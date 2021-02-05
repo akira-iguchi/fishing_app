@@ -13,9 +13,6 @@
         {{-- ナビゲーションバー --}}
         @include('commons.navbar')
 
-        {{-- エラーメッセージ --}}
-        @include('commons.error_messages')
-
         <main>@yield('content')</main>
 
         {{-- フッター --}}

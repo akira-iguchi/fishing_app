@@ -10,6 +10,14 @@ main {
   position: relative;
 }
 
+.signout-body {
+  background-image: url('/images/signout.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 1em;
+  height: 950px;
+}
+
 /* header */
 
 header {
@@ -20,6 +28,10 @@ header {
   background-color: rgba(0,100,255,0.7);
   color: #fff;
   z-index: 10;
+}
+
+header:focus-within {
+  outline: none;
 }
 
 .nav-title {
@@ -37,6 +49,10 @@ header {
 
 #nav-content ul {
   list-style: none;
+}
+
+#nav-content:focus-within {
+  outline: none;
 }
 
 #nav-content li {
@@ -58,7 +74,7 @@ header {
   color: rgba(255,255,255,0.7);
 }
 
-@media (max-width:767px) {
+@media screen and (max-width:1000px) {
 
   #nav-container {
     position: fixed;
@@ -77,7 +93,7 @@ header {
     height: calc(100% - 70px);
     visibility: hidden;
     opacity: 0;
-    transition: .3s;
+    transition: .5s;
     background: #000;
   }
 
@@ -118,6 +134,7 @@ header {
 
   #nav-container:focus-within .nav-button {
     pointer-events: none;
+    outline: none;
   }
 
   #nav-container:focus-within .nav-icon-bar:nth-of-type(1) {
@@ -148,6 +165,7 @@ header {
     transition: transform .2s;
     will-change: transform;
     contain: paint;
+    transition-delay: 0.4s;
   }
 
   #nav-content ul {
@@ -161,7 +179,6 @@ header {
     color: black;
     padding: 10px 5px;
     display: block;
-    text-transform: uppercase;
     transition: color .1s;
   }
 
@@ -191,57 +208,76 @@ header {
   opacity: 0.7;
 }
 
-/* login */
+/* 新規登録ページ、ログインページ */
 
-.login-container {
-  background-image: url('/images/login.jpeg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding: 1em;
-  height: 800px;
-}
-
-.login {
+.signout {
   position: relative;
   top: 80px;
 }
 
-.login-header h1 {
+.signout-header h1 {
   color:#fff;
   text-align:center;
   font-size:300%;
 }
 
-.login-form {
+.signout-form {
+  background-color: rgba(255,255,255,0.1);
   border:.5px solid #fff;
   border-radius:10px;
   box-shadow:0px 0px 10px #000;
-  padding: 2em;
+  padding: 2em 0;
 }
 
-.login-form h3 {
+.signout-form h4 {
   text-align:left;
-  margin-left:40px;
   color:#fff;
+  margin: 20px 0 10px 20px;
 }
 
-.login-form {
+.required:after {
+  content: " *";
+  color: red;
+
+}
+
+.signout-form p {
+  position: relative;
+  margin: auto;
+  text-align:left;
+  font-size: large;
+  font-weight: bold;
+  width: 75%;
+}
+
+.signout-form {
   box-sizing:border-box;
   padding-top: 25px;
   margin: 5% auto;
   text-align:center;
 }
 
-.login input[type="email"],
-.login input[type="password"] {
+.signout input[type="text"],
+.signout input[type="email"],
+.signout input[type="password"] {
   line-height:3em;
-  margin:1em 0 2em 0;
+  margin: auto;
   border-radius:5px;
-  border:2px solid #f2f2f2;
+  border: 2px solid #f2f2f2;
   outline:none;
+  width: 75%;
 }
 
-.login-button {
+.signout input:focus {
+  background: #DDDDDD;
+}
+
+.signout input[type="file"] {
+  margin: auto;
+  width: 76%;
+}
+
+.signout-button {
   height:30px;
   width:100px;
   background:#fff;
@@ -249,13 +285,17 @@ header {
   border-radius:20px;
   color: slategrey;
   text-transform:uppercase;
-  font-family: 'Ubuntu', sans-serif;
   cursor:pointer;
-  margin-top: 10px;
+  margin-top: 30px;
+  outline: none;
 }
 
-.login-button:hover {
+.signout-button:hover {
   background:#EEEEEE;
+}
+
+.signout-button:focus-within {
+  outline: none;
 }
 
 .sign-up{

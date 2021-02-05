@@ -1,13 +1,13 @@
 <header tabindex="0"><a class="nav-title" href="/"><i class="fas fa-fish"></i>&thinsp;Fishing_Spot</a>
-  <div id="nav-container">
-    <div class="nav-bg"></div>
-    <div class="nav-button" tabindex="0">
+  <nav id="nav-container">
+    <nav class="nav-bg"></nav>
+    <nav class="nav-button" tabindex="0">
       <span class="nav-icon-bar"></span>
       <span class="nav-icon-bar"></span>
       <span class="nav-icon-bar"></span>
-    </div>
+    </nav>
 
-    <div id="nav-content" tabindex="0">
+    <nav id="nav-content" tabindex="0">
       <ul>
         @if (Auth::check())
           {{-- ユーザ詳細ページへのリンク --}}
@@ -21,6 +21,6 @@
           <li><a href="{{ url('/login') }}"><i class="fas fa-sign-in-alt"></i>&thinsp;Login</a></li>
         @endif
       </ul>
-    </div>
-  </div>
+    </nav>
+  </nav>
 </header>
