@@ -47,15 +47,15 @@ header:focus-within {
   color: white;
 }
 
-#nav-content ul {
+.nav-content ul {
   list-style: none;
 }
 
-#nav-content:focus-within {
+.nav-content:focus-within {
   outline: none;
 }
 
-#nav-content li {
+.nav-content li {
   position: relative;
   right: 2%;
   float: right;
@@ -63,20 +63,20 @@ header:focus-within {
   z-index: 11;
 }
 
-#nav-content li a {
+.nav-content li a {
   font-size: 20px;
   margin-left: 25px;
   color: #fff;
 }
 
-#nav-content li a:hover {
+.nav-content li a:hover {
   text-decoration: none;
   color: rgba(255,255,255,0.7);
 }
 
 @media screen and (max-width:1000px) {
 
-  #nav-container {
+  .nav-container {
     position: fixed;
     z-index: 10;
     height: 100vh;
@@ -85,7 +85,7 @@ header:focus-within {
     opacity: 0.9;
   }
 
-  #nav-container .nav-bg {
+  .nav-container .nav-bg {
     position: absolute;
     top: 70px;
     right: 0;
@@ -97,12 +97,12 @@ header:focus-within {
     background: #000;
   }
 
-  #nav-container:focus-within .nav-bg {
+  .nav-container:focus-within .nav-bg {
     visibility: visible;
     opacity: .6;
   }
 
-  #nav-container * {
+  .nav-container * {
     visibility: visible;
   }
 
@@ -132,24 +132,24 @@ header:focus-within {
     margin-top: 5px;
   }
 
-  #nav-container:focus-within .nav-button {
+  .nav-container:focus-within .nav-button {
     pointer-events: none;
     outline: none;
   }
 
-  #nav-container:focus-within .nav-icon-bar:nth-of-type(1) {
+  .nav-container:focus-within .nav-icon-bar:nth-of-type(1) {
     transform: translate3d(0,8px,0) rotate(45deg);
   }
 
-  #nav-container:focus-within .nav-icon-bar:nth-of-type(2) {
+  .nav-container:focus-within .nav-icon-bar:nth-of-type(2) {
     opacity: 0;
   }
 
-  #nav-container:focus-within .nav-icon-bar:nth-of-type(3) {
+  .nav-container:focus-within .nav-icon-bar:nth-of-type(3) {
     transform: translate3d(0,-8px,0) rotate(-45deg);
   }
 
-  #nav-content {
+  .nav-content {
     margin-top: 70px;
     padding: 20px;
     width: 100%;
@@ -168,25 +168,25 @@ header:focus-within {
     transition-delay: 0.4s;
   }
 
-  #nav-content ul {
+  .nav-content ul {
     height: 100%;
     display: flex;
     flex-direction: column;
     list-style: none;
   }
 
-  #nav-content li a {
+  .nav-content li a {
     color: black;
     padding: 10px 5px;
     display: block;
     transition: color .1s;
   }
 
-  #nav-content li a:hover {
+  .nav-content li a:hover {
     color: #BF7497;
   }
 
-  #nav-container:focus-within #nav-content {
+  .nav-container:focus-within .nav-content {
     transform: none;
   }
 }

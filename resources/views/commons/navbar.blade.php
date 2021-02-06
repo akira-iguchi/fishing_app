@@ -1,5 +1,5 @@
 <header tabindex="0"><a class="nav-title" href="/"><i class="fas fa-fish"></i>&thinsp;Fishing_Spot</a>
-  <nav id="nav-container">
+  <nav class="nav-container">
     <nav class="nav-bg"></nav>
     <nav class="nav-button" tabindex="0">
       <span class="nav-icon-bar"></span>
@@ -7,7 +7,7 @@
       <span class="nav-icon-bar"></span>
     </nav>
 
-    <nav id="nav-content" tabindex="0">
+    <nav class="nav-content" tabindex="0">
       <ul>
         @if (Auth::check())
           {{-- ユーザ詳細ページへのリンク --}}
