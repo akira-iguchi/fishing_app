@@ -208,6 +208,41 @@ header:focus-within {
   opacity: 0.7;
 }
 
+/* ロード画面 */
+
+#js-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  transition: all 1s;
+  background-color: #0bd;
+}
+.js-spinner {
+  width: 100px;
+  height: 100px;
+  margin: 200px auto;
+  background-color: #fff;
+  border-radius: 100%;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+/* ローディングアニメーション */
+@keyframes sk-scaleout {
+  0% {
+    transform: scale(0);
+  } 100% {
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+.js-loaded {
+  opacity: 0;
+  visibility: hidden;
+}
+
 /* 新規登録ページ、ログインページ */
 
 .signout {
