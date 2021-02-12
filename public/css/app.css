@@ -228,7 +228,7 @@ header:focus-within {
   border-radius: 100%;
   animation: sk-scaleout 1.0s infinite ease-in-out;
 }
-/* ローディングアニメーション */
+
 @keyframes sk-scaleout {
   0% {
     transform: scale(0);
@@ -241,6 +241,129 @@ header:focus-within {
 .js-loaded {
   opacity: 0;
   visibility: hidden;
+}
+
+/* トップページ */
+
+.top {
+  position: relative;
+  background-image: url("/images/turi.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: auto;
+  background-position: center center;
+  padding: 75px 20px 50px;
+  z-index: 0;
+}
+
+.top-title {
+  position: relative;
+  top: 20px;
+  font-weight: bold;
+  font-size: 100px;
+  color: #99FFFF;
+  text-shadow: 5px 5px 5px #808080;
+}
+
+.top p {
+  position: relative;
+  top: 40px;
+  color: #ffffff;
+  font-size: 30px;
+}
+
+.top p span {
+  display: inline-block;
+}
+
+.top a {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  border: 2px solid #ffffff;
+  background: #ffffff;
+  border-radius: 4px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  -webkit-transition: .8s;
+  transition: .8s;
+}
+
+.top a span {
+  position: relative;
+  z-index: 1;
+}
+
+.top a::before,
+.top a::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 51%;
+  height: 100%;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+.top a::before {
+  left: 0;
+}
+
+.top a::after {
+  right: 0;
+}
+
+.top a:hover::before,
+.top a:hover::after {
+  width: 0;
+}
+
+.top a:hover {
+  text-decoration: none;
+}
+
+.login-button {
+  margin: 70px 20px 0 0;
+}
+
+.login-button::before,
+.login-button::after,
+.login-button:hover::before,
+.login-button:hover::after {
+  background-color:  rgba(0,100,255,1);
+}
+
+.login-button:hover {
+  color:rgba(0,100,255,1);
+}
+
+.signup-button::before,
+.signup-button::after,
+.signup-button:hover::before,
+.signup-button:hover::after {
+  background-color: #e41313;
+}
+
+.signup-button:hover {
+  color: #e41313;
+}
+
+.guest_login-button {
+  margin-top: 20px;
+}
+
+.guest_login-button::before,
+.guest_login-button::after,
+.guest_login-button:hover::before,
+.guest_login-button:hover::after {
+  background-color: #28a745;
+}
+
+.guest_login-button:hover {
+  color: #28a745;
 }
 
 /* 新規登録ページ、ログインページ */

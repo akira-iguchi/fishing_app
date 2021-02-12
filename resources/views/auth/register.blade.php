@@ -28,9 +28,6 @@
                     </span>
                 @enderror
 
-            <h4>User_image</h4>
-            <input id="user_image" type="file" name="user_image" onchange="previewImage(this);">
-
             <h4 class="required">Password</h4>
             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
             @error('password')

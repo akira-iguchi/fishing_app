@@ -1,4 +1,4 @@
-<header tabindex="0"><a class="nav-title" href="/"><i class="fas fa-fish"></i>&thinsp;Fishing_Spot</a>
+<header tabindex="0"><a class="nav-title" href="/"><i class="fas fa-fish"></i>&thinsp;Fishing Spot</a>
   <nav class="nav-container">
     <nav class="nav-bg"></nav>
     <nav class="nav-button" tabindex="0">
@@ -16,9 +16,9 @@
           <li>{!! link_to_route('logout.get', 'Logout') !!}</li>
         @else
           {{-- ユーザ登録ページへのリンク --}}
-          <li><a href="{{ url('/signup') }}"><i class="fas fa-user-plus"></i>&thinsp;Signup</a></li>
+          <li><a href="{{ url('/signup') }}"><i class="fas fa-user-plus"></i>&thinsp;新規登録</a></li>
           {{-- ログインページへのリンク --}}
-          <li><a href="{{ url('/login') }}"><i class="fas fa-sign-in-alt"></i>&thinsp;Login</a></li>
+          <li><a href="{{ url('/login') }}"><i class="fas fa-sign-in-alt"></i>&thinsp;ログイン</a></li>
         @endif
       </ul>
     </nav>
