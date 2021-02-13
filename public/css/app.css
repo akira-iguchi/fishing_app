@@ -10,12 +10,12 @@ main {
   position: relative;
 }
 
-.signout-body {
+.login-signup_body {
   background-image: url('/images/signout.jpeg');
   background-repeat: no-repeat;
   background-size: cover;
   padding: 1em;
-  height: 950px;
+  height: 850px;
 }
 
 /* header */
@@ -176,7 +176,7 @@ header:focus-within {
   }
 
   .nav-content li a {
-    color: black;
+    color:#555555;
     padding: 10px 5px;
     display: block;
     transition: color .1s;
@@ -261,7 +261,7 @@ header:focus-within {
   top: 20px;
   font-weight: bold;
   font-size: 100px;
-  color: #99FFFF;
+  color: #DDFFFF;
   text-shadow: 5px 5px 5px #808080;
 }
 
@@ -289,6 +289,7 @@ header:focus-within {
   font-weight: bold;
   -webkit-transition: .8s;
   transition: .8s;
+  box-shadow: 5px 5px 10px 0 rgb(0 0 0 / 50%);
 }
 
 .top a span {
@@ -302,7 +303,7 @@ header:focus-within {
   position: absolute;
   top: 0;
   display: block;
-  width: 51%;
+  width: 50%;
   height: 100%;
   -webkit-transition: .2s;
   transition: .2s;
@@ -325,61 +326,184 @@ header:focus-within {
   text-decoration: none;
 }
 
-.login-button {
+.top-login-button {
   margin: 70px 20px 0 0;
 }
 
-.login-button::before,
-.login-button::after,
-.login-button:hover::before,
-.login-button:hover::after {
-  background-color:  rgba(0,100,255,1);
+.top-login-button::before,
+.top-login-button::after,
+.top-login-button:hover::before,
+.top-login-button:hover::after {
+  background-color:  rgba(0,100,255,0.8);
 }
 
-.login-button:hover {
-  color:rgba(0,100,255,1);
+.top-login-button:hover {
+  color: rgba(0,100,255,1);
 }
 
-.signup-button::before,
-.signup-button::after,
-.signup-button:hover::before,
-.signup-button:hover::after {
-  background-color: #e41313;
+.top-signup-button::before,
+.top-signup-button::after,
+.top-signup-button:hover::before,
+.top-signup-button:hover::after {
+  background:rgba(255,0,0,0.8);
 }
 
-.signup-button:hover {
+.top-signup-button:hover {
   color: #e41313;
 }
 
-.guest_login-button {
+.top-guest_login-button {
   margin-top: 20px;
 }
 
-.guest_login-button::before,
-.guest_login-button::after,
-.guest_login-button:hover::before,
-.guest_login-button:hover::after {
-  background-color: #28a745;
+.top-guest_login-button::before,
+.top-guest_login-button::after,
+.top-guest_login-button:hover::before,
+.top-guest_login-button:hover::after {
+  background: rgba(22,163,21,0.8);
 }
 
-.guest_login-button:hover {
+.top-guest_login-button:hover {
   color: #28a745;
+}
+
+.top-intro {
+  display: flex;
+  margin: 40px auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #525263;
+  -webkit-text-size-adjust: 100%;
+  width: 100%;
+  max-width: 1130px;
+}
+
+.top-intro_expla {
+  width: 120%;
+  text-align: center;
+}
+
+.top-intro_expla p:first-child {
+  font-family: serif;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.top-intro_expla p:last-child {
+  padding: 0 20px;
+  text-align: left;
+  font-size: 18px;
+  line-height: 2.7;
+  letter-spacing: 2px;
+  opacity: 0.8;
+}
+
+.top-intro_image  {
+  margin: auto;
+}
+
+.top-intro_image img {
+  width: 100%;
+}
+
+.self-intro_expla p:first-child {
+  display: inline-block;
+  font-family: serif;
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.self-intro_expla p:last-child {
+  padding: 0 40px;
+  text-align: left;
+  font-size: 18px;
+  line-height: 2.7;
+  letter-spacing: 2px;
+  opacity: 0.8;
+}
+
+.self-intro_expla {
+  width: 160%;
+  margin-right: 30px;
+  text-align: center;
+}
+
+.self-intro_expla img {
+  display: none;
+}
+
+.self-intro_image  {
+  padding: 10px;
+  margin: auto;
+}
+
+.self-intro_image img {
+  width: 100%;
+  box-shadow: 5px 5px 10px 0 rgb(0 0 0 / 50%);
+  border-radius: 3px;
+}
+
+@media only screen and (min-width: 1000px) {
+  .top-intro_image {
+    padding: 50px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .top-intro_image {
+    display: none;
+  }
+
+  .top-intro {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .top-intro_expla,
+  .self-intro_expla {
+    width: 100%;
+  }
+
+  .self-intro_expla img {
+    display: block;
+    margin: auto;
+    width: 60%;
+    box-shadow: 5px 5px 10px 0 rgb(0 0 0 / 50%);
+    border-radius: 3px;
+  }
+
+  .self-intro_image  {
+    display: none;
+  }
+
+  .top-intro_expla p:last-child {
+    padding: 0;
+  }
+
+  .self-intro_expla p:last-child {
+    padding: 0;
+    margin-top: 20px;
+  }
 }
 
 /* 新規登録ページ、ログインページ */
 
-.signout {
+.login-signup {
   position: relative;
   top: 80px;
 }
 
-.signout-header h1 {
+.login-signup-header h1 {
   color:#fff;
   text-align:center;
   font-size:300%;
 }
 
-.signout-form {
+.login-signup-form {
   background-color: rgba(255,255,255,0.1);
   border:.5px solid #fff;
   border-radius:10px;
@@ -387,7 +511,7 @@ header:focus-within {
   padding: 2em 0;
 }
 
-.signout-form h4 {
+.login-signup-form h4 {
   text-align:left;
   color:#fff;
   margin: 20px 0 10px 20px;
@@ -396,10 +520,9 @@ header:focus-within {
 .required:after {
   content: " *";
   color: red;
-
 }
 
-.signout-form p {
+.login-signup-form p {
   position: relative;
   margin: auto;
   text-align:left;
@@ -408,16 +531,16 @@ header:focus-within {
   width: 75%;
 }
 
-.signout-form {
+.login-signup-form {
   box-sizing:border-box;
   padding-top: 25px;
   margin: 5% auto;
   text-align:center;
 }
 
-.signout input[type="text"],
-.signout input[type="email"],
-.signout input[type="password"] {
+.login-signup input[type="text"],
+.login-signup input[type="email"],
+.login-signup input[type="password"] {
   line-height:3em;
   margin: auto;
   border-radius:5px;
@@ -426,16 +549,21 @@ header:focus-within {
   width: 75%;
 }
 
-.signout input:focus {
+.login-signup input::placeholder {
+  font-weight: bold;
+  opacity: 0.7;
+}
+
+.login-signup input:focus {
   background: #DDDDDD;
 }
 
-.signout input[type="file"] {
+.login-signup input[type="file"] {
   margin: auto;
   width: 76%;
 }
 
-.signout-button {
+.login-signup-button {
   height:30px;
   width:100px;
   background:#fff;
@@ -448,11 +576,11 @@ header:focus-within {
   outline: none;
 }
 
-.signout-button:hover {
+.login-signup-button:hover {
   background:#EEEEEE;
 }
 
-.signout-button:focus-within {
+.login-signup-button:focus-within {
   outline: none;
 }
 
