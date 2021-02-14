@@ -4,9 +4,9 @@
     @if (Auth::check())
         {{ Auth::user()->name }}
     @else
-    <!-- <div id="js-loading">
+    <div id="js-loading">
         <div class="js-spinner"></div>
-    </div> -->
+    </div>
 
     <div class="top text-center">
         <h1 class="top-title">Fishing Spot</h1>
@@ -17,10 +17,11 @@
         <a href="{{ route('login.guest') }}" class="top-guest_login-button"><span><i class="fas fa-sign-in-alt"></i>ゲストログイン</span></a>
     </div>
 
-    <div class="container top-intro">
+    <div class="top-intro">
         <div class="top-intro_image">
             <img src="/images/fishing_boat_man.png" alt="釣り画像">
         </div>
+
         <div class="top-intro_expla">
             <p>Fishing Spotとは？</p>
             <p>
@@ -31,7 +32,7 @@
         </div>
     </div>
 
-    <div class="container top-intro" id="js">
+    <div class="top-intro">
         <div class="self-intro_expla">
             <p>自己紹介</p>
             <img src="/images/akira.jpeg" alt="自己紹介の画像">
@@ -41,6 +42,7 @@
                 &emsp;趣味は、釣りと筋トレ。釣りで自然と戯れつつ、筋トレで自分を追い込んでます。
             </p>
         </div>
+
         <div class="self-intro_image">
             <img src="/images/akira.jpeg" alt="自己紹介の画像">
         </div>
@@ -49,10 +51,21 @@
 @endsection
 
 <script>
+(() => {
+    window.onload = function() {
+        const spinner = document.getElementById('js-loading');
+        spinner.classList.add('js-loaded');
 
-    const targetElement = document.getElementById('js');
-    console.log(targetElement);
-
-
-
+        const targetElement = document.querySelectorAll('.top-intro');
+        document.addEventListener("scroll", function() {
+            for(let i = 0; i < targetElement.length; i++) {
+                const getElementDistance = targetElement[i].getBoundingClientRect().top
+                + targetElement[i].clientHeight * .6
+                if (window.innerHeight > getElementDistance) {
+                    targetElement[i].classList.add("show");
+                }
+            }
+        })
+    }
+})();
 </script>

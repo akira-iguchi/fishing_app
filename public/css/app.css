@@ -381,14 +381,27 @@ header:focus-within {
   max-width: 1130px;
 }
 
+.top-intro_image {
+  opacity: 0;
+  transform: translateX(-50px);
+  margin: auto;
+}
+
 .top-intro_expla {
-  width: 120%;
+  opacity: 0;
+  transform: translateX(50px);
   text-align: center;
+}
+
+.show .top-intro_image,
+.show .top-intro_expla {
+  opacity: 1;
+  transition: 1s;
+  transform: none;
 }
 
 .top-intro_expla p:first-child {
   font-family: serif;
-  display: inline-block;
   font-weight: bold;
   font-size: 28px;
 }
@@ -402,12 +415,16 @@ header:focus-within {
   opacity: 0.8;
 }
 
-.top-intro_image  {
-  margin: auto;
-}
-
 .top-intro_image img {
   width: 100%;
+}
+
+.self-intro_expla {
+  opacity: 0;
+  transform: translateX(50px);
+  text-align: center;
+  width: 160%;
+  margin-right: 30px;
 }
 
 .self-intro_expla p:first-child {
@@ -426,19 +443,21 @@ header:focus-within {
   opacity: 0.8;
 }
 
-.self-intro_expla {
-  width: 160%;
-  margin-right: 30px;
-  text-align: center;
-}
-
 .self-intro_expla img {
   display: none;
 }
 
-.self-intro_image  {
-  padding: 10px;
+.self-intro_image {
+  opacity: 0;
+  transform: translateX(-50px);
   margin: auto;
+}
+
+.show .self-intro_expla,
+.show .self-intro_image {
+  opacity: 1;
+  transition: 1s;
+  transform: none;
 }
 
 .self-intro_image img {
@@ -456,11 +475,6 @@ header:focus-within {
 @media only screen and (max-width: 768px) {
   .top-intro_image {
     display: none;
-  }
-
-  .top-intro {
-    display: flex;
-    flex-direction: column;
   }
 
   .top-intro_expla,
