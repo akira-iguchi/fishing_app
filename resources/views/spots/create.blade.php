@@ -2,13 +2,17 @@
 
 @section('content')
     @if (Auth::check())
-    <div class="container text-center spot_form">
-        <input type="text" placeholder="スポットを入力" id="address" class=spot__text>
-        <input onclick="codeAddress()" type="button" value="検索する">
-        <div id="map"></div>
+    <div class="container spot_form">
         <div class="row">
-            <div class="col-6">
+            <d class="mx-auto d-block col-6">
                 {!! Form::model($spot, ['route' => 'spots.store', "enctype" => "multipart/form-data"]) !!}
+
+                    <input type="text" placeholder="スポットを入力" id="address" class=spot__text>
+                    <input onclick="codeAddress()" type="button" value="検索する">
+                    <div id="map"></div>
+
+                    {!! Form::hidden('latitude', 35.6594666, ['class' => 'form-control', 'id' => "spot_latitude"]) !!}
+                    {!! Form::hidden('longitude', 139.7005536, ['class' => 'form-control', 'id' => "spot_longitude"]) !!}
 
                     <div class="form-group">
                         {!! Form::label('name', '釣り場名') !!}
@@ -39,16 +43,6 @@
                             <p>{{ $errors->first('address') }}</p>
                         </span>
                     @endif
-
-                    <div class="form-group">
-                        {!! Form::label('latitude', '緯度') !!}
-                        {!! Form::number('latitude', null, ['class' => 'form-control']) !!}
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('longitude', '経度') !!}
-                        {!! Form::number('longitude', null, ['class' => 'form-control']) !!}
-                    </div>
 
                     <div class="form-group">
                     {!! Form::label('image', '画像') !!}

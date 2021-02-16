@@ -47,6 +47,7 @@ class SpotsController extends Controller
             'address' => 'max:50',
             'latitude' => 'required',
             'longitude' => 'required',
+            'image' => 'nullable|image'
         ];
 
         $message = [
@@ -65,8 +66,10 @@ class SpotsController extends Controller
             $spot->name = $request->input('name');
             $spot->explanation = $request->input('explanation');
             $spot->address = $request->input('address');
-            $filePath = $request->file('image')->store('public');
-            $spot->image = basename($filePath);
+            if ($request->hasFile('image')) {
+                $filePath = $request->file('image')->store('public');
+                $spot->image = basename($filePath);
+            }
             $spot->latitude = $request->input('latitude');
             $spot->longitude = $request->input('longitude');
             $spot->user_id = auth()->id();

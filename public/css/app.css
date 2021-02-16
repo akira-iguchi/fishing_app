@@ -10,11 +10,6 @@ main {
   position: relative;
 }
 
-#map {
-  height: 500px;
-  width: 500px;
-}
-
 .login-signup_body {
   background-image: url('/images/signout.jpeg');
   background-repeat: no-repeat;
