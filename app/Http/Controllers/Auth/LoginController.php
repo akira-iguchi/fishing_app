@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -27,16 +28,26 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected function redirectTo() {
+        session()->flash('flash_message', 'ログインしました');
+    }
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function logout(Request $request)
     {
-        $this->middleware('guest')->except('logout');
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        session()->flash('flash_message', 'ログアウトしました');
+
+        return $this->loggedOut($request) ?: redirect('/');
     }
 
     // ゲストユーザー用のユーザーIDを定数として定義
@@ -47,7 +58,7 @@ class LoginController extends Controller
     {
         // id=1 のゲストユーザー情報がDBに存在すれば、ゲストログインする
         if (Auth::loginUsingId(self::GUEST_USER_ID)) {
-            return redirect('/');
+            return redirect('/')->with('flash_message', 'ゲストユーザーとしてログインしました');
         }
 
         return redirect('/');

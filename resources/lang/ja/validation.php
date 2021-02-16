@@ -79,7 +79,7 @@ return [
     'max'                  => [
         'numeric' => ':attributeには、:max以下の数字を指定してください。',
         'file'    => ':attributeには、:max kB以下のファイルを指定してください。',
-        'string'  => ':attributeは、:max文字以下で指定してください。',
+        'string'  => ':attributeは、:max文字以内で入力してください。',
         'array'   => ':attributeは:max個以下指定してください。',
     ],
     'mimes'                => ':attributeには:valuesタイプのファイルを指定してください。',
@@ -87,7 +87,7 @@ return [
     'min'                  => [
         'numeric' => ':attributeには、:min以上の数字を指定してください。',
         'file'    => ':attributeには、:min kB以上のファイルを指定してください。',
-        'string'  => ':attributeは、:min文字以上で指定してください。',
+        'string'  => 'パスワードは、:min文字以上で指定してください。',
         'array'   => ':attributeは:min個以上指定してください。',
     ],
     'not_in'               => '選択された:attributeは正しくありません。',
@@ -161,6 +161,10 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => "釣り場名",
+        'explanation' => "説明",
+        'address' => "所在地",
+    ],
 
 ];

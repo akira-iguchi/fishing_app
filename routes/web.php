@@ -26,3 +26,5 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
 # ゲストユーザーログイン
 Route::get('guest', 'Auth\LoginController@guestLogin')->name('login.guest');
+
+Route::resource('/spots', 'SpotsController');

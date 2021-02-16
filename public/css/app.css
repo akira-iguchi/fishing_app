@@ -10,6 +10,11 @@ main {
   position: relative;
 }
 
+#map {
+  height: 500px;
+  width: 500px;
+}
+
 .login-signup_body {
   background-image: url('/images/signout.jpeg');
   background-repeat: no-repeat;
@@ -188,6 +193,32 @@ header:focus-within {
 
   .nav-container:focus-within .nav-content {
     transform: none;
+  }
+}
+
+/*flash_message*/
+
+.flash_message {
+  position: fixed;
+  top: 90px;
+  text-align: center;
+  padding: 15px 0;
+  width: 300px;
+  z-index: 20;
+  animation: fadeout 1.5s ease 2.3s 1 forwards;
+  font-weight: bold;
+  color: #fff;
+  background-color:#28a745;
+  border-radius: 20px;
+  margin-left: 10px;
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 
@@ -480,6 +511,10 @@ header:focus-within {
   .top-intro_expla,
   .self-intro_expla {
     width: 100%;
+  }
+
+  .self-intro_expla {
+    margin-right: 0;
   }
 
   .self-intro_expla img {
