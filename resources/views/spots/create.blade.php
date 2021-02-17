@@ -2,15 +2,15 @@
 
 @section('content')
     @if (Auth::check())
-    <div class="container spot_form">
+    <div class="container">
         <div class="row">
-            <d class="mx-auto d-block col-lg-6 col-sm-10">
+            <d class="mx-auto d-block col-lg-6 col-sm-10 spot_form">
 
                 <input class="spot_search" id="address" type="text" placeholder="釣り場を入力"/>
                 <button onclick="codeAddress()" class="spot_search_button"><i class="fas fa-search"></i></button>
-                <!-- <p class="marker-drag">マーカーの移動も可能だよ</p> -->
 
                 <div id="map"></div>
+                <p>マーカーの移動も可能だよ！</p>
 
                 {!! Form::model($spot, ['route' => 'spots.store', "enctype" => "multipart/form-data"]) !!}
 
@@ -21,36 +21,40 @@
                     <div class="form-group">
                         {!! Form::label('name', '釣り場名') !!}
                         {!! Form::text('name', null, ['class' => 'form-control']) !!}
-                    </div>
-                    @if($errors->has('name'))
-                        <span class="error_msg">
-                            <p>{{ $errors->first('name') }}</p>
-                        </span>
-                    @endif
 
-                    <div class="form-group">
-                        {!! Form::label('explanation', '説明') !!}
-                        {!! Form::text('explanation', null, ['class' => 'form-control']) !!}
+                        @if($errors->has('name'))
+                            <span class="error_msg">
+                                <p>{{ $errors->first('name') }}</p>
+                            </span>
+                        @endif
                     </div>
-                    @if($errors->has('explanation'))
-                        <span class="error_msg">
-                            <p>{{ $errors->first('explanation') }}</p>
-                        </span>
-                    @endif
 
                     <div class="form-group">
                         {!! Form::label('address', '所在地') !!}
                         {!! Form::text('address', null, ['class' => 'form-control']) !!}
-                    </div>
-                    @if($errors->has('address'))
+
+                        @if($errors->has('address'))
                         <span class="error_msg">
                             <p>{{ $errors->first('address') }}</p>
                         </span>
-                    @endif
+                        @endif
+                    </div>
 
                     <div class="form-group">
-                    {!! Form::label('image', '画像') !!}
+                        {!! Form::label('image', '画像') !!}
                         {{Form::file('image')}}
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('explanation', '説明') !!}
+                        {!! Form::textarea('explanation', null, ['class' => 'form-control js-text']) !!}
+                        <p class="js-text-count"></p>
+
+                        @if($errors->has('explanation'))
+                            <span class="error_msg">
+                                <p>{{ $errors->first('explanation') }}</p>
+                            </span>
+                        @endif
                     </div>
 
                     {!! Form::submit('投稿', ['class' => 'btn btn-primary']) !!}

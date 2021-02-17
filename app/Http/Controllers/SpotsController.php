@@ -43,7 +43,7 @@ class SpotsController extends Controller
         // バリデーション
         $rules = [
             'name' => 'required|max:20',
-            'explanation' => 'required|max:255',
+            'explanation' => 'required|max:300',
             'address' => 'max:50',
             'latitude' => 'required',
             'longitude' => 'required',

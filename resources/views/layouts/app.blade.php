@@ -30,5 +30,6 @@
         <script async defer src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{ config('services.google-map.apikey') }}&callback=initMap"></script>
         <script src="{{ asset('/js/welcome.js') }}" defer></script>
         <script src="{{ asset('/js/setLocation.js') }}" defer></script>
+        <script src="{{ asset('/js/wordCount.js') }}" defer></script>
     </body>
 </html>

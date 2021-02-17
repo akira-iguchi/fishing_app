@@ -18,6 +18,10 @@ main {
   height: 850px;
 }
 
+.error_msg {
+  color: red;
+}
+
 /* header */
 
 header {
