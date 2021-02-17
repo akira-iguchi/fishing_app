@@ -3,7 +3,43 @@
   margin-bottom: 20px;
 }
 
+.spot_search {
+  height: 37px;
+  width: 250px;
+  padding: 0 33px 0 10px;
+  margin-bottom: 10px;
+  position: relative;
+  border-radius: 2px;
+  outline: 0;
+  border: none;
+  background: #eee;
+}
+
+.spot_search_button {
+  height: 50px;
+  position: relative;
+  top: 2px;
+  right: 37px;
+  background: none;
+  color: #666;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.spot_search_button:hover {
+  color:#7fbfff;
+}
+
+.spot_search_button:focus-within {
+  outline: none;
+}
+
+/* .marker-drag {
+position: absolute;
+} */
+
 #map {
-  height: 500px;
-  width: 500px;
+  height: 30rem;
+  width: auto;
 }

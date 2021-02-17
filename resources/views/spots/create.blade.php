@@ -4,12 +4,16 @@
     @if (Auth::check())
     <div class="container spot_form">
         <div class="row">
-            <d class="mx-auto d-block col-6">
+            <d class="mx-auto d-block col-lg-6 col-sm-10">
+
+                <input class="spot_search" id="address" type="text" placeholder="釣り場を入力"/>
+                <button onclick="codeAddress()" class="spot_search_button"><i class="fas fa-search"></i></button>
+                <!-- <p class="marker-drag">マーカーの移動も可能だよ</p> -->
+
+                <div id="map"></div>
+
                 {!! Form::model($spot, ['route' => 'spots.store', "enctype" => "multipart/form-data"]) !!}
 
-                    <input type="text" placeholder="スポットを入力" id="address" class=spot__text>
-                    <input onclick="codeAddress()" type="button" value="検索する">
-                    <div id="map"></div>
 
                     {!! Form::hidden('latitude', 35.6594666, ['class' => 'form-control', 'id' => "spot_latitude"]) !!}
                     {!! Form::hidden('longitude', 139.7005536, ['class' => 'form-control', 'id' => "spot_longitude"]) !!}
