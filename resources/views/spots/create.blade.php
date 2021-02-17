@@ -47,8 +47,9 @@
 
                     <div class="form-group">
                         {!! Form::label('explanation', '説明') !!}
-                        {!! Form::textarea('explanation', null, ['class' => 'form-control js-text']) !!}
-                        <p class="js-text-count"></p>
+                        {!! Form::textarea('explanation', null, ['class' => 'form-control', 'id' => 'textArea']) !!}
+                        残り<span id="textLest">300</span>文字
+                        <p id="textAttention" style="display:none; color:red;">入力文字数が多すぎます。</p>
 
                         @if($errors->has('explanation'))
                             <span class="error_msg">

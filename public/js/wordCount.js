@@ -1,23 +1,14 @@
 (() => {
-    $(function (){
-        const count = $(".js-text").text().replace(/\n/g, "改行").length;
-        const now_count = 300 - count;
+    let lest = null,
+        max = 300,
+        input_area = document.getElementById("textArea"),
+        output_lest = document.getElementById("textLest"),
+        attention = document.getElementById("textAttention");
 
-        if (count > 300) {
-            $(".js-text-count").css("color","red");
-        }
-        $(".js-text-count").text( "残り" + now_count + "文字");
-
-        $(".js-text").on("keyup", function() {
-            const count = $(this).val().replace(/\n/g, "改行").length;
-            const now_count = 300 - count;
-
-            if (count > 300) {
-                $(".js-text-count").css("color","red");
-            } else {
-                $(".js-text-count").css("color","black");
-            }
-            $(".js-text-count").text( "残り" + now_count + "文字");
-        });
-    });
+    input_area.onkeyup = function(){
+        let length = input_area.value.replace(/\n/g, '++').length;
+        lest =  max - length;
+        output_lest.innerText = lest;
+        attention.style.display = ( length > max ) ? "block" : "none";
+    }
 })();
