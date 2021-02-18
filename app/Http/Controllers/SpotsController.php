@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Spot;
 use Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SpotsController extends Controller
 {
@@ -67,8 +69,13 @@ class SpotsController extends Controller
             $spot->explanation = $request->input('explanation');
             $spot->address = $request->input('address');
             if ($request->hasFile('image')) {
-                $filePath = $request->file('image')->store('public');
-                $spot->image = basename($filePath);
+                // $filePath = $request->file('image')->store('public');
+                // $spot->image = basename($filePath);
+                $upload_info = Storage::disk('s3')->putFile('/test', $request->file('image'), 'public');
+
+                //S3へのファイルアップロード処理の時の情報が格納された変数$upload_infoを用いてアップロードされた画像へのリンクURLを変数$pathに格納する
+                $path = Storage::disk('s3')->url($upload_info);
+                $spot->image = $path;
             }
             $spot->latitude = $request->input('latitude');
             $spot->longitude = $request->input('longitude');

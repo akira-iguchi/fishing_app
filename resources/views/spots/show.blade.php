@@ -6,7 +6,7 @@
         <div class="mx-auto d-block col-lg-10 spot_content">
             <div class="spot-map-image">
                 <div id="show_map"></div>
-                <img src="{{ asset('/storage/'.$spot->image)}}" style="width: 100px;">
+                <img src="{{ $spot->image }}">
             </div>
         </div>
     </div>

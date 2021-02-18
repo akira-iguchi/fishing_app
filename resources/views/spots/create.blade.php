@@ -44,7 +44,7 @@
 
                     <div class="form-group">
                         {!! Form::label('image', '画像') !!}
-                        <input type="file" name="image" multiple="multiple">
+                        <input type="file" name="image[]" multiple>
                     </div>
 
                     <div class="form-group">
