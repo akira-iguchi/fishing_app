@@ -1,6 +1,29 @@
+/* create */
+
 .spot_form {
   margin-top: 90px;
   margin-bottom: 20px;
+  background-image: url("/images/spot-create.jpg");
+  background-color:rgba(255,255,255,0.6);
+  background-blend-mode: lighten;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 5px;
+  padding: 3em 6em;
+  width: 120%;
+}
+
+@media screen and (max-width:800px) {
+  .spot_form {
+    padding: 1em;
+  }
+}
+
+.spot_form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 5px;
+  border-bottom: 3px solid #000;
 }
 
 .spot_search {
@@ -35,16 +58,52 @@
   outline: none;
 }
 
-/* .marker-drag {
-position: absolute;
-} */
-
 #map {
   height: 30rem;
   width: auto;
   margin-bottom: 5px;
+  border: 3px solid #FFCC33;
 }
 
 textarea .form-control {
   height: 200px;
+}
+
+.spot-create-button {
+  padding: 12px 30px 10px 22px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  background: transparent;
+  outline: none !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  border: 3px solid #000;
+}
+
+.spot-create-button:hover {
+  background: #000;
+  color: #fff;
+}
+
+.spot-create-button:active {
+  top: 2px;
+}
+
+/* show */
+
+.spot_content {
+  margin-top: 90px;
+}
+
+.spot-map-image {
+  display: flex;
+}
+
+#show_map {
+  height: 30rem;
+  width: 30rem;
+  margin-bottom: 5px;
+  border: 3px solid #FFCC33;
 }

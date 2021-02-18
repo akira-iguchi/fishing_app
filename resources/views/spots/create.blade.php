@@ -4,13 +4,15 @@
     @if (Auth::check())
     <div class="container">
         <div class="row">
-            <d class="mx-auto d-block col-lg-6 col-sm-10 spot_form">
+            <d class="mx-auto d-block col-lg-10 col-md-11 spot_form">
+
+                <h1>釣りスポット作成</h1>
 
                 <input class="spot_search" id="address" type="text" placeholder="釣り場を入力"/>
                 <button onclick="codeAddress()" class="spot_search_button"><i class="fas fa-search"></i></button>
 
                 <div id="map"></div>
-                <p>マーカーの移動も可能だよ！</p>
+                <p>マーカーを掴んで移動も可能だよ！</p>
 
                 {!! Form::model($spot, ['route' => 'spots.store', "enctype" => "multipart/form-data"]) !!}
 
@@ -19,7 +21,7 @@
                     {!! Form::hidden('longitude', 139.7005536, ['class' => 'form-control', 'id' => "spot_longitude"]) !!}
 
                     <div class="form-group">
-                        {!! Form::label('name', '釣り場名') !!}
+                        <div class="required">釣り場名</div>
                         {!! Form::text('name', null, ['class' => 'form-control']) !!}
 
                         @if($errors->has('name'))
@@ -30,7 +32,7 @@
                     </div>
 
                     <div class="form-group">
-                        {!! Form::label('address', '所在地') !!}
+                        <div class="required">所在地</div>
                         {!! Form::text('address', null, ['class' => 'form-control']) !!}
 
                         @if($errors->has('address'))
@@ -42,11 +44,11 @@
 
                     <div class="form-group">
                         {!! Form::label('image', '画像') !!}
-                        {{Form::file('image')}}
+                        <input type="file" name="image" multiple="multiple">
                     </div>
 
                     <div class="form-group">
-                        {!! Form::label('explanation', '説明') !!}
+                        <div class="required">説明</div>
                         {!! Form::textarea('explanation', null, ['class' => 'form-control', 'id' => 'textArea']) !!}
                         残り<span id="textLest">300</span>文字
                         <p id="textAttention" style="display:none; color:red;">入力文字数が多すぎます。</p>
@@ -58,7 +60,7 @@
                         @endif
                     </div>
 
-                    {!! Form::submit('投稿', ['class' => 'btn btn-primary']) !!}
+                    <button class="spot-create-button"><i class="fas fa-pencil-alt"></i>&thinsp;投稿</button>
 
                 {!! Form::close() !!}
             </div>

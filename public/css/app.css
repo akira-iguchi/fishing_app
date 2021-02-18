@@ -1,5 +1,6 @@
 body {
   font-family: 'Osaka', sans-serif;
+  background-color: #F5F5F5;
   display: flex;
   flex-flow: column;
   min-height: 100vh;
