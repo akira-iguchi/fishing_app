@@ -29,6 +29,7 @@ class LoginController extends Controller
      * @var string
      */
     protected function redirectTo() {
+        return '/spots';
         session()->flash('flash_message', 'ログインしました');
     }
 
@@ -58,7 +59,7 @@ class LoginController extends Controller
     {
         // id=1 のゲストユーザー情報がDBに存在すれば、ゲストログインする
         if (Auth::loginUsingId(self::GUEST_USER_ID)) {
-            return redirect('/')->with('flash_message', 'ゲストユーザーとしてログインしました');
+            return redirect('/spots')->with('flash_message', 'ゲストユーザーとしてログインしました');
         }
 
         return redirect('/');

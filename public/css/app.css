@@ -1,6 +1,6 @@
 body {
   font-family: 'Osaka', sans-serif;
-  background-color: #EEEEEE;
+  background-color: #EEFFFF;
   display: flex;
   flex-flow: column;
   min-height: 100vh;
@@ -21,6 +21,11 @@ main {
 
 .error_msg {
   color: red;
+}
+
+.pagination {
+  margin-top: 50px;
+  justify-content: center;
 }
 
 /* header */
@@ -230,7 +235,7 @@ header:focus-within {
   width: 100%;
   text-align: center;
   padding: 2em;
-  background-color: #EEEEEE;
+  background-color: #DDDDDD;
 }
 
 .footer_sentence {

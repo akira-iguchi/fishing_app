@@ -85,4 +85,19 @@ class SpotsController extends Controller
         }
     }
 
+    public function search(Request $request) {
+        $keyword_name = $request->name;
+
+        if (!empty($keyword_name)) {
+            $query = Spot::query();
+            $spots = $query->where('name','like', '%' .$keyword_name. '%')->get();
+            return view('spots/search')->with([
+            'spots' => $spots
+            ]);
+        } else {
+            $spots = Spot::all();
+            return view('spots.index', ['spots' => $spots]);
+        }
+    }
+
 }

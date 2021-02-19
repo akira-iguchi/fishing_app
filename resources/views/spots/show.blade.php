@@ -12,12 +12,10 @@
                         <div class="swiper-slide">
                             <div id="show_map"></div>
                         </div>
-
                         <div class="swiper-slide">
                             <img src="{{ asset('storage/'.$spot->image) }}" alt="釣り場の画像">
                         </div>
                     </div>
-
                     <div class="swiper-pagination"></div>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
@@ -37,10 +35,9 @@
                 </table>
             </div>
 
-            <hr>
-
             <div class="mx-auto d-block col-lg-4 spot_creater">
-                <a href="{{ url('/') }}" class="top-lo">
+                <span>作成者</span><br>
+                <a href="{{ url('/') }}">
                     <img src="{{ asset('storage/'.$spot->user->user_image) }}" alt="釣り場投稿者の画像">
                     <p class="spot_creater_name">{{ $spot->user->name }}</p>
                 </a>
