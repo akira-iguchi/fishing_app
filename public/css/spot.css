@@ -182,26 +182,35 @@ textarea .form-control {
   height: 200px;
 }
 
-.spot-create-button {
-  padding: 12px 30px 10px 22px;
+.spot-create-edit-button,
+.back_button {
+  padding: 8px 20px 8px 12px;
+  margin-right: 12px;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
   background: transparent;
   outline: none !important;
   cursor: pointer;
-  transition: all 0.0.5s ease;
+  transition: all 0.2s ease;
   position: relative;
   display: inline-block;
   border: 3px solid #000;
 }
 
-.spot-create-button:hover {
+.spot-create-edit-button:hover,
+.back_button:hover {
   background: #000;
   color: #fff;
 }
 
-.spot-create-button:active {
+.spot-create-edit-button:active,
+.back_button:active {
   top: 2px;
+}
+
+.back_button {
+  padding: 8px 15px 8px 15px;
+  margin: 0;
 }
 
 /* show */

@@ -4,7 +4,7 @@
     @if (Auth::check())
     <div class="container">
         <div class="row">
-            <d class="mx-auto d-block col-lg-10 col-md-11 spot_form">
+            <div class="mx-auto d-block col-lg-10 col-md-11 spot_form">
 
                 <h1>釣りスポット編集</h1>
 
@@ -61,8 +61,9 @@
                         @endif
                     </div>
 
-                    <button class="spot-create-button"><i class="fas fa-pencil-alt"></i>&thinsp;更新</button>
+                    <button class="spot-create-edit-button"><i class="fas fa-pencil-alt"></i>&thinsp;更新</button>
 
+                    <button type="button" class="back_button" onclick="history.back()">戻る</button>
                 </form>
             </div>
         </div>

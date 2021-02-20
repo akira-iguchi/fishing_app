@@ -38,5 +38,6 @@
         <script src="{{ asset('/js/welcome.js') }}" defer></script>
         <script src="{{ asset('/js/setLocation.js') }}" defer></script>
         <script src="{{ asset('/js/wordCount.js') }}" defer></script>
+        <script src="{{ asset('/js/passwordToggle.js') }}" defer></script>
     </body>
 </html>

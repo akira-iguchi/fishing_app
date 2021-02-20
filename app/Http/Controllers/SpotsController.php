@@ -60,6 +60,7 @@ class SpotsController extends Controller
         $validator = Validator::make($form, $rules, $spot);
 
         if($validator->fails()){
+            session()->flash('error_message', '入力に不備があります');
             return redirect('/spots/create')
                 ->withErrors($validator)
                 ->withInput();

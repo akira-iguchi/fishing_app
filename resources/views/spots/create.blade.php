@@ -60,8 +60,9 @@
                         @endif
                     </div>
 
-                    <button class="spot-create-button"><i class="fas fa-pencil-alt"></i>&thinsp;投稿</button>
+                    <button class="spot-create-edit-button"><i class="fas fa-pencil-alt"></i>&thinsp;投稿</button>
 
+                    <button type="button" class="back_button" onclick="history.back()">戻る</button>
                 </form>
             </div>
         </div>
