@@ -16,7 +16,8 @@
                         <a href="{{ route('spots.show', $spot->id)}}" class="spot-hidden">
                             <div class="spot_card">
                                 <div class="spot_card_img">
-                                    <img src="{{ $spot->image }}" alt="釣り場の画像">
+                                    <!-- <img src="{{ $spot->image }}" alt="釣り場の画像"> -->
+                                    <img src="{{ asset('storage/'.$spot->image) }}" alt="釣り場投稿者の画像">
                                 </div>
 
                                 <div class="spot_card_content">
@@ -30,7 +31,9 @@
                 @endforeach
 
             </div>
-            <div class="seeMore"><i class="fa fa-chevron-down"></i>&nbsp;続きを見る</div>
+            @if (count($spots) > 0)
+                <div class="seeMore"><i class="fa fa-chevron-down"></i>&nbsp;続きを見る</div>
+            @endif
         </div>
     @endif
 @endsection

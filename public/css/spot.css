@@ -111,7 +111,7 @@
   margin-right: 5px;
 }
 
-/* create */
+/* create, edit */
 
 .spot_form {
   margin-top: 100px;
@@ -265,6 +265,49 @@ textarea .form-control {
 .spot_container td {
   padding: 10px;
   border: 1px solid #dedede;
+}
+
+.spot_user_private {
+  display: flex;
+  margin-top: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.spot_edit_link_button {
+  height: 45px;
+  border: 2px solid #339999;
+  color: #339999;
+  margin-right: 20px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: .4s;
+  background: rgba(0, 173, 30, 0.13);
+}
+
+.spot_edit_link_button:hover {
+  text-decoration: none;
+  background-color: #339999;
+  border-color: #9ec34b;
+  color: #FFF;
+}
+
+.spot_delete_button {
+  position: relative;
+  top: 7px;
+  border: 2px solid #FF6633;
+  color: #FF6633;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: .4s;
+  background: rgba(255, 0, 0, 0.13);
+}
+
+.spot_delete_button:hover {
+  text-decoration: none;
+  background-color: #FF6633;
+  border-color: #FF99CC;
+  color: #FFF;
 }
 
 .spot_creater {

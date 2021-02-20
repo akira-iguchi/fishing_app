@@ -52,12 +52,12 @@ class SpotsController extends Controller
             'image' => 'nullable|image'
         ];
 
-        $message = [
+        $spot = [
             'name.required'=> '釣り場名を入力してください',
             'explanation.required'=> '説明を入力してください',
         ];
 
-        $validator = Validator::make($form, $rules, $message);
+        $validator = Validator::make($form, $rules, $spot);
 
         if($validator->fails()){
             return redirect('/spots/create')
@@ -69,20 +69,91 @@ class SpotsController extends Controller
             $spot->explanation = $request->input('explanation');
             $spot->address = $request->input('address');
             if ($request->hasFile('image')) {
-                // $filePath = $request->file('image')->store('public');
-                // $spot->image = basename($filePath);
-                $upload_info = Storage::disk('s3')->putFile('/test', $request->file('image'), 'public');
+                $filePath = $request->file('image')->store('public');
+                $spot->image = basename($filePath);
+                // $upload_info = Storage::disk('s3')->putFile('/test', $request->file('image'), 'public');
 
                 //S3へのファイルアップロード処理の時の情報が格納された変数$upload_infoを用いてアップロードされた画像へのリンクURLを変数$pathに格納する
-                $path = Storage::disk('s3')->url($upload_info);
-                $spot->image = $path;
+                // $path = Storage::disk('s3')->url($upload_info);
+                // $spot->image = $path;
             }
             $spot->latitude = $request->input('latitude');
             $spot->longitude = $request->input('longitude');
             $spot->user_id = auth()->id();
             $spot->save();
-            return redirect('/spots');
+            return redirect('/spots')->with('flash_message', '釣りスポットを投稿しました');
         }
+    }
+
+    public function edit($id)
+    {
+        $spot = Spot::findOrFail($id);
+
+        return view('spots.edit', [
+            'spot' => $spot,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $form = $request->all();
+
+        // バリデーション
+        $rules = [
+            'name' => 'required|max:20',
+            'explanation' => 'required|max:300',
+            'address' => 'max:50',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'image' => 'nullable'
+        ];
+
+        $spot = [
+            'name.required'=> '釣り場名を入力してください',
+            'explanation.required'=> '説明を入力してください',
+            // 'image.image'=> 'ふざけんな',
+        ];
+
+        $validator = Validator::make($form, $rules, $spot);
+
+        if($validator->fails()){
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }else{
+            $spot = Spot::findOrFail($id);
+            $spot->name = $request->name;
+            $spot->explanation = $request->explanation;
+            $spot->address = $request->address;
+            if ($request->hasFile('image')) {
+                Storage::delete('public' . $spot->image);
+                $filePath = $request->file('image')->store('public');
+                $spot->image = basename($filePath);
+                // $upload_info = Storage::disk('s3')->putFile('/test', $request->file('image'), 'public');
+
+                //S3へのファイルアップロード処理の時の情報が格納された変数$upload_infoを用いてアップロードされた画像へのリンクURLを変数$pathに格納する
+                // $path = Storage::disk('s3')->url($upload_info);
+                // $spot->image = $path;
+            }
+            $spot->latitude = $request->latitude;
+            $spot->longitude = $request->longitude;
+            $spot->user_id = auth()->id();
+            $spot->save();
+            return redirect('/spots')->with('flash_message', '釣りスポットを更新しました');;;
+        }
+    }
+
+    public function destroy($id)
+    {
+        // idの値で投稿を検索して取得
+        $spot = Spot::findOrFail($id);
+
+        // 認証済みユーザ（閲覧者）がその投稿の所有者である場合は、投稿を削除
+        if (\Auth::id() === $spot->user_id) {
+            $spot->delete();
+        }
+
+        return redirect('/spots')->with('flash_message', '釣りスポットを削除しました');
     }
 
     public function search(Request $request) {
