@@ -105,18 +105,18 @@ class SpotsController extends Controller
             'address' => 'max:50',
             'latitude' => 'required',
             'longitude' => 'required',
-            'image' => 'nullable'
+            'image' => 'nullable|image'
         ];
 
         $spot = [
             'name.required'=> '釣り場名を入力してください',
             'explanation.required'=> '説明を入力してください',
-            // 'image.image'=> 'ふざけんな',
         ];
 
         $validator = Validator::make($form, $rules, $spot);
 
         if($validator->fails()){
+            session()->flash('error_message', '入力に不備があります');
             return back()
                 ->withErrors($validator)
                 ->withInput();
@@ -139,7 +139,10 @@ class SpotsController extends Controller
             $spot->longitude = $request->longitude;
             $spot->user_id = auth()->id();
             $spot->save();
-            return redirect('/spots')->with('flash_message', '釣りスポットを更新しました');;;
+            session()->flash('flash_message', '釣りスポットを更新しました');
+            return view('spots.show', [
+                'spot' => $spot,
+            ]);
         }
     }
 

@@ -21,12 +21,16 @@
             @enderror
 
             <h4>パスワード</h4>
-            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
-            @error('password')
-              <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-              </span>
-            @enderror
+            <div class="login-password">
+                <input id="password" type="password" class="js-password form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
+                <input class="js-password-toggle" type="checkbox">
+                <label class="js-password-label"><i class="fas fa-eye fa-lg"></i></label>
+                @error('password')
+                  <span class="invalid-feedback" role="alert">
+                    <p>{{ $message }}</p>
+                  </span>
+                @enderror
+            </div>
 
             <!-- <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>

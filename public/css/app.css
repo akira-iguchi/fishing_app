@@ -215,7 +215,24 @@ header:focus-within {
   color: #fff;
   background-color:#28a745;
   border-radius: 20px;
-  margin-left: 10px;
+  margin-left: 20px;
+}
+
+/*error_message*/
+
+.error_message {
+  position: fixed;
+  top: 90px;
+  text-align: center;
+  padding: 15px 0;
+  width: 300px;
+  z-index: 20;
+  animation: fadeout 1.5s ease 2.3s 1 forwards;
+  font-weight: bold;
+  color: #fff;
+  background-color:#FF6699;
+  border-radius: 20px;
+  margin-left: 20px;
 }
 
 @keyframes fadeout {
@@ -595,11 +612,11 @@ header:focus-within {
 .login-signup input[type="text"],
 .login-signup input[type="email"],
 .login-signup input[type="password"] {
-  line-height:3em;
+  line-height: 3em;
   margin: auto;
   border-radius:5px;
   border: 2px solid #f2f2f2;
-  outline:none;
+  outline: none;
   width: 75%;
 }
 
@@ -647,4 +664,32 @@ header:focus-within {
 
 .sign-up:hover {
   color:#f2f2f2;
+}
+
+.login-password {
+  position: relative;
+  display: flex;
+}
+
+.js-password {
+  position: relative;
+  padding-right: 45px;
+  left: 18px;
+}
+
+.js-password-toggle {
+  position: relative;
+  top: 13px;
+  right: 53px;
+  z-index: 10;
+  transform: scale(2.4);
+  cursor: pointer;
+  opacity: 0;
+}
+
+.js-password-label {
+  position: relative;
+  top: 7px;
+  right: 74px;
+  cursor: pointer;
 }

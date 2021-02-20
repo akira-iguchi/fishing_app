@@ -8,21 +8,21 @@
 
                 <h1>釣りスポット作成</h1>
 
-                <input class="spot_search" id="address" type="text" placeholder="釣り場を入力"/>
+                <input class="spot_search" id="address" type="text" placeholder="所在地を入力"/>
                 <button onclick="codeAddress()" class="spot_search_button"><i class="fas fa-search"></i></button>
 
                 <div id="map"></div>
                 <p>マーカーを掴んで移動も可能だよ！</p>
 
-                {!! Form::model($spot, ['route' => 'spots.store', "enctype" => "multipart/form-data"]) !!}
+                <form method="POST" action="{{ route('spots.store') }}" enctype="multipart/form-data">
+                    @csrf
 
-
-                    {!! Form::hidden('latitude', 35.6594666, ['class' => 'form-control', 'id' => "spot_latitude"]) !!}
-                    {!! Form::hidden('longitude', 139.7005536, ['class' => 'form-control', 'id' => "spot_longitude"]) !!}
+                    <input id="spot_latitude" type="hidden" name="latitude" value="35.6594666">
+                    <input id="spot_longitude" type="hidden" name="longitude" value="139.7005536">
 
                     <div class="form-group">
-                        <div class="required">釣り場名</div>
-                        {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                        <div class="required">釣りスポット名</div>
+                        <input id="name" type="text" class="form-control" name="name">
 
                         @if($errors->has('name'))
                             <span class="error_msg">
@@ -33,7 +33,7 @@
 
                     <div class="form-group">
                         <div class="required">所在地</div>
-                        {!! Form::text('address', null, ['class' => 'form-control']) !!}
+                        <input type="text" class="form-control" name="address">
 
                         @if($errors->has('address'))
                         <span class="error_msg">
@@ -43,13 +43,13 @@
                     </div>
 
                     <div class="form-group">
-                        {!! Form::label('image', '画像') !!}
+                        <label>画像</label>
                         <input type="file" name="image">
                     </div>
 
                     <div class="form-group">
                         <div class="required">説明</div>
-                        {!! Form::textarea('explanation', null, ['class' => 'form-control', 'id' => 'textArea']) !!}
+                        <textarea rows="6" id="textArea" class="form-control" name="explanation"></textarea>
                         残り<span id="textLest">300</span>文字
                         <p id="textAttention" style="display:none; color:red;">入力文字数が多すぎます。</p>
 
@@ -62,7 +62,7 @@
 
                     <button class="spot-create-button"><i class="fas fa-pencil-alt"></i>&thinsp;投稿</button>
 
-                {!! Form::close() !!}
+                </form>
             </div>
         </div>
     </div>

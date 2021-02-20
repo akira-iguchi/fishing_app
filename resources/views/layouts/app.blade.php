@@ -19,6 +19,9 @@
         {{-- フラッシュメッセージ --}}
         @include('commons.flash_message')
 
+        {{-- エラーメッセージ --}}
+        @include('commons.error_message')
+
         <main>@yield('content')</main>
 
         {{-- フッター --}}

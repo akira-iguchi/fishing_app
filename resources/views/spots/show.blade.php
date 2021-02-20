@@ -24,7 +24,7 @@
                     <table>
                         <tbody>
                             <tr>
-                                <th>所在地（住所）</th>
+                                <th>所在地</th>
                                 <td>{{ $spot->address }}</td>
                             </tr>
                             <tr>
