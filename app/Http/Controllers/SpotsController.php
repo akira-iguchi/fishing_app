@@ -141,9 +141,7 @@ class SpotsController extends Controller
             $spot->user_id = auth()->id();
             $spot->save();
             session()->flash('flash_message', '釣りスポットを更新しました');
-            return view('spots.show', [
-                'spot' => $spot,
-            ]);
+            return redirect()->route('spots.show', [$spot]);
         }
     }
 
