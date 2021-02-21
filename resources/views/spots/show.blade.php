@@ -48,7 +48,7 @@
 
                 <div class="mx-auto d-block col-lg-4 spot_creater">
                     <span>作成者</span><br>
-                    <a href="{{ url('/') }}">
+                    <a href="{{ route('users.show', $spot->user_id)}}">
                         <img src="{{ asset('storage/'.$spot->user->user_image) }}" alt="釣り場投稿者の画像">
                         <p class="spot_creater_name">{{ $spot->user->name }}</p>
                     </a><br>
