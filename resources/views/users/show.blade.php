@@ -18,6 +18,8 @@
                             </div>
                         @endunless
                     @endif
+                    {{-- フォロー／アンフォローボタン --}}
+                    @include('user_follow.follow_button')
                 </div>
             </div>
         </div>

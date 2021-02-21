@@ -20,8 +20,6 @@ Route::get('/', function () {
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
 Route::post('signup', 'Auth\RegisterController@register')->name('signup.post');
 
-Route::resource('users', 'UsersController');
-
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('login.post');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
@@ -29,5 +27,16 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 # ゲストユーザーログイン
 Route::get('guest', 'Auth\LoginController@guestLogin')->name('login.guest');
 
-Route::get('/spots/search','SpotsController@search');
-Route::resource('/spots', 'SpotsController');
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['prefix' => 'users/{id}'], function () {
+        Route::post('follow', 'UserFollowController@store')->name('user.follow');
+        Route::delete('unfollow', 'UserFollowController@destroy')->name('user.unfollow');
+        Route::get('followings', 'UsersController@followings')->name('users.followings');
+        Route::get('followers', 'UsersController@followers')->name('users.followers');
+    });
+
+    Route::resource('users', 'UsersController');
+
+    Route::get('/spots/search','SpotsController@search');
+    Route::resource('/spots', 'SpotsController');
+});
