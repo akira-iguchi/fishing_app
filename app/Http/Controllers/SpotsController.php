@@ -90,9 +90,14 @@ class SpotsController extends Controller
     {
         $spot = Spot::findOrFail($id);
 
-        return view('spots.edit', [
-            'spot' => $spot,
-        ]);
+        if (\Auth::id() === $spot->user_id) {
+            return view('spots.edit', [
+                'spot' => $spot,
+            ]);
+        } else {
+            session()->flash('error_message', '自信が投稿した釣りスポットのみ編集できます');
+            return redirect('/spots');
+        }
     }
 
     public function update(Request $request, $id)

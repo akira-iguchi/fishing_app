@@ -23,7 +23,14 @@ class UsersController extends Controller
 
     public function edit($id)
     {
-        return view('users.edit', ['user' => Auth::user() ]);
+        $user = User::findOrFail($id);
+
+        if($user->id == 1) {
+            session()->flash('error_message', 'ゲストユーザーは編集できません');
+            return redirect('/spots');
+        } else {
+            return view('users.edit', ['user' => Auth::user() ]);
+        }
     }
 
     public function update(Request $request, $id)
@@ -32,9 +39,9 @@ class UsersController extends Controller
 
         // バリデーション
         $rules = [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'image' => 'nullable|image'
+            'name' => 'required|string|max:10',
+            'email' => 'required|string|email|max:255|unique:users,email,'.Auth::user()->email.',email',
+            'user_image' => 'nullable|image'
         ];
 
         $validator = Validator::make($form, $rules);
@@ -48,10 +55,10 @@ class UsersController extends Controller
             $user = Auth::user();
             $user->name = $request->name;
             $user->email = $request->email;
-            if ($request->hasFile('image')) {
-                Storage::delete('public' . $user->image);
-                $filePath = $request->file('image')->store('public');
-                $user->image = basename($filePath);
+            if ($request->hasFile('user_image')) {
+                Storage::delete('public' . $user->user_image);
+                $filePath = $request->file('user_image')->store('public');
+                $user->user_image = basename($filePath);
                 // $upload_info = Storage::disk('s3')->putFile('/test', $request->file('image'), 'public');
 
                 //S3へのファイルアップロード処理の時の情報が格納された変数$upload_infoを用いてアップロードされた画像へのリンクURLを変数$pathに格納する

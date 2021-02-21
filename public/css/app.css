@@ -224,8 +224,8 @@ header:focus-within {
   position: fixed;
   top: 90px;
   text-align: center;
-  padding: 15px 0;
-  width: 300px;
+  padding: 15px 10px;
+  width: 253px;
   z-index: 20;
   animation: fadeout 1.5s ease 2.3s 1 forwards;
   font-weight: bold;
@@ -420,7 +420,7 @@ header:focus-within {
   color: #28a745;
 }
 
-.top-intro {
+.top-slider {
   display: flex;
   margin: 40px auto;
   padding-left: 20px;
@@ -434,32 +434,32 @@ header:focus-within {
   max-width: 1130px;
 }
 
-.top-intro_image {
+.spot-intro_image {
   opacity: 0;
   transform: translateX(-50px);
   margin: auto;
 }
 
-.top-intro_expla {
+.spot-intro_expla {
   opacity: 0;
   transform: translateX(50px);
   text-align: center;
 }
 
-.show .top-intro_image,
-.show .top-intro_expla {
+.show .spot-intro_image,
+.show .spot-intro_expla {
   opacity: 1;
   transition: 1s;
   transform: none;
 }
 
-.top-intro_expla p:first-child {
+.spot-intro_expla p:first-child {
   font-family: serif;
   font-weight: bold;
   font-size: 28px;
 }
 
-.top-intro_expla p:last-child {
+.spot-intro_expla p:last-child {
   padding: 0 20px;
   text-align: left;
   font-size: 18px;
@@ -468,7 +468,7 @@ header:focus-within {
   opacity: 0.8;
 }
 
-.top-intro_image img {
+.spot-intro_image img {
   width: 100%;
 }
 
@@ -520,17 +520,17 @@ header:focus-within {
 }
 
 @media only screen and (min-width: 1000px) {
-  .top-intro_image {
+  .spot-intro_image {
     padding: 50px;
   }
 }
 
 @media only screen and (max-width: 768px) {
-  .top-intro_image {
+  .spot-intro_image {
     display: none;
   }
 
-  .top-intro_expla,
+  .spot-intro_expla,
   .self-intro_expla {
     width: 100%;
   }
@@ -551,7 +551,7 @@ header:focus-within {
     display: none;
   }
 
-  .top-intro_expla p:last-child {
+  .spot-intro_expla p:last-child {
     padding: 0;
   }
 

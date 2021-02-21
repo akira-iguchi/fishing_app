@@ -14,10 +14,14 @@
         <nav class="nav-content" tabindex="0">
             <ul>
                 @if (Auth::check())
-                    {{-- 釣りスポット作成へのリンク --}}
-                    <li><a href="{{ url('/spots/create') }}">作成</a></li>
                     {{-- ログアウトへのリンク --}}
                     <li>{!! link_to_route('logout.get', 'ログアウト') !!}</li>
+                    {{-- 釣りスポット作成へのリンク --}}
+                    <li><a href="{{ url('/spots/create') }}">投稿</a></li>
+                    {{-- 釣りスポット作成へのリンク --}}
+                    <li>
+                        <a href="{{ route('users.show', Auth::id())}}">{{ Auth::user()->name }}さん</a>
+                    </li>
                 @else
                     {{-- ユーザ登録ページへのリンク --}}
                     <li><a href="{{ url('/signup') }}"><i class="fas fa-user-plus"></i>&thinsp;新規登録</a></li>

@@ -4,7 +4,7 @@
         const spinner = document.getElementById('js-loading');
         spinner.classList.add('js-loaded');
 
-        const targetElement = document.querySelectorAll('.top-intro');
+        const targetElement = document.querySelectorAll('.top-slider');
         document.addEventListener("scroll", function() {
             for(let i = 0; i < targetElement.length; i++) {
                 const getElementDistance = targetElement[i].getBoundingClientRect().top

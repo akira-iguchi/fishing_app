@@ -1,3 +1,4 @@
+// 文字数
 (() => {
     let lest = null,
         max = 300,

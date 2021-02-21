@@ -12,7 +12,7 @@
 
             <div class="row">
                 @foreach ($spots as $spot)
-                    <div class="mx-auto d-block col-lg-4 col-md-6">
+                    <div class="mx-auto d-block col-lg-4 col-md-6 col-9">
                         <div class="spot_card">
                             <a href="{{ route('spots.show', $spot->id)}}" class="spot-hidden">
                                 <div class="spot_card_img">

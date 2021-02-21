@@ -17,12 +17,12 @@
         <a href="{{ route('login.guest') }}" class="top-guest_login-button"><span><i class="fas fa-sign-in-alt"></i>ゲストログイン</span></a>
     </div>
 
-    <div class="top-intro">
-        <div class="top-intro_image">
+    <div class="top-slider">
+        <div class="spot-intro_image">
             <img src="/images/fishing_boat_man.png" alt="釣り画像">
         </div>
 
-        <div class="top-intro_expla">
+        <div class="spot-intro_expla">
             <p>Fishing Spotとは？</p>
             <p>
                 &emsp;Fishing Spotとは、釣り場を投稿し、釣り場にコメントして釣果などを共有したり、その釣り場におすすめの釣り方を投稿するアプリです。また、カレンダーに釣りの予定を入れたり、記録することができます。
@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <div class="top-intro">
+    <div class="top-slider">
         <div class="self-intro_expla">
             <p>自己紹介</p>
             <img src="/images/akira.jpeg" alt="自己紹介の画像">
