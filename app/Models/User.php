@@ -122,10 +122,61 @@ class User extends Authenticatable
     }
 
     /**
+     * このユーザがお気に入り中のスポット
+     */
+    public function favorites()
+    {
+        return $this->belongsToMany(Spot::class, 'spot_favorite', 'user_id', 'spot_id')->withTimestamps();
+    }
+
+    /**
+     *
+     * @param  int  $spotId
+     * @return bool
+     */
+    public function favorite($spotId)
+    {
+        $exist = $this->is_favorite($spotId);
+
+        if ($exist) {
+            return false;
+        } else {
+            $this->favorites()->attach($spotId);
+            return true;
+        }
+    }
+
+    /**
+     * @param  int  $spotId
+     * @return bool
+     */
+    public function unfavorite($spotId)
+    {
+        $exist = $this->is_favorite($spotId);
+
+        if ($exist) {
+            $this->favorites()->detach($spotId);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     *
+     * @param  int  $spotId
+     * @return bool
+     */
+    public function is_favorite($spotId)
+    {
+        return $this->favorites()->where('spot_id', $spotId)->exists();
+    }
+
+    /**
      * このユーザに関係するモデルの件数をロードする。
      */
     public function loadRelationshipCounts()
     {
-        $this->loadCount(['spots', 'followings', 'followers']);
+        $this->loadCount(['spots', 'followings', 'followers', 'favorites']);
     }
 }

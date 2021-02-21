@@ -24,4 +24,12 @@ class Spot extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * このスポットをお気に入り中のユーザー
+     */
+    public function user_favorites()
+    {
+        return $this->belongsToMany(Spot::class, 'spot_favorite', 'spot_id', 'user_id')->withTimestamps();
+    }
 }

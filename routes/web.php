@@ -35,6 +35,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('followers', 'UsersController@followers')->name('users.followers');
     });
 
+    Route::group(['prefix' => 'spots/{id}'], function () {
+        Route::post('favorite', 'SpotFavoriteController@store')->name('favorites.favorite');
+        Route::delete('unfavorite', 'SpotFavoriteController@destroy')->name('favorites.unfavorite');
+        Route::get('favorites', 'SpotsController@favorites')->name('favorites.favorites');
+        Route::get('favorites', 'SpotsController@userFavorites')->name('favorites.userFavorites');
+    });
+
     Route::resource('users', 'UsersController');
 
     Route::get('/spots/search','SpotsController@search');

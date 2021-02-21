@@ -44,6 +44,7 @@
                             </form>
                         </div>
                     @endif
+                    @include('spot_favorite.favorite_button')
                 </div>
 
                 <div class="mx-auto d-block col-lg-4 spot_creater">
