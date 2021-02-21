@@ -3,8 +3,8 @@
 @section('content')
     @if (Auth::check())
         <div class="container">
-            <div class="row">
-                fahebfjekb
+            <div class="row user-container">
+
             </div>
         </div>
     @endif

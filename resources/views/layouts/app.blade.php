@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/spot.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/user.css') }}">
     </head>
 
     <body>

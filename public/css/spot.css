@@ -65,13 +65,28 @@
 }
 
 .spot_card:hover .spot_card_content {
-  bottom: -30%;
+  bottom: -40%;
+}
+
+.spotName_userImage {
+  display: flex;
+  justify-content: space-between;
+}
+
+.spotName_userImage p {
+  margin-right: 5px;
+}
+
+.spotName_userImage img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 .spot_card_content p:first-child {
-  font-size: 23px;
+  font-size: 21px;
   color: black;
-  line-height: 1.5;
+  line-height: 1.3;
 }
 
 .spot_card_content p:last-child {
@@ -122,13 +137,13 @@
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 5px;
-  padding: 3em 6em;
+  padding: 3em 8em;
   width: 120%;
 }
 
-@media screen and (max-width:800px) {
+@media screen and (max-width:1000px) {
   .spot_form {
-    padding: 1em;
+    padding: 2em 3em;
   }
 }
 
