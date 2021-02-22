@@ -3,8 +3,8 @@
 @section('content')
     @if (Auth::check())
         <div class="container">
-            <div class="row">
-                <div class="mx-auto d-block col-lg-7 col-offset-lg-1 spot_container">
+            <div class="row spot_body">
+                <div class="mx-auto d-block col-lg-8 spot_container">
                     <p class="spot_created_at">{{ $spot->created_at->format('Y年m月d日') }}</p>
                     <h1 class="spot_name">{{ $spot->name }}</h1>
                     <div class="swiper-container">
@@ -21,6 +21,7 @@
                         <div class="swiper-button-next"></div>
                     </div>
 
+                    @include('spot_favorite.favorite_button')
                     <table>
                         <tbody>
                             <tr>
@@ -44,15 +45,38 @@
                             </form>
                         </div>
                     @endif
-                    @include('spot_favorite.favorite_button')
                 </div>
 
-                <div class="mx-auto d-block col-lg-4 spot_creater">
+                <!-- <div class="mx-auto d-block col-lg-4 spot_creater">
                     <span>作成者</span><br>
                     <a href="{{ route('users.show', $spot->user_id)}}">
                         <img src="{{ asset('storage/'.$spot->user->user_image) }}" alt="釣り場投稿者の画像">
                         <p class="spot_creater_name">{{ $spot->user->name }}</p>
                     </a><br>
+                </div> -->
+                <div class="other-spot">
+                    @foreach ($spots as $spot)
+                        <div class="spot_card-show">
+                            <a href="{{ route('spots.show', $spot->id)}}">
+                                <div class="spot_card_img">
+                                    <!-- <img src="{{ $spot->image }}" alt="釣り場の画像"> -->
+                                    <img src="{{ asset('storage/'.$spot->image) }}" alt="釣り場投稿者の画像">
+                                </div>
+                            </a>
+
+                            <div class="spot_card-show_content">
+                                <div class="spotName_userImage">
+                                    <p>{{ $spot->name }}</p>
+                                    <a href="{{ route('users.show', $spot->user_id)}}">
+                                        <img src="{{ asset('storage/'.$spot->user->user_image) }}" alt="釣り場投稿者の画像">
+                                    </a>
+                                </div>
+                                @include('spot_favorite.favorite_button')
+                                <p>{{ $spot->address }}</p>
+                                <p>{{ $spot->explanation }}</p>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

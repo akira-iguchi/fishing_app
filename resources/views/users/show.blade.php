@@ -18,7 +18,9 @@
                             </div>
                         @endunless
                     @endif
-                    {{-- フォロー／アンフォローボタン --}}
+
+                    {{ $user->spots_count }}
+                    <!-- フォロー／アンフォローボタン -->
                     @include('user_follow.follow_button')
                 </div>
             </div>

@@ -230,10 +230,13 @@ textarea .form-control {
 
 /* show */
 
+.spot_body {
+  display: flex;
+  margin: 100px 0 30px 0;
+}
+
 .spot_container {
   height: 100%;
-  margin-top: 100px;
-  margin-bottom: 30px;
   border: solid 1px silver;
   border-radius: 30px;
   padding: 30px 50px;
@@ -334,14 +337,65 @@ textarea .form-control {
   color: #FFF;
 }
 
-.spot_creater {
-  text-align: center;
-  margin: 100px 20px 20px 0;
+@media screen and (max-width: 991px) {
+  .other-spot {
+    display: none;
+  }
 }
 
-.spot_creater span {
-  font-family: 'Roboto';
-  opacity: 0.9;
+.spot_card-show {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  background: #FFFFFF;
+  margin: 0 0 50px 0;
+  width: 200px;
+  height: 230px;
+  box-shadow: 5px 5px 10px 0 rgb(0 0 0 / 50%);
+}
+
+.spot_card-show img {
+  width: 100%;
+}
+
+.spot_card-show:hover .spot_card_img {
+  opacity: .6;
+}
+
+.spot_card-show:hover .spot_card-show_content {
+  bottom: -40%;
+}
+
+.spot_card-show_content {
+  position: absolute;
+  bottom: -71%;
+  left: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 1em 1em 7em 1em;
+  background: #fff;
+  transition: 0.3s;
+  text-align: center;
+  overflow: auto;
+  color: #444444;
+}
+
+.spotName_userImage img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.spot_card-show_content p:first-child {
+  font-size: 21px;
+  color: black;
+  line-height: 1.3;
+}
+
+.spot_card-wh_content p:last-child {
+  text-align: left;
+  font-size: 1em;
 }
 
 .spot_created_at {
@@ -352,6 +406,16 @@ textarea .form-control {
   text-align: center;
   margin: 40px 0 15px 0;
   font-size: 190%;
+}
+
+/* .spot_creater {
+  text-align: center;
+  margin: 100px 20px 20px 0;
+}
+
+.spot_creater span {
+  font-family: 'Roboto';
+  opacity: 0.9;
 }
 
 .spot_creater a:hover {
@@ -371,7 +435,7 @@ textarea .form-control {
   margin-top: 15px;
   font-size: 20px;
   color: black;
-}
+} */
 
 
 @media screen and (max-width: 991px) {
@@ -384,4 +448,17 @@ textarea .form-control {
   .spot_container {
     padding: 30px 15px;
   }
+}
+
+/* favorite */
+
+.like-btn {
+  background: #fff;
+  border: none;
+}
+
+.unlike-btn {
+  background: #fff;
+  border: none;
+  color: red;
 }

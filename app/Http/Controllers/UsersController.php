@@ -15,6 +15,8 @@ class UsersController extends Controller
         // idの値でメッセージを検索して取得
         $user = User::findOrFail($id);
 
+        $user->loadRelationshipCounts();
+
         // メッセージ詳細ビューでそれを表示
         return view('users.show', [
             'user' => $user,

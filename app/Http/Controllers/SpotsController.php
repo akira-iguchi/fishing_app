@@ -22,9 +22,12 @@ class SpotsController extends Controller
         // idの値でメッセージを検索して取得
         $spot = Spot::findOrFail($id);
 
+        $spots = Spot::all();
+
         // メッセージ詳細ビューでそれを表示
         return view('spots.show', [
             'spot' => $spot,
+            'spots' => $spots,
         ]);
     }
 

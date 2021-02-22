@@ -28,6 +28,7 @@
                                         <img src="{{ asset('storage/'.$spot->user->user_image) }}" alt="釣り場投稿者の画像">
                                     </a>
                                 </div>
+                                @include('spot_favorite.favorite_button')
                                 <p>{{ $spot->address }}</p>
                                 <p>{{ $spot->explanation }}</p>
                             </div>

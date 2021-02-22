@@ -1,11 +1,14 @@
 @if (Auth::user()->is_favorite($spot->id))
     {{-- アンフォローボタンのフォーム --}}
-    {!! Form::open(['route' => ['favorites.unfavorite', $spot->id], 'method' => 'delete']) !!}
-        {!! Form::submit('Unfavorite', ['class' => "btn btn-danger"]) !!}
-    {!! Form::close() !!}
+    <form method="POST" action="{{ route('favorites.unfavorite', $spot->id) }}">
+        @csrf
+        @method('DELETE')
+        <button class="unlike-btn"><i class="fa fa-heart"></i></button>
+    </form>
 @else
     {{-- フォローボタンのフォーム --}}
-    {!! Form::open(['route' => ['favorites.favorite', $spot->id]]) !!}
-        {!! Form::submit('Favorite', ['class' => "btn btn-primary"]) !!}
-    {!! Form::close() !!}
+    <form method="POST" action="{{ route('favorites.favorite', $spot->id) }}">
+        @csrf
+        <button class="like-btn"><i class="fa fa-heart"></i></button>
+    </form>
 @endif
