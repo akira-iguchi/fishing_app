@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row spot_body">
                 <div class="mx-auto d-block col-lg-8 spot_container">
-                    <p class="spot_created_at">{{ $spot->created_at->format('Y年m月d日') }}</p>
+                    <p class="spot_created_at">{{ $spot->created_at->format('Y/m/d') }}</p>
                     <h1 class="spot_name">{{ $spot->name }}</h1>
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
@@ -45,6 +45,69 @@
                             </form>
                         </div>
                     @endif
+
+                    <h2 class="mt-3">コメント一覧</h2>
+
+                    <div class="comments">
+                        @foreach ($comments as $comment)
+                            <div class="comment">
+                                <div class="mt-2">
+                                    <div class="comment_created_at">{{ $comment->created_at->format('Y/m/d') }}</div>
+                                    <br>
+                                    <a href="{{ route('users.show', $comment->user_id)}}">
+                                        <img src="{{ asset('storage/'.$comment->user->user_image) }}" alt="釣り場投稿者の画像">
+                                        <span class="comment_creater_name">{{ $comment->user->name }}</span>
+                                    </a>
+                                </div>
+
+                                <div class="comment_content">
+                                    {{ $comment->comment }}
+                                </div>
+
+                                @if(isset( $comment->comment_image ))
+                                    <div class="comment_img">
+                                        <img src="{{ asset('storage/'.$comment->comment_image) }}" alt="釣り場コメントの画像">
+                                    </div>
+                                @endif
+                            </div>
+
+                            @if (\Auth::id() === $comment->user_id)
+                                <div class="comment_user_private">
+                                    <form action="{{route('comments.destroy', $spot->id, $comment->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="submit" value="削除" class="spot_delete_button" onclick="return confirm('本当に削除しますか？')">
+                                    </form>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                    {{ $comments->links() }}
+
+                    <form method="POST" action="{{ route('comments.store', $spot->id) }}" enctype="multipart/form-data">
+                        @csrf
+                        @method('POST')
+
+                        <div class="form-group">
+                            <textarea rows="4" id="textArea" class="form-control mt-4" name="comment" placeholder="コメントしよう！"></textarea>
+                            残り<span id="textLest">300</span>文字
+                            <p id="textAttention" style="display:none; color:red;">入力文字数が多すぎます。</p>
+
+                            @if($errors->has('comment'))
+                                <span class="error_msg">
+                                    <p>{{ $errors->first('comment') }}</p>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <label>画像</label>
+                            <input type="file" name="comment_image">
+                        </div>
+
+                        <button class="spot-create-edit-button"><i class="fas fa-pencil-alt"></i>&thinsp;コメント</button>
+
+                    </form>
                 </div>
 
                 <!-- <div class="mx-auto d-block col-lg-4 spot_creater">

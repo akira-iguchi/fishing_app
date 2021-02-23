@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('unfavorite', 'SpotFavoriteController@destroy')->name('favorites.unfavorite');
         Route::get('favorites', 'SpotsController@favorites')->name('favorites.favorites');
         Route::get('favorites', 'SpotsController@userFavorites')->name('favorites.userFavorites');
+        Route::resource('comments', 'SpotCommentController', ['only' => ['store', 'destroy']]);
     });
 
     Route::resource('users', 'UsersController');

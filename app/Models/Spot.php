@@ -25,6 +25,11 @@ class Spot extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function spot_comments()
+    {
+        return $this->hasMany(SpotComment::class);
+    }
+
     /**
      * このスポットをお気に入り中のユーザー
      */

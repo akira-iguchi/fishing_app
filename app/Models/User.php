@@ -47,6 +47,11 @@ class User extends Authenticatable
         return $this->hasMany(Spot::class);
     }
 
+    public function spot_comments()
+    {
+        return $this->hasMany(SpotComment::class);
+    }
+
     /**
      * このユーザがフォロー中のユーザー
      */

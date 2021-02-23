@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Spot;
+use App\Models\SpotComment;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -24,10 +25,13 @@ class SpotsController extends Controller
 
         $spots = Spot::all();
 
+        $comments = $spot->spot_comments()->orderBy('created_at', 'desc')->paginate(1);
+
         // メッセージ詳細ビューでそれを表示
         return view('spots.show', [
             'spot' => $spot,
             'spots' => $spots,
+            'comments' => $comments,
         ]);
     }
 

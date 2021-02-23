@@ -165,6 +165,7 @@ return [
         'name' => "釣り場名",
         'explanation' => "説明",
         'address' => "所在地",
+        'comment' => "コメント",
     ],
 
 ];

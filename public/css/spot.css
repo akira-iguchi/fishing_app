@@ -244,13 +244,37 @@ textarea .form-control {
   background: #FFFFFF;
 }
 
+.spot_created_at {
+  float: right;
+}
+
+.spot_name {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 190%;
+}
+
+.swiper-slide {
+  margin: auto;
+}
+
 .swiper-slide img {
+  padding: 46px;
+  margin-top: -46px;
   width: 100%;
 }
 
 #show_map {
-  height: 400px;
+  height: 500px;
+  margin-top: 10px;
   border: 3px solid #FFCC33;
+}
+
+@media screen and (max-width: 767px) {
+  .swiper-slide img {
+    padding: 0;
+    width: 100%;
+  }
 }
 
 /* .swiper-button-prev,
@@ -343,6 +367,54 @@ textarea .form-control {
   }
 }
 
+.comment {
+  margin: 10px 0;
+  padding: 5px 5px 0;
+  border-bottom: 1px solid #000;
+}
+
+.comment_created_at {
+  float: right;
+}
+
+.comment a{
+  margin-top: 20px;
+  text-decoration: none;
+}
+
+.comment a img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.comment_creater_name {
+  color: #000;
+}
+
+.comment a:hover .comment_creater_name {
+  color: #BF7497;
+}
+
+.comment_content {
+  position: relative;
+  bottom: 9px;
+  padding: 0px 55px;
+}
+
+.comment_img img {
+  width: 100%;
+  padding: 0px 100px;
+  margin-bottom: 20px;
+  border-radius: 19% 19% 19% 19% / 6% 6% 6% 6%;
+}
+
+@media screen and (max-width: 450px) {
+  .comment_img img {
+    padding: 0 55px;
+  }
+}
+
 .spot_card-show {
   position: relative;
   overflow: hidden;
@@ -396,16 +468,6 @@ textarea .form-control {
 .spot_card-wh_content p:last-child {
   text-align: left;
   font-size: 1em;
-}
-
-.spot_created_at {
-  float: right;
-}
-
-.spot_name {
-  text-align: center;
-  margin: 40px 0 15px 0;
-  font-size: 190%;
 }
 
 /* .spot_creater {
