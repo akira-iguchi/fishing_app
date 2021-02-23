@@ -72,11 +72,11 @@
                             </div>
 
                             @if (\Auth::id() === $comment->user_id)
-                                <div class="comment_user_private">
-                                    <form action="{{route('comments.destroy', $spot->id, $comment->id)}}" method="post">
+                                <div class="comment_delete">
+                                    <form action="{{route('comments.destroy', [$comment->spot_id, $comment->id])}}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <input type="submit" value="削除" class="spot_delete_button" onclick="return confirm('本当に削除しますか？')">
+                                        <button type="submit" onclick="return confirm('本当に削除しますか？')"><i class="fas fa-trash-alt"></i></button>
                                     </form>
                                 </div>
                             @endif
@@ -89,9 +89,9 @@
                         @method('POST')
 
                         <div class="form-group">
-                            <textarea rows="4" id="textArea" class="form-control mt-4" name="comment" placeholder="コメントしよう！"></textarea>
-                            残り<span id="textLest">300</span>文字
-                            <p id="textAttention" style="display:none; color:red;">入力文字数が多すぎます。</p>
+                            <textarea rows="4" id="textAreaComment" class="form-control mt-4" name="comment" placeholder="コメントしよう！"></textarea>
+                            残り<span id="textLestComment">150</span>文字
+                            <p id="textAttentionComment" style="display:none; color:red;">入力文字数が多すぎます。</p>
 
                             @if($errors->has('comment'))
                                 <span class="error_msg">

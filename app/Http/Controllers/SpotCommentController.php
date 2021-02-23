@@ -16,7 +16,7 @@ class SpotCommentController extends Controller
 
         // バリデーション
         $rules = [
-            'comment' => 'required|max:200',
+            'comment' => 'required|max:150',
             'comment_image' => 'nullable|image'
         ];
 
@@ -52,10 +52,10 @@ class SpotCommentController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy($id, $comment)
     {
         // idの値で投稿を検索して取得
-        $comment = SpotComment::findOrFail($id);
+        $comment = SpotComment::findOrFail($comment);
 
         $spot = Spot::findOrFail($id);
 
@@ -64,7 +64,9 @@ class SpotCommentController extends Controller
             $comment->delete();
             session()->flash('flash_message', 'コメントを削除しました');
             return redirect()->route('spots.show', [$spot]);
+        } else {
+            session()->flash('flash_message', 'コメントを削除できませんでした');
+            return redirect()->route('spots.show', [$spot]);
         }
-
     }
 }

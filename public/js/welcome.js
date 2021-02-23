@@ -14,7 +14,6 @@
                 }
             }
         })
-
     }
 })();
 
@@ -39,7 +38,7 @@
     function appeared() {
         const appearedSpots = document.querySelectorAll('.spot-hidden');
 
-        for(let i = 0; i < 1; i++){
+        for(let i = 0; i < 3; i++){
             appearedSpots[i].classList.remove('spot-hidden');
         }
     };
