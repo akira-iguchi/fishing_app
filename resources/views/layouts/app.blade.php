@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>Fishing Spot</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css" />
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
@@ -36,6 +37,7 @@
         <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{ config('services.google-map.apikey') }}&callback=initMap"></script> -->
         <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <script src="{{ asset('/js/app.js') }}"></script>
         <script src="{{ asset('/js/welcome.js') }}" defer></script>
         <script src="{{ asset('/js/setLocation.js') }}" defer></script>
         <script src="{{ asset('/js/wordCount.js') }}" defer></script>

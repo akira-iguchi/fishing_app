@@ -24,6 +24,7 @@ class SpotsController extends Controller
         $spot = Spot::findOrFail($id);
 
         $spots = Spot::all();
+        $favoriteSpots = Auth::user()->favoriteSpots()->pluck('spot_id');
 
         $comments = $spot->spot_comments()->orderBy('created_at', 'desc')->paginate(11);
 
@@ -31,6 +32,7 @@ class SpotsController extends Controller
         return view('spots.show', [
             'spot' => $spot,
             'spots' => $spots,
+            'favoriteSpots' => $favoriteSpots,
             'comments' => $comments,
         ]);
     }

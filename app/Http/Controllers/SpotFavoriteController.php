@@ -3,30 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Spot;
+use App\Models\User;
+use App\Models\SpotFavorite;
+use Illuminate\Support\Facades\Auth;
 
 class SpotFavoriteController extends Controller
 {
-    /**
-     *
-     * @param
-     * @return \Illuminate\Http\Response
-     */
-    public function store($id)
+    public function store(Spot $spot)
     {
-        \Auth::user()->favorite($id);
-        // 前のURLへリダイレクトさせる
-        return back();
+        Auth::user()->favoriteSpots()->attach($spot);
     }
 
-    /**
-     *
-     * @param
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function delete(Spot $spot)
     {
-        \Auth::user()->unfavorite($id);
-        // 前のURLへリダイレクトさせる
-        return back();
+        Auth::user()->favoriteSpots()->detach($spot);
     }
 }

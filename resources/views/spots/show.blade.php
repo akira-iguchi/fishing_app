@@ -21,7 +21,10 @@
                         <div class="swiper-button-next"></div>
                     </div>
 
-                    @include('spot_favorite.favorite_button')
+                    <div id="app">
+                        <favorite-component :spot-id="{{ $spot->id }}" :favorite-data="{{ $favoriteSpots }}"></favorite-component>
+                    </div>
+
                     <table>
                         <tbody>
                             <tr>
@@ -134,7 +137,7 @@
                                         <img src="{{ asset('storage/'.$spot->user->user_image) }}" alt="釣り場投稿者の画像">
                                     </a>
                                 </div>
-                                @include('spot_favorite.favorite_button')
+
                                 <p>{{ $spot->address }}</p>
                                 <p>{{ $spot->explanation }}</p>
                             </div>

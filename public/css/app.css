@@ -666,14 +666,14 @@ header:focus-within {
   color:#f2f2f2;
 }
 
-.login-password {
+.login-signup-password {
   position: relative;
   display: flex;
 }
 
 .js-password {
   position: relative;
-  padding-right: 45px;
+  padding-right: 3.4em;
   left: 18px;
 }
 
