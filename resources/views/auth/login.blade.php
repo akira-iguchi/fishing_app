@@ -27,20 +27,15 @@
                                 <input class="js-password-toggle" type="checkbox">
                                 <label class="js-password-label"><i class="fas fa-eye fa-lg"></i></label>
                             </div>
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <p>{{ $message }}</p>
-                                </span>
-                            @enderror
 
-                            <!-- <div class="form-check">
+                            <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                 <label class="form-check-label" for="remember">
                                     {{ __('Remember Me') }}
                                 </label>
                             </div>
-                            <br> -->
+                            <br>
 
                             <button type="submit" class="login-signup-button">
                                 {{ __('ログイン') }}

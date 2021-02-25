@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'SpotsController@index');
 
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
 Route::post('signup', 'Auth\RegisterController@register')->name('signup.post');
@@ -46,5 +44,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', 'UsersController');
 
     Route::get('/spots/search','SpotsController@search');
-    Route::resource('/spots', 'SpotsController');
+    Route::resource('/spots', 'SpotsController')->except(['index']);
 });
