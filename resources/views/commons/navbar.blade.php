@@ -1,8 +1,4 @@
-@if (Auth::check())
-<header tabindex="0"><a class="nav-title" href="/spots"><i class="fas fa-fish"></i>&thinsp;Fishing Spot</a>
-@else
 <header tabindex="0"><a class="nav-title" href="/"><i class="fas fa-fish"></i>&thinsp;Fishing Spot</a>
-@endif
     <nav class="nav-container">
         <nav class="nav-bg"></nav>
         <nav class="nav-button" tabindex="0">
@@ -20,7 +16,7 @@
                     <li><a href="{{ url('/spots/create') }}">投稿</a></li>
                     {{-- 釣りスポット作成へのリンク --}}
                     <li>
-                        <a href="{{ route('users.show', Auth::id())}}">{{ Auth::user()->name }}さん</a>
+                        <a href="{{ route('users.show', Auth::id())}}">{{ Auth::user()->user_name }}さん</a>
                     </li>
                 @else
                     {{-- ユーザ登録ページへのリンク --}}

@@ -13,15 +13,15 @@
                         <form method="POST" action="{{ route('signup.post') }}">
                             @csrf
 
-                            <h4 class="required">ユーザー名</h4>
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus>
-                            @error('name')
+                            <label class="required">ユーザー名</label>
+                            <input id="user_name" type="text" class="form-control @error('user_name') is-invalid @enderror" name="user_name" value="{{ old('user_name') }}" autocomplete="user_name" placeholder="10文字以内" autofocus>
+                            @error('user_name')
                                 <span class="invalid-feedback" role="alert">
                                     <p>{{ $message }}</p>
                                 </span>
                             @enderror
 
-                            <h4 class="required">メールアドレス</h4>
+                            <label class="required">メールアドレス</label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -29,11 +29,11 @@
                                     </span>
                                 @enderror
 
-                            <h4 class="required">パスワード</h4>
+                            <label class="required">パスワード</label>
                             <div class="login-signup-password">
                                 <input id="password" type="password" class="js-password form-control @error('password') @enderror" name="password" autocomplete="current-password" placeholder="4文字以上">
                                 <input class="js-password-toggle" type="checkbox">
-                                <label class="js-password-label"><i class="fas fa-eye fa-lg"></i></label>
+                                <div class="js-password-label"><i class="fas fa-eye fa-lg"></i></div>
                             </div>
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -41,7 +41,7 @@
                                 </span>
                             @enderror
 
-                            <h4 class="required">パスワード（確認）</h4>
+                            <label class="required">パスワード（確認）</label>
                             <input id="password-confirm" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" autocomplete="new-password">
 
                             <button type="submit" class="login-signup-button">

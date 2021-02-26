@@ -95,7 +95,7 @@ return [
     'numeric'              => ':attributeには、数字を指定してください。',
     'present'              => ':attributeが存在していません。',
     'regex'                => ':attributeに正しい形式を指定してください。',
-    'required'             => ':attributeは必ず入力してください。',
+    'required'             => ':attributeを入力してください',
     'required_if'          => ':otherが:valueの場合、:attributeも指定してください。',
     'required_unless'      => ':otherが:valuesでない場合、:attributeを指定してください。',
     'required_with'        => ':valuesを指定する場合は、:attributeも指定してください。',
@@ -145,7 +145,7 @@ return [
             'required' => 'パスワードを入力してください。',
             ],
 
-        'name' => [
+        'user_name' => [
             'required' => 'ユーザー名を入力してください。',
             ],
     ],
@@ -162,7 +162,8 @@ return [
     */
 
     'attributes' => [
-        'name' => "釣り場名",
+        'user_name' => "ユーザー名",
+        'spot_name' => "釣りスポット名",
         'explanation' => "説明",
         'address' => "所在地",
         'comment' => "コメント",

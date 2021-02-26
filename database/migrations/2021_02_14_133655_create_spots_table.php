@@ -15,10 +15,10 @@ class CreateSpotsTable extends Migration
     {
         Schema::create('spots', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable(false);
+            $table->string('spot_name')->nullable(false);
             $table->longText('explanation')->nullable(false);
             $table->string('address')->nullable();
-            $table->string('image')->default('defaultSpot.jpg');
+            $table->string('spot_image')->default('defaultSpot.jpg');
             $table->float('latitude');
             $table->float('longitude');
             $table->timestamps();

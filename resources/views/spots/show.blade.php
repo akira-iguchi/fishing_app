@@ -6,14 +6,14 @@
             <div class="row spot_body">
                 <div class="mx-auto d-block col-lg-8 spot_container">
                     <p class="spot_created_at">{{ $spot->created_at->format('Y/m/d') }}</p>
-                    <h1 class="spot_name">{{ $spot->name }}</h1>
+                    <h1 class="spot_name">{{ $spot->spot_name }}</h1>
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <div id="show_map"></div>
                             </div>
                             <div class="swiper-slide">
-                                <img src="{{ asset('storage/'.$spot->image) }}" alt="釣り場の画像">
+                                <img src="{{ asset('storage/'.$spot->spot_image) }}" alt="釣り場の画像">
                             </div>
                         </div>
                         <div class="swiper-pagination"></div>
@@ -21,16 +21,16 @@
                         <div class="swiper-button-next"></div>
                     </div>
 
-                    <div id="app">
-                        <favorite-component :spot-id="{{ $spot->id }}" :favorite-data="{{ $favoriteSpots }}"></favorite-component>
-                    </div>
+
 
                     <table>
                         <tbody>
-                            <tr>
-                                <th>所在地</th>
-                                <td>{{ $spot->address }}</td>
-                            </tr>
+                            @if(isset( $spot->address ))
+                                <tr>
+                                    <th>所在地</th>
+                                    <td>{{ $spot->address }}</td>
+                                </tr>
+                            @endif
                             <tr>
                                 <th>説明</th>
                                 <td>{{ $spot->explanation }}</td>
@@ -41,11 +41,32 @@
                     @if (\Auth::id() === $spot->user_id)
                         <div class="spot_user_private">
                             <a href="{{ route('spots.edit', $spot->id)}}" class="spot_edit_link_button">編集</a>
-                            <form action="{{route('spots.destroy', $spot->id)}}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <input type="submit" value="削除" class="spot_delete_button" onclick="return confirm('本当に削除しますか？')">
-                            </form>
+                            <a data-toggle="modal" data-target="#modal-delete-{{ $spot->id }}" class="spot_delete_button">削除</a>
+
+                            <!-- modal -->
+                                <div id="modal-delete-{{ $spot->id }}" class="modal fade" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <form method="POST" action="{{ route('spots.destroy', $spot->id) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class="modal-body text-center">
+                                            本当に削除しますか？
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="submit" class="btn btn-danger">削除する</button>
+                                            <a class="btn btn-outline-grey text-dark" data-dismiss="modal">キャンセル</a>
+                                        </div>
+                                        </form>
+                                    </div>
+                                    </div>
+                                </div>
+                            <!-- modal -->
                         </div>
                     @endif
 
@@ -59,7 +80,7 @@
                                     <br>
                                     <a href="{{ route('users.show', $comment->user_id)}}">
                                         <img src="{{ asset('storage/'.$comment->user->user_image) }}" alt="釣り場投稿者の画像">
-                                        <span class="comment_creater_name">{{ $comment->user->name }}</span>
+                                        <span class="comment_creater_name">{{ $comment->user->user_name }}</span>
                                     </a>
                                 </div>
 
@@ -126,13 +147,13 @@
                             <a href="{{ route('spots.show', $spot->id)}}">
                                 <div class="spot_card_img">
                                     <!-- <img src="{{ $spot->image }}" alt="釣り場の画像"> -->
-                                    <img src="{{ asset('storage/'.$spot->image) }}" alt="釣り場投稿者の画像">
+                                    <img src="{{ asset('storage/'.$spot->spot_image) }}" alt="釣り場投稿者の画像">
                                 </div>
                             </a>
 
                             <div class="spot_card-show_content">
                                 <div class="spotName_userImage">
-                                    <p>{{ $spot->name }}</p>
+                                    <p>{{ $spot->spot_name }}</p>
                                     <a href="{{ route('users.show', $spot->user_id)}}">
                                         <img src="{{ asset('storage/'.$spot->user->user_image) }}" alt="釣り場投稿者の画像">
                                     </a>

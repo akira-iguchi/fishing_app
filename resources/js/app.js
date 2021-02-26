@@ -4,8 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
-require("./fontawesome");
+import './bootstrap'
+import Vue from 'vue'
+import SpotFavorite from './components/SpotFavorite'
 
 window.Vue = require('vue').default;
 
@@ -31,4 +32,7 @@ Vue.component('favorite-component', require('./components/FavoriteComponent.vue'
 
 const app = new Vue({
     el: '#app',
-});
+    components: {
+      SpotFavorite,
+    }
+  })

@@ -344,11 +344,19 @@ textarea .form-control {
   color: #FFF;
 }
 
+a:not([href]):not([tabindex]) {
+  color: #FF6633;
+}
+
+a:not([href]):not([tabindex]):hover {
+  color: #FFF;
+}
+
 .spot_delete_button {
   position: relative;
-  top: 7px;
   border: 2px solid #FF6633;
   color: #FF6633;
+  cursor: pointer;
   padding: 8px 16px;
   border-radius: 4px;
   transition: .4s;

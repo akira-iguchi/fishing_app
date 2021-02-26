@@ -29,7 +29,7 @@ class UsersController extends Controller
 
         if($user->id == 1) {
             session()->flash('error_message', 'ゲストユーザーは編集できません');
-            return redirect('/spots');
+            return redirect('/');
         } else {
             return view('users.edit', ['user' => Auth::user() ]);
         }
@@ -41,7 +41,7 @@ class UsersController extends Controller
 
         // バリデーション
         $rules = [
-            'name' => 'required|string|max:10',
+            'user_name' => 'required|string|max:10',
             'email' => 'required|string|email|max:255|unique:users,email,'.Auth::user()->email.',email',
             'user_image' => 'nullable|image'
         ];
@@ -55,7 +55,7 @@ class UsersController extends Controller
                 ->withInput();
         }else{
             $user = Auth::user();
-            $user->name = $request->name;
+            $user->user_name = $request->user_name;
             $user->email = $request->email;
             if ($request->hasFile('user_image')) {
                 Storage::delete('public' . $user->user_image);

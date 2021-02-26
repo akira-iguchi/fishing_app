@@ -13,14 +13,14 @@
 
                             <label class="required">ユーザー名</label>
                             <div class="user-edit_text">
-                                <input id="name" type="text" placeholder="お名前" name="name" value="{{ old('$user->name', $user->name) }}" autocomplete="name" autofocus>
+                                <input id="name" type="text" placeholder="お名前" name="name" value="{{ old('user_name', $user['user_name']) }}" autocomplete="user_name" autofocus>
                                 <span><i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i></span>
-                                @if($errors->has('name'))
-                                    <span class="error_msg">
-                                        <p>{{ $errors->first('name') }}</p>
-                                    </span>
-                                @endif
                             </div>
+                            @if($errors->has('user_name'))
+                                <span class="error_msg">
+                                    <p>{{ $errors->first('user_name') }}</p>
+                                </span>
+                            @endif
 
                             <div>
                                 <label>プロフィール画像</label>
@@ -29,14 +29,14 @@
 
                             <label class="required">メールアドレス</label>
                             <div class="user-edit_text">
-                                <input id="email" type="email" placeholder="メールアドレス" name="email" value="{{ old('$user->email', $user->email) }}" autocomplete="email">
+                                <input id="email" type="email" placeholder="メールアドレス" name="email" value="{{ old('email', $user['email']) }}" autocomplete="email">
                                 <span><i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i></span>
-                                @if($errors->has('email'))
-                                    <span class="error_msg">
-                                        <p>{{ $errors->first('email') }}</p>
-                                    </span>
-                                @endif
                             </div>
+                            @if($errors->has('email'))
+                                <span class="error_msg">
+                                    <p>{{ $errors->first('email') }}</p>
+                                </span>
+                            @endif
 
                             <div>
                                 <button class="user_edit-button">更新&emsp;<i class="fas fa-angle-right fa-lg"></i></button>

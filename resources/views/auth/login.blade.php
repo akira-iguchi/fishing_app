@@ -13,7 +13,7 @@
                         <form method="POST" action="{{ route('login.post') }}">
                             @csrf
 
-                            <h4>メールアドレス</h4>
+                            <label>メールアドレス</label>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -21,11 +21,11 @@
                                 </span>
                             @enderror
 
-                            <h4>パスワード</h4>
+                            <label>パスワード</label>
                             <div class="login-signup-password">
                                 <input id="password" type="password" class="js-password form-control @error('password') @enderror" name="password" autocomplete="current-password">
                                 <input class="js-password-toggle" type="checkbox">
-                                <label class="js-password-label"><i class="fas fa-eye fa-lg"></i></label>
+                                <div class="js-password-label"><i class="fas fa-eye fa-lg"></i></div>
                             </div>
 
                             <div class="form-check">

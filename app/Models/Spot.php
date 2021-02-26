@@ -12,10 +12,10 @@ class Spot extends Model
     protected $table = 'spots';
 
     protected $fillable = [
-        'name',
+        'spot_name',
         'explanation',
         'address',
-        'image',
+        'spot_image',
         'latitude',
         'longitude'
     ];
