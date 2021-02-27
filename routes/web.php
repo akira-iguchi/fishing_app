@@ -26,11 +26,11 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 Route::get('guest', 'Auth\LoginController@guestLogin')->name('login.guest');
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::group(['prefix' => 'users/{id}'], function () {
-        Route::post('follow', 'UserFollowController@store')->name('user.follow');
-        Route::delete('unfollow', 'UserFollowController@destroy')->name('user.unfollow');
-        Route::get('followings', 'UsersController@followings')->name('users.followings');
-        Route::get('followers', 'UsersController@followers')->name('users.followers');
+
+    // idはフォローされる側
+    Route::group(['prefix' => 'users/{user}'], function () {
+        Route::put('/follow', 'UsersController@follow')->name('follow');
+        Route::delete('/follow', 'UsersController@unfollow')->name('unfollow');
     });
 
     Route::group(['prefix' => 'spots/{spot}'], function () {

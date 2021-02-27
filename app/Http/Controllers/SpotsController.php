@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests\SpotRequest;
 use App\Models\Spot;
 use App\Models\SpotComment;
+use Illuminate\Http\Request;
+use App\Http\Requests\SpotRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -77,7 +77,6 @@ class SpotsController extends Controller
 
     public function update(SpotRequest $request, Spot $spot)
     {
-
         $spot->fill($request->except('spot_image'));
         if ($request->hasFile('spot_image')) {
             Storage::delete('public' . $spot->spot_image);

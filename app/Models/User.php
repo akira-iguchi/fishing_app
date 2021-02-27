@@ -52,78 +52,16 @@ class User extends Authenticatable
         return $this->hasMany(SpotComment::class);
     }
 
-    /**
-     * このユーザがフォロー中のユーザー
-     */
-    public function followings()
-    {
-        return $this->belongsToMany(User::class, 'user_follow', 'user_id', 'follow_id')->withTimestamps();
-    }
-
-    /**
-     * このユーザをフォロー中のユーザ
-     */
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'user_follow', 'follow_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'follows', 'followee_id', 'follower_id')->withTimestamps();
     }
 
-    /**
-     * $userIdで指定されたユーザをフォローする。
-     *
-     * @param  int  $userId
-     * @return bool
-     */
-    public function follow($userId)
+    public function isFollowedBy(?User $user): bool
     {
-        // すでにフォローしているかの確認
-        $exist = $this->is_following($userId);
-        // 対象が自分自身かどうかの確認
-        $its_me = $this->id == $userId;
-
-        if ($exist || $its_me) {
-            // すでにフォローしていれば何もしない
-            return false;
-        } else {
-            // 未フォローであればフォローする
-            $this->followings()->attach($userId);
-            return true;
-        }
-    }
-
-    /**
-     * $userIdで指定されたユーザをアンフォローする。
-     *
-     * @param  int  $userId
-     * @return bool
-     */
-    public function unfollow($userId)
-    {
-        // すでにフォローしているかの確認
-        $exist = $this->is_following($userId);
-        // 対象が自分自身かどうかの確認
-        $its_me = $this->id == $userId;
-
-        if ($exist && !$its_me) {
-            // すでにフォローしていればフォローを外す
-            $this->followings()->detach($userId);
-            return true;
-        } else {
-            // 未フォローであれば何もしない
-            return false;
-        }
-    }
-
-    /**
-     * 指定された $userIdのユーザをこのユーザがフォロー中であるか調べる。フォロー中ならtrueを返す。
-     *
-     * @param  int  $userId
-     * @return bool
-     */
-    public function is_following($userId)
-    {
-        // フォロー中ユーザの中に $userIdのものが存在するか
-        return $this->followings()->where('follow_id', $userId)->exists();
+        return $user
+            ? (bool)$this->followers->where('id', $user->id)->count()
+            : false;
     }
 
     /**
@@ -139,6 +77,6 @@ class User extends Authenticatable
      */
     public function loadRelationshipCounts()
     {
-        $this->loadCount(['spots', 'followings', 'followers']);
+        $this->loadCount(['spots']);
     }
 }

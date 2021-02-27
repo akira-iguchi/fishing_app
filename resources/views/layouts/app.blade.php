@@ -31,6 +31,11 @@
         {{-- フッター --}}
         @include('commons.footer')
 
+        <script src="{{ mix('/js/app.js') }}"></script>
+        <script src="{{ asset('/js/welcome.js') }}" defer></script>
+        <script src="{{ asset('/js/setLocation.js') }}" defer></script>
+        <script src="{{ asset('/js/wordCount.js') }}" defer></script>
+        <script src="{{ asset('/js/passwordToggle.js') }}" defer></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
@@ -39,10 +44,5 @@
         <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{ config('services.google-map.apikey') }}&callback=initMap"></script> -->
         <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-        <script src="{{ asset('/js/app.js') }}"></script>
-        <script src="{{ asset('/js/welcome.js') }}" defer></script>
-        <script src="{{ asset('/js/setLocation.js') }}" defer></script>
-        <script src="{{ asset('/js/wordCount.js') }}" defer></script>
-        <script src="{{ asset('/js/passwordToggle.js') }}" defer></script>
     </body>
 </html>

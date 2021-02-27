@@ -13,7 +13,7 @@
 
                             <label class="required">ユーザー名</label>
                             <div class="user-edit_text">
-                                <input id="name" type="text" placeholder="お名前" name="name" value="{{ old('user_name', $user['user_name']) }}" autocomplete="user_name" autofocus>
+                                <input id="user_name" type="text" placeholder="お名前" name="user_name" value="{{ old('user_name', $user['user_name']) }}" autocomplete="user_name" autofocus>
                                 <span><i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i></span>
                             </div>
                             @if($errors->has('user_name'))

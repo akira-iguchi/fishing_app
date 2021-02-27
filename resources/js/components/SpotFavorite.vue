@@ -6,10 +6,10 @@
         >
             <i class="fas fa-heart mr-1"
                 :class="{'text-danger':this.isLikedBy, 'animated heartBeat fast':this.gotToFavorite}"
-                v-on:click="clickFavorite"
+                @click="clickFavorite"
             />
         </button>
-            {{ countSpotFavorites }}
+        {{ countSpotFavorites }}
     </div>
 </template>
 
@@ -32,6 +32,7 @@
                 type: String,
             },
         },
+
         data() {
             return {
                 isLikedBy: this.initialIsLikedBy,
@@ -39,30 +40,34 @@
                 gotToFavorite: false,
             }
         },
+
         methods: {
             clickFavorite() {
                 if (!this.authorized) {
                     alert('お気に入り機能はログイン中のみ使用できます')
                     return
                 }
+
                 this.isLikedBy
                     ? this.unfavorite()
                     : this.favorite()
-                },
-                async favorite() {
-                    const response = await axios.put(this.endpoint)
-
-                    this.isLikedBy = true
-                    this.countSpotFavorites = response.data.countSpotFavorites
-                    this.gotToFavorite = true
-                },
-                async unfavorite() {
-                    const response = await axios.delete(this.endpoint)
-
-                    this.isLikedBy = false
-                    this.countSpotFavorites = response.data.countSpotFavorites
-                    this.gotToFavorite = false
-                },
             },
+
+            async favorite() {
+                const response = await axios.put(this.endpoint)
+
+                this.isLikedBy = true
+                this.countSpotFavorites = response.data.countSpotFavorites
+                this.gotToFavorite = true
+            },
+
+            async unfavorite() {
+                const response = await axios.delete(this.endpoint)
+
+                this.isLikedBy = false
+                this.countSpotFavorites = response.data.countSpotFavorites
+                this.gotToFavorite = false
+            },
+        },
     }
 </script>
