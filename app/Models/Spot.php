@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Spot extends Model
 {
@@ -33,8 +33,20 @@ class Spot extends Model
     /**
      * このスポットをお気に入り中のユーザー
      */
-    public function user_favorites()
+    public function spot_favorites()
     {
-        return $this->belongsToMany(Spot::class, 'spot_favorite', 'spot_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'spot_favorite')->withTimestamps();
+    }
+
+    public function isLikedBy(?User $user): bool
+    {
+        return $user
+            ? (bool)$this->spot_favorites->where('id', $user->id)->count()
+            : false;
+    }
+
+    public function getCountSpotFavoritesAttribute(): int
+    {
+        return $this->spot_favorites->count();
     }
 }

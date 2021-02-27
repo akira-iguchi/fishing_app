@@ -24,7 +24,9 @@
         {{-- エラーメッセージ --}}
         @include('commons.error_message')
 
-        <main>@yield('content')</main>
+        <div id="app">
+            <main>@yield('content')</main>
+        </div>
 
         {{-- フッター --}}
         @include('commons.footer')

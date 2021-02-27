@@ -119,4 +119,25 @@ class SpotsController extends Controller
         }
     }
 
+    public function favorite(Request $request, Spot $spot)
+    {
+        // 1人のユーザーが同一釣りスポットに複数回重ねていいねを付けられないようにするため、先にdetach
+        $spot->spot_favorites()->detach($request->user()->id);
+        $spot->spot_favorites()->attach($request->user()->id);
+
+        return [
+            'id' => $spot->id,
+            'countSpotFavorites' => $spot->count_spot_favorites,
+        ];
+    }
+
+    public function unfavorite(Request $request, Spot $spot)
+    {
+        $spot->spot_favorites()->detach($request->user()->id);
+
+        return [
+            'id' => $spot->id,
+            'countSpotFavorites' => $spot->count_spot_favorites,
+        ];
+    }
 }
