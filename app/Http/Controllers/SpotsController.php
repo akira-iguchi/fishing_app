@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Spot;
+use App\Models\Tag;
+use App\Library\BaseClass;
 use App\Models\SpotComment;
 use Illuminate\Http\Request;
 use App\Http\Requests\SpotRequest;
@@ -11,11 +13,6 @@ use Illuminate\Support\Facades\Storage;
 
 class SpotsController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(Spot::class, 'spot');
-    }
-
     public function index()
     {
         $spots = Spot::all()->sortByDesc('created_at')->load('user');
@@ -39,8 +36,13 @@ class SpotsController extends Controller
 
     public function create(Spot $spot)
     {
+        $allTagNames = Tag::all()->map(function ($tag) {
+            return ['text' => $tag->name];
+        });
+
         return view('spots.create', [
             'spot' => $spot,
+            'allTagNames' => $allTagNames,
         ]);
     }
 
@@ -59,15 +61,30 @@ class SpotsController extends Controller
         }
         $spot->user_id = auth()->id();
         $spot->save();
+
+        $request->tags->each(function ($tagName) use ($spot) {
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $spot->tags()->attach($tag);
+        });
+
         return redirect('/')->with('flash_message', '釣りスポットを投稿しました');
     }
 
     public function edit(Spot $spot)
     {
-
         if (\Auth::id() === $spot->user_id) {
+            $tagNames = $spot->tags->map(function ($tag) {
+                return ['text' => $tag->name];
+            });
+
+            $allTagNames = Tag::all()->map(function ($tag) {
+                return ['text' => $tag->name];
+            });
+
             return view('spots.edit', [
                 'spot' => $spot,
+                'tagNames' => $tagNames,
+                'allTagNames' => $allTagNames,
             ]);
         } else {
             session()->flash('error_message', '自信が投稿した釣りスポットのみ編集できます');
@@ -89,6 +106,13 @@ class SpotsController extends Controller
             // $spot->spot_image = $path;
         }
         $spot->save();
+
+        $spot->tags()->detach();
+        $request->tags->each(function ($tagName) use ($spot) {
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $spot->tags()->attach($tag);
+        });
+
         session()->flash('flash_message', '釣りスポットを更新しました');
         return redirect()->route('spots.show', [$spot]);
     }

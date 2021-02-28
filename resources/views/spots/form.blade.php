@@ -24,9 +24,17 @@
 </div>
 
 <div class="form-group">
+    <label>タグ</label>
     <spot-tags-input
+        :initial-tags='@json($tagNames ?? [])'
+        :autocomplete-items='@json($allTagNames ?? [])'
     >
     </spot-tags-input>
+    @if($errors->has('tags'))
+    <span class="error_msg">
+        <p>{{ $errors->first('tags') }}</p>
+    </span>
+    @endif
 </div>
 
 <div class="form-group">

@@ -20,18 +20,24 @@ class Spot extends Model
         'longitude'
     ];
 
+    /**
+     * ユーザー
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * 釣りスポットのコメント
+     */
     public function spot_comments()
     {
         return $this->hasMany(SpotComment::class);
     }
 
     /**
-     * このスポットをお気に入り中のユーザー
+     * お気に入り
      */
     public function spot_favorites()
     {
@@ -48,5 +54,13 @@ class Spot extends Model
     public function getCountSpotFavoritesAttribute(): int
     {
         return $this->spot_favorites->count();
+    }
+
+    /**
+     * タグ
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 }

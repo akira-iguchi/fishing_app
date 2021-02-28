@@ -16,11 +16,17 @@ class SpotComment extends Model
         'comment_image',
     ];
 
+    /**
+     * ユーザー
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * 釣りスポット
+     */
     public function spot()
     {
         return $this->belongsTo(Spot::class);

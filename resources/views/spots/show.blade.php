@@ -7,6 +7,21 @@
                 <div class="mx-auto d-block col-lg-8 spot_container">
                     <p class="spot_created_at">{{ $spot->created_at->format('Y/m/d') }}</p>
                     <h1 class="spot_name">{{ $spot->spot_name }}</h1>
+
+                    @foreach($spot->tags as $tag)
+                        @if($loop->first)
+                        <div class="card-body pt-0 pb-4 pl-3">
+                            <div class="card-text line-height">
+                        @endif
+                            <a href="" class="spot_tag">
+                                {{ $tag->hashtag }}
+                            </a>
+                        @if($loop->last)
+                            </div>
+                        </div>
+                        @endif
+                    @endforeach
+
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">

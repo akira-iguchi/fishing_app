@@ -42,6 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * 釣りスポット
+     */
     public function spots()
     {
         return $this->hasMany(Spot::class);
@@ -52,16 +55,25 @@ class User extends Authenticatable
         return $this->spots->count();
     }
 
+    /**
+     * お気に入りスポット
+     */
     public function favoriteSpots()
     {
         return $this->belongsToMany(Spot::class, 'spot_favorite')->withTimestamps();
     }
 
+    /**
+     * 釣りスポットのコメント
+     */
     public function spot_comments()
     {
         return $this->hasMany(SpotComment::class);
     }
 
+    /**
+     * フォロー
+     */
     public function followers()
     {
         return $this->belongsToMany(User::class, 'follows', 'followee_id', 'follower_id')->withTimestamps();
