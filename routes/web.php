@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'users/{user}'], function () {
         Route::put('/follow', 'UsersController@follow')->name('users.follow');
         Route::delete('/follow', 'UsersController@unfollow')->name('users.unfollow');
+        Route::get('/favorites', 'UsersController@favorites')->name('users.favorites');
     });
 
     Route::group(['prefix' => 'spots/{spot}'], function () {

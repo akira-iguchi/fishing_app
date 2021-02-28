@@ -24,6 +24,12 @@
 </div>
 
 <div class="form-group">
+    <spot-tags-input
+    >
+    </spot-tags-input>
+</div>
+
+<div class="form-group">
     <label>画像</label>
     <input type="file" name="spot_image">
 </div>

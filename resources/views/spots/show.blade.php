@@ -113,7 +113,7 @@
                             @endif
                         @endforeach
                     </div>
-                    {{ $comments->links() }}
+
 
                     <form method="POST" action="{{ route('comments.store', $spot->id) }}" enctype="multipart/form-data">
                         @csrf

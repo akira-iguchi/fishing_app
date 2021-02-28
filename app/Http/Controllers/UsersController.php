@@ -12,11 +12,12 @@ class UsersController extends Controller
 {
     public function show(User $user)
     {
-        $user->loadRelationshipCounts();
+        $spots = $user->spots->sortByDesc('created_at');
 
         // メッセージ詳細ビューでそれを表示
         return view('users.show', [
             'user' => $user,
+            'spots' => $spots,
         ]);
     }
 
@@ -71,5 +72,15 @@ class UsersController extends Controller
         $request->user()->followings()->detach($user);
 
         return ['user' => $user];
+    }
+
+    public function favorites(User $user)
+    {
+        $spots = $user->favoriteSpots->sortByDesc('created_at');
+
+        return view('users.favorite_spots', [
+            'user' => $user,
+            'spots' => $spots,
+        ]);
     }
 }

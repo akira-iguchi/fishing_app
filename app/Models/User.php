@@ -47,6 +47,16 @@ class User extends Authenticatable
         return $this->hasMany(Spot::class);
     }
 
+    public function getCountSpotsAttribute(): int
+    {
+        return $this->spots->count();
+    }
+
+    public function favoriteSpots()
+    {
+        return $this->belongsToMany(Spot::class, 'spot_favorite')->withTimestamps();
+    }
+
     public function spot_comments()
     {
         return $this->hasMany(SpotComment::class);
@@ -67,22 +77,6 @@ class User extends Authenticatable
         return $user
             ? (bool)$this->followers->where('id', $user->id)->count()
             : false;
-    }
-
-    /**
-     * このユーザがお気に入り中のスポット
-     */
-    public function favoriteSpots()
-    {
-        return $this->belongsToMany(Spot::class, 'spot_favorite', 'user_id', 'spot_id')->withTimestamps();
-    }
-
-    /**
-     * このユーザに関係するモデルの件数をロードする。
-     */
-    public function loadRelationshipCounts()
-    {
-        $this->loadCount(['spots']);
     }
 
     public function getCountFollowersAttribute(): int

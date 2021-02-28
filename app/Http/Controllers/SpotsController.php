@@ -18,20 +18,20 @@ class SpotsController extends Controller
 
     public function index()
     {
-        $spots = Spot::all();
+        $spots = Spot::all()->sortByDesc('created_at')->load('user');
         return view('spots.index', ['spots' => $spots]);
     }
 
     public function show(Spot $spot)
     {
         // その他の釣りスポット
-        $spots = Spot::all();
+        $spots = Spot::all()->sortByDesc('created_at')->load('user');
 
-        $comments = $spot->spot_comments()->orderBy('created_at', 'desc')->paginate(11);
+        $comments = $spot->spot_comments()->with('user')->get()->sortByDesc('created_at');
 
         // メッセージ詳細ビューでそれを表示
         return view('spots.show', [
-            'spot' => $spot,
+            'spot' => $spot->load('user'),
             'spots' => $spots,
             'comments' => $comments,
         ]);
