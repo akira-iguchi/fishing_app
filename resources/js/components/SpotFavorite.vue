@@ -3,11 +3,10 @@
         <button
             type="button"
             class="btn m-0 p-1 shadow-none"
+            :class="{'text-danger':this.isLikedBy}"
+            @click="clickFavorite"
         >
-            <i class="fas fa-heart mr-1"
-                :class="{'text-danger':this.isLikedBy, 'animated heartBeat fast':this.gotToFavorite}"
-                @click="clickFavorite"
-            />
+            <i class="fas fa-heart mr-1" />
         </button>
         {{ countSpotFavorites }}
     </div>

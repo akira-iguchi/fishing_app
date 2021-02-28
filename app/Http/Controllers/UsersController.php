@@ -52,24 +52,24 @@ class UsersController extends Controller
     {
         if ($user->id === $request->user()->id)
         {
-            return abort('404', '自信でフォローはできません');
+            return abort('404', 'あなた自信をフォローすることはできません');
         }
 
         $request->user()->followings()->detach($user);
         $request->user()->followings()->attach($user);
 
-        return ['name' => $name];
+        return ['user' => $user];
     }
 
     public function unfollow(Request $request, User $user)
     {
         if ($user->id === $request->user()->id)
         {
-            return abort('404', '自信でフォローはできません');
+            return abort('404', 'あなた自信をフォローすることはできません');
         }
 
         $request->user()->followings()->detach($user);
 
-        return ['name' => $name];
+        return ['user' => $user];
     }
 }

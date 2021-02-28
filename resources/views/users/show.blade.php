@@ -25,10 +25,15 @@
                         <follow-button
                             class="ml-auto"
                             :initial-is-followed-by='@json($user->isFollowedBy(Auth::user()))'
+                            :authorized='@json(Auth::check())'
+                            endpoint="{{ route('users.follow', ['user' => $user]) }}"
                         >
                         </follow-button>
                     @endif
+                    <p>{{ $user->count_followings }}フォロー</p>
+                    <p>{{ $user->count_followers }}フォロワー</p>
                 </div>
+                .
             </div>
         </div>
     @endif

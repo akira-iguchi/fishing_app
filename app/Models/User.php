@@ -57,6 +57,11 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'follows', 'followee_id', 'follower_id')->withTimestamps();
     }
 
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'followee_id')->withTimestamps();
+    }
+
     public function isFollowedBy(?User $user): bool
     {
         return $user
@@ -78,5 +83,15 @@ class User extends Authenticatable
     public function loadRelationshipCounts()
     {
         $this->loadCount(['spots']);
+    }
+
+    public function getCountFollowersAttribute(): int
+    {
+        return $this->followers->count();
+    }
+
+    public function getCountFollowingsAttribute(): int
+    {
+        return $this->followings->count();
     }
 }

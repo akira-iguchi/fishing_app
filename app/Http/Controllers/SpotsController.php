@@ -125,7 +125,7 @@ class SpotsController extends Controller
         $spot->spot_favorites()->attach($request->user()->id);
 
         return [
-            'id' => $spot->id,
+            'spot' => $spot,
             'countSpotFavorites' => $spot->count_spot_favorites,
         ];
     }
@@ -135,7 +135,7 @@ class SpotsController extends Controller
         $spot->spot_favorites()->detach($request->user()->id);
 
         return [
-            'id' => $spot->id,
+            'spot' => $spot,
             'countSpotFavorites' => $spot->count_spot_favorites,
         ];
     }

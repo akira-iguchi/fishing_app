@@ -29,13 +29,13 @@ Route::group(['middleware' => ['auth']], function () {
 
     // idはフォローされる側
     Route::group(['prefix' => 'users/{user}'], function () {
-        Route::put('/follow', 'UsersController@follow')->name('follow');
-        Route::delete('/follow', 'UsersController@unfollow')->name('unfollow');
+        Route::put('/follow', 'UsersController@follow')->name('users.follow');
+        Route::delete('/follow', 'UsersController@unfollow')->name('users.unfollow');
     });
 
     Route::group(['prefix' => 'spots/{spot}'], function () {
-        Route::post('favorite', 'SpotsController@favorite')->name('spots.favorite');
-        Route::delete('favorite', 'SpotsController@unfavorite')->name('spots.unfavorite');
+        Route::put('/favorite', 'SpotsController@favorite')->name('spots.favorite');
+        Route::delete('/favorite', 'SpotsController@unfavorite')->name('spots.unfavorite');
         Route::get('favorites', 'SpotsController@favorites')->name('spots.favorites');
         Route::resource('comments', 'SpotCommentController', ['only' => ['store', 'destroy']]);
     });
