@@ -69,7 +69,7 @@
         background-color: #fff;
         border: 1px solid #aaa;
         border-radius: 6px;
-        color: #333;
+        color: rgba(0,100,255,0.7);
         font-size: 12px;
         text-decoration: none;
         -webkit-transition: .2s;
@@ -78,8 +78,8 @@
     }
 
     .vue-tags-input .ti-tag:hover {
-        background-color: #2196F3;
-        border: 1px solid #2196F3;
+        background-color: rgba(0,100,255,0.7);
+        border: 1px solid rgba(0,100,255,0.7);
         color: #fff;
     }
 

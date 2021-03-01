@@ -10,7 +10,11 @@
                 <button type="submit" class="spotIndex_search_button"><i class="fas fa-search"></i></button>
             </form>
 
-            @include('spots.card')
+            <div class="row">
+                @include('spots.card')
+            </div>
+
+            @include('spots.count')
         </div>
     @else
         <div id="js-loading">

@@ -4,19 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Spot;
 use App\Models\Tag;
-use App\Library\BaseClass;
 use App\Models\SpotComment;
 use Illuminate\Http\Request;
+use App\Traits\TagNameTrait;
 use App\Http\Requests\SpotRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class SpotsController extends Controller
 {
+    // 共通メソッド化（挑戦中）
+    use TagNameTrait;
+
     public function index()
     {
         $spots = Spot::all()->sortByDesc('created_at')->load('user');
-        return view('spots.index', ['spots' => $spots]);
+        return view('spots.index', [
+            'spots' => $spots,
+        ]);
     }
 
     public function show(Spot $spot)

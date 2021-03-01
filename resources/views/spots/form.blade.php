@@ -2,7 +2,7 @@
 <input id="spot_longitude" type="hidden" name="longitude" value="139.7005536">
 
 <div class="form-group">
-    <label class="required">釣りスポット名</label>
+    <label for="spot_name" class="required">釣りスポット名</label>
     <input id="spot_name" type="text" class="form-control" name="spot_name" value="{{ old('spot_name', $spot['spot_name']) }}">
 
     @if($errors->has('spot_name'))
@@ -13,8 +13,8 @@
 </div>
 
 <div class="form-group">
-    <label>所在地</label>
-    <input type="text" class="form-control" name="address" value="{{ old('address', $spot['name']) }}">
+    <label for="spot_address">所在地</label>
+    <input id="spot_address" type="text" class="form-control" name="address" value="{{ old('address', $spot['name']) }}">
 
     @if($errors->has('address'))
     <span class="error_msg">
@@ -24,7 +24,7 @@
 </div>
 
 <div class="form-group">
-    <label>タグ</label>
+    <label for="tags">タグ</label>
     <spot-tags-input
         :initial-tags='@json($tagNames ?? [])'
         :autocomplete-items='@json($allTagNames ?? [])'
@@ -38,12 +38,12 @@
 </div>
 
 <div class="form-group">
-    <label>画像</label>
-    <input type="file" name="spot_image">
+    <label for="spot_image">画像</label>
+    <input id="spot_image" type="file" name="spot_image">
 </div>
 
 <div class="form-group">
-    <label class="required">説明</label>
+    <label for="textArea" class="required">説明</label>
     <textarea rows="6" id="textArea" class="form-control" name="explanation">{{ old('explanation', $spot['explanation']) }}</textarea>
     残り<span id="textLest">300</span>文字
     <p id="textAttention" style="display:none; color:red;">入力文字数が多すぎます。</p>

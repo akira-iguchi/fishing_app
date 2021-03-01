@@ -41,6 +41,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('comments', 'SpotCommentController', ['only' => ['store', 'destroy']]);
     });
 
+    Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
+
     Route::resource('users', 'UsersController');
 
     Route::get('/spots/search','SpotsController@search');

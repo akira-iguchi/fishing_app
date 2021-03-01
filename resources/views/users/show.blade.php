@@ -47,9 +47,9 @@
                             </a>
                         </li>
                     </ul>
-                    @foreach($spots as $spot)
-                        @include('spots.card')
-                    @endforeach
+
+                    @include('spots.card')
+
                 </div>
                 <div>
                     釣り場数{{ $user->count_spots }}

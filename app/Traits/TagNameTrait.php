@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Library;
+namespace App\Traits;
 
 use App;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class BaseClass
+trait TagNameTrait
 {
     //タグの自動補完
-    public static function getAllTagNames()
+    public function getAllTagNames()
     {
-        Tag::all()->map(function ($tag) {
+        $allTagNames = Tag::all()->map(function ($tag) {
             return ['text' => $tag->name];
         });
     }

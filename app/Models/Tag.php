@@ -19,4 +19,12 @@ class Tag extends Model
     {
         return '#' . $this->name;
     }
+
+    /**
+     * 釣りスポット
+     */
+    public function spots()
+    {
+        return $this->belongsToMany(Spot::class)->withTimestamps();
+    }
 }

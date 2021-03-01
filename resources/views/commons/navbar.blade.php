@@ -23,6 +23,8 @@
                     <li><a href="{{ url('/signup') }}"><i class="fas fa-user-plus"></i>&thinsp;新規登録</a></li>
                     {{-- ログインページへのリンク --}}
                     <li><a href="{{ url('/login') }}"><i class="fas fa-sign-in-alt"></i>&thinsp;ログイン</a></li>
+                    {{-- ゲストログインへのリンク --}}
+                    <li><a href="{{ route('login.guest') }}"><i class="fas fa-sign-in-alt"></i>&thinsp;ゲストログイン</a></li>
                 @endif
             </ul>
         </nav>

@@ -229,8 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         /* originals */
-        'BaseClass' => app\Library\BaseClass::class,
-
+        'TagNameTrait' => app\Traits\TagNameTrait::class,
     ],
 
 ];

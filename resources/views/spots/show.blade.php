@@ -13,7 +13,7 @@
                         <div class="card-body pt-0 pb-4 pl-3">
                             <div class="card-text line-height">
                         @endif
-                            <a href="" class="spot_tag">
+                            <a href="{{ route('tags.show', ['name' => $tag->name]) }}" class="spot_tag">
                                 {{ $tag->hashtag }}
                             </a>
                         @if($loop->last)
@@ -22,7 +22,7 @@
                         @endif
                     @endforeach
 
-                    <div class="swiper-container">
+                    <div class="swiper-container mb-2">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <div id="show_map"></div>
@@ -93,6 +93,7 @@
                     @endif
 
                     <h2 class="mt-3">コメント一覧</h2>
+                    <i class="fa fa-comment mr-1"></i>{{ $comments->count() }}
 
                     <div class="comments">
                         @foreach ($comments as $comment)
