@@ -14,7 +14,7 @@
 
 <div class="form-group">
     <label for="spot_address">所在地</label>
-    <input id="spot_address" type="text" class="form-control" name="address" value="{{ old('address', $spot['name']) }}">
+    <input id="spot_address" type="text" class="form-control" name="address" value="{{ old('address', $spot['address']) }}">
 
     @if($errors->has('address'))
     <span class="error_msg">

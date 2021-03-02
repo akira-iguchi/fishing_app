@@ -19,15 +19,19 @@ class SpotsController extends Controller
     public function index()
     {
         $spots = Spot::all()->sortByDesc('created_at')->load('user');
+
+        $tags = Tag::all();
+
         return view('spots.index', [
             'spots' => $spots,
+            'tags' => $tags,
         ]);
     }
 
     public function show(Spot $spot)
     {
         // その他の釣りスポット
-        $spots = Spot::all()->sortByDesc('created_at')->load('user');
+        $spots = Spot::where('id','!=', $spot->id)->get()->sortByDesc('created_at')->load('user');
 
         $comments = $spot->spot_comments()->with('user')->get()->sortByDesc('created_at');
 
@@ -134,16 +138,22 @@ class SpotsController extends Controller
 
     public function search(Request $request) {
         $keyword_name = $request->name;
+        $tags = Tag::all();
 
         if (!empty($keyword_name)) {
             $query = Spot::query();
             $spots = $query->where('spot_name','like', '%' .$keyword_name. '%')->get();
             return view('spots/search')->with([
-            'spots' => $spots
+            'spots' => $spots,
+            'keyword_name' => $keyword_name,
+            'tags' => $tags,
             ]);
         } else {
-            $spots = Spot::all();
-            return view('spots.index', ['spots' => $spots]);
+            $spots = Spot::all()->sortByDesc('created_at')->load('user');
+            return view('spots.search', [
+                'spots' => $spots,
+                'tags' => $tags,
+            ]);
         }
     }
 

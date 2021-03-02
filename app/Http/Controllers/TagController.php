@@ -11,7 +11,11 @@ class TagController extends Controller
     public function show(string $name)
     {
         $tag = Tag::where('name', $name)->first();
+        $tags = Tag::all();
 
-        return view('tags.show', ['tag' => $tag]);
+        return view('tags.show', [
+            'tag' => $tag,
+            'tags' => $tags,
+        ]);
     }
 }
