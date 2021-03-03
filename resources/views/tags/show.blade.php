@@ -4,9 +4,9 @@
     <div class="container">
         @include('spots.search_form')
 
-        <h2 class="tag_search"><span>{{ $tag->hashtag }}</span>の検索結果</h2>
+        <h2 class="search-result"><span>{{ $tag->hashtag }}</span>の検索結果</h2>
 
-        <p class="tag_count">{{ $tag->spots->count() }}件<br></p>
+        <p class="search_count">{{ $tag->spots->count() }}件</p>
 
         <div class="row">
             @include('spots.card', ['spots' => $tag->spots])

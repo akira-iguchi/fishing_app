@@ -11,7 +11,7 @@
                             @csrf
                             @method('PUT')
 
-                            <label class="required">ユーザー名</label>
+                            <label for="user_name" class="required">ユーザー名</label>
                             <div class="user-edit_text">
                                 <input id="user_name" type="text" placeholder="お名前" name="user_name" value="{{ old('user_name', $user['user_name']) }}" autocomplete="user_name" autofocus>
                                 <span><i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i></span>
@@ -23,11 +23,11 @@
                             @endif
 
                             <div>
-                                <label>プロフィール画像</label>
-                                <input type="file" name="user_image">
+                                <label for="user_image">プロフィール画像</label>
+                                <input id="user_image" type="file" name="user_image">
                             </div>
 
-                            <label class="required">メールアドレス</label>
+                            <label for="email" class="required">メールアドレス</label>
                             <div class="user-edit_text">
                                 <input id="email" type="email" placeholder="メールアドレス" name="email" value="{{ old('email', $user['email']) }}" autocomplete="email">
                                 <span><i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i></span>
@@ -43,6 +43,7 @@
                             </div>
                         </form>
                     </div>
+                    <p class="back_link" onclick="history.back()">戻る</p>
                 </div>
             </div>
         </div>

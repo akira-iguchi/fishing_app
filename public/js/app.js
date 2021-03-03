@@ -1856,6 +1856,16 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Comments.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Comments.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ (() => {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /var/www/fishing_app/resources/js/components/Comments.vue: Unexpected token (21:17)\n\n\u001b[0m \u001b[90m 19 |\u001b[39m \u001b[36mexport\u001b[39m \u001b[36mdefault\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 20 |\u001b[39m     props\u001b[33m:\u001b[39m {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 21 |\u001b[39m         \u001b[32m'spot_id'\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 22 |\u001b[39m         \u001b[32m'user_id'\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 23 |\u001b[39m     }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 24 |\u001b[39m\u001b[0m\n    at Parser._raise (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:776:17)\n    at Parser.raiseWithData (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:769:17)\n    at Parser.raise (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:737:17)\n    at Parser.unexpected (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:9183:16)\n    at Parser.parseObjPropValue (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:11216:21)\n    at Parser.parsePropertyDefinition (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:11139:10)\n    at Parser.parseObjectLike (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:11029:25)\n    at Parser.parseExprAtom (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:10589:23)\n    at Parser.parseExprSubscripts (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:10248:23)\n    at Parser.parseUpdate (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:10228:21)\n    at Parser.parseMaybeUnary (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:10206:23)\n    at Parser.parseExprOps (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:10071:23)\n    at Parser.parseMaybeConditional (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:10045:23)\n    at Parser.parseMaybeAssign (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:10008:21)\n    at /var/www/fishing_app/node_modules/@babel/parser/lib/index.js:9975:39\n    at Parser.allowInAnd (/var/www/fishing_app/node_modules/@babel/parser/lib/index.js:11647:12)");
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FollowButton.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FollowButton.vue?vue&type=script&lang=js& ***!
@@ -1891,11 +1901,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     initialIsFollowedBy: {
       type: Boolean,
       "default": false
+    },
+    initialCountFollowings: {
+      type: Number,
+      "default": 0
+    },
+    initialCountFollowers: {
+      type: Number,
+      "default": 0
     },
     authorized: {
       type: Boolean,
@@ -1907,7 +1928,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      isFollowedBy: this.initialIsFollowedBy
+      isFollowedBy: this.initialIsFollowedBy,
+      countFollowings: this.initialCountFollowings,
+      countFollowers: this.initialCountFollowers
     };
   },
   computed: {
@@ -1945,8 +1968,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 response = _context.sent;
                 _this.isFollowedBy = true;
+                _this.countFollowings = response.data.countFollowings;
+                _this.countFollowers = response.data.countFollowers;
 
-              case 4:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -1969,8 +1994,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 response = _context2.sent;
                 _this2.isFollowedBy = false;
+                _this2.countFollowings = response.data.countFollowings;
+                _this2.countFollowers = response.data.countFollowers;
 
-              case 4:
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -2066,9 +2093,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
                 _this.isLikedBy = true;
                 _this.countSpotFavorites = response.data.countSpotFavorites;
-                _this.gotToFavorite = true;
 
-              case 6:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -2092,9 +2118,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context2.sent;
                 _this2.isLikedBy = false;
                 _this2.countSpotFavorites = response.data.countSpotFavorites;
-                _this2.gotToFavorite = false;
 
-              case 6:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -2185,21 +2210,24 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _components_SpotFavorite__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/SpotFavorite */ "./resources/js/components/SpotFavorite.vue");
 /* harmony import */ var _components_SpotTagsInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/SpotTagsInput */ "./resources/js/components/SpotTagsInput.vue");
 /* harmony import */ var _components_FollowButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/FollowButton */ "./resources/js/components/FollowButton.vue");
+/* harmony import */ var _components_Comments__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Comments */ "./resources/js/components/Comments.vue");
 
 
 
 
 
-var app = new vue__WEBPACK_IMPORTED_MODULE_4__.default({
+
+var app = new vue__WEBPACK_IMPORTED_MODULE_5__.default({
   el: '#app',
   components: {
     SpotFavorite: _components_SpotFavorite__WEBPACK_IMPORTED_MODULE_1__.default,
     SpotTagsInput: _components_SpotTagsInput__WEBPACK_IMPORTED_MODULE_2__.default,
-    FollowButton: _components_FollowButton__WEBPACK_IMPORTED_MODULE_3__.default
+    FollowButton: _components_FollowButton__WEBPACK_IMPORTED_MODULE_3__.default,
+    Comments: _components_Comments__WEBPACK_IMPORTED_MODULE_4__.default
   }
 });
 
@@ -38796,6 +38824,48 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./resources/js/components/Comments.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/Comments.vue ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Comments_vue_vue_type_template_id_4aa6d95f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Comments.vue?vue&type=template&id=4aa6d95f& */ "./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f&");
+/* harmony import */ var _Comments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Comments.vue?vue&type=script&lang=js& */ "./resources/js/components/Comments.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _Comments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _Comments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _Comments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Comments_vue_vue_type_template_id_4aa6d95f___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Comments_vue_vue_type_template_id_4aa6d95f___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Comments.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/FollowButton.vue":
 /*!**************************************************!*\
   !*** ./resources/js/components/FollowButton.vue ***!
@@ -38917,6 +38987,26 @@ component.options.__file = "resources/js/components/SpotTagsInput.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/Comments.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/Comments.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Comments.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Comments.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default())); 
+
+/***/ }),
+
 /***/ "./resources/js/components/FollowButton.vue?vue&type=script&lang=js&":
 /*!***************************************************************************!*\
   !*** ./resources/js/components/FollowButton.vue?vue&type=script&lang=js& ***!
@@ -38991,6 +39081,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f& ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_template_id_4aa6d95f___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_template_id_4aa6d95f___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_template_id_4aa6d95f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Comments.vue?vue&type=template&id=4aa6d95f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/FollowButton.vue?vue&type=template&id=426ba0ae&":
 /*!*********************************************************************************!*\
   !*** ./resources/js/components/FollowButton.vue?vue&type=template&id=426ba0ae& ***!
@@ -39042,6 +39149,25 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {}
+var staticRenderFns = []
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FollowButton.vue?vue&type=template&id=426ba0ae&":
 /*!************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/FollowButton.vue?vue&type=template&id=426ba0ae& ***!
@@ -39059,6 +39185,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("span", [_vm._v(_vm._s(_vm.countFollowings) + " フォロー")]),
+    _vm._v(" "),
+    _c("span", [_vm._v(_vm._s(_vm.countFollowers) + " フォロワー")]),
+    _vm._v(" "),
     _c(
       "button",
       {

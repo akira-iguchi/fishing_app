@@ -1,5 +1,8 @@
 <template>
     <div>
+        <span>{{ countFollowings }} フォロー</span>
+        <span>{{ countFollowers }} フォロワー</span>
+
         <button
             class="btn-sm shadow-none border border-primary p-2"
             :class="buttonColor"
@@ -21,6 +24,14 @@
                 type: Boolean,
                 default: false,
             },
+            initialCountFollowings: {
+                type: Number,
+                default: 0,
+            },
+            initialCountFollowers: {
+                type: Number,
+                default: 0,
+            },
             authorized: {
                 type: Boolean,
                 default: false,
@@ -33,6 +44,8 @@
         data() {
             return {
                 isFollowedBy: this.initialIsFollowedBy,
+                countFollowings: this.initialCountFollowings,
+                countFollowers: this.initialCountFollowers,
             }
         },
 
@@ -70,12 +83,16 @@
                 const response = await axios.put(this.endpoint)
 
                 this.isFollowedBy = true
+                this.countFollowings = response.data.countFollowings
+                this.countFollowers = response.data.countFollowers
             },
 
             async unfollow() {
                 const response = await axios.delete(this.endpoint)
 
                 this.isFollowedBy = false
+                this.countFollowings = response.data.countFollowings
+                this.countFollowers = response.data.countFollowers
             },
         },
     }

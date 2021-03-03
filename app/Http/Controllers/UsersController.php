@@ -59,7 +59,11 @@ class UsersController extends Controller
         $request->user()->followings()->detach($user);
         $request->user()->followings()->attach($user);
 
-        return ['user' => $user];
+        return [
+            'user' => $user,
+            'countFollowings' => $user->count_followings,
+            'countFollowers' => $user->count_followers,
+        ];
     }
 
     public function unfollow(Request $request, User $user)
@@ -71,7 +75,11 @@ class UsersController extends Controller
 
         $request->user()->followings()->detach($user);
 
-        return ['user' => $user];
+        return [
+            'user' => $user,
+            'countFollowings' => $user->count_followings,
+            'countFollowers' => $user->count_followers,
+        ];
     }
 
     public function favorites(User $user)

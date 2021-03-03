@@ -62,6 +62,7 @@
                         @include('comments.comments')
                     </div>
 
+                    <!-- <comment :spot_id="{{$spot->id}}" :user_id="{{\Auth::id()}}"></comment> -->
                     @include('comments.comment_form')
 
                 </div>
@@ -73,6 +74,8 @@
                             <img src="{{ asset('storage/'.$spot->user->user_image) }}" alt="釣り場投稿者の画像">
                             <p class="spot_creater_name">{{ $spot->user->user_name }}</p>
                         </a>
+
+                        {{ $spot->user->count_followings }} フォロー&nbsp;{{ $spot->user->count_followers }} フォロワー
                     </div>
 
                     @include('spots.mini_card')

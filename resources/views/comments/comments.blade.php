@@ -10,7 +10,7 @@
         </div>
 
         <div class="comment_content">
-            {{ $comment->comment }}
+            {!! nl2br(e($comment->comment)) !!}
         </div>
 
         @if(isset( $comment->comment_image ))

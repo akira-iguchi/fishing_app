@@ -5,9 +5,13 @@
         <div class="container">
             @include('spots.search_form')
 
+            @if(isset( $keyword_name ))
+                <h2 class="search-result"><span>{{ $keyword_name }}</span>の検索結果</h2>
+            @else
+                <h2 class="search-result">すべての投稿</h2>
+            @endif
 
-            <h2 class="search-result">{{ $keyword_name }}の検索結果</h2>
-
+            <p class="search_count">{{ $spots->count() }}件<br></p>
 
             <div class="row">
                 @include('spots.card')

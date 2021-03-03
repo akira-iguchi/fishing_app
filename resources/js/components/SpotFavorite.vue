@@ -57,7 +57,6 @@
 
                 this.isLikedBy = true
                 this.countSpotFavorites = response.data.countSpotFavorites
-                this.gotToFavorite = true
             },
 
             async unfavorite() {
@@ -65,7 +64,6 @@
 
                 this.isLikedBy = false
                 this.countSpotFavorites = response.data.countSpotFavorites
-                this.gotToFavorite = false
             },
         },
     }
