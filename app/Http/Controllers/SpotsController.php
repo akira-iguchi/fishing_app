@@ -33,13 +33,10 @@ class SpotsController extends Controller
         // その他の釣りスポット
         $spots = Spot::where('id','!=', $spot->id)->get()->sortByDesc('created_at')->load('user');
 
-        $comments = $spot->spot_comments()->with('user')->get()->sortByDesc('created_at');
-
         // メッセージ詳細ビューでそれを表示
         return view('spots.show', [
             'spot' => $spot->load('user'),
             'spots' => $spots,
-            'comments' => $comments,
         ]);
     }
 

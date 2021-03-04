@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Storage;
 
 class SpotCommentController extends Controller
 {
+    public function index()
+    {
+        $comments = $spot->spot_comments()->with('user')->get()->sortByDesc('created_at');
+
+        return [
+            'comments' => $comments,
+        ];
+    }
+
     public function store(SpotCommentRequest $request, Spot $spot, SpotComment $spot_comment)
     {
         $spot_comment->fill($request->except('comment_image'));
@@ -35,7 +44,7 @@ class SpotCommentController extends Controller
         // 認証済みユーザ（閲覧者）がその投稿の所有者である場合は、投稿を削除
         if (\Auth::id() === $comment->user_id) {
             $comment->delete();
-            return ['flash_message' => 'コメントしました'];
+            return ['flash_message' => 'コメントを削除しました'];
         } else {
             return ['error_message' => 'コメントを削除できませんでした'];
         }

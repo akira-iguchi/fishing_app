@@ -38,7 +38,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/favorite', 'SpotsController@favorite')->name('spots.favorite');
         Route::delete('/favorite', 'SpotsController@unfavorite')->name('spots.unfavorite');
         Route::get('favorites', 'SpotsController@favorites')->name('spots.favorites');
-        Route::resource('comments', 'SpotCommentController', ['only' => ['store', 'destroy']]);
+        Route::get('comments', 'SpotCommentController@index')->name('comments.comments');
+        Route::post('comments', 'SpotCommentController@store')->name('comments.store');
+        Route::delete('comments/{comment}', 'SpotCommentController@destroy')->name('comments.destroy');
     });
 
     Route::get('/tags/{name}', 'TagController@show')->name('tags.show');

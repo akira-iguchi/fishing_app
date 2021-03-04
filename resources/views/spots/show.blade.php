@@ -55,16 +55,11 @@
 
                     @include('spots.private')
 
-                    <h2 class="mt-3">コメント一覧</h2>
-                    <i class="fa fa-comment mr-1"></i>{{ $comments->count() }}
-
-                    <div class="comments">
-                        @include('comments.comments')
-                    </div>
-
-                    <!-- <comment :spot_id="{{$spot->id}}" :user_id="{{\Auth::id()}}"></comment> -->
-                    @include('comments.comment_form')
-
+                    <comments
+                        spot-id="{{ $spot->id }}"
+                        user-id="{{ Auth::id() }}"
+                    >
+                    </comments>
                 </div>
 
                 <div class="mx-auto d-block col-lg-4">
