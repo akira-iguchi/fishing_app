@@ -38,6 +38,11 @@ class Spot extends Model
         return $this->hasMany(SpotComment::class);
     }
 
+    public function getCountSpotCommentsAttribute(): int
+    {
+        return $this->spot_comments->count();
+    }
+
     /**
      * お気に入り
      */

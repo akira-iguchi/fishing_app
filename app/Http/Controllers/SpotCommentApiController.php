@@ -9,9 +9,9 @@ use App\Http\Requests\SpotCommentRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class SpotCommentController extends Controller
+class SpotCommentApiController extends Controller
 {
-    public function index()
+    public function index(Spot $spot)
     {
         $comments = $spot->spot_comments()->with('user')->get()->sortByDesc('created_at');
 
@@ -24,7 +24,7 @@ class SpotCommentController extends Controller
     {
         $spot_comment->fill($request->except('comment_image'));
         $spot_comment->spot_id = $spot->id;
-        $spot_comment->user_id = auth()->id();
+        $spot_comment->user_id = 1;
         if ($request->hasFile('comment_image')) {
             $filePath = $request->file('comment_image')->store('public');
             $spot_comment->comment_image = basename($filePath);

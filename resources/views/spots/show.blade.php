@@ -56,6 +56,7 @@
                     @include('spots.private')
 
                     <comments
+                        :initial-count-spot-favorites='@json($spot->count_spot_comments)'
                         spot-id="{{ $spot->id }}"
                         user-id="{{ Auth::id() }}"
                     >

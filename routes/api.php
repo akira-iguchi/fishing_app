@@ -13,3 +13,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::group(['middleware' => ['api']], function () {
+    Route::get('comments', 'SpotCommentApiController@index');
+    Route::post('spots/{spot}/comments', 'SpotCommentApiController@store');
+    Route::delete('spots/{spot}/comments/{comment}', 'SpotCommentApiController@destroy');
+});

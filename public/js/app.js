@@ -1871,6 +1871,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
+var _props$props$data$cre;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -1903,86 +1907,125 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['userId', 'spotId'],
-  data: function data() {
-    return {
-      message: "",
-      comment: '',
-      comment_image: null,
-      view: true,
-      confirmedImage: "",
-      spot_id: this.spotId,
-      user_id: this.userId
-    };
-  },
-  methods: {
-    confirmImage: function confirmImage(e) {
-      this.message = "";
-      this.comment_image = e.target.files[0];
-      document.getElementById("comment_image").setAttribute("type", "file");
-      console.log(this.comment_image.type);
-
-      if (!this.comment_image.type.match("image.*")) {
-        this.message = "画像ファイルを選択して下さい";
-        this.confirmedImage = "";
-        return;
-      }
-
-      this.createImage(this.comment_image);
-    },
-    createImage: function createImage(comment_image) {
-      var _this = this;
-
-      var reader = new FileReader();
-      reader.readAsDataURL(comment_image);
-
-      reader.onload = function (e) {
-        _this.confirmedImage = e.target.result;
-      };
-    },
-    uploadComment: function uploadComment() {
-      var _this2 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var data, id, array, path;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                data = {
-                  comment: _this2.comment,
-                  comment_image: _this2.comment_image
-                };
-                id = _this2.spot_id;
-                array = ["/spots/", id, "/comments"];
-                path = array.join('');
-                _context.next = 6;
-                return axios.post(path, data).then(function (response) {
-                  _this2.message = response.data.success;
-                  _this2.confirmedImage = "";
-                  _this2.comment = "";
-                  _this2.comment_image = null; //ファイルを選択のクリア
-
-                  _this2.view = false;
-
-                  _this2.$nextTick(function () {
-                    this.view = true;
-                  });
-                })["catch"](function (err) {
-                  _this2.message = err.response.data.errors;
-                });
-
-              case 6:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_props$props$data$cre = {
+  props: {
+    initialCountComments: {
+      type: Number,
+      "default": 0
     }
   }
-});
+}, _defineProperty(_props$props$data$cre, "props", ['userId', 'spotId']), _defineProperty(_props$props$data$cre, "data", function data() {
+  return {
+    message: "",
+    comment: "",
+    comment_image: "",
+    comments: {},
+    view: true,
+    confirmedImage: "",
+    spot_id: this.spotId,
+    user_id: this.userId,
+    countComments: this.initialCountComments
+  };
+}), _defineProperty(_props$props$data$cre, "created", function created() {
+  this.getComment();
+}), _defineProperty(_props$props$data$cre, "methods", {
+  getComment: function getComment() {
+    var _this = this;
+
+    axios.get("/api/comments/").then(function (response) {
+      _this.comments = response.data;
+    })["catch"](function (err) {
+      console.log(err);
+    });
+  },
+  confirmImage: function confirmImage(e) {
+    this.message = "";
+    this.comment_image = e.target.files[0];
+
+    if (!this.comment_image.type.match("image.*")) {
+      this.message = "画像ファイルを選択して下さい";
+      this.confirmedImage = "";
+      return;
+    }
+
+    this.createImage(this.comment_image);
+  },
+  createImage: function createImage(comment_image) {
+    var _this2 = this;
+
+    var reader = new FileReader();
+    reader.readAsDataURL(comment_image);
+
+    reader.onload = function (e) {
+      _this2.confirmedImage = e.target.result;
+    };
+  },
+  uploadComment: function uploadComment() {
+    var _this3 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var formData, id, array, path;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              formData = new FormData();
+              formData.append('user_id', _this3.user_id);
+              formData.append('comment', _this3.comment);
+              formData.append('comment_image', _this3.comment_image);
+              id = _this3.spot_id;
+              array = ["/api/spots/", id, "/comments"];
+              path = array.join('');
+              _context.next = 9;
+              return axios.post(path, formData, {
+                headers: {
+                  'X-HTTP-Method-Override': 'POST'
+                }
+              }).then(function (response) {
+                _this3.getComment();
+
+                _this3.countComments = response.data.countComments;
+                _this3.confirmedImage = "";
+                _this3.comment = "";
+                _this3.comment_image = ""; //ファイルを選択のクリア
+
+                _this3.view = false;
+
+                _this3.$nextTick(function () {
+                  this.view = true;
+                });
+              })["catch"](function (err) {
+                _this3.message = err.response.data.errors;
+              });
+
+            case 9:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  }
+}), _props$props$data$cre);
 
 /***/ }),
 
@@ -39347,84 +39390,114 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("input", {
-      staticClass: "form-control",
-      attrs: { type: "hidden", id: "user_id", name: "user_id" }
-    }),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("textarea", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.comment,
-            expression: "comment"
-          }
-        ],
-        staticClass: "form-control mt-4",
-        attrs: {
-          rows: "4",
-          id: "textAreaComment",
-          placeholder: "コメントしよう！"
-        },
-        domProps: { value: _vm.comment },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.comment = $event.target.value
-          }
-        }
-      }),
-      _vm._v("\n        残り"),
-      _c("span", { attrs: { id: "textLestComment" } }, [_vm._v("150")]),
-      _vm._v("文字\n        "),
-      _c(
-        "p",
-        {
-          staticStyle: { display: "none", color: "red" },
-          attrs: { id: "textAttentionComment" }
-        },
-        [_vm._v("入力文字数が多すぎます。")]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "comment_image" } }, [_vm._v("画像")]),
+  return _c(
+    "div",
+    [
+      _c("h2", { staticClass: "mt-3" }, [_vm._v("コメント一覧")]),
       _vm._v(" "),
-      _vm.view
-        ? _c("input", {
-            attrs: { id: "comment_image", type: "file" },
-            on: { change: _vm.confirmImage }
-          })
-        : _vm._e()
-    ]),
-    _vm._v(" "),
-    _vm.confirmedImage
-      ? _c("p", [
-          _c("img", {
-            staticClass: "commentImg",
-            attrs: { src: _vm.confirmedImage }
-          })
+      _c("i", { staticClass: "fa fa-comment mr-1" }),
+      _vm._v(_vm._s(_vm.countComments) + "\n\n    "),
+      _vm._l(_vm.comments, function(comment) {
+        return _c("div", { key: comment.id }, [
+          _c("div", { staticClass: "comment" }, [
+            _c("div", { staticClass: "mt-2" }, [
+              _c("div", { staticClass: "comment_created_at" }, [
+                _vm._v(_vm._s(comment.created_at))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "comment_content" }, [
+              _vm._v(
+                "\n                " +
+                  _vm._s(comment.comment) +
+                  "\n            "
+              )
+            ])
+          ])
         ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("span", { staticClass: "error_msg" }, [
-      _c("p", [_vm._v(_vm._s(_vm.message))])
-    ]),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "spot-create-edit-button",
-        on: { click: _vm.uploadComment }
-      },
-      [_c("i", { staticClass: "fas fa-pencil-alt" }), _vm._v(" コメント")]
-    )
-  ])
+      }),
+      _vm._v(" "),
+      _c("div", [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "hidden", id: "user_id", name: "user_id" }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.comment,
+                expression: "comment"
+              }
+            ],
+            staticClass: "form-control mt-4",
+            attrs: {
+              rows: "4",
+              id: "textAreaComment",
+              placeholder: "コメントしよう！"
+            },
+            domProps: { value: _vm.comment },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.comment = $event.target.value
+              }
+            }
+          }),
+          _vm._v("\n            残り"),
+          _c("span", { attrs: { id: "textLestComment" } }, [_vm._v("150")]),
+          _vm._v("文字\n            "),
+          _c(
+            "p",
+            {
+              staticStyle: { display: "none", color: "red" },
+              attrs: { id: "textAttentionComment" }
+            },
+            [_vm._v("入力文字数が多すぎます。")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "comment_image" } }, [_vm._v("画像")]),
+          _vm._v(" "),
+          _vm.view
+            ? _c("input", {
+                attrs: { id: "comment_image", type: "file" },
+                on: { change: _vm.confirmImage }
+              })
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _vm.confirmedImage
+          ? _c("p", [
+              _c("img", {
+                staticClass: "commentImg",
+                attrs: { src: _vm.confirmedImage }
+              })
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("span", { staticClass: "error_msg" }, [
+          _c("p", [_vm._v(_vm._s(_vm.message))])
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "spot-create-edit-button",
+            on: { click: _vm.uploadComment }
+          },
+          [_c("i", { staticClass: "fas fa-pencil-alt" }), _vm._v(" コメント")]
+        )
+      ])
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
