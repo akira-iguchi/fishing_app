@@ -52,8 +52,8 @@ class SpotsController extends Controller
         ]);
     }
 
-    public function store(SpotRequest $request, Spot $spot) {
-
+    public function store(SpotRequest $request, Spot $spot)
+    {
         $spot->fill($request->except('spot_image'));
         if ($request->hasFile('spot_image')) {
             Storage::delete('public' . $spot->spot_image);

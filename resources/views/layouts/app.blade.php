@@ -21,10 +21,8 @@
         {{-- フラッシュメッセージ --}}
         @include('commons.flash_message')
 
-        {{-- エラーメッセージ --}}
-        @include('commons.error_message')
-
         <div id="app">
+            <flash-message />
             <main>@yield('content')</main>
         </div>
 

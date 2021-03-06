@@ -5,14 +5,33 @@
 
         <div v-for="comment in comments" :key="comment.id">
             <div class="comment">
-                <div class="mt-2">
-                    <div class="comment_created_at">{{ comment.created_at }}</div>
-
+                <div class="comment_top">
+                    <div class="comment_created_at">{{ comment.created_at | moment }}</div>
+                    <a v-bind:href="`/users/${comment.user_id}`">
+                        <img :src="`/storage/${comment.user.user_image}`" alt="釣り場投稿者の画像" />
+                        <span class="comment_creater_name">{{ comment.user.user_name }}</span>
+                    </a>
                 </div>
 
-                <div class="comment_content">
+                <div class="comment_under">
                     {{ comment.comment }}
                 </div>
+
+                <div v-if="comment.comment_image && comment.comment_image.length > 0" class="comment_img">
+                    <img :src="`/storage/${comment.comment_image}`" alt="釣り場コメントの画像" />
+                </div>
+
+                <div class="comment_delete">
+                    <button
+                        v-if="comment.user_id == user_id"
+                        @click.prevent="deleteComment(comment.id)"
+                        type="button"
+                        onclick="return confirm('本当に削除しますか？')"
+                    >
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+
             </div>
 
         </div>
@@ -21,9 +40,10 @@
             <input type="hidden" class="form-control" id="user_id" name="user_id">
 
             <div class="form-group">
-                <textarea rows="4" id="textAreaComment" class="form-control mt-4" v-model="comment" placeholder="コメントしよう！"></textarea>
-                残り<span id="textLestComment">150</span>文字
-                <p id="textAttentionComment" style="display:none; color:red;">入力文字数が多すぎます。</p>
+                <div v-if="0 > wordCount" v-on="changeTrue()"></div>
+                <div v-else-if="0 <= wordCount" v-on="changeFalse()"></div>
+                <textarea rows="4" class="form-control mt-4" v-model="comment" placeholder="コメントしよう！"></textarea>
+                残り<span v-bind:class="{ 'text-danger':isActive }">{{ wordCount }}</span>文字
             </div>
 
 
@@ -46,15 +66,31 @@
 </template>
 
 <script>
+    import moment from 'moment';
+
     export default {
         props: {
             initialCountComments: {
                 type: Number,
                 default: 0,
             },
+
+            userId: {
+                type: String,
+                default: 0,
+            },
+
+            spotId: {
+                type: String,
+                default: 0,
+            },
         },
 
-        props: ['userId', 'spotId'],
+        filters: {
+            moment: function (date) {
+                return moment(date).format('YYYY/MM/DD');
+            }
+        },
 
         data() {
             return {
@@ -66,7 +102,15 @@
                 confirmedImage: "",
                 spot_id: this.spotId,
                 user_id: this.userId,
+                wordLimit: 150,
+                isActive: false,
                 countComments: this.initialCountComments,
+            }
+        },
+
+        computed: {
+            wordCount(){
+                return this.wordLimit - this.comment.length
             }
         },
 
@@ -75,9 +119,14 @@
         },
 
         methods: {
+            // コメント一覧
             getComment() {
+                const id = this.spot_id
+                const array = ["/spots/",id,"/comments"];
+                const path = array.join('')
+
                 axios
-                    .get("/api/comments/")
+                    .get(path)
                     .then(response => {
                         this.comments = response.data;
                     })
@@ -86,6 +135,15 @@
                     });
             },
 
+            // 文字数
+            changeTrue:function(){
+                this.isActive = true
+            },
+            changeFalse:function(){
+                this.isActive = false
+            },
+
+            // 画像確認
             confirmImage(e) {
                 this.message = "";
                 this.comment_image = e.target.files[0];
@@ -97,6 +155,7 @@
                 this.createImage(this.comment_image);
             },
 
+            // 画像プレビュー
             createImage(comment_image) {
                 let reader = new FileReader();
                 reader.readAsDataURL(comment_image);
@@ -105,17 +164,18 @@
                 };
             },
 
-            async uploadComment() {
+            // コメント作成
+            uploadComment() {
                 let formData = new FormData();
                 formData.append('user_id', this.user_id);
                 formData.append('comment', this.comment);
                 formData.append('comment_image', this.comment_image);
 
                 const id = this.spot_id
-                const array = ["/api/spots/",id,"/comments"];
+                const array = ["/spots/",id,"/comments"];
                 const path = array.join('')
 
-                await axios
+                axios
                     .post(path, formData, {
                         headers: {
                             'X-HTTP-Method-Override': 'POST'
@@ -123,10 +183,12 @@
                     })
                     .then(response => {
                         this.getComment();
-                        this.countComments = response.data.countComments
                         this.confirmedImage = "";
                         this.comment = "";
                         this.comment_image = "";
+                        this.message = "";
+                        this.wordLimit = 150;
+                        this.countComments = response.data.countComments;
 
                         //ファイルを選択のクリア
                         this.view = false;
@@ -137,7 +199,20 @@
                     .catch(err => {
                         this.message = err.response.data.errors;
                     });
-            }
+            },
+
+            // コメント削除
+            deleteComment(comment) {
+                const id = this.spot_id
+                const array = ["/spots/",id,"/comments/", comment];
+                const path = array.join('')
+                axios.delete(path).then(response => {
+                    this.getComment();
+                    this.countComments = response.data.countComments;
+                }).catch(function(err) {
+                console.log(err)
+                })
+            },
         },
     }
 </script>

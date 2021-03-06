@@ -56,7 +56,7 @@
                     @include('spots.private')
 
                     <comments
-                        :initial-count-spot-favorites='@json($spot->count_spot_comments)'
+                        :initial-count-comments='@json($spot->count_spot_comments)'
                         spot-id="{{ $spot->id }}"
                         user-id="{{ Auth::id() }}"
                     >
@@ -71,7 +71,7 @@
                             <p class="spot_creater_name">{{ $spot->user->user_name }}</p>
                         </a>
 
-                        {{ $spot->user->count_followings }} フォロー&nbsp;{{ $spot->user->count_followers }} フォロワー
+                        <span>{{ $spot->user->count_followings }}フォロー  {{ $spot->user->count_followers }}フォロワー</span>
                     </div>
 
                     @include('spots.mini_card')
