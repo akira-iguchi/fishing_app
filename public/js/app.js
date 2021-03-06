@@ -2046,9 +2046,9 @@ __webpack_require__.r(__webpack_exports__);
         _this3.confirmedImage = "";
         _this3.comment = "";
         _this3.comment_image = "";
-        _this3.message = "";
+        _this3.message = "コメントしました";
         _this3.wordLimit = 150;
-        _this3.countComments = response.data.countComments; //ファイルを選択のクリア
+        _this3.countComments += 1; //ファイルを選択のクリア
 
         _this3.view = false;
 
@@ -2056,7 +2056,7 @@ __webpack_require__.r(__webpack_exports__);
           this.view = true;
         });
       })["catch"](function (err) {
-        _this3.message = err.response.data.errors;
+        _this3.message = err.response.data.errors.comment;
       });
     },
     // コメント削除
@@ -2069,7 +2069,7 @@ __webpack_require__.r(__webpack_exports__);
       axios["delete"](path).then(function (response) {
         _this4.getComment();
 
-        _this4.countComments = response.data.countComments;
+        _this4.countComments -= 1;
       })["catch"](function (err) {
         console.log(err);
       });
@@ -60874,13 +60874,14 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h2", { staticClass: "mt-3" }, [_vm._v("コメント一覧")]),
-      _vm._v(" "),
-      _c("i", { staticClass: "fa fa-comment mr-1" }),
-      _vm._v(_vm._s(_vm.countComments) + "\n\n    "),
+  return _c("div", [
+    _c("h2", { staticClass: "mt-3" }, [_vm._v("コメント一覧")]),
+    _vm._v(" "),
+    _c("i", { staticClass: "fa fa-comment mr-1" }),
+    _vm._v(_vm._s(_vm.countComments) + "\n\n    "),
+    _c(
+      "div",
+      { staticClass: "comment_index" },
       _vm._l(_vm.comments, function(comment) {
         return _c("div", { key: comment.id }, [
           _c("div", { staticClass: "comment" }, [
@@ -60905,9 +60906,9 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "comment_under" }, [
               _vm._v(
-                "\n                " +
+                "\n                    " +
                   _vm._s(comment.comment) +
-                  "\n            "
+                  "\n                "
               )
             ]),
             _vm._v(" "),
@@ -60945,84 +60946,84 @@ var render = function() {
           ])
         ])
       }),
+      0
+    ),
+    _vm._v(" "),
+    _c("div", [
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "hidden", id: "user_id", name: "user_id" }
+      }),
       _vm._v(" "),
-      _c("div", [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "hidden", id: "user_id", name: "user_id" }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          0 > _vm.wordCount
-            ? _c("div", _vm._g({}, _vm.changeTrue()))
-            : 0 <= _vm.wordCount
-            ? _c("div", _vm._g({}, _vm.changeFalse()))
-            : _vm._e(),
-          _vm._v(" "),
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.comment,
-                expression: "comment"
-              }
-            ],
-            staticClass: "form-control mt-4",
-            attrs: { rows: "4", placeholder: "コメントしよう！" },
-            domProps: { value: _vm.comment },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.comment = $event.target.value
-              }
-            }
-          }),
-          _vm._v("\n            残り"),
-          _c("span", { class: { "text-danger": _vm.isActive } }, [
-            _vm._v(_vm._s(_vm.wordCount))
-          ]),
-          _vm._v("文字\n        ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "comment_image" } }, [_vm._v("画像")]),
-          _vm._v(" "),
-          _vm.view
-            ? _c("input", {
-                attrs: { id: "comment_image", type: "file" },
-                on: { change: _vm.confirmImage }
-              })
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _vm.confirmedImage
-          ? _c("p", [
-              _c("img", {
-                staticClass: "commentImg",
-                attrs: { src: _vm.confirmedImage }
-              })
-            ])
+      _c("div", { staticClass: "form-group" }, [
+        0 > _vm.wordCount
+          ? _c("div", _vm._g({}, _vm.changeTrue()))
+          : 0 <= _vm.wordCount
+          ? _c("div", _vm._g({}, _vm.changeFalse()))
           : _vm._e(),
         _vm._v(" "),
-        _c("span", { staticClass: "error_msg" }, [
-          _c("p", [_vm._v(_vm._s(_vm.message))])
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.comment,
+              expression: "comment"
+            }
+          ],
+          staticClass: "form-control mt-4",
+          attrs: { rows: "4", placeholder: "コメントしよう！" },
+          domProps: { value: _vm.comment },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.comment = $event.target.value
+            }
+          }
+        }),
+        _vm._v("\n            残り"),
+        _c("span", { class: { "text-danger": _vm.isActive } }, [
+          _vm._v(_vm._s(_vm.wordCount))
         ]),
+        _vm._v("文字\n        ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "comment_image" } }, [_vm._v("画像")]),
         _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "spot-create-edit-button",
-            on: { click: _vm.uploadComment }
-          },
-          [_c("i", { staticClass: "fas fa-pencil-alt" }), _vm._v(" コメント")]
-        )
-      ])
-    ],
-    2
-  )
+        _vm.view
+          ? _c("input", {
+              attrs: { id: "comment_image", type: "file" },
+              on: { change: _vm.confirmImage }
+            })
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _vm.confirmedImage
+        ? _c("p", [
+            _c("img", {
+              staticClass: "commentImg",
+              attrs: { src: _vm.confirmedImage }
+            })
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("span", { staticClass: "error_msg" }, [
+        _c("p", [_vm._v(_vm._s(_vm.message))])
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "spot-create-edit-button",
+          on: { click: _vm.uploadComment }
+        },
+        [_c("i", { staticClass: "fas fa-pencil-alt" }), _vm._v(" コメント")]
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

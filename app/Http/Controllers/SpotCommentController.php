@@ -13,7 +13,7 @@ class SpotCommentController extends Controller
 {
     public function index(Spot $spot)
     {
-        return $spot->spot_comments()->with('user')->orderBy('created_at', 'desc')->get();
+        return $spot->spot_comments()->with('user')->orderBy('id', 'desc')->get();
     }
 
     public function store(SpotCommentRequest $request, Spot $spot, SpotComment $spot_comment)

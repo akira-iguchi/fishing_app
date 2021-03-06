@@ -22,7 +22,6 @@
         @include('commons.flash_message')
 
         <div id="app">
-            <flash-message />
             <main>@yield('content')</main>
         </div>
 
@@ -34,6 +33,7 @@
         <script src="{{ asset('/js/setLocation.js') }}" defer></script>
         <script src="{{ asset('/js/wordCount.js') }}" defer></script>
         <script src="{{ asset('/js/passwordToggle.js') }}" defer></script>
+        <script src="https://unpkg.com/vuejs-paginate@2.1.0"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>

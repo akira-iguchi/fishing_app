@@ -3,37 +3,37 @@
         <h2 class="mt-3">コメント一覧</h2>
         <i class="fa fa-comment mr-1"></i>{{ countComments }}
 
-        <div v-for="comment in comments" :key="comment.id">
-            <div class="comment">
-                <div class="comment_top">
-                    <div class="comment_created_at">{{ comment.created_at | moment }}</div>
-                    <a v-bind:href="`/users/${comment.user_id}`">
-                        <img :src="`/storage/${comment.user.user_image}`" alt="釣り場投稿者の画像" />
-                        <span class="comment_creater_name">{{ comment.user.user_name }}</span>
-                    </a>
-                </div>
+        <div class="comment_index">
+            <div v-for="comment in comments" :key="comment.id">
+                <div class="comment">
+                    <div class="comment_top">
+                        <div class="comment_created_at">{{ comment.created_at | moment }}</div>
+                        <a v-bind:href="`/users/${comment.user_id}`">
+                            <img :src="`/storage/${comment.user.user_image}`" alt="釣り場投稿者の画像" />
+                            <span class="comment_creater_name">{{ comment.user.user_name }}</span>
+                        </a>
+                    </div>
 
-                <div class="comment_under">
-                    {{ comment.comment }}
-                </div>
+                    <div class="comment_under">
+                        {{ comment.comment }}
+                    </div>
 
-                <div v-if="comment.comment_image && comment.comment_image.length > 0" class="comment_img">
-                    <img :src="`/storage/${comment.comment_image}`" alt="釣り場コメントの画像" />
-                </div>
+                    <div v-if="comment.comment_image && comment.comment_image.length > 0" class="comment_img">
+                        <img :src="`/storage/${comment.comment_image}`" alt="釣り場コメントの画像" />
+                    </div>
 
-                <div class="comment_delete">
-                    <button
-                        v-if="comment.user_id == user_id"
-                        @click.prevent="deleteComment(comment.id)"
-                        type="button"
-                        onclick="return confirm('本当に削除しますか？')"
-                    >
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
+                    <div class="comment_delete">
+                        <button
+                            v-if="comment.user_id == user_id"
+                            @click.prevent="deleteComment(comment.id)"
+                            type="button"
+                            onclick="return confirm('本当に削除しますか？')"
+                        >
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
                 </div>
-
             </div>
-
         </div>
 
         <div>
@@ -186,9 +186,9 @@
                         this.confirmedImage = "";
                         this.comment = "";
                         this.comment_image = "";
-                        this.message = "";
+                        this.message = "コメントしました";
                         this.wordLimit = 150;
-                        this.countComments = response.data.countComments;
+                        this.countComments += 1;
 
                         //ファイルを選択のクリア
                         this.view = false;
@@ -197,7 +197,7 @@
                         });
                     })
                     .catch(err => {
-                        this.message = err.response.data.errors;
+                        this.message = err.response.data.errors.comment;
                     });
             },
 
@@ -208,7 +208,7 @@
                 const path = array.join('')
                 axios.delete(path).then(response => {
                     this.getComment();
-                    this.countComments = response.data.countComments;
+                    this.countComments -= 1;
                 }).catch(function(err) {
                 console.log(err)
                 })

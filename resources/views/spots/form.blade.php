@@ -40,6 +40,11 @@
 <div class="form-group">
     <label for="spot_image">画像</label>
     <input id="spot_image" type="file" name="spot_image">
+    @if($errors->has('spot_image'))
+        <span class="error_msg">
+            <p>{{ $errors->first('spot_image') }}</p>
+        </span>
+    @endif
 </div>
 
 <div class="form-group">
