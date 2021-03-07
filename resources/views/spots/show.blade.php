@@ -71,7 +71,7 @@
                             <p class="spot_creater_name">{{ $spot->user->user_name }}</p>
                         </a>
 
-                        <span>{{ $spot->user->count_followings }}フォロー  {{ $spot->user->count_followers }}フォロワー</span>
+                        <span><strong>{{ $spot->user->count_followings }}</strong>フォロー  <strong>{{ $spot->user->count_followers }}</strong>フォロワー</span>
                     </div>
 
                     @include('spots.mini_card')

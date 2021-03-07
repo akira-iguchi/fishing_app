@@ -25,7 +25,7 @@ class SpotCommentRequest extends FormRequest
     {
         return [
             'comment' => 'required|max:150',
-            'comment_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024',
+            'comment_image' => 'nullable|image|mimes:jpeg,png,jpg',
         ];
     }
 

@@ -38,8 +38,11 @@
 </div>
 
 <div class="form-group">
-    <label for="spot_image">画像</label>
-    <input id="spot_image" type="file" name="spot_image">
+    <label for="image">画像</label>
+    <input id="image" type="file" name="spot_image">
+    <p class="text-danger" id="file_hidden">画像ファイルを選択してください</p>
+    <span><img id="file-preview"></span>
+
     @if($errors->has('spot_image'))
         <span class="error_msg">
             <p>{{ $errors->first('spot_image') }}</p>
