@@ -24,6 +24,10 @@ return [
         'apikey' => env('GOOGLE_MAP_API'),
     ],
 
+    'weather' => [
+        'apikey' => env('OPEN_WEATHER_API'),
+    ],
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],

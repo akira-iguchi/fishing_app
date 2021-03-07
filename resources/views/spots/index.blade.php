@@ -9,11 +9,17 @@
                 <a href="{{ url('/spots/create') }}" class="btn create_btn">釣りスポットを投稿</a>
             </div>
 
-            <div class="row">
-                @include('spots.card')
-            </div>
+            <div class="toppage_under">
+                <div class="row">
+                    @include('spots.card')
+                    <div>@include('spots.count')</div>
+                </div>
 
-            @include('spots.count')
+                <aside class="entire_weather">
+                    <div id="city-name"></div>
+                    <div id="weather"></div>
+                </aside>
+            </div>
         </div>
     @else
         <div id="js-loading">
