@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class SpotSeeder extends Seeder
 {
@@ -13,6 +16,13 @@ class SpotSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('spots')->insert([
+            'user_id' => 1,
+            'spot_name' => Str::random(10),
+            'explanation' => Str::random(200),
+            'address' => Str::random(20),
+            'latitude' => 34.32,
+            'longitude' => 135.153,
+        ]);
     }
 }

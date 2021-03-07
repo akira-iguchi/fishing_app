@@ -19,11 +19,12 @@ class SpotsController extends Controller
     public function index()
     {
         $spots = Spot::all()->sortByDesc('created_at')->load('user');
-
+        $cardSize = 'mx-auto d-block col-md-6 col-11';
         $tags = Tag::all();
 
         return view('spots.index', [
             'spots' => $spots,
+            'cardSize' => $cardSize,
             'tags' => $tags,
         ]);
     }
@@ -135,20 +136,23 @@ class SpotsController extends Controller
 
     public function search(Request $request) {
         $keyword_name = $request->name;
+        $cardSize = 'mx-auto d-block col-lg-4 col-md-6 col-11';
         $tags = Tag::all();
 
         if (!empty($keyword_name)) {
             $query = Spot::query();
             $spots = $query->where('spot_name','like', '%' .$keyword_name. '%')->get();
-            return view('spots/search')->with([
-            'spots' => $spots,
-            'keyword_name' => $keyword_name,
-            'tags' => $tags,
+            return view('spots.searches.search')->with([
+                'spots' => $spots,
+                'keyword_name' => $keyword_name,
+                'cardSize' => $cardSize,
+                'tags' => $tags,
             ]);
         } else {
             $spots = Spot::all()->sortByDesc('created_at')->load('user');
-            return view('spots.search', [
+            return view('spots.searches.search', [
                 'spots' => $spots,
+                'cardSize' => $cardSize,
                 'tags' => $tags,
             ]);
         }

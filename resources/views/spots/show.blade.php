@@ -74,7 +74,7 @@
                         <span><strong>{{ $spot->user->count_followings }}</strong>フォロー  <strong>{{ $spot->user->count_followers }}</strong>フォロワー</span>
                     </div>
 
-                    @include('spots.mini_card')
+                    @include('spots.cards.mini_card')
                 </div>
             </div>
         </div>

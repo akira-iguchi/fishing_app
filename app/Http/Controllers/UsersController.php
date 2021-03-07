@@ -13,11 +13,13 @@ class UsersController extends Controller
     public function show(User $user)
     {
         $spots = $user->spots->sortByDesc('created_at');
+        $cardSize = 'mx-auto d-block col-lg-4 col-md-6 col-11';
 
         // メッセージ詳細ビューでそれを表示
         return view('users.show', [
             'user' => $user,
             'spots' => $spots,
+            'cardSize' => $cardSize,
         ]);
     }
 
@@ -85,10 +87,12 @@ class UsersController extends Controller
     public function favorites(User $user)
     {
         $spots = $user->favoriteSpots->sortByDesc('created_at');
+        $cardSize = 'mx-auto d-block col-lg-4 col-md-6 col-11';
 
         return view('users.favorite_spots', [
             'user' => $user,
             'spots' => $spots,
+            'cardSize' => $cardSize,
         ]);
     }
 }

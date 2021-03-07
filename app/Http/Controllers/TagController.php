@@ -12,10 +12,12 @@ class TagController extends Controller
     {
         $tag = Tag::where('name', $name)->first();
         $tags = Tag::all();
+        $cardSize = 'mx-auto d-block col-lg-4 col-md-6 col-11';
 
         return view('tags.show', [
             'tag' => $tag,
             'tags' => $tags,
+            'cardSize' => $cardSize,
         ]);
     }
 }

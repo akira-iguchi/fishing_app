@@ -3,16 +3,18 @@
 @section('content')
     @if (Auth::check())
         <div class="container">
-            @include('spots.search_form')
+            @include('spots.searches.search_form')
 
             <div class="text-center">
                 <a href="{{ url('/spots/create') }}" class="btn create_btn">釣りスポットを投稿</a>
             </div>
 
             <div class="toppage_under">
-                <div class="row">
-                    @include('spots.card')
-                    <div>@include('spots.count')</div>
+                <div>
+                    <div class="row">
+                        @include('spots.cards.card')
+                    </div>
+                    @include('spots.count')
                 </div>
 
                 <aside class="entire_weather">
