@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'SpotsController@index');
+Route::get('/', 'SpotController@index');
 
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
 Route::post('signup', 'Auth\RegisterController@register')->name('signup.post');
@@ -29,15 +29,15 @@ Route::group(['middleware' => ['auth']], function () {
 
     // idはフォローされる側
     Route::group(['prefix' => 'users/{user}'], function () {
-        Route::put('/follow', 'UsersController@follow')->name('users.follow');
-        Route::delete('/follow', 'UsersController@unfollow')->name('users.unfollow');
-        Route::get('/favorites', 'UsersController@favorites')->name('users.favorites');
+        Route::put('/follow', 'UserController@follow')->name('users.follow');
+        Route::delete('/follow', 'UserController@unfollow')->name('users.unfollow');
+        Route::get('/favorites', 'UserController@favorites')->name('users.favorites');
     });
 
     Route::group(['prefix' => 'spots/{spot}'], function () {
-        Route::put('/favorite', 'SpotsController@favorite')->name('spots.favorite');
-        Route::delete('/favorite', 'SpotsController@unfavorite')->name('spots.unfavorite');
-        Route::get('favorites', 'SpotsController@favorites')->name('spots.favorites');
+        Route::put('/favorite', 'SpotController@favorite')->name('spots.favorite');
+        Route::delete('/favorite', 'SpotController@unfavorite')->name('spots.unfavorite');
+        Route::get('favorites', 'SpotController@favorites')->name('spots.favorites');
         Route::get('comments', 'SpotCommentController@index');
         Route::post('comments', 'SpotCommentController@store');
         Route::delete('comments/{comment}', 'SpotCommentController@destroy');
@@ -45,8 +45,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
 
-    Route::resource('users', 'UsersController');
+    Route::resource('users', 'UserController');
 
-    Route::get('/spots/search','SpotsController@search');
-    Route::resource('/spots', 'SpotsController')->except(['index']);
+    Route::get('/fishing_types','FishingTypeController@index');
+
+    Route::get('/spots/search','SpotController@search');
+    Route::resource('/spots', 'SpotController')->except(['index']);
 });

@@ -23,10 +23,12 @@
                     </ul>
 
                     <div class="row">
-                        @include('spots.card')
+                        @include('spots.cards.card')
                     </div>
                 </div>
-                @include('spots.count')
+                <div class="w-100">
+                    @include('spots.count')
+                </div>
             </div>
         </div>
     @endif

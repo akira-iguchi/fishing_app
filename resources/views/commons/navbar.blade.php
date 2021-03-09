@@ -12,12 +12,12 @@
                 @if (Auth::check())
                     {{-- ログアウトへのリンク --}}
                     <li>{!! link_to_route('logout.get', 'ログアウト') !!}</li>
-                    {{-- 釣りスポット作成へのリンク --}}
+                    {{-- 釣り方一覧ページへのリンク --}}
+                    <li><a href="{{ url('/fishing_types') }}">釣り方一覧</a></li>
+                    {{-- 釣りスポット作成ページへのリンク --}}
                     <li><a href="{{ url('/spots/create') }}">投稿</a></li>
-                    {{-- 釣りスポット作成へのリンク --}}
-                    <li>
-                        <a href="{{ route('users.show', Auth::id())}}">{{ Auth::user()->user_name }}さん</a>
-                    </li>
+                    {{-- ユーザーページへのリンク --}}
+                    <li><a href="{{ route('users.show', Auth::id())}}">{{ Auth::user()->user_name }}さん</a></li>
                 @else
                     {{-- ユーザ登録ページへのリンク --}}
                     <li><a href="{{ url('/signup') }}"><i class="fas fa-user-plus"></i>&thinsp;新規登録</a></li>

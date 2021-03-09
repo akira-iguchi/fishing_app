@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Spot;
 use App\Models\Tag;
+use App\Models\FishingType;
 use App\Models\SpotComment;
 use Illuminate\Http\Request;
 use App\Traits\TagNameTrait;
@@ -11,14 +12,14 @@ use App\Http\Requests\SpotRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class SpotsController extends Controller
+class SpotController extends Controller
 {
     // 共通メソッド化（挑戦中）
     use TagNameTrait;
 
     public function index()
     {
-        $spots = Spot::all()->sortByDesc('created_at')->load('user');
+        $spots = Spot::all()->sortByDesc('created_at');
         $cardSize = 'mx-auto d-block col-md-6 col-11';
         $tags = Tag::all();
 
@@ -36,7 +37,7 @@ class SpotsController extends Controller
 
         // メッセージ詳細ビューでそれを表示
         return view('spots.show', [
-            'spot' => $spot->load('user'),
+            'spot' => $spot,
             'spots' => $spots,
         ]);
     }
@@ -47,9 +48,12 @@ class SpotsController extends Controller
             return ['text' => $tag->name];
         });
 
+        $fishingTypes = FishingType::find(1);
+
         return view('spots.create', [
             'spot' => $spot,
             'allTagNames' => $allTagNames,
+            'fishingTypes' => $fishingTypes,
         ]);
     }
 
@@ -67,12 +71,18 @@ class SpotsController extends Controller
             // $spot->spot_image = $path;
         }
         $spot->user_id = auth()->id();
+        $request->fishing_types->each(function ($fishingType) use ($spot) {
+            $fishing_type = FishingType::find(1);
+            dd($fishing_type);
+            $spot->fishing_types()->attach($fishing_type);
+        });
         $spot->save();
 
         $request->tags->each(function ($tagName) use ($spot) {
-            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $tag = Tag::firstOrCreate(['text' => $tagName]);
             $spot->tags()->attach($tag);
         });
+
 
         return redirect('/')->with('flash_message', '釣りスポットを投稿しました');
     }

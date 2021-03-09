@@ -44,6 +44,7 @@ class SpotRequest extends FormRequest
             'longitude' => '経度',
             'spot_image' => '画像',
             'tags' => 'タグ',
+            'fishing_types' => '釣り方',
         ];
     }
 
@@ -54,5 +55,8 @@ class SpotRequest extends FormRequest
             ->map(function ($requestTag) {
                 return $requestTag->text;
             });
+
+        $this->fishing_types = collect($this->fishing_types)
+            ->slice(0, 8);
     }
 }

@@ -15,4 +15,12 @@ class FishingType extends Model
         'fishing_type_name',
         'content',
     ];
+
+    /**
+     *釣りスポット
+     */
+    public function spots()
+    {
+        return $this->belongsToMany(Spot::class, 'spot_fishing_type')->withTimestamps();
+    }
 }

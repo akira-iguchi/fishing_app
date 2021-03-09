@@ -70,4 +70,12 @@ class Spot extends Model
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
+
+    /**
+     * 釣り方
+     */
+    public function fishing_types()
+    {
+        return $this->belongsToMany(FishingType::class, 'spot_fishing_type')->withTimestamps();
+    }
 }

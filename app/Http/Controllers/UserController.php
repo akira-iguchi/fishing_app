@@ -8,7 +8,7 @@ use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     public function show(User $user)
     {

@@ -38,6 +38,22 @@
 </div>
 
 <div class="form-group">
+    <label>おすすめの釣り方</label><br>
+
+
+        <label class="mr-2" for="{{ $fishingType->id }}">
+            <input id="{{ $fishingType->id }}" type="checkbox" name="fishing_types"> {{ $fishingTypes->fishing_type_name }}
+        </label>
+
+
+    @if($errors->has('fishing_types'))
+    <span class="error_msg">
+        <p>{{ $errors->first('fishing_types') }}</p>
+    </span>
+    @endif
+</div>
+
+<div class="form-group">
     <label for="image">画像</label>
     <input id="image" type="file" name="spot_image">
     <p class="text-danger" id="file_hidden">画像ファイルを選択してください</p>
