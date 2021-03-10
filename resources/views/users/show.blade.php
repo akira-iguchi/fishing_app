@@ -17,7 +17,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-muted"
                             href="{{ route('users.favorites', ['user' => $user]) }}">
-                            いいね <span class="badge badge-secondary">{{ $user->favoriteSpots->count() }}</span>
+                            いいね <span class="badge badge-secondary">{{ $user->count_favorite_spots }}</span>
                             </a>
                         </li>
                     </ul>

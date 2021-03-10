@@ -1,3 +1,9 @@
+@if ($user->id === Auth::id())
+    <span class="user_title"><i class="fa fa-user" aria-hidden="true"></i>マイプロフィール</span>
+@else
+    <span class="user_title"><i class="fa fa-user" aria-hidden="true"></i>ユーザープロフィール</span>
+@endif
+
 <div class="profile">
     <div class="profile_top">
         <div class="profile_image">

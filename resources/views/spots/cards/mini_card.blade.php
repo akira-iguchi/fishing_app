@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="card_comment">
-                        <i class="fa fa-comment mr-1"></i>{{ $spot->spot_comments()->count() }}
+                        <i class="fa fa-comment mr-1"></i>{{ $spot->count_spot_comments }}
                     </div>
 
                 <a href="{{ route('users.show', $spot->user_id)}}">

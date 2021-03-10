@@ -64,6 +64,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Spot::class, 'spot_favorite')->withTimestamps();
     }
 
+    public function getCountFavoriteSpotsAttribute(): int
+    {
+        return $this->favoriteSpots->count();
+    }
+
     /**
      * 釣りスポットのコメント
      */

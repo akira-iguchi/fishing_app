@@ -46,6 +46,18 @@
                                     <td>{{ $spot->address }}</td>
                                 </tr>
                             @endif
+                            @if($spot->fishing_types !== null)
+                                <tr>
+                                    <th><a href="/fishing_types">おすすめの釣り方</a></th>
+                                    <td>
+                                        @foreach($spot->fishing_types as $fishing_type)
+                                            <ul class="spot-fishing_type">
+                                                <li>{{ $fishing_type->fishing_type_name }}</li>
+                                            </ul>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                            @endif
                             <tr>
                                 <th>説明</th>
                                 <td>{{ $spot->explanation }}</td>

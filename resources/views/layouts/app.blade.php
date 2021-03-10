@@ -31,6 +31,7 @@
         @include('commons.footer')
 
         <script src="{{ mix('/js/app.js') }}"></script>
+        @stack('js')
         <script src="{{ asset('/js/various.js') }}" defer></script>
         <script src="{{ asset('/js/setLocation.js') }}" defer></script>
         <script src="{{ asset('/js/wordCount.js') }}" defer></script>

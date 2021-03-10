@@ -40,13 +40,15 @@
 <div class="form-group">
     <label>おすすめの釣り方</label><br>
 
-    @foreach ($fishingTypes as $fishingType)
-        <label class="mr-2" for="{{ $fishingType->id }}">
-            <input id="{{ $fishingType->id }}" type="checkbox" name="fishing_types[]" value="{{ $fishingType->id }}"
-                {{ $spot->fishing_types->contains('id', $fishingType->id) ? 'checked="checked"' : '' }}
-            > {{ $fishingType->fishing_type_name }}
-        </label>
-    @endforeach
+    <div class="fishing_type_form">
+        @foreach ($fishingTypes as $fishingType)
+            <label class="mr-2" for="{{ $fishingType->id }}">
+                <input id="{{ $fishingType->id }}" type="checkbox" name="fishing_types[]" value="{{ $fishingType->id }}"
+                    {{ $spot->fishing_types->contains('id', $fishingType->id) ? 'checked="checked"' : '' }}
+                > {{ $fishingType->fishing_type_name }}
+            </label>
+        @endforeach
+    </div>
 
     @if($errors->has('fishing_types'))
     <span class="error_msg">

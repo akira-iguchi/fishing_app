@@ -12,7 +12,7 @@ class FishingTypeController extends Controller
 {
     public function index()
     {
-        $fishing_types = FishingType::all()->sortByDesc('created_at');
+        $fishing_types = FishingType::all()->sortByDesc('created_at')->load('spots');
 
         return view('fishing_types.index', [
             'fishing_types' => $fishing_types,

@@ -76,7 +76,7 @@
   background: #FFFFFF;
   margin: auto;
   margin-top: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   max-width: 275px;
   height: 330px;
   box-shadow: 5px 5px 10px 0 rgb(0 0 0 / 50%);
@@ -321,6 +321,12 @@
   border: 3px solid #FFCC33;
 }
 
+.fishing_type_form {
+  background: #eeffff;
+  padding: .5em 1em 0 1em;
+  border: 1px solid #ced4da;
+}
+
 #file_hidden {
   display: none;
 }
@@ -391,6 +397,7 @@
 .spot_tag {
   position: relative;
   top: 20px;
+  white-space: nowrap;
   line-height: 2.2rem;
   padding: 0.5em 1em;
   margin-right: 8px;
@@ -470,6 +477,13 @@
 .spot_container td {
   padding: 10px;
   border: 1px solid #dedede;
+}
+
+.spot-fishing_type {
+  position: relative;
+  right: 19px;
+  list-style: none;
+  margin: auto;
 }
 
 .spot_user_private {

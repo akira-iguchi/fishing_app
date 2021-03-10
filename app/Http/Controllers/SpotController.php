@@ -19,21 +19,27 @@ class SpotController extends Controller
 
     public function index()
     {
-        $spots = Spot::all()->sortByDesc('created_at');
-        $cardSize = 'mx-auto d-block col-md-6 col-11';
-        $tags = Tag::all();
+        if (Auth::check()) {
+            $spots = Spot::all()->sortByDesc('created_at')
+                    ->load(['user', 'spot_favorites', 'spot_comments']);
 
-        return view('spots.index', [
-            'spots' => $spots,
-            'cardSize' => $cardSize,
-            'tags' => $tags,
-        ]);
+            $tags = Tag::all()->take(15);
+
+            return view('spots.index', [
+                'spots' => $spots,
+                'tags' => $tags,
+            ]);
+        } else {
+            return view('spots.index');
+        }
     }
 
     public function show(Spot $spot)
     {
         // その他の釣りスポット
-        $spots = Spot::where('id','!=', $spot->id)->get()->sortByDesc('created_at')->load('user');
+        $spots = Spot::where('id','!=', $spot->id)->get()->sortByDesc('created_at')
+                ->take(15)
+                ->load(['user', 'spot_favorites', 'spot_comments', 'fishing_types']);
 
         // メッセージ詳細ビューでそれを表示
         return view('spots.show', [
@@ -146,23 +152,22 @@ class SpotController extends Controller
 
     public function search(Request $request) {
         $keyword_name = $request->name;
-        $cardSize = 'mx-auto d-block col-lg-4 col-md-6 col-11';
-        $tags = Tag::all();
+        $tags = Tag::all()->take(15);
 
         if (!empty($keyword_name)) {
-            $query = Spot::query();
-            $spots = $query->where('spot_name','like', '%' .$keyword_name. '%')->get();
+            $spots = Spot::query()->where('spot_name','like', '%' .$keyword_name. '%')->get();
             return view('spots.searches.search')->with([
-                'spots' => $spots,
+                'spots' => $spots->sortByDesc('created_at')
+                            ->load(['user', 'spot_favorites', 'spot_comments']),
                 'keyword_name' => $keyword_name,
                 'cardSize' => $cardSize,
                 'tags' => $tags,
             ]);
         } else {
-            $spots = Spot::all()->sortByDesc('created_at')->load('user');
+            $spots = Spot::all()->sortByDesc('created_at')
+                    ->load(['user', 'spot_favorites', 'spot_comments']);
             return view('spots.searches.search', [
                 'spots' => $spots,
-                'cardSize' => $cardSize,
                 'tags' => $tags,
             ]);
         }

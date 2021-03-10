@@ -69,3 +69,7 @@
         </div>
     @endif
 @endsection
+
+@push('js')
+    <script src="{{ asset('/js/weather.js') }}" defer></script>
+@endpush

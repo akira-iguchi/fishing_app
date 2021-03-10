@@ -30,7 +30,7 @@ class SpotRequest extends FormRequest
             'latitude' => 'required',
             'longitude' => 'required',
             'spot_image' => 'nullable|image|mimes:jpeg,png,jpg',
-            'tags' => 'json|regex:/^(?!.*\s).+$/u|regex:/^(?!.*\/).*$/u',
+            'tags' => 'json|regex:/^(?!.*\s).+$/u|regex:/^(?!.*\/).*$/u|max:10',
         ];
     }
 
