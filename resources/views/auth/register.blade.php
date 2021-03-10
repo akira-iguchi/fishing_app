@@ -4,7 +4,7 @@
     <div class="login-signup_body">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-8 login-signup">
+                <div class="login-signup">
                     <div class="login-signup-header">
                         <h1>新規登録</h1>
                     </div>
@@ -24,6 +24,16 @@
                             <label for="email" class="required">メールアドレス</label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email">
                                 @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <p>{{ $message }}</p>
+                                    </span>
+                                @enderror
+
+                            <label for="textAreaIntroduction">自己紹介</label>
+                                <textarea rows="4" id="textAreaIntroduction" class="form-control @error('introduction') is-invalid @enderror" name="introduction">{{ old('introduction') }}</textarea>
+                                <p>残り<span id="textLestIntroduction">100</span>文字</p>
+                                <p id="textAttentionIntroduction" style="display:none; color:red;">入力文字数が多すぎます。</p>
+                                @error('introduction')
                                     <span class="invalid-feedback" role="alert">
                                         <p>{{ $message }}</p>
                                     </span>

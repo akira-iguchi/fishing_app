@@ -15,10 +15,10 @@
     if (document.getElementById("textArea") != null) {
         input_area.addEventListener('keyup', wordCount);
     } else {
-        max = 150;
-        input_area = document.getElementById("textAreaComment"),
-        output_lest = document.getElementById("textLestComment"),
-        attention = document.getElementById("textAttentionComment");
+        max = 100;
+        input_area = document.getElementById("textAreaIntroduction"),
+        output_lest = document.getElementById("textLestIntroduction"),
+        attention = document.getElementById("textAttentionIntroduction");
 
         input_area.addEventListener('keyup', wordCount);
     }

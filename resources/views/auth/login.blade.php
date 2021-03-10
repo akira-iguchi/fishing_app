@@ -4,7 +4,7 @@
     <div class="login-signup_body">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-8 login-signup">
+                <div class="login-signup">
                     <div class="login-signup-header">
                         <h1>ログイン</h1>
                     </div>

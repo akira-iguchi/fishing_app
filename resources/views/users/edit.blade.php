@@ -45,6 +45,18 @@
                                 </span>
                             @endif
 
+                            <label for="textAreaIntroduction">自己紹介</label>
+                                <div class="user-edit_text">
+                                    <textarea rows="5" id="textAreaIntroduction" name="introduction">{{ old('introduction', $user['introduction']) }}</textarea>
+                                </div>
+                                <p>残り<span id="textLestIntroduction">100</span>文字</p>
+                                <p id="textAttentionIntroduction" style="display:none; color:red;">入力文字数が多すぎます。</p>
+                                @error('introduction')
+                                    <span class="invalid-feedback" role="alert">
+                                        <p>{{ $message }}</p>
+                                    </span>
+                                @enderror
+
                             <div>
                                 <button class="user_edit-button">更新&emsp;<i class="fas fa-angle-right fa-lg"></i></button>
                             </div>

@@ -164,6 +164,7 @@ return [
     'attributes' => [
         'user_name' => "ユーザー名",
         'spot_name' => "釣りスポット名",
+        'introduction' => "自己紹介",
         'explanation' => "説明",
         'address' => "所在地",
         'comment' => "コメント",

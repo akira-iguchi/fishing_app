@@ -48,7 +48,7 @@ class SpotController extends Controller
             return ['text' => $tag->name];
         });
 
-        $fishingTypes = FishingType::find(1);
+        $fishingTypes = FishingType::all();
 
         return view('spots.create', [
             'spot' => $spot,
@@ -71,11 +71,6 @@ class SpotController extends Controller
             // $spot->spot_image = $path;
         }
         $spot->user_id = auth()->id();
-        $request->fishing_types->each(function ($fishingType) use ($spot) {
-            $fishing_type = FishingType::find(1);
-            dd($fishing_type);
-            $spot->fishing_types()->attach($fishing_type);
-        });
         $spot->save();
 
         $request->tags->each(function ($tagName) use ($spot) {
@@ -83,6 +78,7 @@ class SpotController extends Controller
             $spot->tags()->attach($tag);
         });
 
+        $spot->fishing_types()->attach($request->fishing_types);
 
         return redirect('/')->with('flash_message', '釣りスポットを投稿しました');
     }
@@ -98,10 +94,13 @@ class SpotController extends Controller
                 return ['text' => $tag->name];
             });
 
+            $fishingTypes = FishingType::all();
+
             return view('spots.edit', [
                 'spot' => $spot,
                 'tagNames' => $tagNames,
                 'allTagNames' => $allTagNames,
+                'fishingTypes' => $fishingTypes,
             ]);
         } else {
             session()->flash('error_message', '自信が投稿した釣りスポットのみ編集できます');
@@ -124,11 +123,12 @@ class SpotController extends Controller
         }
         $spot->save();
 
-        $spot->tags()->detach();
         $request->tags->each(function ($tagName) use ($spot) {
             $tag = Tag::firstOrCreate(['name' => $tagName]);
-            $spot->tags()->attach($tag);
+            $spot->tags()->sync($tag);
         });
+
+        $spot->fishing_types()->sync($request->fishing_types);
 
         session()->flash('flash_message', '釣りスポットを更新しました');
         return redirect()->route('spots.show', [$spot]);

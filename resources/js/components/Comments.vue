@@ -207,6 +207,7 @@
                 const array = ["/spots/",id,"/comments/", comment];
                 const path = array.join('')
                 axios.delete(path).then(response => {
+                    this.message = "コメントを削除しました";
                     this.getComment();
                     this.countComments -= 1;
                 }).catch(function(err) {
