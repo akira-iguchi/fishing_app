@@ -327,6 +327,11 @@
   border: 1px solid #ced4da;
 }
 
+.fishing_type_form label,
+.fishing_type_form input {
+  cursor: pointer;
+}
+
 #file_hidden {
   display: none;
 }

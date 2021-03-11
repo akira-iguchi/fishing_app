@@ -29,3 +29,9 @@
     </div>
     @endif
 @endsection
+
+@push('js')
+    <script src="{{ asset('/js/setLocation.js') }}" defer></script>
+    <script src="{{ asset('/js/wordCount.js') }}" defer></script>
+    <script src="{{ asset('/js/imagePreview.js') }}" defer></script>
+@endpush

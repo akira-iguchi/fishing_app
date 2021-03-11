@@ -23,6 +23,11 @@
                 </aside>
             </div>
         </div>
+
+        @push('js')
+            <script src="{{ asset('/js/weather.js') }}" defer></script>
+            <script src="{{ asset('/js/seeMore.js') }}" defer></script>
+        @endpush
     @else
         <div id="js-loading">
             <div class="js-spinner"></div>
@@ -67,9 +72,9 @@
                 <img src="/images/akira.jpeg" alt="自己紹介の画像">
             </div>
         </div>
+
+        @push('js')
+            <script src="{{ asset('/js/loading.js') }}" defer></script>
+        @endpush
     @endif
 @endsection
-
-@push('js')
-    <script src="{{ asset('/js/weather.js') }}" defer></script>
-@endpush

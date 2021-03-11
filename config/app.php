@@ -230,6 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         /* originals */
         'TagNameTrait' => app\Traits\TagNameTrait::class,
+        'SpotTrait' => app\Traits\SpotTrait::class,
     ],
 
 ];

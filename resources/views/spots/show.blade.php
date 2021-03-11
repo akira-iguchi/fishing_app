@@ -93,6 +93,11 @@
     @endif
 @endsection
 
+@push('js')
+    <script src="{{ asset('/js/imageSlide.js') }}" defer></script>
+    <script src="{{ asset('/js/seeMore.js') }}" defer></script>
+@endpush
+
 <script>
     function initMap(){
         map = new google.maps.Map(document.getElementById('show_map'), { //'show_map'というidを取得してマップを表示

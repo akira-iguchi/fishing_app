@@ -21,3 +21,7 @@
         </div>
     @endif
 @endsection
+
+@push('js')
+    <script src="{{ asset('/js/seeMore.js') }}" defer></script>
+@endpush

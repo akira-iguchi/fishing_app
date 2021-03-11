@@ -64,3 +64,8 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script src="{{ asset('/js/passwordToggle.js') }}" defer></script>
+    <script src="{{ asset('/js/wordCount.js') }}" defer></script>
+@endpush

@@ -55,8 +55,7 @@ class UserController extends Controller
             return abort('404', 'あなた自信をフォローすることはできません');
         }
 
-        $request->user()->followings()->detach($user);
-        $request->user()->followings()->attach($user);
+        $request->user()->followings()->sync($user);
 
         return [
             'user' => $user,

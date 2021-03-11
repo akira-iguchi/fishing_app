@@ -8,20 +8,17 @@ use App\Models\FishingType;
 use App\Models\SpotComment;
 use Illuminate\Http\Request;
 use App\Traits\TagNameTrait;
+use App\Traits\SpotTrait;
 use App\Http\Requests\SpotRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class SpotController extends Controller
 {
-    // 共通メソッド化（挑戦中）
-    use TagNameTrait;
-
     public function index()
     {
         if (Auth::check()) {
-            $spots = Spot::all()->sortByDesc('created_at')
-                    ->load(['user', 'spot_favorites', 'spot_comments']);
+            $spots = SpotTrait::allSpots();
 
             $tags = Tag::all()->take(15);
 
@@ -50,9 +47,7 @@ class SpotController extends Controller
 
     public function create(Spot $spot)
     {
-        $allTagNames = Tag::all()->map(function ($tag) {
-            return ['text' => $tag->name];
-        });
+        $allTagNames = TagNameTrait::getAllTagNames();
 
         $fishingTypes = FishingType::all();
 
@@ -96,9 +91,7 @@ class SpotController extends Controller
                 return ['text' => $tag->name];
             });
 
-            $allTagNames = Tag::all()->map(function ($tag) {
-                return ['text' => $tag->name];
-            });
+            $allTagNames = TagNameTrait::getAllTagNames();
 
             $fishingTypes = FishingType::all();
 
@@ -164,8 +157,7 @@ class SpotController extends Controller
                 'tags' => $tags,
             ]);
         } else {
-            $spots = Spot::all()->sortByDesc('created_at')
-                    ->load(['user', 'spot_favorites', 'spot_comments']);
+            $spots = SpotTrait::allSpots();
             return view('spots.searches.search', [
                 'spots' => $spots,
                 'tags' => $tags,
@@ -175,9 +167,7 @@ class SpotController extends Controller
 
     public function favorite(Request $request, Spot $spot)
     {
-        // 1人のユーザーが同一釣りスポットに複数回重ねていいねを付けられないようにするため、先にdetach
-        $spot->spot_favorites()->detach($request->user()->id);
-        $spot->spot_favorites()->attach($request->user()->id);
+        $spot->spot_favorites()->sync($request->user()->id);
 
         return [
             'spot' => $spot,

@@ -47,3 +47,7 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script src="{{ asset('/js/passwordToggle.js') }}" defer></script>
+@endpush

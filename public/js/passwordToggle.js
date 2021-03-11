@@ -2,7 +2,7 @@
 (() => {
     const passwordToggle = document.querySelectorAll('.js-password-toggle');
 
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 1; i++) {
         passwordToggle[i].addEventListener('change', function () {
             const password = document.querySelectorAll('.js-password'),
                 passwordLabel = document.querySelectorAll('.js-password-label');
