@@ -10,16 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function show(User $user)
-    {
-        // メッセージ詳細ビューでそれを表示
-        return view('users.show', [
-            'user' => $user,
-            'spots' => $user->spots->sortByDesc('created_at')
-                        ->load(['user', 'spot_favorites', 'spot_comments']),
-        ]);
-    }
-
     public function edit(User $user)
     {
         if($user->id == 1) {
@@ -80,12 +70,16 @@ class UserController extends Controller
         ];
     }
 
-    public function favorites(User $user)
+    public function show(User $user)
     {
-        return view('users.favorite_spots', [
+        return view('users.show', [
             'user' => $user,
-            'spots' => $user->favoriteSpots->sortByDesc('created_at')
-                        ->load(['user', 'spot_favorites', 'spot_comments']),
         ]);
+    }
+
+    public function tabs(User $user)
+    {
+        return $user->spots->sortByDesc('created_at')
+                    ->load(['user', 'spot_favorites', 'spot_comments']);
     }
 }

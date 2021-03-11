@@ -77,6 +77,11 @@ class User extends Authenticatable
         return $this->hasMany(SpotComment::class);
     }
 
+    public function getCountSpotCommentsAttribute(): int
+    {
+        return $this->spot_comments->count();
+    }
+
     /**
      * フォロー
      */
