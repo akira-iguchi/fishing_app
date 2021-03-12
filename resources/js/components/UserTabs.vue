@@ -13,7 +13,7 @@
             </li>
         </ul>
 
-        <div v-show="tab === 1">
+        <div class="row" v-show="tab === 1">
             <div v-for="spot in spots" :key="spot.id" class="mx-auto d-block col-lg-4 col-md-6 col-11">
                 <div class="spot_card">
                     <a v-bind:href="`/spots/${spot.id}`">
@@ -97,7 +97,7 @@
         data() {
             return {
                 tab: 1,
-                spots: {},
+                userSpots: [],
                 countSpots: 2,
                 user_id: this.userId,
                 countUserSpots: this.initialCountUserSpots,
@@ -108,8 +108,8 @@
         },
 
         computed: {
-            listSpots() {
-                const list = this.spots
+            spots() {
+                const list = this.userSpots
                 return list.slice(0, this.countSpots)
             }
         },
@@ -128,7 +128,7 @@
                 axios
                     .get(path)
                     .then(response => {
-                        this.spots = response.data;
+                        this.userSpots = response.data;
                     })
                     .catch(err => {
                         console.log(err);

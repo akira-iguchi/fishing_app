@@ -5,7 +5,6 @@
         <div class="container">
             <div class="row spot_body">
                 <div class="mx-auto d-block col-lg-8 spot_container">
-                    <p class="spot_created_at">{{ $spot->created_at->format('Y/m/d') }}</p>
                     <h1 class="spot_name">{{ $spot->spot_name }}</h1>
 
                     @foreach($spot->tags as $tag)
@@ -36,19 +35,20 @@
                         <div class="swiper-button-next"></div>
                     </div>
 
-                    @include('favorites.favorite_button')
+                    <div class="d-flex">
+                        @include('favorites.favorite_button')
+                        {{ $spot->created_at->format('Y/m/d') }}
+                    </div>
 
                     <table>
                         <tbody>
-                            @if(isset( $spot->address ))
-                                <tr>
-                                    <th>所在地</th>
-                                    <td>{{ $spot->address }}</td>
-                                </tr>
-                            @endif
-                            @if($spot->fishing_types !== null)
-                                <tr>
-                                    <th><a href="/fishing_types">おすすめの釣り方</a></th>
+                            <tr>
+                                <th>所在地</th>
+                                <td> {{ $spot->address ?: '未登録' }}</td>
+                            </tr>
+                            <tr>
+                                <th><a href="/fishing_types">おすすめの釣り方</a></th>
+                                @if($spot->fishing_types !== null)
                                     <td>
                                         @foreach($spot->fishing_types as $fishing_type)
                                             <ul class="spot-fishing_type">
@@ -56,8 +56,10 @@
                                             </ul>
                                         @endforeach
                                     </td>
+                                @else
+                                    <td>未登録</td>
+                                @endif
                                 </tr>
-                            @endif
                             <tr>
                                 <th>説明</th>
                                 <td>{{ $spot->explanation }}</td>

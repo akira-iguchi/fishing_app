@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mr-3">
         <button
             type="button"
             class="btn m-0 p-0 shadow-none"

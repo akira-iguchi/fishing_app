@@ -34,14 +34,14 @@ class SpotController extends Controller
     public function show(Spot $spot)
     {
         // その他の釣りスポット
-        $spots = Spot::where('id','!=', $spot->id)->get()->sortByDesc('created_at')
+        $otherSpots = Spot::where('id','!=', $spot->id)->get()->sortByDesc('created_at')
                 ->take(15)
                 ->load(['user', 'spot_favorites', 'spot_comments', 'fishing_types']);
 
         // メッセージ詳細ビューでそれを表示
         return view('spots.show', [
             'spot' => $spot,
-            'spots' => $spots,
+            'otherSpots' => $otherSpots,
         ]);
     }
 
@@ -49,12 +49,12 @@ class SpotController extends Controller
     {
         $allTagNames = TagNameTrait::getAllTagNames();
 
-        $fishingTypes = FishingType::all();
+        $allFishingTypeNames = FishingType::all();
 
         return view('spots.create', [
             'spot' => $spot,
             'allTagNames' => $allTagNames,
-            'fishingTypes' => $fishingTypes,
+            'allFishingTypeNames' => $allFishingTypeNames,
         ]);
     }
 
@@ -93,13 +93,13 @@ class SpotController extends Controller
 
             $allTagNames = TagNameTrait::getAllTagNames();
 
-            $fishingTypes = FishingType::all();
+            $allFishingTypeNames = FishingType::all();
 
             return view('spots.edit', [
                 'spot' => $spot,
                 'tagNames' => $tagNames,
                 'allTagNames' => $allTagNames,
-                'fishingTypes' => $fishingTypes,
+                'allFishingTypeNames' => $allFishingTypeNames,
             ]);
         } else {
             session()->flash('error_message', '自信が投稿した釣りスポットのみ編集できます');
@@ -167,7 +167,8 @@ class SpotController extends Controller
 
     public function favorite(Request $request, Spot $spot)
     {
-        $spot->spot_favorites()->sync($request->user()->id);
+        $spot->spot_favorites()->detach($request->user()->id);
+        $spot->spot_favorites()->attach($request->user()->id);
 
         return [
             'spot' => $spot,

@@ -2518,7 +2518,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       tab: 1,
-      spots: {},
+      userSpots: [],
       countSpots: 2,
       user_id: this.userId,
       countUserSpots: this.initialCountUserSpots,
@@ -2528,8 +2528,8 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
-    listSpots: function listSpots() {
-      var list = this.spots;
+    spots: function spots() {
+      var list = this.userSpots;
       return list.slice(0, this.countSpots);
     }
   },
@@ -2545,7 +2545,7 @@ __webpack_require__.r(__webpack_exports__);
       var array = ["/users/", id, "/tabs"];
       var path = array.join('');
       axios.get(path).then(function (response) {
-        _this.spots = response.data;
+        _this.userSpots = response.data;
       })["catch"](function (err) {
         console.log(err);
       });
@@ -61310,7 +61310,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "mr-3" }, [
     _c(
       "button",
       {
@@ -61469,7 +61469,8 @@ var render = function() {
             value: _vm.tab === 1,
             expression: "tab === 1"
           }
-        ]
+        ],
+        staticClass: "row"
       },
       _vm._l(_vm.spots, function(spot) {
         return _c(

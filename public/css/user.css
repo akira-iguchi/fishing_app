@@ -46,9 +46,13 @@
 .profile_content span,
 .profile_content button {
   position: relative;
-  top: 10px;
   left: 20px;
+  margin-top: 10px;
   margin-right: 10px;
+}
+
+.profile_content button {
+  cursor: pointer;
 }
 
 .profile_edit_link {
@@ -64,6 +68,21 @@
 
 .user-tabs {
   width: 100%;
+}
+
+.tab_under {
+  overflow: auto;
+  max-height: 600px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.followings_user_name {
+  margin-top: 10px;
+  color: black;
+  font-size: 1.3rem;
+  font-weight: 200;
+  text-decoration: none;
 }
 
 @media only screen and (max-width: 769px) {

@@ -2,7 +2,7 @@
     <hr>
     <h3 class="text-center mt-1">他の釣りスポット</h3>
 
-    @foreach ($spots as $spot)
+    @foreach ($otherSpots as $spot)
         <div class="mini_card spot-hidden">
             <a href="{{ route('spots.show', $spot->id)}}">
                 <div class="mini_card_img">
@@ -35,6 +35,6 @@
     @endforeach
 
     <div>
-        @include('spots.count')
+        @include('spots.count', ['spots' => $otherSpots])
     </div>
 </div>

@@ -40,9 +40,6 @@ class SpotCommentController extends Controller
         // 認証済みユーザ（閲覧者）がその投稿の所有者である場合は、投稿を削除
         if (\Auth::id() === $comment->user_id) {
             $comment->delete();
-            return ['flash_message' => 'コメントを削除しました'];
-        } else {
-            return ['error_message' => 'コメントを削除できませんでした'];
         }
     }
 }

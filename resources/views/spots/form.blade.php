@@ -41,7 +41,7 @@
     <label>おすすめの釣り方</label><br>
 
     <div class="fishing_type_form">
-        @foreach ($fishingTypes as $fishingType)
+        @foreach ($allFishingTypeNames as $fishingType)
             <label class="mr-2" for="{{ $fishingType->id }}">
                 <input id="{{ $fishingType->id }}" type="checkbox" name="fishing_types[]" value="{{ $fishingType->id }}"
                     {{ $spot->fishing_types->contains('id', $fishingType->id) ? 'checked="checked"' : '' }}

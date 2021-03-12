@@ -395,7 +395,6 @@
 
 .spot_name {
   text-align: center;
-  margin-top: 40px;
   font-size: 190%;
 }
 
@@ -723,19 +722,4 @@ a:not([href]):not([tabindex]):hover {
   .spot_container {
     padding: 30px 15px;
   }
-}
-
-/* favorite */
-
-.like-btn {
-  background: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-.unlike-btn {
-  background: #fff;
-  border: none;
-  color: red;
-  cursor: pointer;
 }
