@@ -2279,8 +2279,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       isLikedBy: this.initialIsLikedBy,
-      countSpotFavorites: this.initialCountSpotFavorites,
-      gotToFavorite: false
+      countSpotFavorites: this.initialCountSpotFavorites
     };
   },
   methods: {
@@ -2488,6 +2487,95 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2502,11 +2590,15 @@ __webpack_require__.r(__webpack_exports__);
       type: Number,
       "default": 0
     },
-    initialCountSpotComments: {
+    initialCountUserFollowings: {
       type: Number,
       "default": 0
     },
-    initialCountSpotFavorites: {
+    initialCountUserFollowers: {
+      type: Number,
+      "default": 0
+    },
+    initialCountSpotComments: {
       type: Number,
       "default": 0
     },
@@ -2517,21 +2609,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      tab: 1,
+      tab: 'spotsTab',
       userSpots: [],
-      countSpots: 2,
+      userFavoriteSpots: [],
+      userFollowings: [],
+      userFollowers: [],
       user_id: this.userId,
       countUserSpots: this.initialCountUserSpots,
       countUserFavoriteSpots: this.initialCountUserFavoriteSpots,
-      countSpotFavorites: this.initialCountSpotFavorites,
+      countUserFollowings: this.initialCountUserFollowings,
+      countUserFollowers: this.initialCountUserFollowers,
       countSpotComments: this.initialCountSpotComments
     };
-  },
-  computed: {
-    spots: function spots() {
-      var list = this.userSpots;
-      return list.slice(0, this.countSpots);
-    }
   },
   created: function created() {
     this.getUserSpots();
@@ -2542,7 +2631,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var id = this.user_id;
-      var array = ["/users/", id, "/tabs"];
+      var array = ["/users/", id, "/spots"];
       var path = array.join('');
       axios.get(path).then(function (response) {
         _this.userSpots = response.data;
@@ -2550,8 +2639,65 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err);
       });
     },
-    seeMore: function seeMore() {
-      this.countSpots += 2;
+    // ユーザーのお気に入り釣りスポット一覧
+    getUserFavoriteSpots: function getUserFavoriteSpots() {
+      var _this2 = this;
+
+      this.tab = 'favoriteSpotsTab';
+      var id = this.user_id;
+      var array = ["/users/", id, "/favoriteSpots"];
+      var path = array.join('');
+      axios.get(path).then(function (response) {
+        _this2.userFavoriteSpots = response.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    // ユーザーフォロー一覧
+    getUserFollowings: function getUserFollowings() {
+      var _this3 = this;
+
+      this.tab = 'followingsTab';
+      var id = this.user_id;
+      var array = ["/users/", id, "/followings"];
+      var path = array.join('');
+      axios.get(path).then(function (response) {
+        _this3.userFollowings = response.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    // ユーザーフォロワー一覧
+    getUserFollowers: function getUserFollowers() {
+      var _this4 = this;
+
+      this.tab = 'followersTab';
+      var id = this.user_id;
+      var array = ["/users/", id, "/followers"];
+      var path = array.join('');
+      axios.get(path).then(function (response) {
+        _this4.userFollowers = response.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
+  },
+  computed: {
+    spots: function spots() {
+      var spotsList = this.userSpots;
+      return Array.prototype.slice.call(spotsList).reverse();
+    },
+    favoriteSpots: function favoriteSpots() {
+      var favoriteSpotsList = this.userFavoriteSpots;
+      return Array.prototype.slice.call(favoriteSpotsList).reverse();
+    },
+    followings: function followings() {
+      var followingsList = this.userFollowings;
+      return Array.prototype.slice.call(followingsList).reverse();
+    },
+    followers: function followers() {
+      var followersList = this.userFollowers;
+      return Array.prototype.slice.call(followersList).reverse();
     }
   }
 });
@@ -61410,7 +61556,7 @@ var render = function() {
           staticClass: "nav-item",
           on: {
             click: function($event) {
-              _vm.tab = 1
+              _vm.tab = "spotsTab"
             }
           }
         },
@@ -61419,7 +61565,7 @@ var render = function() {
             "span",
             {
               staticClass: "nav-link text-muted",
-              class: { active: _vm.tab === 1 }
+              class: { active: _vm.tab === "spotsTab" }
             },
             [
               _vm._v("\n                釣りスポット "),
@@ -61433,25 +61579,58 @@ var render = function() {
       _vm._v(" "),
       _c(
         "li",
-        {
-          staticClass: "nav-item",
-          on: {
-            click: function($event) {
-              _vm.tab = 2
-            }
-          }
-        },
+        { staticClass: "nav-item", on: { click: _vm.getUserFavoriteSpots } },
         [
           _c(
             "span",
             {
               staticClass: "nav-link text-muted",
-              class: { active: _vm.tab === 2 }
+              class: { active: _vm.tab === "favoriteSpotsTab" }
             },
             [
               _vm._v("\n                いいね "),
               _c("span", { staticClass: "badge badge-secondary" }, [
                 _vm._v(_vm._s(_vm.countUserFavoriteSpots))
+              ])
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "li",
+        { staticClass: "nav-item", on: { click: _vm.getUserFollowings } },
+        [
+          _c(
+            "span",
+            {
+              staticClass: "nav-link text-muted",
+              class: { active: _vm.tab === "followingsTab" }
+            },
+            [
+              _vm._v("\n                フォロー "),
+              _c("span", { staticClass: "badge badge-secondary" }, [
+                _vm._v(_vm._s(_vm.countUserFollowings))
+              ])
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "li",
+        { staticClass: "nav-item", on: { click: _vm.getUserFollowers } },
+        [
+          _c(
+            "span",
+            {
+              staticClass: "nav-link text-muted",
+              class: { active: _vm.tab === "followersTab" }
+            },
+            [
+              _vm._v("\n                フォロワー "),
+              _c("span", { staticClass: "badge badge-secondary" }, [
+                _vm._v(_vm._s(_vm.countUserFollowers))
               ])
             ]
           )
@@ -61466,91 +61645,290 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value: _vm.tab === 1,
-            expression: "tab === 1"
+            value: _vm.tab === "spotsTab",
+            expression: "tab === 'spotsTab'"
           }
         ],
-        staticClass: "row"
+        staticClass: "row tab_under"
       },
-      _vm._l(_vm.spots, function(spot) {
-        return _c(
-          "div",
-          {
-            key: spot.id,
-            staticClass: "mx-auto d-block col-lg-4 col-md-6 col-11"
-          },
-          [
-            _c("div", { staticClass: "spot_card" }, [
-              _c("a", { attrs: { href: "/spots/" + spot.id } }, [
-                _c("div", { staticClass: "spot_card_img" }, [
-                  _c("img", {
-                    attrs: {
-                      src: "/storage/" + spot.spot_image,
-                      alt: "釣り場投稿者の画像"
-                    }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "spot_card_content" }, [
-                _c("div", { staticClass: "card_spot_name" }, [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(spot.spot_name) +
-                      "\n                    "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card_detail" }, [
-                  _c("div", { staticClass: "favorite_button" }, [
-                    _vm._v(
-                      "\n                            aaa\n                        "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card_comment" }, [
-                    _c("i", { staticClass: "fa fa-comment mr-1" }),
-                    _vm._v(
-                      _vm._s(_vm.countSpotComments) +
-                        "\n                        "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("a", { attrs: { href: "/users/" + spot.user.id } }, [
+      [
+        _vm._l(_vm.spots, function(spot) {
+          return _c(
+            "div",
+            {
+              key: spot.id,
+              staticClass: "mx-auto d-block col-lg-4 col-md-6 col-11"
+            },
+            [
+              _c("div", { staticClass: "spot_card" }, [
+                _c("a", { attrs: { href: "/spots/" + spot.id } }, [
+                  _c("div", { staticClass: "spot_card_img" }, [
                     _c("img", {
                       attrs: {
-                        src: "/storage/" + spot.user.user_image,
+                        src: "/storage/" + spot.spot_image,
                         alt: "釣り場投稿者の画像"
                       }
                     })
                   ])
                 ]),
                 _vm._v(" "),
-                spot.address && spot.address.length > 0
-                  ? _c("p", [_vm._v(_vm._s(spot.address))])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(spot.explanation))])
+                _c("div", { staticClass: "spot_card_content" }, [
+                  _c("div", { staticClass: "card_spot_name" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(spot.spot_name) +
+                        "\n                    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card_detail" }, [
+                    _c("div", { staticClass: "favorite_button" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card_comment" }, [
+                      _c("i", { staticClass: "fa fa-comment mr-1" }),
+                      _vm._v(
+                        _vm._s(_vm.countSpotComments) +
+                          "\n                        "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("a", { attrs: { href: "/users/" + spot.user_id } }, [
+                      _c("img", {
+                        attrs: {
+                          src: "/storage/" + spot.user.user_image,
+                          alt: "釣り場投稿者の画像"
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  spot.address && spot.address.length > 0
+                    ? _c("p", [_vm._v(_vm._s(spot.address))])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("p", [_vm._v(_vm._s(spot.explanation))])
+                ])
               ])
-            ])
-          ]
-        )
-      }),
-      0
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "w-100 text-center" }, [
-      _vm.spots.length - _vm.countSpots >= 0
-        ? _c(
-            "button",
-            { staticClass: "btn seeMore", on: { click: _vm.seeMore } },
-            [
-              _c("i", { staticClass: "fa fa-chevron-down" }),
-              _vm._v(" 続きを見る\n        ")
             ]
           )
-        : _vm._e()
-    ])
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-100 text-center" }, [
+          _vm.favoriteSpots.length - _vm.countFavoriteSpots >= 0
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn seeMore",
+                  on: { click: _vm.seeMoreFavoriteSpots }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-chevron-down" }),
+                  _vm._v(" もっと見る\n            ")
+                ]
+              )
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _vm.spots.length <= 0
+          ? _c("div", { staticClass: "tabItem_none" }, [
+              _vm._v("投稿していません")
+            ])
+          : _vm._e()
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.tab === "favoriteSpotsTab",
+            expression: "tab === 'favoriteSpotsTab'"
+          }
+        ],
+        staticClass: "row tab_under"
+      },
+      [
+        _vm._l(_vm.favoriteSpots, function(spot) {
+          return _c(
+            "div",
+            {
+              key: spot.id,
+              staticClass: "mx-auto d-block col-lg-4 col-md-6 col-11"
+            },
+            [
+              _c("div", { staticClass: "spot_card" }, [
+                _c("a", { attrs: { href: "/spots/" + spot.id } }, [
+                  _c("div", { staticClass: "spot_card_img" }, [
+                    _c("img", {
+                      attrs: {
+                        src: "/storage/" + spot.spot_image,
+                        alt: "釣り場投稿者の画像"
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "spot_card_content" }, [
+                  _c("div", { staticClass: "card_spot_name" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(spot.spot_name) +
+                        "\n                    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card_detail" }, [
+                    _c("div", { staticClass: "favorite_button" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card_comment" }, [
+                      _c("i", { staticClass: "fa fa-comment mr-1" }),
+                      _vm._v(
+                        _vm._s(_vm.countSpotComments) +
+                          "\n                        "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("a", { attrs: { href: "/users/" + spot.user_id } }, [
+                      _c("img", {
+                        attrs: {
+                          src: "/storage/" + spot.user.user_image,
+                          alt: "釣り場投稿者の画像"
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  spot.address && spot.address.length > 0
+                    ? _c("p", [_vm._v(_vm._s(spot.address))])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("p", [_vm._v(_vm._s(spot.explanation))])
+                ])
+              ])
+            ]
+          )
+        }),
+        _vm._v(" "),
+        _vm.favoriteSpots.length <= 0
+          ? _c("div", { staticClass: "tabItem_none" }, [
+              _vm._v("お気に入りしていません")
+            ])
+          : _vm._e()
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.tab === "followingsTab",
+            expression: "tab === 'followingsTab'"
+          }
+        ],
+        staticClass: "row tab_under"
+      },
+      [
+        _vm._l(_vm.followings, function(user) {
+          return _c(
+            "div",
+            {
+              key: user.id,
+              staticClass:
+                "mx-auto d-block col-xl-3 col-lg-4 col-md-6 mt-4 mb-5 text-center"
+            },
+            [
+              _c("div", { staticClass: "profile_image" }, [
+                _c("img", {
+                  attrs: {
+                    src: "/storage/" + user.user_image,
+                    alt: "ユーザーの画像"
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "profile_content" }, [
+                _c("a", { attrs: { href: "/users/" + user.id } }, [
+                  _c("p", { staticClass: "followings_user_name" }, [
+                    _c("strong", [_vm._v(_vm._s(user.user_name))])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div")
+              ])
+            ]
+          )
+        }),
+        _vm._v(" "),
+        _vm.followings.length <= 0
+          ? _c("div", { staticClass: "tabItem_none" }, [
+              _vm._v("フォローしていません")
+            ])
+          : _vm._e()
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.tab === "followersTab",
+            expression: "tab === 'followersTab'"
+          }
+        ],
+        staticClass: "row tab_under"
+      },
+      [
+        _vm._l(_vm.followers, function(user) {
+          return _c(
+            "div",
+            {
+              key: user.id,
+              staticClass:
+                "mx-auto d-block col-lg-4 col-md-6 mt-4 mb-5 text-center"
+            },
+            [
+              _c("div", { staticClass: "profile_image" }, [
+                _c("img", {
+                  attrs: {
+                    src: "/storage/" + user.user_image,
+                    alt: "ユーザーの画像"
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "profile_content" }, [
+                _c("a", { attrs: { href: "/users/" + user.id } }, [
+                  _c("p", { staticClass: "followings_user_name" }, [
+                    _c("strong", [_vm._v(_vm._s(user.user_name))])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div")
+              ])
+            ]
+          )
+        }),
+        _vm._v(" "),
+        _vm.followers.length <= 0
+          ? _c("div", { staticClass: "tabItem_none" }, [
+              _vm._v("フォローされていません")
+            ])
+          : _vm._e()
+      ],
+      2
+    )
   ])
 }
 var staticRenderFns = []

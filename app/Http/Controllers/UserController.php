@@ -78,29 +78,27 @@ class UserController extends Controller
         ]);
     }
 
+    public function spots(User $user)
+    {
+        return $user->spots
+                    ->load(['user', 'spot_favorites', 'spot_comments']);
+    }
+
+    public function favoriteSpots(User $user)
+    {
+        return $user->favoriteSpots
+                    ->load(['user', 'spot_favorites', 'spot_comments']);
+    }
+
     public function followings(User $user)
     {
-        $followings = $user->followings->sortByDesc('created_at')->load('followings','followers');
-
-        return view('users.followings', [
-            'user' => $user->load('spots', 'favoriteSpots'),
-            'followings' => $followings,
-        ]);
+        return $user->followings
+                    ->load('followings','followers');
     }
 
     public function followers(User $user)
     {
-        $followers = $user->followers->sortByDesc('created_at');
-
-        return view('users.followers', [
-            'user' => $user->load('followers.followers'),
-            'followings' => $followings,
-        ]);
-    }
-
-    public function tabs(User $user)
-    {
-        return $user->spots->sortByDesc('created_at')
-                    ->load(['user', 'spot_favorites', 'spot_comments']);
+        return $followers = $user->followers
+                                    ->load('followers','followers');
     }
 }

@@ -6,34 +6,15 @@
             <div class="row user-container">
                 @include('users.profile')
 
-                <div class="user-tabs">
-                    <ul class="nav nav-tabs nav-justified mt-3">
-                        <li class="nav-item">
-                            <a class="nav-link text-muted active"
-                            href="{{ route('users.show', ['user' => $user]) }}">
-                            釣りスポット <span class="badge badge-secondary">{{ $user->count_spots }}</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-muted"
-                            href="">
-                            いいね <span class="badge badge-secondary">{{ $user->count_favorite_spots }}</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-muted"
-                            href="{{ route('users.followings', ['user' => $user]) }}">
-                            フォロー <span class="badge badge-secondary">{{ $user->count_followings }}</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-muted"
-                            href="">
-                            フォロワー <span class="badge badge-secondary">{{ $user->count_followers }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <!-- ユーザーのタブ一覧（フォロー、お気に入りボタン含む） -->
+                <user-tabs
+                    :initial-count-user-spots='@json($user->count_spots)'
+                    :initial-count-user-favorite-spots='@json($user->count_favorite_spots)'
+                    :initial-count-user-followings='@json($user->count_followings)'
+                    :initial-count-user-followers='@json($user->count_followers)'
+                    user-id="{{ $user->id }}"
+                >
+                </user-tabs>
             </div>
         </div>
     @endif

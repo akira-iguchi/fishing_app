@@ -1,13 +1,16 @@
 /* index, search */
 
 .search_group {
+  max-width: 60rem;
+  margin: auto;
   margin-top: 100px;
-  padding: 1rem;
+  padding-bottom: 1em;
   border: 2px solid grey;
   border-radius: 10px;
 }
 
 .spotIndex_search_form {
+  padding: 1em 1em 0 1em;
   margin: 0 auto;
   display: flex;
   max-width: 390px;
@@ -142,12 +145,12 @@
 }
 
 .spot_card_content p {
+  line-height: 1.7em;
   font-size: .9em;
 }
 
 .spot_card_content p:last-child {
   text-align: left;
-  line-height: 1.7em;
 }
 
 .spot-hidden {
@@ -479,8 +482,15 @@
 }
 
 .spot_container td {
-  padding: 10px;
+  text-align: center;
+  padding: 10px 0 10px 9px;
   border: 1px solid #dedede;
+}
+
+.spot_container td span {
+  display: inline-block;
+  text-align: left;
+  width: 90%;
 }
 
 .spot-fishing_type {
@@ -493,8 +503,7 @@
 .spot_user_private {
   display: flex;
   margin-top: 15px;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
 }
 
 .spot_edit_link_button {
@@ -510,7 +519,7 @@
 
 .spot_edit_link_button:hover {
   text-decoration: none;
-  background-color: rgba(0,100,255,1);
+  background-color: rgba(0,100,255,.8);
   border-color: rgba(0,100,255,0.1);
   color: #FFF;
 }

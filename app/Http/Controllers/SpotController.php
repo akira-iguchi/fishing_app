@@ -75,7 +75,7 @@ class SpotController extends Controller
         $spot->save();
 
         $request->tags->each(function ($tagName) use ($spot) {
-            $tag = Tag::firstOrCreate(['text' => $tagName]);
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
             $spot->tags()->attach($tag);
         });
 
@@ -122,9 +122,10 @@ class SpotController extends Controller
         }
         $spot->save();
 
+        $spot->tags()->detach();
         $request->tags->each(function ($tagName) use ($spot) {
             $tag = Tag::firstOrCreate(['name' => $tagName]);
-            $spot->tags()->sync($tag);
+            $spot->tags()->attach($tag);
         });
 
         $spot->fishing_types()->sync($request->fishing_types);
@@ -153,7 +154,6 @@ class SpotController extends Controller
                 'spots' => $spots->sortByDesc('created_at')
                             ->load(['user', 'spot_favorites', 'spot_comments']),
                 'keyword_name' => $keyword_name,
-                'cardSize' => $cardSize,
                 'tags' => $tags,
             ]);
         } else {

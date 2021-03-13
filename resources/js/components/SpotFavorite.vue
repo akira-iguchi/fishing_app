@@ -36,7 +36,6 @@
             return {
                 isLikedBy: this.initialIsLikedBy,
                 countSpotFavorites: this.initialCountSpotFavorites,
-                gotToFavorite: false,
             }
         },
 

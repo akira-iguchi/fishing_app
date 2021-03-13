@@ -27,13 +27,15 @@ Route::get('guest', 'Auth\LoginController@guestLogin')->name('login.guest');
 
 Route::group(['middleware' => ['auth']], function () {
 
-    // idはフォローされる側
     Route::group(['prefix' => 'users/{user}'], function () {
         Route::put('/follow', 'UserController@follow')->name('users.follow');
         Route::delete('/follow', 'UserController@unfollow')->name('users.unfollow');
-        Route::get('/followings', 'UserController@followings')->name('users.followings');
-        Route::get('/followers', 'UserController@followers')->name('users.followers');
-        Route::get('/tabs', 'UserController@tabs')->name('users.tabs');
+
+        // ユーザーページのzタブ
+        Route::get('/spots', 'UserController@spots');
+        Route::get('/favoriteSpots', 'UserController@favoriteSpots');
+        Route::get('/followings', 'UserController@followings');
+        Route::get('/followers', 'UserController@followers');
     });
 
     Route::group(['prefix' => 'spots/{spot}'], function () {

@@ -1,19 +1,29 @@
 <template>
     <div class="user-tabs">
         <ul class="nav nav-tabs nav-justified mt-3">
-            <li class="nav-item" @click="tab = 1">
-                <span class="nav-link text-muted" :class="{'active': tab === 1 }">
+            <li class="nav-item" @click="tab = 'spotsTab'">
+                <span class="nav-link text-muted" :class="{'active': tab === 'spotsTab' }">
                     釣りスポット <span class="badge badge-secondary">{{ countUserSpots }}</span>
                 </span>
             </li>
-            <li class="nav-item" @click="tab = 2">
-                <span class="nav-link text-muted" :class="{'active': tab === 2 }">
+            <li class="nav-item" @click="getUserFavoriteSpots">
+                <span class="nav-link text-muted" :class="{'active': tab === 'favoriteSpotsTab' }">
                     いいね <span class="badge badge-secondary">{{ countUserFavoriteSpots }}</span>
+                </span>
+            </li>
+            <li class="nav-item" @click="getUserFollowings">
+                <span class="nav-link text-muted" :class="{'active': tab === 'followingsTab' }">
+                    フォロー <span class="badge badge-secondary">{{ countUserFollowings }}</span>
+                </span>
+            </li>
+            <li class="nav-item" @click="getUserFollowers">
+                <span class="nav-link text-muted" :class="{'active': tab === 'followersTab' }">
+                    フォロワー <span class="badge badge-secondary">{{ countUserFollowers }}</span>
                 </span>
             </li>
         </ul>
 
-        <div class="row" v-show="tab === 1">
+        <div class="row tab_under" v-show="tab === 'spotsTab'">
             <div v-for="spot in spots" :key="spot.id" class="mx-auto d-block col-lg-4 col-md-6 col-11">
                 <div class="spot_card">
                     <a v-bind:href="`/spots/${spot.id}`">
@@ -29,14 +39,14 @@
 
                         <div class="card_detail">
                             <div class="favorite_button">
-                                aaa
+                                <!-- お気に入りボタン -->
                             </div>
 
                             <div class="card_comment">
                                 <i class="fa fa-comment mr-1"></i>{{ countSpotComments }}
                             </div>
 
-                            <a v-bind:href="`/users/${spot.user.id}`">
+                            <a v-bind:href="`/users/${spot.user_id}`">
                                 <img :src="`/storage/${spot.user.user_image}`" alt="釣り場投稿者の画像">
                             </a>
                         </div>
@@ -46,15 +56,94 @@
                     </div>
                 </div>
             </div>
+
+            <div class="w-100 text-center">
+                <button
+                    v-if="(favoriteSpots.length - countFavoriteSpots) >= 0"
+                    @click="seeMoreFavoriteSpots" class="btn seeMore"
+                >
+                    <i class="fa fa-chevron-down"></i>&nbsp;もっと見る
+                </button>
+            </div>
+
+            <div class="tabItem_none" v-if="(spots.length) <= 0">投稿していません</div>
         </div>
 
-        <div class="w-100 text-center">
-            <button
-                v-if="(spots.length - countSpots) >= 0"
-                @click="seeMore" class="btn seeMore"
-            >
-                <i class="fa fa-chevron-down"></i>&nbsp;続きを見る
-            </button>
+        <div class="row tab_under" v-show="tab === 'favoriteSpotsTab'">
+            <div v-for="spot in favoriteSpots" :key="spot.id" class="mx-auto d-block col-lg-4 col-md-6 col-11">
+                <div class="spot_card">
+                    <a v-bind:href="`/spots/${spot.id}`">
+                        <div class="spot_card_img">
+                            <img :src="`/storage/${spot.spot_image}`" alt="釣り場投稿者の画像">
+                        </div>
+                    </a>
+
+                    <div class="spot_card_content">
+                        <div class="card_spot_name">
+                            {{ spot.spot_name }}
+                        </div>
+
+                        <div class="card_detail">
+                            <div class="favorite_button">
+                                <!-- お気に入りボタン -->
+                            </div>
+
+                            <div class="card_comment">
+                                <i class="fa fa-comment mr-1"></i>{{ countSpotComments }}
+                            </div>
+
+                            <a v-bind:href="`/users/${spot.user_id}`">
+                                <img :src="`/storage/${spot.user.user_image}`" alt="釣り場投稿者の画像">
+                            </a>
+                        </div>
+
+                        <p v-if="spot.address && spot.address.length > 0">{{ spot.address }}</p>
+                        <p>{{ spot.explanation }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabItem_none" v-if="(favoriteSpots.length) <= 0">お気に入りしていません</div>
+        </div>
+
+        <div class="row tab_under" v-show="tab === 'followingsTab'">
+            <div v-for="user in followings" :key="user.id" class="mx-auto d-block col-xl-3 col-lg-4 col-md-6 mt-4 mb-5 text-center">
+                <div class="profile_image">
+                    <img :src="`/storage/${user.user_image}`" alt="ユーザーの画像">
+                </div>
+
+                <div class="profile_content">
+                    <a v-bind:href="`/users/${user.id}`">
+                        <p class="followings_user_name"><strong>{{ user.user_name }}</strong></p>
+                    </a>
+
+                    <div>
+                        <!-- フォローボタン -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabItem_none" v-if="(followings.length) <= 0">フォローしていません</div>
+        </div>
+
+        <div class="row tab_under" v-show="tab === 'followersTab'">
+            <div v-for="user in followers" :key="user.id" class="mx-auto d-block col-lg-4 col-md-6 mt-4 mb-5 text-center">
+                <div class="profile_image">
+                    <img :src="`/storage/${user.user_image}`" alt="ユーザーの画像">
+                </div>
+
+                <div class="profile_content">
+                    <a v-bind:href="`/users/${user.id}`">
+                        <p class="followings_user_name"><strong>{{ user.user_name }}</strong></p>
+                    </a>
+
+                    <div>
+                        <!-- フォローボタン -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabItem_none" v-if="(followers.length) <= 0">フォローされていません</div>
         </div>
     </div>
 </template>
@@ -78,12 +167,17 @@
                 default: 0,
             },
 
-            initialCountSpotComments: {
+            initialCountUserFollowings: {
                 type: Number,
                 default: 0,
             },
 
-            initialCountSpotFavorites: {
+            initialCountUserFollowers: {
+                type: Number,
+                default: 0,
+            },
+
+            initialCountSpotComments: {
                 type: Number,
                 default: 0,
             },
@@ -96,21 +190,17 @@
 
         data() {
             return {
-                tab: 1,
+                tab: 'spotsTab',
                 userSpots: [],
-                countSpots: 2,
+                userFavoriteSpots: [],
+                userFollowings: [],
+                userFollowers: [],
                 user_id: this.userId,
                 countUserSpots: this.initialCountUserSpots,
                 countUserFavoriteSpots: this.initialCountUserFavoriteSpots,
-                countSpotFavorites: this.initialCountSpotFavorites,
+                countUserFollowings: this.initialCountUserFollowings,
+                countUserFollowers: this.initialCountUserFollowers,
                 countSpotComments: this.initialCountSpotComments,
-            }
-        },
-
-        computed: {
-            spots() {
-                const list = this.userSpots
-                return list.slice(0, this.countSpots)
             }
         },
 
@@ -122,7 +212,7 @@
             // ユーザーの釣りスポット一覧
             getUserSpots() {
                 const id = this.user_id
-                const array = ["/users/",id,"/tabs"];
+                const array = ["/users/",id,"/spots"];
                 const path = array.join('')
 
                 axios
@@ -135,8 +225,77 @@
                     });
             },
 
-            seeMore() {
-                this.countSpots += 2
+            // ユーザーのお気に入り釣りスポット一覧
+            getUserFavoriteSpots() {
+                this.tab = 'favoriteSpotsTab';
+                const id = this.user_id
+                const array = ["/users/",id,"/favoriteSpots"];
+                const path = array.join('')
+
+                axios
+                    .get(path)
+                    .then(response => {
+                        this.userFavoriteSpots = response.data;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            },
+
+            // ユーザーフォロー一覧
+            getUserFollowings() {
+                this.tab = 'followingsTab';
+                const id = this.user_id
+                const array = ["/users/",id,"/followings"];
+                const path = array.join('')
+
+                axios
+                    .get(path)
+                    .then(response => {
+                        this.userFollowings = response.data;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            },
+
+            // ユーザーフォロワー一覧
+            getUserFollowers() {
+                this.tab = 'followersTab';
+                const id = this.user_id
+                const array = ["/users/",id,"/followers"];
+                const path = array.join('')
+
+                axios
+                    .get(path)
+                    .then(response => {
+                        this.userFollowers = response.data;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            },
+        },
+
+        computed: {
+            spots() {
+                const spotsList = this.userSpots
+                return Array.prototype.slice.call(spotsList).reverse()
+            },
+
+            favoriteSpots() {
+                const favoriteSpotsList = this.userFavoriteSpots
+                return Array.prototype.slice.call(favoriteSpotsList).reverse()
+            },
+
+            followings() {
+                const followingsList = this.userFollowings
+                return Array.prototype.slice.call(followingsList).reverse()
+            },
+
+            followers() {
+                const followersList = this.userFollowers
+                return Array.prototype.slice.call(followersList).reverse()
             },
         },
     }

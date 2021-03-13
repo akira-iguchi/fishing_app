@@ -42,13 +42,15 @@
 
                     <table>
                         <tbody>
-                            <tr>
-                                <th>所在地</th>
-                                <td> {{ $spot->address ?: '未登録' }}</td>
-                            </tr>
-                            <tr>
-                                <th><a href="/fishing_types">おすすめの釣り方</a></th>
-                                @if($spot->fishing_types !== null)
+                            @if(isset($spot->address))
+                                <tr>
+                                    <th>所在地</th>
+                                    <td><span>{{ $spot->address }}</span></td>
+                                </tr>
+                            @endif
+                            @if(isset($spot->fishing_types[0]))
+                                <tr>
+                                    <th><a href="/fishing_types">おすすめの釣り方</a></th>
                                     <td>
                                         @foreach($spot->fishing_types as $fishing_type)
                                             <ul class="spot-fishing_type">
@@ -56,13 +58,11 @@
                                             </ul>
                                         @endforeach
                                     </td>
-                                @else
-                                    <td>未登録</td>
-                                @endif
                                 </tr>
+                            @endif
                             <tr>
                                 <th>説明</th>
-                                <td>{{ $spot->explanation }}</td>
+                                <td><span>{{ $spot->explanation }}</span></td>
                             </tr>
                         </tbody>
                     </table>

@@ -70,9 +70,13 @@
   width: 100%;
 }
 
+.nav-item {
+  cursor: pointer;
+}
+
 .tab_under {
   overflow: auto;
-  max-height: 600px;
+  max-height: 825px;
   margin-top: 20px;
   margin-bottom: 50px;
 }
@@ -83,6 +87,14 @@
   font-size: 1.3rem;
   font-weight: 200;
   text-decoration: none;
+}
+
+.tabItem_none {
+  width: 100%;
+  text-align: center;
+  margin: 2.3rem 0;
+  font-size: 2rem;
+  color: rgba(0,100,255,0.9);
 }
 
 @media only screen and (max-width: 769px) {

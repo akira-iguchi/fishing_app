@@ -23,7 +23,7 @@ class CreateSpotFishingTypeTable extends Migration
             $table->unsignedBigInteger('fishing_type_id');
             $table->foreign('fishing_type_id')
                 ->references('id')
-                ->on('tags')
+                ->on('fishing_types')
                 ->onDelete('cascade');
             $table->timestamps();
         });
