@@ -15,20 +15,81 @@ use Illuminate\Support\Facades\Storage;
 
 class SpotController extends Controller
 {
-    public function index()
+
+    public static function escapeLike($str)
+    {
+        return str_replace(['\\', '%', '_'], ['\\\\', '\%', '\_'], $str);
+    }
+
+    public function index(Request $request)
     {
         if (Auth::check()) {
             $spots = SpotTrait::allSpots();
-
             $tags = Tag::all()->take(15);
+
+            // 検索機能
+            $allFishingTypeNames = FishingType::all();
+            $searchWord = $request->input('searchWord');
+            $fishingTypes = $request->input('fishing_types');
 
             return view('spots.index', [
                 'spots' => $spots,
                 'tags' => $tags,
+                'allFishingTypeNames' => $allFishingTypeNames,
+                'searchWord' => $searchWord,
+                'fishingTypes' => $fishingTypes,
             ]);
         } else {
             return view('spots.index');
         }
+    }
+
+    public function search(Request $request)
+    {
+        $searchWord = $request->input('searchWord');
+        $fishingTypes = $request->input('fishing_types');
+        $tags = Tag::all()->take(15);
+
+        $query = Spot::query();
+
+        if (isset($searchWord) && is_array($fishingTypes)) {
+            // （釣り場名または所在地）かつ、釣り場におすすめの釣り方を取得
+            $query->where(function($query) use($searchWord) {
+                $query->where('spot_name', 'like', '%' . self::escapeLike($searchWord) . '%')
+                    ->orWhere('address', 'like', '%' . self::escapeLike($searchWord) . '%');
+            })
+            ->whereHas('fishing_types', function($query) use($fishingTypes){
+                foreach($fishingTypes as $param){
+                    $query->where('fishing_type_id', $param);
+                };
+            });
+        }
+
+        if (isset($searchWord)) {
+            $query->where('spot_name', 'like', '%' . self::escapeLike($searchWord) . '%')
+                    ->orWhere('address', 'like', '%' . self::escapeLike($searchWord) . '%');
+        }
+
+        if (is_array($fishingTypes)){
+            // 釣り場と関連付く釣り方を取得
+            if (in_array($fishingTypes) {
+                $query->whereHas('fishing_types', function($query) use($fishingTypes) {
+                    $query->where('fishing_type_id', $fishingTypes);
+                });
+            }
+        }
+
+        $spots = $query->get();
+
+        $allFishingTypeNames = FishingType::all();
+
+        return view('spots.searches.search', [
+            'spots' => $spots,
+            'tags' => $tags,
+            'searchWord' => $searchWord,
+            'allFishingTypeNames' => $allFishingTypeNames,
+            'fishingTypes' => $fishingTypes
+        ]);
     }
 
     public function show(Spot $spot)
@@ -128,7 +189,8 @@ class SpotController extends Controller
             $spot->tags()->attach($tag);
         });
 
-        $spot->fishing_types()->sync($request->fishing_types);
+        $spot->fishing_types()->detach($request->fishing_types);
+        $spot->fishing_types()->attach($request->fishing_types);
 
         session()->flash('flash_message', '釣りスポットを更新しました');
         return redirect()->route('spots.show', [$spot]);
@@ -141,27 +203,6 @@ class SpotController extends Controller
             return redirect('/')->with('flash_message', '釣りスポットを削除しました');
         } else {
             return redirect('/')->with('flash_message', '釣りスポットを削除できませんでした');
-        }
-    }
-
-    public function search(Request $request) {
-        $keyword_name = $request->name;
-        $tags = Tag::all()->take(15);
-
-        if (!empty($keyword_name)) {
-            $spots = Spot::query()->where('spot_name','like', '%' .$keyword_name. '%')->get();
-            return view('spots.searches.search')->with([
-                'spots' => $spots->sortByDesc('created_at')
-                            ->load(['user', 'spot_favorites', 'spot_comments']),
-                'keyword_name' => $keyword_name,
-                'tags' => $tags,
-            ]);
-        } else {
-            $spots = SpotTrait::allSpots();
-            return view('spots.searches.search', [
-                'spots' => $spots,
-                'tags' => $tags,
-            ]);
         }
     }
 
