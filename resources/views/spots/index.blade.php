@@ -24,6 +24,10 @@
             </div>
         </div>
 
+        @foreach($rankSpots as $rankSpot)
+            <p>{{ $rankSpot->spot_name }}  {{ $rankSpot->count_spot_favorites }}</p>
+        @endforeach
+
         @push('js')
             <script src="{{ asset('/js/weather.js') }}" defer></script>
             <script src="{{ asset('/js/seeMore.js') }}" defer></script>

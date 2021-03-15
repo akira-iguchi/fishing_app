@@ -26,6 +26,9 @@ class SpotController extends Controller
             $spots = SpotTrait::allSpots();
             $tags = Tag::all()->take(15);
 
+            // いいねランキング
+            $rankSpots = Spot::withCount('spot_favorites')->orderBy('spot_favorites_count', 'desc')->take(5)->get();
+
             // 検索機能
             $allFishingTypeNames = FishingType::all();
             $searchWord = $request->input('searchWord');
@@ -34,6 +37,7 @@ class SpotController extends Controller
             return view('spots.index', [
                 'spots' => $spots,
                 'tags' => $tags,
+                'rankSpots' => $rankSpots,
                 'allFishingTypeNames' => $allFishingTypeNames,
                 'searchWord' => $searchWord,
                 'fishingTypes' => $fishingTypes,
