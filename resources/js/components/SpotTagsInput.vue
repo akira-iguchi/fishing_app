@@ -62,29 +62,3 @@
         max-width: inherit;
     }
 </style>
-
-<style lang="css">
-    .vue-tags-input .ti-tag {
-        margin-right: 4px;
-        background-color: #fff;
-        border: 1px solid #aaa;
-        border-radius: 6px;
-        color: rgba(0,100,255,0.7);
-        font-size: 12px;
-        text-decoration: none;
-        -webkit-transition: .2s;
-        transition: .2s;
-        box-sizing: border-box;
-    }
-
-    .vue-tags-input .ti-tag:hover {
-        background-color: rgba(0,100,255,0.7);
-        border: 1px solid rgba(0,100,255,0.7);
-        color: #fff;
-    }
-
-    .vue-tags-input .ti-tag::before {
-        content: "#";
-        margin-right: 3px;
-    }
-</style>

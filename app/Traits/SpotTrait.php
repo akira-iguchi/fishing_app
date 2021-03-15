@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 trait SpotTrait
 {
-    //タグの自動補完
+    //すべての釣りスポット一覧
     public static function allSpots()
     {
         $spots = Spot::all()->sortByDesc('created_at')
