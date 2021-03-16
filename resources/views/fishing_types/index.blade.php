@@ -8,6 +8,8 @@
             <div class="mx-auto d-block col-lg-5 fishing_type_card">
                 <span class="fishing_type_card-title">{{ $fishing_type->fishing_type_name }}</span>
                 {{ $fishing_type->content }}
+                <p class="text-center"><img onClick="openImageByFullScreen(this)" src="{{ asset('storage/'.$fishing_type->fishing_type_image) }}" alt="釣り場方の画像"></p>
+                <small>画像クリックで拡大！</small>
                 <hr>
                 <h5>おすすめの釣り場</h5>
                 @foreach ($fishing_type->spots as $spot)
@@ -21,3 +23,19 @@
         </div>
     </div>
 @endsection
+
+
+<script>
+  // フルスクリーンにする
+  function openImageByFullScreen(e) {
+  if (e.requestFullscreen) {
+    e.requestFullscreen();
+  } else if (e.mozRequestFullScreen) { /* Firefox */
+    e.mozRequestFullScreen();
+  } else if (e.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+    e.webkitRequestFullscreen();
+  } else if (e.msRequestFullscreen) { /* IE/Edge */
+    e.msRequestFullscreen();
+  }
+}
+</script>

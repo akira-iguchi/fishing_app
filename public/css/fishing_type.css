@@ -29,7 +29,7 @@
   margin-top: 60px;
   margin-bottom: 15px;
   padding: 1.2em 1em 1em;
-  background-color: #f7f7f7;
+  background-color: #fff;
   border: 3px double #999999;
   box-shadow: 10px 10px 10px rgba(0,0,0,0.6);
 }
@@ -47,6 +47,13 @@
   background-color: #a0a0a0;
   border: 1px solid #999999;
   border-radius: 5px 5px 0 0;
+}
+
+.fishing_type_card img {
+  cursor: pointer;
+  margin-top: 1em;
+  width: 7em;
+  background-color: #fff;
 }
 
 .fishing_type-spot {

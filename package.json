@@ -28,6 +28,7 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.2",
         "moment": "^2.29.1",
+        "screenfull": "^5.1.0",
         "scrollreveal": "^4.0.7",
         "swiper": "^6.4.14",
         "vuejs-paginate": "^2.1.0",

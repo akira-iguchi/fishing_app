@@ -13,6 +13,7 @@ class FishingType extends Model
 
     protected $fillable = [
         'fishing_type_name',
+        'fishing_type_image',
         'content',
     ];
 

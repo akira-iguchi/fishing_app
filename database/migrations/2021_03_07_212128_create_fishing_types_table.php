@@ -16,6 +16,7 @@ class CreateFishingTypesTable extends Migration
         Schema::create('fishing_types', function (Blueprint $table) {
             $table->id();
             $table->string('fishing_type_name')->unique();
+            $table->string('fishing_type_image')->nullable();
             $table->string('content');
             $table->timestamps();
         });

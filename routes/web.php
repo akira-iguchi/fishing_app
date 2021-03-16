@@ -51,7 +51,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('users', 'UserController');
 
-    Route::get('/fishing_types','FishingTypeController@index');
+    Route::resource('/fishing_types','FishingTypeController');
 
     Route::get('/spots/search','SpotController@search')->name('spots.search');
     Route::resource('/spots', 'SpotController')->except(['index']);

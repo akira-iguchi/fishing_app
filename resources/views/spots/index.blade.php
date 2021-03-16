@@ -30,6 +30,7 @@
                 @include('spots.cards.card', ['spots' => $recentSpots])
             </div>
             @include('spots.seeMore', ['spots' => $recentSpots])
+
         </div>
 
         @push('js')
@@ -43,7 +44,7 @@
 
         <div class="top text-center">
             <h1 class="top-title">Fishing Spot</h1>
-            <p>釣り場や釣り方を投稿して、<span>共有し合おう！</span></p>
+            <p>釣り場を投稿して、<span>共有し合おう！</span></p>
             <a href="{{ url('/login') }}" class="top-login-button"><span><i class="fas fa-user-plus"></i>ログイン</span></a>
             <a href="{{ url('/signup') }}" class="top-signup-button"><span><i class="fas fa-sign-in-alt"></i>新規登録</span></a>
             <br>
@@ -58,7 +59,7 @@
             <div class="spot-intro_expla">
                 <p>Fishing Spotとは？</p>
                 <p>
-                    &emsp;Fishing Spotとは、釣り場を投稿し、釣り場にコメントして釣果などを共有したり、その釣り場におすすめの釣り方を投稿するアプリです。また、カレンダーに釣りの予定を入れたり、記録することができます。
+                    &emsp;Fishing Spotとは、釣り場を投稿し、釣り場にコメントして釣果などを共有するアプリです。また、釣り場におすすめの釣り方を選択することもできます。
                     <br>
                     &emsp;最近は、釣りの技術が進み、釣りを始める人も多くなっています。そこで、釣り初心者の方でもこのアプリ1つで釣りを知り、楽しんでもらえるように、このアプリを作成しました。
                 </p>
