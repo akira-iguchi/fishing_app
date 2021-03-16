@@ -76,7 +76,7 @@ header:focus-within {
   color: rgba(255,255,255,0.7);
 }
 
-@media screen and (max-width:1000px) {
+@media screen and (max-width:800px) {
 
   .nav-container {
     position: fixed;
