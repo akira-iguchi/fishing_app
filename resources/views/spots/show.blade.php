@@ -37,7 +37,7 @@
 
                     <div class="d-flex">
                         @include('favorites.favorite_button')
-                        {{ $spot->created_at->format('Y/m/d') }}
+                        <i class="fas fa-clock ml-2 mt-1"></i>&nbsp;{{ $spot->created_at->format('Y/m/d') }}
                     </div>
 
                     <table>

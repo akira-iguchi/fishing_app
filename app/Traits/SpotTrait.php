@@ -12,7 +12,7 @@ trait SpotTrait
     //すべての釣りスポット一覧
     public static function allSpots()
     {
-        $spots = Spot::all()->sortByDesc('created_at')
+        $spots = Spot::all()->sortByDesc('id')
                     ->load(['user', 'spot_favorites', 'spot_comments']);
         return $spots;
     }

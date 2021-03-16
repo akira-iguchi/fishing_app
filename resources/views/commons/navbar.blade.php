@@ -11,7 +11,7 @@
             <ul>
                 @if (Auth::check())
                     {{-- ログアウトへのリンク --}}
-                    <li>{!! link_to_route('logout.get', 'ログアウト') !!}</li>
+                    <li><a href="{{ url('/logout') }}" onclick="return confirm('ログアウトしますか？')">ログアウト</a></li>
                     {{-- 釣り方一覧ページへのリンク --}}
                     <li><a href="{{ url('/fishing_types') }}">釣り方一覧</a></li>
                     {{-- 釣りスポット作成ページへのリンク --}}

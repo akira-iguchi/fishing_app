@@ -2,7 +2,7 @@
     @if ( request()->is('/') )
         <div class="mx-auto d-block col-md-6 col-11">
     @else
-        <div class="mx-auto d-block col-lg-4 col-md-6 col-11">
+        <div class="mx-auto d-block col-xl-3 col-lg-4 col-md-6 col-11">
     @endif
         <div class="spot_card spot-hidden">
             <a href="{{ route('spots.show', $spot->id)}}">
@@ -19,12 +19,16 @@
 
                 <div class="card_detail">
 
-                    <div class="favorite_button">
+                    <div class="card_item">
                         @include('favorites.favorite_button')
                     </div>
 
-                    <div class="card_comment">
+                    <div class="card_item mr-3">
                         <i class="fa fa-comment mr-1"></i>{{ $spot->count_spot_comments }}
+                    </div>
+
+                    <div class="card_item">
+                        <i class="fas fa-clock"></i>&thinsp;{{ $spot->created_at->diffForHumans() }}
                     </div>
 
                 <a href="{{ route('users.show', $spot->user_id)}}">
@@ -35,7 +39,7 @@
                 @if(isset( $spot->address ))
                     <p>{{ $spot->address }}</p>
                 @endif
-                <p>{{ $spot->explanation }}</p>
+                <!-- <p>{{ $spot->explanation }}</p> -->
             </div>
         </div>
     </div>

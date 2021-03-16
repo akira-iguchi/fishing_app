@@ -183,12 +183,11 @@
   left: 0;
   box-sizing: border-box;
   width: 100%;
-  height: 100%;
-  padding: .3em 1em 13em 1em;
+  padding: .3em 1em 13.3em 1em;
   background: #fff;
   transition: 0.3s;
   text-align: center;
-  overflow: auto;
+  overflow: hidden;
   color: #444444;
 }
 
@@ -209,13 +208,7 @@
   display: flex;
 }
 
-.favorite_button {
-  position: relative;
-  top: 20px;
-  margin-right: 10px;
-}
-
-.card_comment {
+.card_item {
   position: relative;
   top: 20px;
 }
@@ -232,7 +225,6 @@
 }
 
 .spot_card_content p {
-  line-height: 1.7em;
   font-size: .9em;
 }
 
@@ -275,6 +267,18 @@
 
 .toppage_under {
   display: flex;
+}
+
+.toppage_heading {
+  border-bottom: double 5px rgba(0,100,255,0.8);
+  margin-top: 20px;
+  padding-bottom: 6px;
+  text-align: center;
+}
+
+.toppage_heading:first-letter {
+  font-size: 140%;
+  color:  rgba(0,100,255,0.8);
 }
 
 @media screen and (max-width: 991px) {
@@ -768,6 +772,7 @@ a:not([href]):not([tabindex]):hover {
   display: flex;
   position: relative;
   bottom: 10px;
+  margin-top: 5px;
 }
 
 .mini_card_detail a {

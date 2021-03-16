@@ -4,7 +4,7 @@
     @if (Auth::check())
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-8 user-edit_body mx-auto d-block ">
+                <div class="col-lg-6 col-md-8 user-edit_body mx-auto d-block">
                     <h1>プロフィール編集</h1>
                     <div class="user_edit_form">
                         <form method="POST" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data">

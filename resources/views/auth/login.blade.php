@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="login-signup_body">
+    <div class="login_body">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="login-signup">

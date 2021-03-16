@@ -12,7 +12,7 @@
             @include('spots.cards.card', ['spots' => $tag->spots])
         </div>
 
-        @include('spots.count', ['spots' => $tag->spots])
+        @include('spots.seeMore', ['spots' => $tag->spots])
     </div>
 @endsection
 

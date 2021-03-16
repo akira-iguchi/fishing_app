@@ -555,11 +555,18 @@ header:focus-within {
 
 /* 新規登録ページ、ログインページ */
 
-.login-signup_body {
+.signup_body {
   background-image: url('/images/signout.jpeg');
   background-repeat: no-repeat;
   background-size: cover;
   height: 70rem;
+}
+
+.login_body {
+  background-image: url('/images/signout.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 50rem;
 }
 
 .login-signup {

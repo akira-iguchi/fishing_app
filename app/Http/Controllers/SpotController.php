@@ -8,7 +8,6 @@ use App\Models\FishingType;
 use App\Models\SpotComment;
 use Illuminate\Http\Request;
 use App\Traits\TagNameTrait;
-use App\Traits\SpotTrait;
 use App\Http\Requests\SpotRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -23,11 +22,15 @@ class SpotController extends Controller
     public function index(Request $request)
     {
         if (Auth::check()) {
-            $spots = SpotTrait::allSpots();
+            // 最近の投稿
+            $recentSpots = Spot::all()->sortByDesc('id')
+                        ->load(['user', 'spot_favorites', 'spot_comments']);
+
             $tags = Tag::all()->take(15);
 
             // いいねランキング
-            $rankSpots = Spot::withCount('spot_favorites')->orderBy('spot_favorites_count', 'desc')->take(5)->get();
+            $rankSpots = Spot::withCount('spot_favorites')->orderBy('spot_favorites_count', 'desc')
+                        ->with(['user', 'spot_favorites', 'spot_comments'])->take(4)->get();
 
             // 検索機能
             $allFishingTypeNames = FishingType::all();
@@ -35,7 +38,7 @@ class SpotController extends Controller
             $fishingTypes = $request->input('fishing_types');
 
             return view('spots.index', [
-                'spots' => $spots,
+                'recentSpots' => $recentSpots,
                 'tags' => $tags,
                 'rankSpots' => $rankSpots,
                 'allFishingTypeNames' => $allFishingTypeNames,
@@ -101,8 +104,8 @@ class SpotController extends Controller
     public function show(Spot $spot)
     {
         // その他の釣りスポット
-        $otherSpots = Spot::where('id','!=', $spot->id)->get()->sortByDesc('created_at')
-                ->take(15)
+        $otherSpots = Spot::where('id','!=', $spot->id)->get()->shuffle()
+                ->take(4)
                 ->load(['user', 'spot_favorites', 'spot_comments', 'fishing_types']);
 
         return view('spots.show', [

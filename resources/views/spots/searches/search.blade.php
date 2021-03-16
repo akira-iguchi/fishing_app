@@ -30,7 +30,7 @@
                 @endif
             </div>
 
-            @include('spots.count')
+            @include('spots.seeMore')
         </div>
     @endif
 @endsection

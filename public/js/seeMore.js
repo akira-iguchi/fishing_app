@@ -3,7 +3,7 @@
     function appeared() {
         const appearedSpots = document.querySelectorAll('.spot-hidden');
 
-        for(let i = 0; i < 2; i++){
+        for(let i = 0; i < 8; i++){
             appearedSpots[i].classList.remove('spot-hidden');
         }
     };

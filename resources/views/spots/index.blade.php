@@ -11,10 +11,10 @@
 
             <div class="toppage_under">
                 <div>
+                    <h2 class="toppage_heading">人気の釣りスポット<i class="fas fa-crown"></i></h2>
                     <div class="row">
-                        @include('spots.cards.card')
+                        @include('spots.cards.card', ['spots' => $rankSpots])
                     </div>
-                    @include('spots.count')
                 </div>
 
                 <aside class="entire_weather">
@@ -22,11 +22,15 @@
                     <div id="weather"></div>
                 </aside>
             </div>
-        </div>
 
-        @foreach($rankSpots as $rankSpot)
-            <p>{{ $rankSpot->spot_name }}  {{ $rankSpot->count_spot_favorites }}</p>
-        @endforeach
+            <hr>
+
+            <h2 class="toppage_heading">最近の投稿</h2>
+            <div class="row">
+                @include('spots.cards.card', ['spots' => $recentSpots])
+            </div>
+            @include('spots.seeMore', ['spots' => $recentSpots])
+        </div>
 
         @push('js')
             <script src="{{ asset('/js/weather.js') }}" defer></script>
