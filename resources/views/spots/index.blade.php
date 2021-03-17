@@ -13,13 +13,61 @@
                 <div>
                     <h2 class="toppage_heading">人気の釣りスポット<i class="fas fa-crown"></i></h2>
                     <div class="row">
-                        @include('spots.cards.card', ['spots' => $rankSpots])
+                        <!-- カードの大きさが違うため直書き -->
+                        @foreach ($rankSpots as $spot)
+                            <div class="mx-auto d-block col-md-6 col-11">
+                                <div class="spot_card spot-hidden">
+                                    <a href="{{ route('spots.show', $spot->id)}}">
+                                        <div class="spot_card_img">
+                                            <!-- <img src="{{ $spot->image }}" alt="釣り場の画像"> -->
+                                            <img src="{{ asset('storage/'.$spot->spot_image) }}" alt="釣り場投稿者の画像">
+                                        </div>
+                                    </a>
+
+                                    <div class="spot_card_content">
+                                        <div class="card_spot_name">
+                                            {{ $spot->spot_name }}
+                                        </div>
+
+                                        <div class="card_detail">
+
+                                            <div class="card_item">
+                                                @include('favorites.favorite_button')
+                                            </div>
+
+                                            <div class="card_item mr-3">
+                                                <i class="fa fa-comment mr-1"></i>{{ $spot->count_spot_comments }}
+                                            </div>
+
+                                            <div class="card_item">
+                                                <i class="fas fa-clock"></i>&thinsp;{{ $spot->created_at->diffForHumans() }}
+                                            </div>
+
+                                        <a href="{{ route('users.show', $spot->user_id)}}">
+                                            <img src="{{ asset('storage/'.$spot->user->user_image) }}" alt="釣り場投稿者の画像">
+                                        </a>
+                                        </div>
+
+                                        @if(isset( $spot->address ))
+                                            <p>{{ $spot->address }}</p>
+                                        @endif
+                                        <!-- <p>{{ $spot->explanation }}</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 
-                <aside class="entire_weather">
-                    <div id="city-name"></div>
-                    <div id="weather"></div>
+                <aside class="aside_hidden">
+                    <select id="js-prefectures">
+                        @include('weathers.prefecture')
+                    </select>
+
+                    <div class="entire_weather">
+                        <div id="city-name"></div>
+                        <div id="weather"></div>
+                    </div>
                 </aside>
             </div>
 

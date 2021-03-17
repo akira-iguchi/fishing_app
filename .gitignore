@@ -1,5 +1,6 @@
 /node_modules
 /public/mix-manifest.json
+/public/js/weather.js
 /public/storage
 /storage/*.key
 /vendor

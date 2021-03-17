@@ -19,7 +19,13 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [
+        'https://spatie.be',
+        'https://laravel.com',
+
+        'https://*.spatie.be',
+        'https://*.laravel.com',
+    ],
 
     'allowed_origins_patterns' => [],
 

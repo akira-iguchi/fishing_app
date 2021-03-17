@@ -235,6 +235,13 @@
   display: none;
 }
 
+#js-prefectures {
+  position: relative;
+  left: 20px;
+  margin-top: 40px;
+  width: 100px;
+}
+
 .seeMore {
   font-family: auto;
   position: relative;
@@ -281,13 +288,13 @@
 }
 
 @media screen and (max-width: 991px) {
-  .entire_weather {
+  .aside_hidden {
     display: none;
   }
 }
 
 .entire_weather {
-  margin-top: 40px;
+  margin-top: 10px;
   margin-left: 20px;
   margin-bottom: 20px;
   text-align: center;

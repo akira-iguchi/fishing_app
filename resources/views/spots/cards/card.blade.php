@@ -1,9 +1,5 @@
 @foreach ($spots as $spot)
-    @if ( request()->is('/') )
-        <div class="mx-auto d-block col-md-6 col-11">
-    @else
-        <div class="mx-auto d-block col-xl-3 col-lg-4 col-md-6 col-11">
-    @endif
+    <div class="mx-auto d-block col-xl-3 col-lg-4 col-md-6 col-11">
         <div class="spot_card spot-hidden">
             <a href="{{ route('spots.show', $spot->id)}}">
                 <div class="spot_card_img">
@@ -23,12 +19,12 @@
                         @include('favorites.favorite_button')
                     </div>
 
-                    <div class="card_item mr-3">
+                    <div class="card_item mr-2">
                         <i class="fa fa-comment mr-1"></i>{{ $spot->count_spot_comments }}
                     </div>
 
                     <div class="card_item">
-                        <i class="fas fa-clock"></i>&thinsp;{{ $spot->created_at->diffForHumans() }}
+                        <i class="fas fa-clock"></i>{{ $spot->created_at->diffForHumans() }}
                     </div>
 
                 <a href="{{ route('users.show', $spot->user_id)}}">

@@ -1,5 +1,6 @@
 import './bootstrap'
 import Vue from 'vue'
+
 import SpotFavorite from './components/SpotFavorite'
 import SpotTagsInput from './components/SpotTagsInput'
 import FollowButton from './components/FollowButton'

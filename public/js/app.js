@@ -2426,6 +2426,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _SpotFavorite__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SpotFavorite */ "./resources/js/components/SpotFavorite.vue");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2604,6 +2612,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     'spot-favorite': _SpotFavorite__WEBPACK_IMPORTED_MODULE_0__.default
@@ -2632,6 +2641,11 @@ __webpack_require__.r(__webpack_exports__);
     userId: {
       type: String,
       "default": 0
+    }
+  },
+  filters: {
+    moment: function moment(date) {
+      return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format('MM/DD');
     }
   },
   data: function data() {
@@ -61562,7 +61576,7 @@ var render = function() {
               class: { active: _vm.tab === "favoriteSpotsTab" }
             },
             [
-              _vm._v("\n                いいね "),
+              _vm._v("\n                お気に入り "),
               _c("span", { staticClass: "badge badge-secondary" }, [
                 _vm._v(_vm._s(_vm.countUserFavoriteSpots))
               ])
@@ -61640,7 +61654,7 @@ var render = function() {
                     _c("img", {
                       attrs: {
                         src: "/storage/" + spot.spot_image,
-                        alt: "釣り場投稿者の画像"
+                        alt: "釣り場の画像"
                       }
                     })
                   ])
@@ -61656,12 +61670,20 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "card_detail" }, [
-                    _c("div", { staticClass: "favorite_button" }),
+                    _c("div", { staticClass: "card_item" }),
                     _vm._v(" "),
-                    _c("div", { staticClass: "card_comment" }, [
+                    _c("div", { staticClass: "card_item mr-3" }, [
                       _c("i", { staticClass: "fa fa-comment mr-1" }),
                       _vm._v(
                         _vm._s(_vm.countSpotComments) +
+                          "\n                        "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card_item" }, [
+                      _c("i", { staticClass: "fas fa-clock mr-1" }),
+                      _vm._v(
+                        _vm._s(_vm._f("moment")(spot.created_at)) +
                           "\n                        "
                       )
                     ]),
@@ -61678,9 +61700,7 @@ var render = function() {
                   _vm._v(" "),
                   spot.address && spot.address.length > 0
                     ? _c("p", [_vm._v(_vm._s(spot.address))])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("p", [_vm._v(_vm._s(spot.explanation))])
+                    : _vm._e()
                 ])
               ])
             ]
@@ -61737,7 +61757,7 @@ var render = function() {
                     _c("img", {
                       attrs: {
                         src: "/storage/" + spot.spot_image,
-                        alt: "釣り場投稿者の画像"
+                        alt: "釣り場の画像"
                       }
                     })
                   ])
@@ -61753,12 +61773,21 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "card_detail" }, [
-                    _c("div", { staticClass: "favorite_button" }),
+                    _c("div", { staticClass: "card_item" }),
                     _vm._v(" "),
-                    _c("div", { staticClass: "card_comment" }, [
+                    _c("div", { staticClass: "card_item mr-3" }, [
                       _c("i", { staticClass: "fa fa-comment mr-1" }),
                       _vm._v(
                         _vm._s(_vm.countSpotComments) +
+                          "\n                        "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card_item" }, [
+                      _c("i", { staticClass: "fas fa-clock mr-1" }),
+                      _vm._v(
+                        " " +
+                          _vm._s(_vm._f("moment")(spot.created_at)) +
                           "\n                        "
                       )
                     ]),
@@ -61775,9 +61804,7 @@ var render = function() {
                   _vm._v(" "),
                   spot.address && spot.address.length > 0
                     ? _c("p", [_vm._v(_vm._s(spot.address))])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("p", [_vm._v(_vm._s(spot.explanation))])
+                    : _vm._e()
                 ])
               ])
             ]
