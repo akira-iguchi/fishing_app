@@ -3,14 +3,14 @@ let geocoder //変数の定義
 const SpotLat = document.getElementById( "spot_latitude" );
 const SpotLng = document.getElementById( "spot_longitude" );
 
-function initMap(){ //コールバック関数
-  geocoder = new google.maps.Geocoder() //GoogleMapsAPIジオコーディングサービスにアクセス
+function initMap(){
+  geocoder = new google.maps.Geocoder()
   const getMap = document.getElementById('map');
 
-  if(getMap){ //'map'というidを取得できたら実行
-    map = new google.maps.Map(getMap, { //'map'というidを取得してマップを表示
-      center: {lat: 35.6594666, lng: 139.7005536}, //最初に表示する場所（今回は「渋谷スクランブル交差点」が初期値）
-      zoom: 15, //拡大率（1〜21まで設定可能）
+  if(getMap){
+    map = new google.maps.Map(getMap, { /
+      center: {lat: 35.6594666, lng: 139.7005536},
+      zoom: 15,
     });
 
     marker = new google.maps.Marker({ //GoogleMapにマーカーを落とす
@@ -45,12 +45,12 @@ function initMap(){ //コールバック関数
 
 function codeAddress(){ //コールバック関数
 
-  let inputAddress = document.getElementById('address').value; //'address'というidの値（value）を取得
+  let inputAddress = document.getElementById('address').value; /
 
-  geocoder.geocode( { 'address': inputAddress}, function(results, status) { //ジオコードしたい住所を引数として渡す
+  geocoder.geocode( { 'address': inputAddress}, function(results, status) {
     if (status == 'OK') {
-      let lat = results[0].geometry.location.lat(); //ジオコードした結果の緯度
-      let lng = results[0].geometry.location.lng(); //ジオコードした結果の経度
+      let lat = results[0].geometry.location.lat();
+      let lng = results[0].geometry.location.lng();
       let mark = {
           lat: lat, //緯度
           lng: lng  //経度

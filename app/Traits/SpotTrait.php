@@ -21,7 +21,6 @@ trait SpotTrait
     //すべての釣りスポット一覧
     public static function imageUpload($spot, $req, $image)
     {
-        if (isset($spot_image))
         $spot_image = new SpotImage;
         $spot_image->spot_id = $spot->id;
         $filePath = $req->file($image)->store('public');

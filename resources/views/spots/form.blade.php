@@ -58,10 +58,10 @@
 </div>
 
 <div class="form-group">
-    <label for="image">画像</label>
-    <input id="image" type="file" name="spot_image1">
-    <p class="text-danger" id="file_hidden">画像ファイルを選択してください</p>
-    <span><img id="file-preview"></span>
+    <label>画像（３つまで）</label><br>
+    <input id="image1" type="file" name="spot_image1">
+    <p class="text-danger" id="file1_hidden">画像ファイルを選択してください</p>
+    <p><img id="file1-preview"></p>
 
     @if($errors->has('spot_image1'))
         <span class="error_msg">
@@ -70,11 +70,10 @@
     @endif
 </div>
 
-<div class="form-group">
-    <label for="image">画像</label>
-    <input id="image" type="file" name="spot_image2">
-    <p class="text-danger" id="file_hidden">画像ファイルを選択してください</p>
-    <span><img id="file-preview"></span>
+<div class="form-group" id="image2_hidden">
+    <input id="image2" type="file" name="spot_image2">
+    <p class="text-danger" id="file2_hidden">画像ファイルを選択してください</p>
+    <p><img id="file2-preview"></p>
 
     @if($errors->has('spot_image2'))
         <span class="error_msg">
@@ -83,11 +82,10 @@
     @endif
 </div>
 
-<div class="form-group">
-    <label for="image">画像</label>
-    <input id="image" type="file" name="spot_image3">
-    <p class="text-danger" id="file_hidden">画像ファイルを選択してください</p>
-    <span><img id="file-preview"></span>
+<div class="form-group" id="image3_hidden">
+    <input id="image3" type="file" name="spot_image3">
+    <p class="text-danger" id="file3_hidden">画像ファイルを選択してください</p>
+    <p><img id="file3-preview"></p>
 
     @if($errors->has('spot_image3'))
         <span class="error_msg">

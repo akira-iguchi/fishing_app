@@ -432,11 +432,17 @@
   cursor: pointer;
 }
 
-#file_hidden {
+#image2_hidden,
+#image3_hidden,
+#file1_hidden,
+#file2_hidden,
+#file3_hidden {
   display: none;
 }
 
-#file-preview {
+#file1-preview,
+#file2-preview,
+#file3-preview {
   margin-top: 5px;
   max-width: 10em;
   border-radius: 9px;
