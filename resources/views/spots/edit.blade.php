@@ -16,7 +16,7 @@
 
                 <form method="POST" action="{{ route('spots.update', $spot->id) }}" enctype="multipart/form-data">
                     @csrf
-                    @method('PATCH')
+                    @method('PUT')
 
                     @include('spots.form')
 

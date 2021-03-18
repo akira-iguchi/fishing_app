@@ -29,7 +29,9 @@ class SpotRequest extends FormRequest
             'address' => 'max:50',
             'latitude' => 'required',
             'longitude' => 'required',
-            'spot_image' => 'nullable|image|mimes:jpeg,png,jpg',
+            'spot_image1' => 'image|mimes:jpeg,png,jpg',
+            'spot_image2' => 'image|mimes:jpeg,png,jpg',
+            'spot_image3' => 'image|mimes:jpeg,png,jpg',
             'tags' => 'json|regex:/^(?!.*\s).+$/u|regex:/^(?!.*\/).*$/u',
         ];
     }
@@ -42,7 +44,9 @@ class SpotRequest extends FormRequest
             'address' => '所在地',
             'latitude' => '緯度',
             'longitude' => '経度',
-            'spot_image' => '画像',
+            'spot_image1' => '画像',
+            'spot_image2' => '画像',
+            'spot_image3' => '画像',
             'tags' => 'タグ',
             'fishing_types' => '釣り方',
         ];

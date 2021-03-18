@@ -18,7 +18,6 @@ class CreateSpotsTable extends Migration
             $table->string('spot_name')->nullable(false);
             $table->longText('explanation')->nullable(false);
             $table->string('address')->nullable();
-            $table->string('spot_image')->default('defaultSpot.jpg');
             $table->float('latitude');
             $table->float('longitude');
             $table->timestamps();

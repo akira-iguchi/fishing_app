@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Spot;
 use App\Models\Tag;
-use App\Models\FishingType;
+use App\Models\SpotImage;
 use App\Models\SpotComment;
+use App\Models\FishingType;
 use Illuminate\Http\Request;
+use App\Traits\SpotTrait;
 use App\Traits\TagNameTrait;
 use App\Http\Requests\SpotRequest;
 use Illuminate\Support\Facades\Auth;
@@ -24,13 +26,13 @@ class SpotController extends Controller
         if (Auth::check()) {
             // 最近の投稿
             $recentSpots = Spot::all()->sortByDesc('id')
-                        ->load(['user', 'spot_favorites', 'spot_comments']);
+                        ->load(['user', 'spot_images', 'spot_favorites', 'spot_comments']);
 
             $tags = Tag::all()->take(15);
 
             // いいねランキング
             $rankSpots = Spot::withCount('spot_favorites')->orderBy('spot_favorites_count', 'desc')
-                        ->with(['user', 'spot_favorites', 'spot_comments'])->take(4)->get();
+                        ->with(['user', 'spot_images', 'spot_favorites', 'spot_comments'])->take(4)->get();
 
             // 検索機能
             $allFishingTypeNames = FishingType::all();
@@ -60,7 +62,7 @@ class SpotController extends Controller
         $query = Spot::query();
 
         if (isset($searchWord) && is_array($fishingTypes)) {
-            // （釣り場名または所在地）かつ、釣り場におすすめの釣り方を取得。釣り場は、釣り方を１つでも含んでいたら表示
+            // （釣りスポット名または所在地）かつ、釣りスポットにおすすめの釣り方を取得。釣りスポットは、釣り方を１つでも含んでいたら表示
             $query->where(function($query) use($searchWord) {
                 $query->where('spot_name', 'like', '%' . self::escapeLike($searchWord) . '%')
                 ->orWhere('address', 'like', '%' . self::escapeLike($searchWord) . '%');
@@ -106,7 +108,7 @@ class SpotController extends Controller
         // その他の釣りスポット
         $otherSpots = Spot::where('id','!=', $spot->id)->get()->shuffle()
                 ->take(4)
-                ->load(['user', 'spot_favorites', 'spot_comments', 'fishing_types']);
+                ->load(['user', 'spot_images', 'spot_favorites', 'spot_comments', 'fishing_types']);
 
         return view('spots.show', [
             'spot' => $spot,
@@ -127,27 +129,38 @@ class SpotController extends Controller
         ]);
     }
 
-    public function store(SpotRequest $request, Spot $spot)
+    public function store(SpotRequest $request, Spot $spot, SpotImage $spot_image)
     {
-        $spot->fill($request->except('spot_image'));
-        if ($request->hasFile('spot_image')) {
-            Storage::delete('public' . $spot->spot_image);
-            $filePath = $request->file('spot_image')->store('public');
-            $spot->spot_image = basename($filePath);
-            // $upload_info = Storage::disk('s3')->putFile('/test', $request->file('spot_image'), 'public');
-
-            //S3へのファイルアップロード処理の時の情報が格納された変数$upload_infoを用いてアップロードされた画像へのリンクURLを変数$pathに格納する
-            // $path = Storage::disk('s3')->url($upload_info);
-            // $spot->spot_image = $path;
-        }
+        $spot->fill($request->all());
         $spot->user_id = auth()->id();
         $spot->save();
 
+        $image1 = 'spot_image1';
+        $image2 = 'spot_image2';
+        $image3 = 'spot_image3';
+
+        // 画像（小テーブル）とリレーション
+        if ($request->hasFile('spot_image1') && $request->hasFile('spot_image2') && $request->hasFile('spot_image3')) {
+            SpotTrait::imageUpload($spot, $request, $image1);
+            SpotTrait::imageUpload($spot, $request, $image2);
+            SpotTrait::imageUpload($spot, $request, $image3);
+        } elseif ($request->hasFile('spot_image1') && $request->hasFile('spot_image2')) {
+            SpotTrait::imageUpload($spot, $request, $image1);
+            SpotTrait::imageUpload($spot, $request, $image2);
+        } elseif ($request->hasFile('spot_image1')) {
+            SpotTrait::imageUpload($spot, $request, $image1);
+        } else {
+            $spot_image->spot_id = $spot->id;
+            $spot_image->save();
+        }
+
+        // タグとリレーション
         $request->tags->each(function ($tagName) use ($spot) {
             $tag = Tag::firstOrCreate(['name' => $tagName]);
             $spot->tags()->attach($tag);
         });
 
+        // 釣り方とリレーション
         $spot->fishing_types()->attach($request->fishing_types);
 
         return redirect('/')->with('flash_message', '釣りスポットを投稿しました');
@@ -176,20 +189,33 @@ class SpotController extends Controller
         }
     }
 
-    public function update(SpotRequest $request, Spot $spot)
+    public function update(SpotRequest $request, Spot $spot, SpotImage $spot_image)
     {
-        $spot->fill($request->except('spot_image'));
-        if ($request->hasFile('spot_image')) {
-            Storage::delete('public' . $spot->spot_image);
-            $filePath = $request->file('spot_image')->store('public');
-            $spot->spot_image = basename($filePath);
-            // $upload_info = Storage::disk('s3')->putFile('/test', $request->file('spot_image'), 'public');
-
-            //S3へのファイルアップロード処理の時の情報が格納された変数$upload_infoを用いてアップロードされた画像へのリンクURLを変数$pathに格納する
-            // $path = Storage::disk('s3')->url($upload_info);
-            // $spot->spot_image = $path;
-        }
+        $spot->fill($request->all());
+        $spot->user_id = auth()->id();
         $spot->save();
+
+        $image1 = 'spot_image1';
+        $image2 = 'spot_image2';
+        $image3 = 'spot_image3';
+
+        // 画像（小テーブル）とリレーション
+        if ($request->hasFile('spot_image1') || $request->hasFile('spot_image2') || $request->hasFile('spot_image3')) {
+            $spot->spot_images()->delete();
+            if ($request->hasFile('spot_image1') && $request->hasFile('spot_image2') && $request->hasFile('spot_image3')) {
+                SpotTrait::imageUpload($spot, $request, $image1);
+                SpotTrait::imageUpload($spot, $request, $image2);
+                SpotTrait::imageUpload($spot, $request, $image3);
+            } elseif ($request->hasFile('spot_image1') && $request->hasFile('spot_image2')) {
+                SpotTrait::imageUpload($spot, $request, $image1);
+                SpotTrait::imageUpload($spot, $request, $image2);
+            } elseif ($request->hasFile('spot_image1')) {
+                SpotTrait::imageUpload($spot, $request, $image1);
+            } else {
+                $spot_image->spot_id = $spot->id;
+                $spot_image->save();
+            }
+        }
 
         $spot->tags()->detach();
         $request->tags->each(function ($tagName) use ($spot) {

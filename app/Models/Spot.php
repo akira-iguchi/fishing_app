@@ -17,7 +17,6 @@ class Spot extends Model
         'spot_name',
         'explanation',
         'address',
-        'spot_image',
         'latitude',
         'longitude'
     ];
@@ -28,6 +27,14 @@ class Spot extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * 釣りスポットの画像
+     */
+    public function spot_images()
+    {
+        return $this->hasMany(SpotImage::class);
     }
 
     /**

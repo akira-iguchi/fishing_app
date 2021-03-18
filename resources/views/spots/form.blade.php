@@ -59,13 +59,39 @@
 
 <div class="form-group">
     <label for="image">画像</label>
-    <input id="image" type="file" name="spot_image">
+    <input id="image" type="file" name="spot_image1">
     <p class="text-danger" id="file_hidden">画像ファイルを選択してください</p>
     <span><img id="file-preview"></span>
 
-    @if($errors->has('spot_image'))
+    @if($errors->has('spot_image1'))
         <span class="error_msg">
-            <p>{{ $errors->first('spot_image') }}</p>
+            <p>{{ $errors->first('spot_image1') }}</p>
+        </span>
+    @endif
+</div>
+
+<div class="form-group">
+    <label for="image">画像</label>
+    <input id="image" type="file" name="spot_image2">
+    <p class="text-danger" id="file_hidden">画像ファイルを選択してください</p>
+    <span><img id="file-preview"></span>
+
+    @if($errors->has('spot_image2'))
+        <span class="error_msg">
+            <p>{{ $errors->first('spot_image2') }}</p>
+        </span>
+    @endif
+</div>
+
+<div class="form-group">
+    <label for="image">画像</label>
+    <input id="image" type="file" name="spot_image3">
+    <p class="text-danger" id="file_hidden">画像ファイルを選択してください</p>
+    <span><img id="file-preview"></span>
+
+    @if($errors->has('spot_image3'))
+        <span class="error_msg">
+            <p>{{ $errors->first('spot_image3') }}</p>
         </span>
     @endif
 </div>

@@ -6,7 +6,7 @@
 <option value="miyagi">宮城
 <option value="akita">秋田
 <option value="yamagata">山形
-<option value="hukushima">福島
+<option value="fukushima">福島
 <option value="ibaraki">茨城
 <option value="tochigi">栃木
 <option value="gunma">群馬
@@ -15,11 +15,11 @@
 <option value="kanagawa">神奈川
 <option value="niigata">新潟
 <option value="toyama">富山
-<option value="isikawa">石川
+<option value="ishikawa">石川
 <option value="hukui">福井
 <option value="yamanasi">山梨
 <option value="nagano">長野
-<option value="gihu">岐阜
+<option value="gifu">岐阜
 <option value="sizuoka">静岡
 <option value="aichi">愛知
 <option value="mie">三重
@@ -37,7 +37,7 @@
 <option value="kagawa">香川
 <option value="aichi">愛媛
 <option value="kochi">高知
-<option value="hukuoka">福岡
+<option value="fukuoka">福岡
 <option value="saga">佐賀
 <option value="nagasaki">長崎
 <option value="kumamoto">熊本

@@ -26,9 +26,11 @@
                             <div class="swiper-slide">
                                 <div id="show_map"></div>
                             </div>
-                            <div class="swiper-slide">
-                                <img src="{{ asset('storage/'.$spot->spot_image) }}" alt="釣り場の画像">
-                            </div>
+                            @foreach($spot->spot_images as $image)
+                                <div class="swiper-slide">
+                                    <img src="{{ asset('storage/'.$image->spot_image) }}" alt="釣り場の画像">
+                                </div>
+                            @endforeach
                         </div>
                         <div class="swiper-pagination"></div>
                         <div class="swiper-button-prev"></div>

@@ -1,11 +1,13 @@
 // 天気予報
 (() => {
-    var element = document.getElementById("js-prefectures");
+    const element = document.getElementById("js-prefectures");
     let prefecture = element.value;
+    let number = element.selectedIndex;
+    let prefectureTitle = element.options[number].text;
 
     const weather = function() {
         $(function() {
-            let apikey = "fd147a76560ede8d326036a373f1ea0d";
+            let apikey = process.env.MIX_OPEN_WEATHER_API;
             let city = prefecture;
             let url = '//api.openweathermap.org/data/2.5/forecast?q=' + city + ',jp&lang=ja&units=metric&APPID=' + apikey;
             $.ajax({
@@ -15,7 +17,7 @@
             })
             .done(function(data) {
                 let insertHTML = "";
-                let cityName = '<h2>' + prefecture + 'の天気' + '</h2>';
+                let cityName = '<h2>' + prefectureTitle + 'の天気' + '</h2>';
                 $('#city-name').html(cityName);
                 for (let i = 0; i <= 8; i = i + 2) {
                 insertHTML += buildHTML(data, i);
@@ -65,6 +67,8 @@
 
     element.addEventListener('change', function(){
         prefecture = element.value;
+        number = element.selectedIndex;
+        prefectureTitle = element.options[number].text;
         weather();
     });
 })();
