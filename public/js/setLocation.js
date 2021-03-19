@@ -8,7 +8,7 @@ function initMap(){
   const getMap = document.getElementById('map');
 
   if(getMap){
-    map = new google.maps.Map(getMap, { /
+    map = new google.maps.Map(getMap, {
       center: {lat: 35.6594666, lng: 139.7005536},
       zoom: 15,
     });
@@ -45,7 +45,7 @@ function initMap(){
 
 function codeAddress(){ //コールバック関数
 
-  let inputAddress = document.getElementById('address').value; /
+  let inputAddress = document.getElementById('address').value;
 
   geocoder.geocode( { 'address': inputAddress}, function(results, status) {
     if (status == 'OK') {

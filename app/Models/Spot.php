@@ -37,6 +37,11 @@ class Spot extends Model
         return $this->hasMany(SpotImage::class);
     }
 
+    public function first_spot_image()
+    {
+        return $this->spot_images->first()->spot_image;
+    }
+
     /**
      * 釣りスポットのコメント
      */

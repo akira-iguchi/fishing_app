@@ -159,11 +159,12 @@ class SpotController extends Controller
                 SpotTrait::imageUpload($spot, $request, $image1);
             } elseif ($request->hasFile('spot_image2')) {
                 SpotTrait::imageUpload($spot, $request, $image2);
-            } elseif ($request->hasFile('spot_image3')) {
-                SpotTrait::imageUpload($spot, $request, $image3);
             } else {
-                $spot_image->save();
+                SpotTrait::imageUpload($spot, $request, $image3);
             }
+        } else {
+            $spot_image->spot_id = $spot->id;
+            $spot_image->save();
         }
 
         // タグとリレーション

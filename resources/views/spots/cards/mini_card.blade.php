@@ -7,7 +7,7 @@
             <a href="{{ route('spots.show', $spot->id)}}">
                 <div class="mini_card_img">
                     <!-- <img src="{{ $spot->image }}" alt="釣り場の画像"> -->
-                    <img src="{{ asset('storage/'.$spot->spot_images->first()->spot_image) }}" alt="釣りスポットの画像">
+                    <img src="{{ asset('storage/'.$spot->first_spot_image()) }}" alt="釣りスポットの画像">
                 </div>
             </a>
 

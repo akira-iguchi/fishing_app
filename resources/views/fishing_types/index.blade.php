@@ -6,7 +6,7 @@
         <div class="row">
             @foreach ($fishing_types as $fishing_type)
             <div class="mx-auto d-block col-lg-5 fishing_type_card">
-                <span class="fishing_type_card-title">{{ $fishing_type->fishing_type_name }}</span>
+                <span class="fishing_type_card_title">{{ $fishing_type->fishing_type_name }}</span>
                 {{ $fishing_type->content }}
                 <p class="text-center"><img onClick="openImageByFullScreen(this)" src="{{ asset('storage/'.$fishing_type->fishing_type_image) }}" alt="釣り場方の画像"></p>
                 <small>画像クリックで拡大！</small>

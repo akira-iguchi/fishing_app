@@ -6,7 +6,7 @@
             :class="{'text-danger':this.isLikedBy}"
             @click="clickFavorite"
         >
-            <i class="fas fa-heart" />
+            <i class="fas fa-heart"></i>
         </button>
         {{ countSpotFavorites }}
     </div>

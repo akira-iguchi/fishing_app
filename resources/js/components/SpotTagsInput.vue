@@ -6,9 +6,10 @@
             :value="tagsJson"
         >
         <vue-tags-input
+            class="input_tag"
             v-model="tag"
             :tags="tags"
-            placeholder="タグを5個まで入力できます（6個以上は切り捨て）"
+            placeholder="例） 東京、風が弱い、アジ"
             :autocomplete-items="filteredItems"
             :add-on-key="[13, 32]"
             @tags-changed="newTags => tags = newTags"

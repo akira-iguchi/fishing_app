@@ -34,7 +34,7 @@
   box-shadow: 10px 10px 10px rgba(0,0,0,0.6);
 }
 
-.fishing_type_card-title {
+.fishing_type_card_title {
   position: absolute;
   display: inline-block;
   top: -38px;

@@ -13,6 +13,7 @@
                     :initial-count-user-followings='@json($user->count_followings)'
                     :initial-count-user-followers='@json($user->count_followers)'
                     user-id="{{ $user->id }}"
+                    auth-user="{{ auth()->user() }}"
                 >
                 </user-tabs>
             </div>

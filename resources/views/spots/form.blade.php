@@ -3,7 +3,7 @@
 
 <div class="form-group">
     <label for="spot_name" class="required">釣りスポット名</label>
-    <input id="spot_name" type="text" class="form-control" name="spot_name" value="{{ old('spot_name', $spot['spot_name']) }}">
+    <input id="spot_name" type="text" class="form-control" name="spot_name" value="{{ old('spot_name', $spot['spot_name']) }}" placeholder="例） 〇〇釣り公園">
 
     @if($errors->has('spot_name'))
         <span class="error_msg">
@@ -14,7 +14,7 @@
 
 <div class="form-group">
     <label for="spot_address">所在地</label>
-    <input id="spot_address" type="text" class="form-control" name="address" value="{{ old('address', $spot['address']) }}">
+    <input id="spot_address" type="text" class="form-control" name="address" value="{{ old('address', $spot['address']) }}" placeholder="例） 〇〇県〇〇市〇〇区〇〇町1-1-1">
 
     @if($errors->has('address'))
     <span class="error_msg">
@@ -24,7 +24,7 @@
 </div>
 
 <div class="form-group">
-    <label for="tags">タグ</label>
+    <label for="tags">タグ（５つまで）</label>
     <spot-tags-input
         :initial-tags='@json($tagNames ?? [])'
         :autocomplete-items='@json($allTagNames ?? [])'
@@ -96,7 +96,7 @@
 
 <div class="form-group">
     <label for="textArea" class="required">説明</label>
-    <textarea rows="6" id="textArea" class="form-control" name="explanation">{{ old('explanation', $spot['explanation']) }}</textarea>
+    <textarea rows="6" id="textArea" class="form-control" name="explanation" placeholder="例） 風が弱くて釣りやすい釣り場です。">{{ old('explanation', $spot['explanation']) }}</textarea>
     残り<span id="textLest">300</span>文字
     <p id="textAttention" style="display:none; color:red;">入力文字数が多すぎます。</p>
 

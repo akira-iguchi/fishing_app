@@ -30,6 +30,7 @@
         "bootstrap-vue": "^2.21.2",
         "core-js": "^3.9.1",
         "dotenv": "^8.2.0",
+        "dotenv-expand": "^5.1.0",
         "moment": "^2.29.1",
         "screenfull": "^5.1.0",
         "scrollreveal": "^4.0.7",

@@ -25,39 +25,41 @@
 
         <div class="row" v-show="tab === 'spotsTab'">
             <div v-for="spot in spots" :key="spot.id" class="mx-auto d-block col-lg-4 col-md-6 col-11">
-                <div class="spot_card">
-                    <a v-bind:href="`/spots/${spot.id}`">
-                        <div class="spot_card_img">
-                            <img :src="`/storage/${spot.spot_image}`" alt="釣り場の画像">
-                        </div>
-                    </a>
-
-                    <div class="spot_card_content">
-                        <div class="card_spot_name">
-                            {{ spot.spot_name }}
-                        </div>
-
-                        <div class="card_detail">
-                            <div class="card_item">
-                                <!-- お気に入りボタン -->
+                <a v-bind:href="`/spots/${spot.id}`">
+                    <div class="spot_card">
+                            <div class="spot_card_img">
+                                <img :src="`/storage/${spot.spot_images[0].spot_image}`" alt="釣りスポットの画像">
                             </div>
 
-                            <div class="card_item mr-3">
-                                <i class="fa fa-comment mr-1"></i>{{ countSpotComments }}
+                        <div class="spot_card_content">
+                            <div class="card_spot_name">
+                                {{ spot.spot_name }}
                             </div>
 
-                            <div class="card_item">
-                                <i class="fas fa-clock mr-1"></i>{{ spot.created_at | moment }}
+                            <div class="card_detail">
+                                <div class="card_item">
+                                    <!-- お気に入りボタン -->
+                                    <i class="fas fa-heart heart_text"></i>
+                                    {{ spot.spot_favorites.length }}
+                                </div>
+
+                                <div class="card_item ml-2 mr-3">
+                                    <i class="fa fa-comment mr-1"></i>{{ countSpotComments }}
+                                </div>
+
+                                <div class="card_item">
+                                    <i class="fas fa-clock mr-1"></i>&thinsp;{{ spot.created_at | moment }}
+                                </div>
+
+                                <a v-bind:href="`/users/${spot.user_id}`">
+                                    <img :src="`/storage/${spot.user.user_image}`" alt="釣りスポット投稿者の画像">
+                                </a>
                             </div>
 
-                            <a v-bind:href="`/users/${spot.user_id}`">
-                                <img :src="`/storage/${spot.user.user_image}`" alt="釣り場投稿者の画像">
-                            </a>
+                            <p v-if="spot.address && spot.address.length > 0">{{ spot.address }}</p>
                         </div>
-
-                        <p v-if="spot.address && spot.address.length > 0">{{ spot.address }}</p>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="w-100 text-center">
@@ -74,39 +76,41 @@
 
         <div class="row" v-show="tab === 'favoriteSpotsTab'">
             <div v-for="spot in favoriteSpots" :key="spot.id" class="mx-auto d-block col-lg-4 col-md-6 col-11">
-                <div class="spot_card">
-                    <a v-bind:href="`/spots/${spot.id}`">
-                        <div class="spot_card_img">
-                            <img :src="`/storage/${spot.spot_image}`" alt="釣り場の画像">
-                        </div>
-                    </a>
-
-                    <div class="spot_card_content">
-                        <div class="card_spot_name">
-                            {{ spot.spot_name }}
-                        </div>
-
-                        <div class="card_detail">
-                            <div class="card_item">
-                                <!-- お気に入りボタン -->
+                <a v-bind:href="`/spots/${spot.id}`">
+                    <div class="spot_card">
+                            <div class="spot_card_img">
+                                <img :src="`/storage/${spot.spot_images[0].spot_image}`" alt="釣りスポットの画像">
                             </div>
 
-                            <div class="card_item mr-3">
-                                <i class="fa fa-comment mr-1"></i>{{ countSpotComments }}
+                        <div class="spot_card_content">
+                            <div class="card_spot_name">
+                                {{ spot.spot_name }}
                             </div>
 
-                            <div class="card_item">
-                                <i class="fas fa-clock mr-1"></i>&thinsp;{{ spot.created_at | moment }}
+                            <div class="card_detail">
+                                <div class="card_item">
+                                    <!-- お気に入りボタン -->
+                                    <i class="fas fa-heart heart_text"></i>
+                                    {{ spot.spot_favorites.length }}
+                                </div>
+
+                                <div class="card_item ml-2 mr-3">
+                                    <i class="fa fa-comment mr-1"></i>{{ countSpotComments }}
+                                </div>
+
+                                <div class="card_item">
+                                    <i class="fas fa-clock mr-1"></i>&thinsp;{{ spot.created_at | moment }}
+                                </div>
+
+                                <a v-bind:href="`/users/${spot.user_id}`">
+                                    <img :src="`/storage/${spot.user.user_image}`" alt="釣りスポット投稿者の画像">
+                                </a>
                             </div>
 
-                            <a v-bind:href="`/users/${spot.user_id}`">
-                                <img :src="`/storage/${spot.user.user_image}`" alt="釣り場投稿者の画像">
-                            </a>
+                            <p v-if="spot.address && spot.address.length > 0">{{ spot.address }}</p>
                         </div>
-
-                        <p v-if="spot.address && spot.address.length > 0">{{ spot.address }}</p>
                     </div>
-                </div>
+                </a>
             </div>
 
             <div class="w-100 text-center">
@@ -133,7 +137,8 @@
                     </a>
 
                     <div>
-                        <!-- フォローボタン -->
+                        <span>{{ user.followings.length }} フォロー</span>
+                        <span class="mr-4">{{ user.followers.length }} フォロワー</span>
                     </div>
                 </div>
             </div>
@@ -160,10 +165,6 @@
                     <a v-bind:href="`/users/${user.id}`">
                         <p class="followings_user_name"><strong>{{ user.user_name }}</strong></p>
                     </a>
-
-                    <div>
-                        <!-- フォローボタン -->
-                    </div>
                 </div>
             </div>
 
@@ -218,7 +219,11 @@
 
             userId: {
                 type: String,
-                default: 0,
+                default: "",
+            },
+
+            authUser: {
+                default: {},
             },
         },
 
@@ -240,6 +245,7 @@
                 userFollowings: [],
                 userFollowers: [],
                 user_id: this.userId,
+                auth_user: this.authUser,
                 countUserSpots: this.initialCountUserSpots,
                 countUserFavoriteSpots: this.initialCountUserFavoriteSpots,
                 countUserFollowings: this.initialCountUserFollowings,

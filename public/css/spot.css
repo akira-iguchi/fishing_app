@@ -126,6 +126,10 @@
   margin-right: 3px;
 }
 
+.ti-new-tag-input-wrapper {
+  font-size: 1rem;
+}
+
 .search-result {
   text-align: center;
   font-size: 1.6rem;

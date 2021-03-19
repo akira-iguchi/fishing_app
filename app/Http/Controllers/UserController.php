@@ -81,13 +81,13 @@ class UserController extends Controller
     public function spots(User $user)
     {
         return $user->spots
-                    ->load(['user', 'spot_favorites', 'spot_comments']);
+                    ->load(['user', 'spot_images', 'spot_favorites', 'spot_comments']);
     }
 
     public function favoriteSpots(User $user)
     {
         return $user->favoriteSpots
-                    ->load(['user', 'spot_favorites', 'spot_comments']);
+                    ->load(['user', 'spot_images', 'spot_favorites', 'spot_comments']);
     }
 
     public function followings(User $user)

@@ -16,8 +16,8 @@
 <option value="niigata">新潟
 <option value="toyama">富山
 <option value="ishikawa">石川
-<option value="hukui">福井
-<option value="yamanasi">山梨
+<option value="fukui">福井
+<option value="yamanashi">山梨
 <option value="nagano">長野
 <option value="gifu">岐阜
 <option value="sizuoka">静岡
@@ -29,11 +29,11 @@
 <option value="nara">奈良
 <option value="wakayama">和歌山
 <option value="tottori">鳥取
-<option value="simane">島根
+<option value="shimane">島根
 <option value="okayama">岡山
-<option value="hirosima">広島
+<option value="hiroshima">広島
 <option value="yamaguchi">山口
-<option value="tokusima">徳島
+<option value="tokushima">徳島
 <option value="kagawa">香川
 <option value="aichi">愛媛
 <option value="kochi">高知

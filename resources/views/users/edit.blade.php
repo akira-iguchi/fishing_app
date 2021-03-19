@@ -23,10 +23,10 @@
                             @endif
 
                             <div>
-                                <label for="image">プロフィール画像</label>
-                                <input id="image" type="file" name="user_image">
-                                <p class="text-danger" id="file_hidden">画像ファイルを選択してください</p>
-                                <span><img id="file-preview"></span>
+                                <label for="image1">プロフィール画像</label>
+                                <input id="image1" type="file" name="user_image">
+                                <p class="text-danger" id="file1_hidden">画像ファイルを選択してください</p>
+                                <span><img id="file1-preview"></span>
                                 @if($errors->has('user_image'))
                                     <span class="error_msg">
                                         <p>{{ $errors->first('user_image') }}</p>

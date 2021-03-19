@@ -7,9 +7,8 @@
 
     const weather = function() {
         $(function() {
-            let apikey = process.env.MIX_OPEN_WEATHER_API;
             let city = prefecture;
-            let url = '//api.openweathermap.org/data/2.5/forecast?q=' + city + ',jp&lang=ja&units=metric&APPID=' + apikey;
+            let url = '//api.openweathermap.org/data/2.5/forecast?q=' + city + ',jp&lang=ja&units=metric&APPID=' + weatherApiKey;
             $.ajax({
                 url: url,
                 dataType: "json",

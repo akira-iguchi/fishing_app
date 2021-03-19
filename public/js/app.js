@@ -2377,6 +2377,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2611,6 +2612,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2640,7 +2642,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     userId: {
       type: String,
-      "default": 0
+      "default": ""
+    },
+    authUser: {
+      "default": {}
     }
   },
   filters: {
@@ -2660,6 +2665,7 @@ __webpack_require__.r(__webpack_exports__);
       userFollowings: [],
       userFollowers: [],
       user_id: this.userId,
+      auth_user: this.authUser,
       countUserSpots: this.initialCountUserSpots,
       countUserFavoriteSpots: this.initialCountUserFavoriteSpots,
       countUserFollowings: this.initialCountUserFollowings,
@@ -61490,9 +61496,10 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("vue-tags-input", {
+        staticClass: "input_tag",
         attrs: {
           tags: _vm.tags,
-          placeholder: "タグを5個まで入力できます（6個以上は切り捨て）",
+          placeholder: "例） 東京、風が弱い、アジ",
           "autocomplete-items": _vm.filteredItems,
           "add-on-key": [13, 32]
         },
@@ -61648,59 +61655,67 @@ var render = function() {
               staticClass: "mx-auto d-block col-lg-4 col-md-6 col-11"
             },
             [
-              _c("div", { staticClass: "spot_card" }, [
-                _c("a", { attrs: { href: "/spots/" + spot.id } }, [
+              _c("a", { attrs: { href: "/spots/" + spot.id } }, [
+                _c("div", { staticClass: "spot_card" }, [
                   _c("div", { staticClass: "spot_card_img" }, [
                     _c("img", {
                       attrs: {
-                        src: "/storage/" + spot.spot_image,
-                        alt: "釣り場の画像"
+                        src: "/storage/" + spot.spot_images[0].spot_image,
+                        alt: "釣りスポットの画像"
                       }
                     })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "spot_card_content" }, [
+                    _c("div", { staticClass: "card_spot_name" }, [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(spot.spot_name) +
+                          "\n                        "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card_detail" }, [
+                      _c("div", { staticClass: "card_item" }, [
+                        _c("i", { staticClass: "fas fa-heart heart_text" }),
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(spot.spot_favorites.length) +
+                            "\n                            "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card_item ml-2 mr-3" }, [
+                        _c("i", { staticClass: "fa fa-comment mr-1" }),
+                        _vm._v(
+                          _vm._s(_vm.countSpotComments) +
+                            "\n                            "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card_item" }, [
+                        _c("i", { staticClass: "fas fa-clock mr-1" }),
+                        _vm._v(
+                          " " +
+                            _vm._s(_vm._f("moment")(spot.created_at)) +
+                            "\n                            "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("a", { attrs: { href: "/users/" + spot.user_id } }, [
+                        _c("img", {
+                          attrs: {
+                            src: "/storage/" + spot.user.user_image,
+                            alt: "釣りスポット投稿者の画像"
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    spot.address && spot.address.length > 0
+                      ? _c("p", [_vm._v(_vm._s(spot.address))])
+                      : _vm._e()
                   ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "spot_card_content" }, [
-                  _c("div", { staticClass: "card_spot_name" }, [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(spot.spot_name) +
-                        "\n                    "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card_detail" }, [
-                    _c("div", { staticClass: "card_item" }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card_item mr-3" }, [
-                      _c("i", { staticClass: "fa fa-comment mr-1" }),
-                      _vm._v(
-                        _vm._s(_vm.countSpotComments) +
-                          "\n                        "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card_item" }, [
-                      _c("i", { staticClass: "fas fa-clock mr-1" }),
-                      _vm._v(
-                        _vm._s(_vm._f("moment")(spot.created_at)) +
-                          "\n                        "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("a", { attrs: { href: "/users/" + spot.user_id } }, [
-                      _c("img", {
-                        attrs: {
-                          src: "/storage/" + spot.user.user_image,
-                          alt: "釣り場投稿者の画像"
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  spot.address && spot.address.length > 0
-                    ? _c("p", [_vm._v(_vm._s(spot.address))])
-                    : _vm._e()
                 ])
               ])
             ]
@@ -61751,60 +61766,67 @@ var render = function() {
               staticClass: "mx-auto d-block col-lg-4 col-md-6 col-11"
             },
             [
-              _c("div", { staticClass: "spot_card" }, [
-                _c("a", { attrs: { href: "/spots/" + spot.id } }, [
+              _c("a", { attrs: { href: "/spots/" + spot.id } }, [
+                _c("div", { staticClass: "spot_card" }, [
                   _c("div", { staticClass: "spot_card_img" }, [
                     _c("img", {
                       attrs: {
-                        src: "/storage/" + spot.spot_image,
-                        alt: "釣り場の画像"
+                        src: "/storage/" + spot.spot_images[0].spot_image,
+                        alt: "釣りスポットの画像"
                       }
                     })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "spot_card_content" }, [
+                    _c("div", { staticClass: "card_spot_name" }, [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(spot.spot_name) +
+                          "\n                        "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card_detail" }, [
+                      _c("div", { staticClass: "card_item" }, [
+                        _c("i", { staticClass: "fas fa-heart heart_text" }),
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(spot.spot_favorites.length) +
+                            "\n                            "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card_item ml-2 mr-3" }, [
+                        _c("i", { staticClass: "fa fa-comment mr-1" }),
+                        _vm._v(
+                          _vm._s(_vm.countSpotComments) +
+                            "\n                            "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card_item" }, [
+                        _c("i", { staticClass: "fas fa-clock mr-1" }),
+                        _vm._v(
+                          " " +
+                            _vm._s(_vm._f("moment")(spot.created_at)) +
+                            "\n                            "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("a", { attrs: { href: "/users/" + spot.user_id } }, [
+                        _c("img", {
+                          attrs: {
+                            src: "/storage/" + spot.user.user_image,
+                            alt: "釣りスポット投稿者の画像"
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    spot.address && spot.address.length > 0
+                      ? _c("p", [_vm._v(_vm._s(spot.address))])
+                      : _vm._e()
                   ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "spot_card_content" }, [
-                  _c("div", { staticClass: "card_spot_name" }, [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(spot.spot_name) +
-                        "\n                    "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card_detail" }, [
-                    _c("div", { staticClass: "card_item" }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card_item mr-3" }, [
-                      _c("i", { staticClass: "fa fa-comment mr-1" }),
-                      _vm._v(
-                        _vm._s(_vm.countSpotComments) +
-                          "\n                        "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card_item" }, [
-                      _c("i", { staticClass: "fas fa-clock mr-1" }),
-                      _vm._v(
-                        " " +
-                          _vm._s(_vm._f("moment")(spot.created_at)) +
-                          "\n                        "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("a", { attrs: { href: "/users/" + spot.user_id } }, [
-                      _c("img", {
-                        attrs: {
-                          src: "/storage/" + spot.user.user_image,
-                          alt: "釣り場投稿者の画像"
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  spot.address && spot.address.length > 0
-                    ? _c("p", [_vm._v(_vm._s(spot.address))])
-                    : _vm._e()
                 ])
               ])
             ]
@@ -61875,7 +61897,15 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div")
+                _c("div", [
+                  _c("span", [
+                    _vm._v(_vm._s(user.followings.length) + " フォロー")
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "mr-4" }, [
+                    _vm._v(_vm._s(user.followers.length) + " フォロワー")
+                  ])
+                ])
               ])
             ]
           )
@@ -61943,9 +61973,7 @@ var render = function() {
                   _c("p", { staticClass: "followings_user_name" }, [
                     _c("strong", [_vm._v(_vm._s(user.user_name))])
                   ])
-                ]),
-                _vm._v(" "),
-                _c("div")
+                ])
               ])
             ]
           )
