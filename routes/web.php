@@ -51,6 +51,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('users', 'UserController');
 
+    // カレンダー機能
+    Route::resource('/events', 'EventController');
+    Route::get('/setEvents', 'EventController@setEvents');
+    Route::post('/ajax/addEvent', 'EventController@addEvent');
+    Route::post('/ajax/editEventDate', 'EventController@editEventDate');
+
     Route::get('/fishing_types','FishingTypeController@index');
 
     Route::get('/spots/search','SpotController@search')->name('spots.search');

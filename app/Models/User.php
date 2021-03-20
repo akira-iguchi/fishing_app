@@ -57,6 +57,14 @@ class User extends Authenticatable
     }
 
     /**
+     *  予定`
+     */
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    /**
      * お気に入りスポット
      */
     public function favoriteSpots()

@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (Auth::check())
     <div class="container">
         <div class="row">
             <div class="mx-auto d-block col-lg-10 col-md-11 spot_form">
@@ -27,7 +26,6 @@
             </div>
         </div>
     </div>
-    @endif
 @endsection
 
 @push('js')

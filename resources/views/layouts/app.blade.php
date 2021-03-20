@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="{{ asset('css/spot.css') }}">
         <link rel="stylesheet" href="{{ asset('css/user.css') }}">
         <link rel="stylesheet" href="{{ asset('css/fishing_type.css') }}">
+        <link rel="stylesheet" href="{{ asset('/css/fullcalendar/core/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('/css/fullcalendar/daygrid/main.css') }}">
     </head>
 
     <body>
@@ -41,5 +43,6 @@
         <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
         <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </body>
 </html>
