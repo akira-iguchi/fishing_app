@@ -26,13 +26,13 @@ class EventController extends Controller
         $end = $this->formatDate($request->all()['end']);
         //表示した月のカレンダーの始まりの日を終わりの日をそれぞれ取得。
 
-        $events = Event::select('event_id', 'title', 'date')->whereBetween('date', [$start, $end])->get();
+        $events = Event::select('id', 'fishing_type', 'date')->whereBetween('date', [$start, $end])->get();
         //カレンダーの期間内のイベントを取得
 
         $newArr = [];
         foreach($events as $item){
-            $newItem["id"] = $item["event_id"];
-            $newItem["title"] = $item["title"];
+            $newItem["id"] = $item["id"];
+            $newItem["fishing_type"] = $item["fishing_type"];
             $newItem["start"] = $item["date"];
             $newArr[] = $newItem;
         }
@@ -40,16 +40,13 @@ class EventController extends Controller
         return response()->json($newArr);
     }
 
-    public function addEvent(Request $request)
+    public function addEvent(EventRequest $request, Event $event)
     {
-        $data = $request->all();
-        $event = new Event();
-        $event->event_id = 1;
-        $event->date = $data['date'];
-        $event->title = $data['title'];
+        $event->fill($request->all());
+        $event->user_id = Auth::id();
         $event->save();
 
-        return response()->json(['event_id' => $event->event_id ]);
+        return response()->json(['id' => $event->id ]);
     }
 
     public function editEventDate(Request $request){

@@ -14,10 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
             editEventDate(info);
         },
 
-        dateClick: function(info) {
-            addEvent(calendar,info);
-        },
-
         eventClick: function(info) {
             editEvent(info);
         },

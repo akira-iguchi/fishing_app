@@ -12,9 +12,14 @@ class Event extends Model
     protected $table = 'events';
 
     protected $fillable = [
-        'title',
         'date',
-        'event_id'
+        'fishing_type',
+        'spot',
+        'bait',
+        'weather',
+        'fishing_start_time',
+        'fishing_end_time',
+        'detail',
     ];
 
     /**
