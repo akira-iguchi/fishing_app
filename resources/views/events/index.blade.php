@@ -3,7 +3,13 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="mx-auto d-block col-lg-8" id="calendar"></div>
+
+            <div class="mx-auto d-block col-lg-8">
+                <events
+                    user-id="{{ $user->id }}"
+                >
+                </events>
+            </div>
 
             <div class="mx-auto d-block col-lg-4 event_form_body">
                 <h4 class="font-weight-bold">釣りを記録しよう</h4>
@@ -58,12 +64,3 @@
         </div>
     </div>
 @endsection
-
-@push('js')
-    <script src="/js/ajax-setup.js" defer></script>
-    <script src='/js/fullcalendar/core/main.js' defer></script>
-    <script src='/js/fullcalendar/daygrid/main.js' defer></script>
-    <script src='/js/fullcalendar/interaction/main.js' defer></script>
-    <script src='/js/fullcalendar.js' defer></script>
-    <script src='/js/event-control.js' defer></script>
-@endpush

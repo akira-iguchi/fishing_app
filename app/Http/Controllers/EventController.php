@@ -11,22 +11,23 @@ use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
-    public function index(Request $request)
+    public function index(User $user)
     {
-        $events = Event::all();
+        $events = Event::where('user_id', $user->id);
 
         return view('events.index', [
             'events' => $events,
+            'user' => $user,
         ]);
     }
 
-    public function setEvents(Request $request){
+    public function setEvents(Request $request, User $user){
 
         $start = $this->formatDate($request->all()['start']);
         $end = $this->formatDate($request->all()['end']);
         //表示した月のカレンダーの始まりの日を終わりの日をそれぞれ取得。
 
-        $events = Event::select('id', 'fishing_type', 'date')->whereBetween('date', [$start, $end])->get();
+        $events = Event::where('user_id', $user->id)->select('id', 'fishing_type', 'date')->whereBetween('date', [$start, $end])->get();
         //カレンダーの期間内のイベントを取得
 
         $newArr = [];

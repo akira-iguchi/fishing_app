@@ -31,11 +31,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/follow', 'UserController@follow')->name('users.follow');
         Route::delete('/follow', 'UserController@unfollow')->name('users.unfollow');
 
-        // ユーザーページのzタブ
+        // ユーザーページのタブ
         Route::get('/spots', 'UserController@spots');
         Route::get('/favoriteSpots', 'UserController@favoriteSpots');
         Route::get('/followings', 'UserController@followings');
         Route::get('/followers', 'UserController@followers');
+
+         // カレンダー機能
+        Route::get('/events', 'EventController@index')->name('events');
+        Route::get('/setEvents', 'EventController@setEvents');
+        Route::post('/ajax/addEvent', 'EventController@addEvent');
+        Route::post('/ajax/editEventDate', 'EventController@editEventDate');
     });
 
     Route::group(['prefix' => 'spots/{spot}'], function () {
@@ -47,18 +53,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('comments/{comment}', 'SpotCommentController@destroy');
     });
 
+    // タグの釣りスポット一覧
     Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
 
+    // ユーザーの基本機能
     Route::resource('users', 'UserController');
 
-    // カレンダー機能
-    Route::resource('/events', 'EventController');
-    Route::get('/setEvents', 'EventController@setEvents');
-    Route::post('/ajax/addEvent', 'EventController@addEvent');
-    Route::post('/ajax/editEventDate', 'EventController@editEventDate');
-
+    // 釣り方一覧
     Route::get('/fishing_types','FishingTypeController@index');
 
+    // 釣りスポット機能
     Route::get('/spots/search','SpotController@search')->name('spots.search');
     Route::resource('/spots', 'SpotController')->except(['index']);
 });
