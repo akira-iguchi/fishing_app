@@ -20,20 +20,23 @@
   top: 5px;
 }
 
-.date {
+.date,
+#date_error {
   text-align: right;
-  margin-bottom: 10px;
 }
 
 .event_form {
   background-color:#EEFFFF;
-  padding: 1em;
+  padding: 0 1em 1em 1em;
   border-radius: 1em;
+}
+
+.event_form label {
+  margin-top: 1em;
 }
 
 .form-field {
   position: relative;
-  margin: 32px 0;
 }
 
 .input-text {

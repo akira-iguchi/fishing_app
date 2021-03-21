@@ -18,11 +18,11 @@ class CreateEventsTable extends Migration
             $table->date('date');
             $table->string('fishing_type');
             $table->string('spot');
-            $table->string('bait');
-            $table->string('weather');
-            $table->time('fishing_start_time');
-            $table->time('fishing_end_time');
-            $table->longText('detail');
+            $table->string('bait')->nullable();
+            $table->string('weather')->nullable();
+            $table->time('fishing_start_time')->nullable();
+            $table->time('fishing_end_time')->nullable();
+            $table->longText('detail')->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger('user_id');

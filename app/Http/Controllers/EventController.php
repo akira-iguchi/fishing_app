@@ -43,11 +43,12 @@ class EventController extends Controller
 
     public function addEvent(EventRequest $request, Event $event)
     {
+        $validatedEvent = $request->validated();
         $event->fill($request->all());
         $event->user_id = Auth::id();
         $event->save();
 
-        return response()->json(['id' => $event->id ]);
+        return response()->json($event);
     }
 
     public function editEventDate(Request $request){

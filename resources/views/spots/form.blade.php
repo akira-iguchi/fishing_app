@@ -95,10 +95,10 @@
 </div>
 
 <div class="form-group">
-    <label for="textArea" class="required">説明</label>
-    <textarea rows="6" id="textArea" class="form-control" name="explanation" placeholder="例） 風が弱くて釣りやすい釣り場です。">{{ old('explanation', $spot['explanation']) }}</textarea>
-    残り<span id="textLest">300</span>文字
-    <p id="textAttention" style="display:none; color:red;">入力文字数が多すぎます。</p>
+    <label for="textAreaExplanation" class="required">説明</label>
+    <textarea rows="6" id="textAreaExplanation" class="form-control" name="explanation" placeholder="例） 風が弱くて釣りやすい釣り場です。">{{ old('explanation', $spot['explanation']) }}</textarea>
+    残り<span id="textLestExplanation">300</span>文字
+    <p id="textAttentionExplanation" style="display:none; color:red;">入力文字数が多すぎます。</p>
 
     @if($errors->has('explanation'))
         <span class="error_msg">

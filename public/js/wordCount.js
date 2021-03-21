@@ -1,9 +1,9 @@
 // 文字数
 (() => {
     let max = 300,
-        input_area = document.getElementById("textArea"),
-        output_lest = document.getElementById("textLest"),
-        attention = document.getElementById("textAttention");
+        input_area = document.getElementById("textAreaExplanation"),
+        output_lest = document.getElementById("textLestExplanation"),
+        attention = document.getElementById("textAttentionExplanation");
 
     const wordCount = function() {
         let length = input_area.value.replace(/\n/g, '++').length,
@@ -16,9 +16,9 @@
         input_area.addEventListener('keyup', wordCount);
     } else {
         max = 100,
-        input_area = document.getElementById("textAreaIntroduction"),
-        output_lest = document.getElementById("textLestIntroduction"),
-        attention = document.getElementById("textAttentionIntroduction");
+        input_area = document.getElementById("textArea"),
+        output_lest = document.getElementById("textLest"),
+        attention = document.getElementById("textAttention");
 
         input_area.addEventListener('keyup', wordCount);
     }
