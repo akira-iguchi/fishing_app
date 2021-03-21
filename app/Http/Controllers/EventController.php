@@ -13,7 +13,7 @@ class EventController extends Controller
 {
     public function index(User $user)
     {
-        $events = Event::where('user_id', $user->id);
+        $events = Event::where('user_id', $user->id)->get();
 
         return view('events.index', [
             'events' => $events,
@@ -33,7 +33,7 @@ class EventController extends Controller
         $newArr = [];
         foreach($events as $item){
             $newItem["id"] = $item["id"];
-            $newItem["fishing_type"] = $item["fishing_type"];
+            $newItem["title"] = $item["fishing_type"];
             $newItem["start"] = $item["date"];
             $newArr[] = $newItem;
         }

@@ -631,11 +631,11 @@
   color: #FFF;
 }
 
-a:not([href]):not([tabindex]) {
+.spot_user_private a:not([href]):not([tabindex]) {
   color: #FF6633;
 }
 
-a:not([href]):not([tabindex]):hover {
+.spot_user_private a:not([href]):not([tabindex]):hover {
   color: #FFF;
 }
 
