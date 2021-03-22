@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
 
         eventClick: function(info) {
-            editEvent(info);
+            showEvent(info)
         },
     });
     calendar.render();

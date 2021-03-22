@@ -6,19 +6,22 @@
 
             <div class="mx-auto d-block col-lg-8" id="calendar">イベントを掴んで移動も可能！</div>
 
-            <!-- JSでユーザーのidを取得 -->
+            <!-- JSでユーザー、イベントのidを取得 -->
             <span id="js-getUserId" data-name="{{ $user->id }}"></span>
+            <span id="js-getEventId" data-name="{{ $event->id }}"></span>
 
             @include('events.modal')
 
             <div class="mx-auto d-block col-lg-4 event_form_body">
                 <h4>釣りを記録しよう</h4>
                 <div class="event_form">
-                    <form action="" name="eventForm">
+                    <form method="POST" action="{{ route('events.update', ['event' => $event, 'user' => Auth::user()]) }}" name="eventForm">
                         @csrf
+                        @method('PUT')
+
                         @include('events.form')
                         <div>
-                            <button type='button' class="spot-create-edit-button" onclick="addEvent()"><i class="fas fa-pencil-alt"></i>&thinsp;投稿</button>
+                            <button class="spot-create-edit-button"><i class="fas fa-pencil-alt"></i>&thinsp;更新</button>
                         </div>
                     </form>
 

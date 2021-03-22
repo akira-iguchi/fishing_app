@@ -1,16 +1,42 @@
-<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
-    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
-            <header class="modal__header">
-                <h2>Editing my task list</h2>
-                <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-            </header>
-            <main>
-                <form method="POST" action="">
-                    @csrf
-                    <button class="modal__btn modal__btn-primary" type="submit">変更する</button>
-                </form>
-            </main>
+<div class="popup-wrapper">
+    <div class="popup">
+        <div class="popup-close">✕</div>
+        <div class="popup-content">
+            <h2 id="modal-date"></h2>
+            <table class="form-table">
+                <tbody>
+                    <tr>
+                        <th>釣り場</th>
+                        <td id="modal-spot"></td>
+                    </tr>
+                    <tr>
+                        <th>釣り方</th>
+                        <td id="modal-fishing_type"></td>
+                    </tr>
+                    <tr>
+                        <th>エサ</th>
+                        <td id="modal-bait"></td>
+                    </tr>
+                    <tr>
+                        <th>天気</th>
+                        <td id="modal-weather"></td>
+                    </tr>
+                    <tr>
+                        <th>時間</th>
+                        <td>
+                            <span id="modal-fishing_start_time"></span> 〜 <span id="modal-fishing_end_time"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>詳細</th>
+                        <td id="modal-detail"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+            <a href="" class="spot_edit_link_button">編集</a>
+            <a href="" class="spot_delete_button">削除</a>
+            </div>
         </div>
     </div>
 </div>

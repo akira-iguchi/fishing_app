@@ -40,7 +40,10 @@ Route::group(['middleware' => ['auth']], function () {
          // カレンダー機能
         Route::get('/events', 'EventController@index')->name('events');
         Route::get('/setEvents', 'EventController@setEvents');
+        Route::get('/event/{event}/editEvent', 'EventController@editEvent');
         Route::post('/ajax/addEvent', 'EventController@addEvent');
+        Route::put('/event/{event}/updateEvent', 'EventController@updateEvent')->name('events.update');
+        Route::post('/ajax/deleteEvent', 'EventController@deleteEvent');
         Route::post('/ajax/editEventDate', 'EventController@editEventDate');
     });
 

@@ -27,7 +27,7 @@
 
 .event_form {
   background-color:#EEFFFF;
-  padding: 0 1em 1em 1em;
+  padding: 0.1em 1em 1em 1em;
   border-radius: 1em;
 }
 
@@ -61,6 +61,62 @@
   line-height: 26px;
   font-weight: 400;
   outline: none;
+}
+
+.popup-wrapper {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  padding: 0 10px;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.popup {
+  text-align: center;
+  width: 100%;
+  max-width: 50rem;
+  margin: 5% auto;
+  border-radius: 3px;
+  padding: 20px 30px;
+  background: white;
+  position: relative;
+}
+
+.popup-close {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  cursor: pointer;
+}
+
+.form-table {
+  min-width: 18.5em;
+  max-width: 850px;
+  margin: 20px auto;
+  border-collapse: collapse;
+  border: 2px solid #eee;
+}
+
+.form-table th,
+.form-table td {
+  border-top: 1px solid #d7d7d7;
+  border-bottom: 1px solid #d7d7d7;
+  padding: 17px 10px;
+  text-align: center;
+}
+
+.form-table th {
+  background: #ffecea;
+  width: 70px;
+}
+
+#modal-detail {
+  text-align: left;
+  padding-left: 10%;
 }
 
 .fc {

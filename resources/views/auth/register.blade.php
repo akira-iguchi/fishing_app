@@ -29,10 +29,10 @@
                                     </span>
                                 @enderror
 
-                            <label for="textAreaIntroduction">自己紹介</label>
-                                <textarea rows="4" id="textAreaIntroduction" class="form-control @error('introduction') is-invalid @enderror" name="introduction">{{ old('introduction') }}</textarea>
-                                <p>残り<span id="textLestIntroduction">100</span>文字</p>
-                                <p id="textAttentionIntroduction" style="display:none; color:red;">入力文字数が多すぎます。</p>
+                            <label for="textArea">自己紹介</label>
+                                <textarea rows="4" id="textArea" class="form-control @error('introduction') is-invalid @enderror" name="introduction">{{ old('introduction') }}</textarea>
+                                <p>残り<span id="textLest">100</span>文字</p>
+                                <p id="textAttention" style="display:none; color:red;">入力文字数が多すぎます。</p>
                                 @error('introduction')
                                     <span class="invalid-feedback" role="alert">
                                         <p>{{ $message }}</p>

@@ -1,68 +1,95 @@
 function addEvent(){
 
-    let date = document.eventForm.date.value,
-        fishingType = document.eventForm.fishing_type.value,
-        spot = document.eventForm.spot.value,
-        bait = document.eventForm.bait.value,
-        weather = document.eventForm.weather.value,
-        fishingStartTime = document.eventForm.fishing_start_time.value,
-        fishingEndTime = document.eventForm.fishing_end_time.value,
-        detail = document.eventForm.detail.value,
-        userId = document.getElementById('js-getUserId');
+    let date = document.eventForm.date,
+        fishingType = document.eventForm.fishing_type,
+        spot = document.eventForm.spot,
+        bait = document.eventForm.bait,
+        weather = document.eventForm.weather,
+        fishingStartTime = document.eventForm.fishing_start_time,
+        fishingEndTime = document.eventForm.fishing_end_time,
+        detail = document.eventForm.detail,
+        userId = document.getElementById('js-getEventId'),
+        eventSuccess = document.getElementById("event_success"),
+        eventError = document.getElementById("event_error"),
+        dateError = document.getElementById("date_error"),
+        fishingTypeError = document.getElementById("fishing_type_error"),
+        spotError = document.getElementById("spot_error"),
+        baitError = document.getElementById("bait_error"),
+        weatherError = document.getElementById("weather_error"),
+        detailError = document.getElementById("detail_error");
     $.ajax({
         url: `/users/${userId.dataset.name}/ajax/addEvent`,
         type: 'POST',
         dataTape: 'json',
         data:{
-            "date": date,
-            "fishing_type": fishingType,
-            "spot": spot,
-            "bait": bait,
-            "weather": weather,
-            "fishing_start_time": fishingStartTime,
-            "fishing_end_time": fishingEndTime,
-            "detail": detail,
+            "date": date.value,
+            "fishing_type": fishingType.value,
+            "spot": spot.value,
+            "bait": bait.value,
+            "weather": weather.value,
+            "fishing_start_time": fishingStartTime.value,
+            "fishing_end_time": fishingEndTime.value,
+            "detail": detail.value,
         }
     }).fail(function(data) {
-        document.getElementById("date_error").innerHTML = data.responseJSON.errors.date || "";
-        document.getElementById("fishing_type_error").innerHTML = data.responseJSON.errors.fishing_type || "";
-        document.getElementById("spot_error").innerHTML = data.responseJSON.errors.spot || "";
-        document.getElementById("bait_error").innerHTML = data.responseJSON.errors.bait || "";
-        document.getElementById("weather_error").innerHTML = data.responseJSON.errors.weather || "";
-        document.getElementById("detail_error").innerHTML = data.responseJSON.errors.detail || "";
-    }).done(function(data, result) {
-        document.eventForm.date.value = "";
-        document.eventForm.fishing_type.value = "";
-        document.eventForm.spot.value = "";
-        document.eventForm.bait.value = "";
-        document.eventForm.weather.value = "";
-        document.eventForm.fishing_start_time.value = "";
-        document.eventForm.fishing_end_time.value = "";
-        document.eventForm.detail.value = "";
-        console.log(data.date);
+        eventSuccess.innerHTML = "";
+        eventError.innerHTML = "イベントの投稿に失敗しました";
+        dateError.innerHTML = data.responseJSON.errors.date || "";
+        fishingTypeError.innerHTML = data.responseJSON.errors.fishing_type || "";
+        spotError.innerHTML = data.responseJSON.errors.spot || "";
+        baitError.innerHTML = data.responseJSON.errors.bait || "";
+        weatherError.innerHTML = data.responseJSON.errors.weather || "";
+        detailError.innerHTML = data.responseJSON.errors.detail || "";
+    }).done(function(data, calendar) {
+        eventSuccess.innerHTML = "イベントを投稿しました";
+        eventError.innerHTML = "";
+        dateError.innerHTML = "";
+        fishingTypeError.innerHTML = "";
+        spotError.innerHTML = "";
+        baitError.innerHTML = "";
+        weatherError.innerHTML = "";
+        detailError.innerHTML = "";
+        date.value = "";
+        fishingType.value = "";
+        spot.value = "";
+        bait.value = "";
+        weather.value = "";
+        fishingStartTime.value = "";
+        fishingEndTime.value = "";
+        detail.value = "";
+
         calendar.addEvent({
-            id: result['id'],
-            fishingType: fishingType,
-            start: date,
+            id: data['id'],
+            fishingType: data.fishingType,
+            start: data.date,
         });
 
     });
 }
 
-function editEvent(info){
-    MicroModal.show('modal-1');
+function showEvent(info){
+    const popup = document.querySelector('.popup-wrapper');
+    document.getElementById('modal-date').innerHTML = info.event.start.toLocaleDateString();
+    document.getElementById('modal-spot').innerHTML = info.event.extendedProps.spot;
+    document.getElementById('modal-fishing_type').innerHTML = info.event.title;
+    document.getElementById('modal-bait').innerHTML = info.event.extendedProps.bait;
+    document.getElementById('modal-weather').innerHTML = info.event.extendedProps.weather;
+    document.getElementById('modal-fishing_start_time').innerHTML = info.event.extendedProps.fishing_start_time;
+    document.getElementById('modal-fishing_end_time').innerHTML = info.event.extendedProps.fishing_end_time;
+    document.getElementById('modal-detail').innerHTML = info.event.extendedProps.detail;
+    popup.style.display = 'block';
 }
 
 function editEventDate(info){
     const event_id = info.event.id;
-    var date = formatDate(info.event.start);
+    const newDate = formatDate(info.event.start);
 
     $.ajax({
         url: '/users/1/ajax/editEventDate',
         type: 'POST',
         data:{
             "id": event_id,
-            "newDate": date
+            "newDate": newDate
         }
     })
 }
@@ -74,3 +101,13 @@ function formatDate(date) {
     const newDate = year + '-' + month + '-' + day;
     return newDate;
 }
+
+const popup = document.querySelector('.popup-wrapper');
+const close = document.querySelector('.popup-close');
+close.addEventListener('click', () => {
+    popup.style.display = 'none';
+});
+
+popup.addEventListener('click', () => {
+    popup.style.display = 'none';
+});
