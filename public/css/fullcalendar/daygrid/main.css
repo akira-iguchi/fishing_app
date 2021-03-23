@@ -30,6 +30,10 @@
   opacity: 0.3;
 }
 
+.fc-day-number {
+  opacity: .7;
+}
+
 .fc-dayGrid-view .fc-week-number,
 .fc-dayGrid-view .fc-day-number {
   padding: 2px;

@@ -20,7 +20,7 @@
                             @csrf
                             @include('events.form')
                             <div>
-                                <button type='button' class="spot-create-edit-button" onclick="addEvent()"><i class="fas fa-pencil-alt"></i>&thinsp;投稿</button>
+                                <button type='button' id="addEvent" class="spot-create-edit-button"><i class="fas fa-pencil-alt"></i>&thinsp;投稿</button>
                             </div>
                         </form>
 

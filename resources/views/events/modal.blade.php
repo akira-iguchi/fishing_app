@@ -35,8 +35,8 @@
             </table>
 
             <div class="event_private">
-                <button class="event_edit_button"><a href="" class="edit_link_button">編集</a></button>
-                <button type="button" class="delete_button" onclick="deleteEvent()">削除</button>
+                <button id="editEventLink" class="edit_link_button">編集</button>
+                <button id="deleteEvent" type="button" class="delete_button">削除</button>
             </div>
         </div>
     </div>

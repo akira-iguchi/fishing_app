@@ -78,7 +78,7 @@
   text-align: center;
   width: 100%;
   max-width: 50rem;
-  margin: 5% auto;
+  margin: 3% auto;
   border-radius: 3px;
   padding: 20px 30px;
   background: white;
@@ -95,7 +95,7 @@
 .form-table {
   min-width: 18.5em;
   max-width: 850px;
-  margin: 20px auto;
+  margin: 20px auto 10px auto;
   border-collapse: collapse;
   border: 2px solid #eee;
 }
@@ -113,18 +113,9 @@
   width: 70px;
 }
 
-.event_private {
-  display: none;
-}
-
-.event_edit_button {
-  border: none;
-  background: none;
-}
-
 #modal-detail {
   text-align: left;
-  padding-left: 10%;
+  padding-left: 3%;
 }
 
 .fc {
@@ -719,6 +710,13 @@ TODO: more distinction between this file and common.css
 
 .fc-unthemed td.fc-today {
   background: #fcf8e3;
+}
+
+td.fc-sat {
+  background-color: #eaf4ff;
+}
+td.fc-sun {
+  background-color: #ffeaea;
 }
 
 .fc-unthemed .fc-disabled-day {
