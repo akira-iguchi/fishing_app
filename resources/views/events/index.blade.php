@@ -8,22 +8,25 @@
 
             <!-- JSでユーザーのidを取得 -->
             <span id="js-getUserId" data-name="{{ $user->id }}"></span>
+            <span id="js-getAuthUserId" data-name="{{ Auth::id() }}"></span>
 
             @include('events.modal')
 
-            <div class="mx-auto d-block col-lg-4 event_form_body">
-                <h4>釣りを記録しよう</h4>
-                <div class="event_form">
-                    <form action="" name="eventForm">
-                        @csrf
-                        @include('events.form')
-                        <div>
-                            <button type='button' class="spot-create-edit-button" onclick="addEvent()"><i class="fas fa-pencil-alt"></i>&thinsp;投稿</button>
-                        </div>
-                    </form>
+            @if($user->id === Auth::id())
+                <div class="mx-auto d-block col-lg-4 event_form_body">
+                    <h4>釣りを記録しよう</h4>
+                    <div class="event_form">
+                        <form action="" name="eventForm">
+                            @csrf
+                            @include('events.form')
+                            <div>
+                                <button type='button' class="spot-create-edit-button" onclick="addEvent()"><i class="fas fa-pencil-alt"></i>&thinsp;投稿</button>
+                            </div>
+                        </form>
 
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 @endsection

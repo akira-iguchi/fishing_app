@@ -99,7 +99,6 @@
 
 @push('js')
     <script src="{{ asset('/js/imageSlide.js') }}" defer></script>
-    <script src="{{ asset('/js/seeMore.js') }}" defer></script>
 @endpush
 
 <script>

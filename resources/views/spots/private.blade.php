@@ -1,7 +1,7 @@
 @if (\Auth::id() === $spot->user_id)
     <div class="spot_user_private">
-        <a href="{{ route('spots.edit', $spot->id)}}" class="spot_edit_link_button">編集</a>
-        <a data-toggle="modal" data-target="#modal-delete-{{ $spot->id }}" class="spot_delete_button">削除</a>
+        <button><a href="{{ route('spots.edit', $spot->id)}}" class="edit_link_button">編集</a></button>
+        <button><a data-toggle="modal" data-target="#modal-delete-{{ $spot->id }}" class="delete_button">削除</a></button>
 
         <!-- modal -->
             <div id="modal-delete-{{ $spot->id }}" class="modal fade" tabindex="-1" role="dialog">

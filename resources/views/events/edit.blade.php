@@ -8,6 +8,7 @@
 
             <!-- JSでユーザー、イベントのidを取得 -->
             <span id="js-getUserId" data-name="{{ $user->id }}"></span>
+            <span id="js-getAuthUserId" data-name="{{ Auth::id() }}"></span>
             <span id="js-getEventId" data-name="{{ $event->id }}"></span>
 
             @include('events.modal')

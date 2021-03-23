@@ -1,5 +1,7 @@
-function addEvent(){
+let userId = document.getElementById('js-getUserId').dataset.name,
+    authUserId = document.getElementById('js-getAuthUserId').dataset.name;
 
+function addEvent() {
     let date = document.eventForm.date,
         fishingType = document.eventForm.fishing_type,
         spot = document.eventForm.spot,
@@ -8,7 +10,6 @@ function addEvent(){
         fishingStartTime = document.eventForm.fishing_start_time,
         fishingEndTime = document.eventForm.fishing_end_time,
         detail = document.eventForm.detail,
-        userId = document.getElementById('js-getEventId'),
         eventSuccess = document.getElementById("event_success"),
         eventError = document.getElementById("event_error"),
         dateError = document.getElementById("date_error"),
@@ -18,7 +19,7 @@ function addEvent(){
         weatherError = document.getElementById("weather_error"),
         detailError = document.getElementById("detail_error");
     $.ajax({
-        url: `/users/${userId.dataset.name}/ajax/addEvent`,
+        url: `/users/${userId}/ajax/addEvent`,
         type: 'POST',
         dataTape: 'json',
         data:{
@@ -67,8 +68,9 @@ function addEvent(){
     });
 }
 
-function showEvent(info){
-    const popup = document.querySelector('.popup-wrapper');
+function showEvent(info) {
+    const popup = document.querySelector('.popup-wrapper'),
+        private = document.querySelector('.event_private');
     document.getElementById('modal-date').innerHTML = info.event.start.toLocaleDateString();
     document.getElementById('modal-spot').innerHTML = info.event.extendedProps.spot;
     document.getElementById('modal-fishing_type').innerHTML = info.event.title;
@@ -78,28 +80,9 @@ function showEvent(info){
     document.getElementById('modal-fishing_end_time').innerHTML = info.event.extendedProps.fishing_end_time;
     document.getElementById('modal-detail').innerHTML = info.event.extendedProps.detail;
     popup.style.display = 'block';
-}
-
-function editEventDate(info){
-    const event_id = info.event.id;
-    const newDate = formatDate(info.event.start);
-
-    $.ajax({
-        url: '/users/1/ajax/editEventDate',
-        type: 'POST',
-        data:{
-            "id": event_id,
-            "newDate": newDate
-        }
-    })
-}
-
-function formatDate(date) {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const newDate = year + '-' + month + '-' + day;
-    return newDate;
+    if (userId === authUserId) {
+        private.style.display = 'block';
+    }
 }
 
 const popup = document.querySelector('.popup-wrapper');
@@ -111,3 +94,39 @@ close.addEventListener('click', () => {
 popup.addEventListener('click', () => {
     popup.style.display = 'none';
 });
+
+function editEventDate(info) {
+    const event_id = info.event.id;
+    const newDate = formatDate(info.event.start);
+
+    $.ajax({
+        url: `/users/${userId}/ajax/editEventDate`,
+        type: 'POST',
+        data:{
+            "id": event_id,
+            "newDate": newDate
+        }
+    })
+}
+
+function deleteEvent() {
+    $.ajax({
+        url: `/users/${authUserId}/event/${eventId.dataset.name}/ajax/editEventDate`,
+        type: "POST",
+        data: {
+                id: eventId.dataset.name,
+                type: 'delete'
+        },
+        success: function () {
+            alert('イベントを削除しました');
+        }
+    });
+}
+
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const newDate = year + '-' + month + '-' + day;
+    return newDate;
+}

@@ -90,4 +90,13 @@ class EventController extends Controller
         session()->flash('flash_message', 'イベントをを更新しました');
         return redirect()->route('events', ['user' => Auth::user()]);
     }
+
+    public function destroy(User $user, Event $event)
+    {
+        // 認証済みユーザ（閲覧者）がその投稿の所有者である場合は、投稿を削除
+        if (\Auth::id() === $event->user_id) {
+            $event->delete();
+            return response()->json();
+        }
+    }
 }
