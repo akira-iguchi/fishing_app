@@ -23,6 +23,7 @@
                         @include('events.form')
                         <div>
                             <button class="spot-create-edit-button"><i class="fas fa-pencil-alt"></i>&thinsp;更新</button>
+                            <button type="button" class="back_button" onclick="history.back()">戻る</button>
                         </div>
                     </form>
 

@@ -24,13 +24,13 @@ class EventRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => 'required',
+            'date' => 'required|date',
             'fishing_type' => 'required|max:20',
             'spot' => 'required|max:50',
             'bait' => 'nullable|max:20',
             'weather' => 'nullable|max:20',
-            'fishing_start_time' => 'nullable',
-            'fishing_end_time' => 'nullable',
+            'fishing_start_time' => 'nullable|date_format:H:i',
+            'fishing_end_time' => 'nullable|date_format:H:i|after:fishing_start_time',
             'detail' => 'nullable|max:100',
         ];
     }

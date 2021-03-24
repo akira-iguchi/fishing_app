@@ -5,9 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
         authUserId = document.getElementById('js-getAuthUserId').dataset.name;
 
     let calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: [ 'interaction', 'dayGrid', 'googleCalendarPlugin' ],
+        plugins: [ 'interaction', 'dayGrid' ],
         defaultView: 'dayGridMonth',
         editable: true,
+        contentHeight: 'auto',
         locale: "ja",
         timeZone: 'Asia/Tokyo',
         eventDurationEditable : false,
@@ -16,11 +17,13 @@ document.addEventListener('DOMContentLoaded', function() {
             today: '今日'
         },
         events: `/users/${userId}/setEvents`,
-
+        dayCellContent: function (e) {
+            console.log(e.dayNumberText);
+            e.dayNumberText = e.dayNumberText.replace('日', '');
+        },
         eventDrop: function(info){
             editEventDate(info);
         },
-
         eventClick: function(info) {
             showEvent(info)
         },
@@ -39,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
             eventSuccess = document.getElementById("event_success"),
             eventError = document.getElementById("event_error"),
             dateError = document.getElementById("date_error"),
+            timeError = document.getElementById("time_error"),
             fishingTypeError = document.getElementById("fishing_type_error"),
             spotError = document.getElementById("spot_error"),
             baitError = document.getElementById("bait_error"),
@@ -59,9 +63,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 "detail": detail.value,
             }
         }).fail(function(data) {
+            console.log(data.responseJSON.errors);
             eventSuccess.innerHTML = "";
             eventError.innerHTML = "イベントの投稿に失敗しました";
             dateError.innerHTML = data.responseJSON.errors.date || "";
+            timeError.innerHTML = data.responseJSON.errors.fishing_end_time || "";
             fishingTypeError.innerHTML = data.responseJSON.errors.fishing_type || "";
             spotError.innerHTML = data.responseJSON.errors.spot || "";
             baitError.innerHTML = data.responseJSON.errors.bait || "";
@@ -71,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             eventSuccess.innerHTML = "イベントを投稿しました";
             eventError.innerHTML = "";
             dateError.innerHTML = "";
+            timeError.innerHTML = "";
             fishingTypeError.innerHTML = "";
             spotError.innerHTML = "";
             baitError.innerHTML = "";

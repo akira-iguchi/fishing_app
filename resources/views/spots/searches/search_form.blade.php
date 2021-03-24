@@ -3,7 +3,6 @@
         @csrf
         @method('get')
 
-        キーワード複数入力させる
         <div class="spot_search_top">
             <input type="text" class="spotIndex_search_text" placeholder="キーワードを入力" name="searchWord" value="{{ $searchWord }}">
             <button type="submit" class="spotIndex_search_button"><i class="fas fa-search"></i></button>

@@ -20,7 +20,7 @@ class SpotsControllerTest extends TestCase
     public function testIndex()
     {
         // GET リクエスト
-        $response = $this->get(route('spots.index'));
+        $response = $this->get(url('/'));
 
         // レスポンスの検証
         $response->assertOk();  # ステータスコードが 200
@@ -30,7 +30,7 @@ class SpotsControllerTest extends TestCase
     {
         $data = [
             'spot' => [
-                'name' => 'かもめ大橋',
+                'spot_name' => 'かもめ大橋',
                 'explanation' => 'テスト',
                 'address' => '住之江区',
                 'latitude' => 34.23,

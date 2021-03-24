@@ -546,11 +546,13 @@ header:focus-within {
 
   .spot-intro_expla p:last-child {
     padding: 0;
+    line-height: 2;
   }
 
   .self-intro_expla p:last-child {
     padding: 0;
     margin-top: 20px;
+    line-height: 2;
   }
 }
 

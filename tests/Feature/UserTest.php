@@ -18,12 +18,12 @@ class UserTest extends TestCase
     public function createUser()
     {
         $user = new \App\Models\User;
-        $user->name = "test";
+        $user->user_name = "test";
         $user->email = "test@example.com";
         $user->password = \Hash::make('password');
         $user->save();
 
-        $readUser = \App\Models\User::where('name', 'test')->first();
+        $readUser = \App\Models\User::where('user_name', 'test')->first();
         $this->assertNotNull($readUser);            // データが取得できたかテスト
         $this->assertTrue(\Hash::check('password', $readUser->password)); // パスワードが一致しているかテスト
     }

@@ -27,6 +27,7 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
+        "phpstan/phpstan": "^0.12.82",
         "phpunit/phpunit": "^9.3.3"
     },
     "config": {
@@ -71,6 +72,8 @@
         ],
         "test": [
             "./vendor/phpunit/phpunit/phpunit test"
-        ]
+        ],
+        "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
+        "phpunit": "./vendor/bin/phpunit"
     }
 }

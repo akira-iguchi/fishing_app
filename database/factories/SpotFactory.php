@@ -23,7 +23,7 @@ class SpotFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'かもめ大橋',
+            'spot_name' => 'かもめ大橋',
             'explanation' => 'テスト',
             'address' => '住之江区',
             'latitude' => 34.23,

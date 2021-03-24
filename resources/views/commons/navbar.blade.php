@@ -13,7 +13,7 @@
                     {{-- ログアウトへのリンク --}}
                     <li><a href="{{ url('/logout') }}" onclick="return confirm('ログアウトしますか？')">ログアウト</a></li>
                     {{-- 予定ページへのリンク --}}
-                    <li><a href="{{ route('events', ['user' => Auth::user()]) }}">予定<i class="fas fa-pen"></i></a></li>
+                    <li><a href="{{ route('events', Auth::user()) }}">予定<i class="fas fa-pen"></i></a></li>
                     {{-- 釣り方一覧ページへのリンク --}}
                     <li><a href="{{ url('/fishing_types') }}">釣り方一覧</a></li>
                     {{-- 釣りスポット作成ページへのリンク --}}
