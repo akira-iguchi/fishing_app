@@ -50,7 +50,7 @@ class LoginTest extends TestCase
         $response = $this->get('/logout');
         // ホーム画面にリダイレクト
         $response->assertStatus(302)
-                 ->assertRedirect('/'); // リダイレクト先を確認
+                ->assertRedirect('/');
         // 認証されていないことを確認
         $this->assertGuest();
     }
@@ -60,7 +60,7 @@ class LoginTest extends TestCase
      */
     private function dummyLogin()
     {
-        $user = User::factory()->make();
+        $user = User::factory()->create();
         return $this->actingAs($user)
                     ->withSession(['user_id' => $user->id])
                     ->get('/');

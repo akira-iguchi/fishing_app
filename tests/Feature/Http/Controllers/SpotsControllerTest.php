@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Models\Spot;
 use App\Models\User;
+use App\Models\FishingType;
 use Tests\TestCase;
 
 class SpotsControllerTest extends TestCase
@@ -15,6 +16,7 @@ class SpotsControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $response = $this->dummyLogin();
     }
 
     public function testIndex()
@@ -23,13 +25,33 @@ class SpotsControllerTest extends TestCase
         $response = $this->get(url('/'));
 
         // レスポンスの検証
-        $response->assertOk();  # ステータスコードが 200
+        $response->assertOk();
+        $response->assertViewIs("spots.index");
+    }
+
+    public function testShow()
+    {
+        $user = User::factory()->create();
+        $spot = Spot::factory()->for($user)->create();
+        // GET リクエスト
+        $response = $this->get(route('spots.show', [$spot->id]));
+
+        // レスポンスの検証
+        $response->assertOk();
+    }
+
+    public function testCreate()
+    {
+        // GET リクエスト
+        $response = $this->get(route('spots.create'));
+
+        $response->assertOk();
     }
 
     public function testStore()
     {
         $data = [
-            'spot' => [
+            'spots' => [
                 'spot_name' => 'かもめ大橋',
                 'explanation' => 'テスト',
                 'address' => '住之江区',
@@ -42,9 +64,11 @@ class SpotsControllerTest extends TestCase
         // POST リクエスト
         $response = $this->post(route('spots.store'), $data);
 
-        // レスポンス検証
         $response->assertStatus(302);
 
+        $response->assertRedirect('/');
+
+        $this->assertCount(0, Spot::all());
     }
 
     public function testDestroy()
@@ -53,11 +77,24 @@ class SpotsControllerTest extends TestCase
         $spot = Spot::factory()->for($user)->create();
 
         // DELETE リクエスト
-        $response = $this->delete(route('spots.destroy', [$spot->id]));
+        $response = $this->delete(route('spots.destroy', $spot->id));
 
         $response->assertStatus(302);
 
+        $response->assertRedirect('/');
+
         // `spots` テーブルが1件になっている
-        $this->assertCount(1, Spot::all());
+        $this->assertCount(0, Spot::all());
+    }
+
+    /**
+     * ダミーユーザーログイン
+     */
+    private function dummyLogin()
+    {
+        $user = User::factory()->create();
+        return $this->actingAs($user)
+                    ->withSession(['user_id' => $user->id])
+                    ->get('/');
     }
 }
