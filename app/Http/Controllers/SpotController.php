@@ -72,8 +72,8 @@ class SpotController extends Controller
         $query = Spot::query();
 
         if (isset($searchWord) && is_array($fishingTypes)) {
-            // （釣りスポット名または所在地）かつ、釣りスポットにおすすめの釣り方を取得。釣りスポットは、釣り方を１つでも含んでいたら表示
-            $query->where(function($query) use($searchWord) {
+            // （釣りスポット名または所在地）かつ、その釣りスポットにおすすめの釣り方を取得。釣りスポットは、釣り方を１つでも含んでいたら表示
+            $query->where(function($query) use($searchWord, $fishingTypes) {
                 $query->where('spot_name', 'like', '%' . self::escapeLike($searchWord) . '%')
                 ->orWhere('address', 'like', '%' . self::escapeLike($searchWord) . '%');
             })

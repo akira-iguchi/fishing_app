@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 trait SpotTrait
 {
-    //すべての釣りスポット一覧
+    // すべての釣りスポット一覧
     public static function allSpots()
     {
         $spots = Spot::all()->sortByDesc('id')
@@ -18,7 +18,7 @@ trait SpotTrait
         return $spots;
     }
 
-    //すべての釣りスポット一覧
+    // 釣りスポットの画像保存
     public static function imageUpload($spot, $req, $image)
     {
         $spot_image = new SpotImage;
