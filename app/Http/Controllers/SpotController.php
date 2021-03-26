@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Spot;
 use App\Models\Tag;
+use App\Models\User;
 use App\Models\SpotImage;
 use App\Models\SpotComment;
 use App\Models\FishingType;
@@ -25,10 +26,18 @@ class SpotController extends Controller
     {
         if (Auth::check()) {
             // 最近の投稿
-            $recentSpots = Spot::all()->sortByDesc('id')
+            $recentSpots = Spot::all()->sortByDesc('id')->take(12)
                         ->load(['user', 'spot_images', 'spot_favorites', 'spot_comments']);
 
             $tags = Tag::all()->take(15);
+
+            // フォローしたユーザーの釣りスポット
+            if (Auth::user()->count_followings !== 0) {
+                $followUserSpots = Spot::query()->where('user_id', Auth::user()->followings()->pluck('followee_id'))
+                            ->with(['user', 'spot_images', 'spot_favorites', 'spot_comments'])->take(8)->get()->sortByDesc('id');
+            } else {
+                $followUserSpots = null;
+            }
 
             // いいねランキング
             $rankSpots = Spot::withCount('spot_favorites')->orderBy('spot_favorites_count', 'desc')
@@ -42,6 +51,7 @@ class SpotController extends Controller
             return view('spots.index', [
                 'recentSpots' => $recentSpots,
                 'tags' => $tags,
+                'followUserSpots' => $followUserSpots,
                 'rankSpots' => $rankSpots,
                 'allFishingTypeNames' => $allFishingTypeNames,
                 'searchWord' => $searchWord,

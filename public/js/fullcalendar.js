@@ -92,6 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
             fishingEndTime.value = "";
             detail.value = "";
 
+            document.getElementById("textLest").innerText = 100;
+
             calendar.refetchEvents();
         });
     });

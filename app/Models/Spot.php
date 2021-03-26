@@ -29,6 +29,12 @@ class Spot extends Model
         return $this->belongsTo(User::class);
     }
 
+    // フォローしたユーザーの釣りスポット
+    public function followings()
+    {
+        return $this->query()->where('user_id', Auth::user()->followings()->pluck('followee_id'));
+    }
+
     /**
      * 釣りスポットの画像
      */

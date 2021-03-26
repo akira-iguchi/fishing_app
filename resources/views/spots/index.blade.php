@@ -73,6 +73,15 @@
 
             <hr>
 
+            @if (Auth::user()->count_followings !== 0)
+            <h2 class="toppage_heading">フォローしたユーザーの投稿</h2>
+                <div class="row">
+                    @include('spots.cards.card', ['spots' => $followUserSpots])
+                </div>
+            <hr>
+            @endif
+
+
             <h2 class="toppage_heading">最近の投稿</h2>
             <div class="row">
                 @include('spots.cards.card', ['spots' => $recentSpots])
