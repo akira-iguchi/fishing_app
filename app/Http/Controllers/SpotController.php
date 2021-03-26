@@ -256,7 +256,8 @@ class SpotController extends Controller
             $spot->tags()->attach($tag);
         });
 
-        $spot->fishing_types()->detach($request->fishing_types);
+
+        $spot->fishing_types()->detach();
         $spot->fishing_types()->attach($request->fishing_types);
 
         session()->flash('flash_message', '釣りスポットを更新しました');
