@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class FishingType extends Model
 {
@@ -20,7 +21,7 @@ class FishingType extends Model
     /**
      *釣りスポット
      */
-    public function spots()
+    public function spots(): BelongsToMany
     {
         return $this->belongsToMany(Spot::class, 'spot_fishing_type')->withTimestamps();
     }

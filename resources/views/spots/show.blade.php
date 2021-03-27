@@ -9,7 +9,7 @@
 
                     @foreach($spot->tags as $tag)
                         @if($loop->first)
-                        <div class="card-body pt-0 pb-4 pl-3">
+                        <div class="card-body pt-3 pb-4 pl-3">
                             <div class="card-text line-height">
                         @endif
                             <a href="{{ route('tags.show', ['name' => $tag->name]) }}" class="spot_tag">

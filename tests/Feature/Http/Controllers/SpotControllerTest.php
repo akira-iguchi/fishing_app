@@ -2,17 +2,21 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Http\Response;
+use Tests\TestCase;
+use App\Models\Tag;
 use App\Models\Spot;
 use App\Models\User;
+use App\Models\SpotImage;
 use App\Models\FishingType;
-use Tests\TestCase;
+use Illuminate\Http\Response;
+use Tests\Factories\Traits\CreateSpot;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 
 class SpotControllerTest extends TestCase
 {
     use RefreshDatabase;
+    use CreateSpot;
 
     public function setUp(): void
     {
@@ -21,9 +25,11 @@ class SpotControllerTest extends TestCase
 
     public function testIndex()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->create(['spot_name' => 'かもめ大橋']);
+        $spot = $this->createSpot();
+
+        $tag = Tag::factory()->create(['name' => 'よく釣れる']);
+
+        $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
         $response = $this->get('/');
 
@@ -31,6 +37,12 @@ class SpotControllerTest extends TestCase
 
         $response->assertSee($spot->spot_name);
         $response->assertSee('かもめ大橋');
+
+        $response->assertSee($tag->name);
+        $response->assertSee('よく釣れる');
+
+        $response->assertSee($fishing_type->fishing_type_name);
+        $response->assertSee('サビキ釣り');
     }
 
     // public function testShow()

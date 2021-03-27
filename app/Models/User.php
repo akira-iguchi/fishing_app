@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -46,7 +48,7 @@ class User extends Authenticatable
     /**
      * 釣りスポット
      */
-    public function spots()
+    public function spots(): HasMany
     {
         return $this->hasMany(Spot::class);
     }
@@ -59,7 +61,7 @@ class User extends Authenticatable
     /**
      *  予定`
      */
-    public function events()
+    public function events(): HasMany
     {
         return $this->hasMany(Event::class);
     }
@@ -67,7 +69,7 @@ class User extends Authenticatable
     /**
      * お気に入りスポット
      */
-    public function favoriteSpots()
+    public function favoriteSpots(): BelongsToMany
     {
         return $this->belongsToMany(Spot::class, 'spot_favorite')->withTimestamps();
     }
@@ -80,7 +82,7 @@ class User extends Authenticatable
     /**
      * 釣りスポットのコメント
      */
-    public function spot_comments()
+    public function spot_comments(): HasMany
     {
         return $this->hasMany(SpotComment::class);
     }
@@ -93,12 +95,12 @@ class User extends Authenticatable
     /**
      * フォロー
      */
-    public function followers()
+    public function followers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'follows', 'followee_id', 'follower_id')->withTimestamps();
     }
 
-    public function followings()
+    public function followings(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'follows', 'follower_id', 'followee_id')->withTimestamps();
     }

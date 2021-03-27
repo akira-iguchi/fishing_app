@@ -5,6 +5,9 @@ namespace App\Models;
 use App\Traits\TagNameTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Spot extends Model
 {
@@ -24,7 +27,7 @@ class Spot extends Model
     /**
      * ユーザー
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -38,7 +41,7 @@ class Spot extends Model
     /**
      * 釣りスポットの画像
      */
-    public function spot_images()
+    public function spot_images(): HasMany
     {
         return $this->hasMany(SpotImage::class);
     }
@@ -51,7 +54,7 @@ class Spot extends Model
     /**
      * 釣りスポットのコメント
      */
-    public function spot_comments()
+    public function spot_comments(): HasMany
     {
         return $this->hasMany(SpotComment::class);
     }
@@ -64,7 +67,7 @@ class Spot extends Model
     /**
      * お気に入り
      */
-    public function spot_favorites()
+    public function spot_favorites(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'spot_favorite')->withTimestamps();
     }
@@ -84,7 +87,7 @@ class Spot extends Model
     /**
      * タグ
      */
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
@@ -92,7 +95,7 @@ class Spot extends Model
     /**
      * 釣り方
      */
-    public function fishing_types()
+    public function fishing_types(): BelongsToMany
     {
         return $this->belongsToMany(FishingType::class, 'spot_fishing_type')->withTimestamps();
     }

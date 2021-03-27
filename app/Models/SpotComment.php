@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SpotComment extends Model
 {
@@ -19,7 +20,7 @@ class SpotComment extends Model
     /**
      * ユーザー
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -27,7 +28,7 @@ class SpotComment extends Model
     /**
      * 釣りスポット
      */
-    public function spot()
+    public function spot(): BelongsTo
     {
         return $this->belongsTo(Spot::class);
     }

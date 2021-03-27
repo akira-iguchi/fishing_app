@@ -48,15 +48,15 @@ class SpotController extends Controller
             $searchWord = $request->input('searchWord');
             $fishingTypes = $request->input('fishing_types');
 
-            return view('spots.index', [
-                'recentSpots' => $recentSpots,
-                'tags' => $tags,
-                'followUserSpots' => $followUserSpots,
-                'rankSpots' => $rankSpots,
-                'allFishingTypeNames' => $allFishingTypeNames,
-                'searchWord' => $searchWord,
-                'fishingTypes' => $fishingTypes,
-            ]);
+            return view('spots.index', compact(
+                'recentSpots',
+                'tags',
+                'followUserSpots',
+                'rankSpots',
+                'allFishingTypeNames',
+                'searchWord',
+                'fishingTypes',
+            ));
         } else {
             return view('spots.index');
         }
@@ -103,14 +103,14 @@ class SpotController extends Controller
 
         $spots = $query->get();
 
-        return view('spots.searches.search', [
-            'spots' => $spots,
-            'tags' => $tags,
-            'allFishingTypeNames' => $allFishingTypeNames,
-            'searchWord' => $searchWord,
-            'fishingTypes' => $fishingTypes,
-            'searchFishingTypes' => $searchFishingTypes,
-        ]);
+        return view('spots.searches.search', compact(
+            'spots',
+            'tags',
+            'allFishingTypeNames',
+            'searchWord',
+            'fishingTypes',
+            'searchFishingTypes',
+        ));
     }
 
     public function show(Spot $spot)
@@ -132,11 +132,11 @@ class SpotController extends Controller
 
         $allFishingTypeNames = FishingType::all();
 
-        return view('spots.create', [
-            'spot' => $spot,
-            'allTagNames' => $allTagNames,
-            'allFishingTypeNames' => $allFishingTypeNames,
-        ]);
+        return view('spots.create', compact(
+            'spot',
+            'allTagNames',
+            'allFishingTypeNames',
+        ));
     }
 
     public function store(SpotRequest $request, Spot $spot, SpotImage $spot_image)

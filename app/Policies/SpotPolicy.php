@@ -10,6 +10,11 @@ class SpotPolicy
 {
     use HandlesAuthorization;
 
+    public function __construct()
+    {
+        $this->authorizeResource(Spot::class);
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -30,18 +35,19 @@ class SpotPolicy
      */
     public function view(User $user, Spot $spot)
     {
-        return true;
+        return $user->id == $spot->user_id;
     }
 
     /**
      * Determine whether the user can create models.
      *
      * @param  \App\Models\User  $user
+     * @param  \App\Models\Spot  $spot
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, Spot $spot)
     {
-        return true;
+        return $user->id == $spot->user_id;
     }
 
     /**
@@ -66,29 +72,5 @@ class SpotPolicy
     public function delete(User $user, Spot $spot)
     {
         return $user->id === $spot->user_id;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Spot  $spot
-     * @return mixed
-     */
-    public function restore(User $user, Spot $spot)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Spot  $spot
-     * @return mixed
-     */
-    public function forceDelete(User $user, Spot $spot)
-    {
-        //
     }
 }

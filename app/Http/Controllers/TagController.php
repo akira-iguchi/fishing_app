@@ -19,12 +19,12 @@ class TagController extends Controller
         $searchWord = $request->input('searchWord');
         $fishingTypes = $request->input('fishing_types');
 
-        return view('tags.show', [
-            'tag' => $tag,
-            'tags' => $tags,
-            'allFishingTypeNames' => $allFishingTypeNames,
-            'searchWord' => $searchWord,
-            'fishingTypes' => $fishingTypes,
-        ]);
+        return view('tags.show', compact(
+            'tag',
+            'tags',
+            'allFishingTypeNames',
+            'searchWord',
+            'fishingTypes',
+        ));
     }
 }

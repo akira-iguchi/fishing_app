@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tag extends Model
 {
@@ -23,7 +24,7 @@ class Tag extends Model
     /**
      * 釣りスポット
      */
-    public function spots()
+    public function spots(): BelongsToMany
     {
         return $this->belongsToMany(Spot::class)->withTimestamps();
     }

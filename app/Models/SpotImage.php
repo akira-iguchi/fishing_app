@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SpotImage extends Model
 {
@@ -19,7 +20,7 @@ class SpotImage extends Model
     /**
      * 釣りスポット
      */
-    public function spot()
+    public function spot(): BelongsTo
     {
         return $this->belongsTo(Spot::class);
     }
