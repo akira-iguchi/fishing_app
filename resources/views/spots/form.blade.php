@@ -3,7 +3,7 @@
 
 <div class="form-group">
     <label for="spot_name" class="required">釣りスポット名</label>
-    <input id="spot_name" type="text" class="form-control" name="spot_name" value="{{ old('spot_name', $spot['spot_name']) }}" placeholder="例） 〇〇釣り公園">
+    <input id="spot_name" type="text" class="form-control" name="spot_name" value="{{ old('spot_name', $spot['spot_name']) }}" placeholder="例） 〇〇釣り公園" required>
 
     @if($errors->has('spot_name'))
         <span class="error_msg">
@@ -96,7 +96,7 @@
 
 <div class="form-group">
     <label for="textAreaExplanation" class="required">説明</label>
-    <textarea rows="6" id="textAreaExplanation" class="form-control" name="explanation" placeholder="例） 風が弱くて釣りやすい釣り場です。">{{ old('explanation', $spot['explanation']) }}</textarea>
+    <textarea rows="6" id="textAreaExplanation" class="form-control" name="explanation" placeholder="例） 風が弱くて釣りやすい釣り場です。" required>{{ old('explanation', $spot['explanation']) }}</textarea>
     残り<span id="textLestExplanation">300</span>文字
     <p id="textAttentionExplanation" style="display:none; color:red;">入力文字数が多すぎます。</p>
 

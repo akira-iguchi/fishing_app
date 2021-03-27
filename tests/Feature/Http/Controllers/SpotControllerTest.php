@@ -17,12 +17,12 @@ class SpotControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $response = $this->dummyLogin();
     }
 
     public function testIndex()
     {
         $user = User::factory()->create();
+        $this->actingAs($user);
         $spot = Spot::factory()->for($user)->create(['spot_name' => 'かもめ大橋']);
 
         $response = $this->get('/');
@@ -90,15 +90,4 @@ class SpotControllerTest extends TestCase
     //     // `spots` テーブルが1件になっている
     //     $this->assertCount(0, Spot::all());
     // }
-
-    /**
-     * ダミーユーザーログイン
-     */
-    private function dummyLogin()
-    {
-        $user = User::factory()->create();
-        return $this->actingAs($user)
-                    ->withSession(['user_id' => $user->id])
-                    ->get('/');
-    }
 }

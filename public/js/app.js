@@ -2378,6 +2378,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -61491,7 +61492,7 @@ var render = function() {
     "div",
     [
       _c("input", {
-        attrs: { type: "hidden", name: "tags" },
+        attrs: { type: "hidden", name: "tags", maxlength: "8" },
         domProps: { value: _vm.tagsJson }
       }),
       _vm._v(" "),

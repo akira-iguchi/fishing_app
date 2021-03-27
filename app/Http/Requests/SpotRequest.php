@@ -32,7 +32,7 @@ class SpotRequest extends FormRequest
             'spot_image1' => 'image|mimes:jpeg,png,jpg',
             'spot_image2' => 'image|mimes:jpeg,png,jpg',
             'spot_image3' => 'image|mimes:jpeg,png,jpg',
-            'tags' => 'json|regex:/^(?!.*\s).+$/u|regex:/^(?!.*\/).*$/u',
+            'tags' => 'json|distinct|regex:/^(?!.*\s).+$/u|regex:/^(?!.*\/).*$/u',
         ];
     }
 

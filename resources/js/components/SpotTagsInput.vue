@@ -4,6 +4,7 @@
             type="hidden"
             name="tags"
             :value="tagsJson"
+            maxlength="8"
         >
         <vue-tags-input
             class="input_tag"
