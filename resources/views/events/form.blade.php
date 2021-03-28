@@ -1,7 +1,7 @@
 
 <div class="date">
     <label class="required">日付</label>
-    <input type="date" name="date" value="{{ old('date', $event['date']) }}" required>
+    <input type="date" name="date" value="{{ old('date', $event['date']) }}" placeholder="例）2021-03-27" required>
 </div>
 @if($errors->has('date'))
     <span class="error_msg">
@@ -14,17 +14,25 @@
 
 <div class="date">
     <label>時間</label>
-    <input type="time" name="fishing_start_time" value="{{ old('fishing_start_time', $event['fishing_start_time']) }}">
+    <input type="time" name="fishing_start_time" value="{{ old('fishing_start_time', $event['fishing_start_time']) }}" placeholder="例）07:10">
     〜
-    <input type="time" name="fishing_end_time" value="{{ old('fishing_end_time', $event['fishing_end_time']) }}">
+    <input type="time" name="fishing_end_time" value="{{ old('fishing_end_time', $event['fishing_end_time']) }}" placeholder="例）17:30">
 </div>
+@if($errors->has('fishing_start_time'))
+    <span class="error_msg">
+        <p>{{ $errors->first('fishing_start_time') }}</p>
+    </span>
+@endif
+<span class="error_msg">
+    <p id="start_time_error"></p>
+</span>
 @if($errors->has('fishing_end_time'))
     <span class="error_msg">
         <p>{{ $errors->first('fishing_end_time') }}</p>
     </span>
 @endif
 <span class="error_msg">
-    <p id="time_error"></p>
+    <p id="end_time_error"></p>
 </span>
 
 <div class="form-field">

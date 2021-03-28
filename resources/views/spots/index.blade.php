@@ -102,10 +102,10 @@
         <div class="top text-center">
             <h1 class="top-title">Fishing Spot</h1>
             <p>釣り場を投稿して、<span>共有し合おう！</span></p>
-            <a href="{{ url('/login') }}" class="top-login-button"><span><i class="fas fa-user-plus"></i>ログイン</span></a>
-            <a href="{{ url('/signup') }}" class="top-signup-button"><span><i class="fas fa-sign-in-alt"></i>新規登録</span></a>
+            <a href="{{ url('/login') }}" class="top-login-button"><span><i class="fas fa-user-plus mr-1"></i>ログイン</span></a>
+            <a href="{{ url('/signup') }}" class="top-signup-button"><span><i class="fas fa-sign-in-alt mr-1"></i>新規登録</span></a>
             <br>
-            <a href="{{ route('login.guest') }}" class="top-guest_login-button"><span><i class="fas fa-sign-in-alt"></i>ゲストログイン</span></a>
+            <a href="{{ route('login.guest') }}" class="top-guest_login-button"><span><i class="fas fa-sign-in-alt mr-1"></i>ゲストログイン</span></a>
         </div>
 
         <div class="top-slider">

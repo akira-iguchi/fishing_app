@@ -42,7 +42,8 @@ document.addEventListener('DOMContentLoaded', function() {
             eventSuccess = document.getElementById("event_success"),
             eventError = document.getElementById("event_error"),
             dateError = document.getElementById("date_error"),
-            timeError = document.getElementById("time_error"),
+            startTimeError = document.getElementById("start_time_error"),
+            endTimeError = document.getElementById("end_time_error"),
             fishingTypeError = document.getElementById("fishing_type_error"),
             spotError = document.getElementById("spot_error"),
             baitError = document.getElementById("bait_error"),
@@ -67,7 +68,8 @@ document.addEventListener('DOMContentLoaded', function() {
             eventSuccess.innerHTML = "";
             eventError.innerHTML = "イベントの投稿に失敗しました";
             dateError.innerHTML = data.responseJSON.errors.date || "";
-            timeError.innerHTML = data.responseJSON.errors.fishing_end_time || "";
+            startTimeError.innerHTML = data.responseJSON.errors.fishing_start_time || "";
+            endTimeError.innerHTML = data.responseJSON.errors.fishing_end_time || "";
             fishingTypeError.innerHTML = data.responseJSON.errors.fishing_type || "";
             spotError.innerHTML = data.responseJSON.errors.spot || "";
             baitError.innerHTML = data.responseJSON.errors.bait || "";
@@ -77,7 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
             eventSuccess.innerHTML = "イベントを投稿しました";
             eventError.innerHTML = "";
             dateError.innerHTML = "";
-            timeError.innerHTML = "";
+            startTimeError.innerHTML = "";
+            endTimeError.innerHTML = "";
             fishingTypeError.innerHTML = "";
             spotError.innerHTML = "";
             baitError.innerHTML = "";

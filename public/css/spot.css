@@ -247,7 +247,6 @@
 }
 
 .seeMore {
-  font-family: auto;
   position: relative;
   right: 0;
   bottom: 0;
@@ -530,6 +529,10 @@
   background-color:rgba(0,100,255,0.7);
   border: 1px solid rgba(0,100,255,0.7);
   color: #fff;
+}
+
+.swiper-container {
+  max-height: 47rem;
 }
 
 .swiper-slide {

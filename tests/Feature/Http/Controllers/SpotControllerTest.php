@@ -64,8 +64,9 @@ class SpotControllerTest extends TestCase
     //     $response->assertOk();
     // }
 
-    // public function testStore()
+    // public function testStore_success()
     // {
+    //     $this->markTestIncomplete('ファイル入出力の部分がどうしてもテストが書けないので後日改めて時間を取っって書く。')
     //     $data = [
     //         'spots' => [
     //             'spot_name' => 'かもめ大橋',
@@ -80,9 +81,34 @@ class SpotControllerTest extends TestCase
     //     // POST リクエスト
     //     $response = $this->post(route('spots.store'), $data);
 
-    //     $response->assertStatus(302);
+    //     $response->assertStatus(Response::HTTP_FOUND);
 
     //     $response->assertRedirect('/');
+
+    //     $this->assertCount(0, Spot::all());
+    // }
+
+    // public function testStore_error()
+    // {
+    //     $data = [
+    //         'spots' => [
+    //             'explanation' => 'テスト',
+    //             'address' => '住之江区',
+    //             'latitude' => 34.23,
+    //             'longitude' => 135.63,
+    //             'user_id' => 1,
+    //         ],
+    //     ];
+
+    //     // POST リクエスト
+    //     $response = $this->post(route('spots.store'), $data);
+
+    //     $response->assertStatus(Response::HTTP_FOUND);
+
+    //     $response->assertRedirect('/spots/create');
+    //     $response->assertSessionHasErrors();
+    //     $error = session('errors')->first();
+    //     $this->assertStringContainsString('釣りスポット名を入力してください', $error);
 
     //     $this->assertCount(0, Spot::all());
     // }
