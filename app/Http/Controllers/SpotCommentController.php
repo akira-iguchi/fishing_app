@@ -22,13 +22,11 @@ class SpotCommentController extends Controller
         $spot_comment->spot_id = $spot->id;
         $spot_comment->user_id = Auth::id();
         if ($request->hasFile('comment_image')) {
-            $filePath = $request->file('comment_image')->store('public');
-            $spot_comment->comment_image = basename($filePath);
-            // $upload_info = Storage::disk('s3')->putFile('/test', $request->file('image'), 'public');
-
-            //S3へのファイルアップロード処理の時の情報が格納された変数$upload_infoを用いてアップロードされた画像へのリンクURLを変数$pathに格納する
-            // $path = Storage::disk('s3')->url($upload_info);
-            // $spot->image = $path;
+            // $filePath = $request->file('comment_image')->store('public');
+            // $spot_comment->comment_image = basename($filePath);
+            $upload_info = Storage::disk('s3')->putFile('/comment', $request->file('comment_image'), 'public');
+            $path = Storage::disk('s3')->url($upload_info);
+            $spot_comment->comment_image = $path;
         }
         $spot_comment->save();
     }

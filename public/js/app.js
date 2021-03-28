@@ -2613,7 +2613,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -61254,7 +61253,7 @@ var render = function() {
               _c("a", { attrs: { href: "/users/" + comment.user_id } }, [
                 _c("img", {
                   attrs: {
-                    src: "/storage/" + comment.user.user_image,
+                    src: "" + comment.user.user_image,
                     alt: "釣り場投稿者の画像"
                   }
                 }),
@@ -61277,7 +61276,7 @@ var render = function() {
               ? _c("div", { staticClass: "comment_img" }, [
                   _c("img", {
                     attrs: {
-                      src: "/storage/" + comment.comment_image,
+                      src: "" + comment.comment_image,
                       alt: "釣り場コメントの画像"
                     }
                   })
@@ -61661,7 +61660,7 @@ var render = function() {
                   _c("div", { staticClass: "spot_card_img" }, [
                     _c("img", {
                       attrs: {
-                        src: "/storage/" + spot.spot_images[0].spot_image,
+                        src: "" + spot.spot_images[0].spot_image,
                         alt: "釣りスポットの画像"
                       }
                     })
@@ -61706,7 +61705,7 @@ var render = function() {
                       _c("a", { attrs: { href: "/users/" + spot.user_id } }, [
                         _c("img", {
                           attrs: {
-                            src: "/storage/" + spot.user.user_image,
+                            src: "" + spot.user.user_image,
                             alt: "釣りスポット投稿者の画像"
                           }
                         })
@@ -61772,7 +61771,7 @@ var render = function() {
                   _c("div", { staticClass: "spot_card_img" }, [
                     _c("img", {
                       attrs: {
-                        src: "/storage/" + spot.spot_images[0].spot_image,
+                        src: "" + spot.spot_images[0].spot_image,
                         alt: "釣りスポットの画像"
                       }
                     })
@@ -61817,7 +61816,7 @@ var render = function() {
                       _c("a", { attrs: { href: "/users/" + spot.user_id } }, [
                         _c("img", {
                           attrs: {
-                            src: "/storage/" + spot.user.user_image,
+                            src: "" + spot.user.user_image,
                             alt: "釣りスポット投稿者の画像"
                           }
                         })
@@ -61884,10 +61883,7 @@ var render = function() {
             [
               _c("div", { staticClass: "profile_image" }, [
                 _c("img", {
-                  attrs: {
-                    src: "/storage/" + user.user_image,
-                    alt: "ユーザーの画像"
-                  }
+                  attrs: { src: "" + user.user_image, alt: "ユーザーの画像" }
                 })
               ]),
               _vm._v(" "),
@@ -61962,10 +61958,7 @@ var render = function() {
             [
               _c("div", { staticClass: "profile_image" }, [
                 _c("img", {
-                  attrs: {
-                    src: "/storage/" + user.user_image,
-                    alt: "ユーザーの画像"
-                  }
+                  attrs: { src: "" + user.user_image, alt: "ユーザーの画像" }
                 })
               ]),
               _vm._v(" "),

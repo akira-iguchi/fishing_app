@@ -7,7 +7,8 @@
 <div class="profile">
     <div class="profile_top">
         <div class="profile_image">
-            <img src="{{ asset('storage/'.$user->user_image) }}" alt="ユーザーの画像">
+            <img src="{{ $user->user_image }}" alt="ユーザーの画像">
+            <!-- <img src="{{ asset('storage/'.$user->user_image) }}" alt="ユーザーの画像"> -->
         </div>
 
         <div class="profile_content">

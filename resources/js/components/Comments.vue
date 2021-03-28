@@ -9,7 +9,7 @@
                     <div class="comment_top">
                         <div class="comment_created_at">{{ comment.created_at | moment }}</div>
                         <a v-bind:href="`/users/${comment.user_id}`">
-                            <img :src="`/storage/${comment.user.user_image}`" alt="釣り場投稿者の画像" />
+                            <img :src="`${comment.user.user_image}`" alt="釣り場投稿者の画像" />
                             <span class="comment_creater_name">{{ comment.user.user_name }}</span>
                         </a>
                     </div>
@@ -19,7 +19,7 @@
                     </div>
 
                     <div v-if="comment.comment_image && comment.comment_image.length > 0" class="comment_img">
-                        <img :src="`/storage/${comment.comment_image}`" alt="釣り場コメントの画像" />
+                        <img :src="`${comment.comment_image}`" alt="釣り場コメントの画像" />
                     </div>
 
                     <div class="comment_delete">

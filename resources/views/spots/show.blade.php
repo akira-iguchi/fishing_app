@@ -28,7 +28,8 @@
                             </div>
                             @foreach($spot->spot_images as $image)
                                 <div class="swiper-slide">
-                                    <img src="{{ asset('storage/'.$image->spot_image) }}" alt="釣り場の画像">
+                                    <img src="{{ $spot->first_spot_image() }}" alt="釣りスポットの画像">
+                                    <!-- <img src="{{ asset('storage/'.$image->spot_image) }}" alt="釣りスポットの画像"> -->
                                 </div>
                             @endforeach
                         </div>
@@ -83,7 +84,8 @@
                     <div class="spot_creater">
                         <span>作成者</span><br>
                         <a href="{{ route('users.show', $spot->user_id)}}">
-                            <img src="{{ asset('storage/'.$spot->user->user_image) }}" alt="釣り場投稿者の画像">
+                            <img src="{{ $spot->user->user_image }}" alt="釣りスポット投稿者の画像">
+                            <!-- <img src="{{ asset('storage/'.$spot->user->user_image) }}" alt="釣り場投稿者の画像"> -->
                             <p class="spot_creater_name">{{ $spot->user->user_name }}</p>
                         </a>
 

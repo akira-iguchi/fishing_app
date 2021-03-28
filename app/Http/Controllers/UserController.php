@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function edit(User $user)
     {
-        if($user->id == 1) {
+        if ($user->id == 1) {
             session()->flash('error_message', 'ゲストユーザーは編集できません');
             return redirect('/');
         } else {
@@ -25,13 +25,11 @@ class UserController extends Controller
         $user->fill($request->except('user_image'));
         if ($request->hasFile('user_image')) {
             Storage::delete('public' . $user->user_image);
-            $filePath = $request->file('user_image')->store('public');
-            $user->user_image = basename($filePath);
-            // $upload_info = Storage::disk('s3')->putFile('/test', $request->file('image'), 'public');
-
-            //S3へのファイルアップロード処理の時の情報が格納された変数$upload_infoを用いてアップロードされた画像へのリンクURLを変数$pathに格納する
-            // $path = Storage::disk('s3')->url($upload_info);
-            // $user->image = $path;
+            // $filePath = $request->file('user_image')->store('public');
+            // $user->user_image = basename($filePath);
+            $upload_info = Storage::disk('s3')->putFile('/user', $request->file('user_image'), 'public');
+            $path = Storage::disk('s3')->url($upload_info);
+            $user->user_image = $path;
         }
         $user->save();
         session()->flash('flash_message', 'ユーザー情報を更新しました');
@@ -40,8 +38,7 @@ class UserController extends Controller
 
     public function follow(Request $request, User $user)
     {
-        if ($user->id === $request->user()->id)
-        {
+        if ($user->id === $request->user()->id) {
             return abort('404', 'あなた自信をフォローすることはできません');
         }
 
@@ -57,8 +54,7 @@ class UserController extends Controller
 
     public function unfollow(Request $request, User $user)
     {
-        if ($user->id === $request->user()->id)
-        {
+        if ($user->id === $request->user()->id) {
             return abort('404', 'あなた自信をフォローすることはできません');
         }
 
@@ -74,7 +70,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         return view('users.show', [
-            'user' => $user->load('followings','followers'),
+            'user' => $user->load('followings', 'followers'),
         ]);
     }
 
@@ -93,12 +89,12 @@ class UserController extends Controller
     public function followings(User $user)
     {
         return $user->followings
-                    ->load('followings','followers');
+                    ->load('followings', 'followers');
     }
 
     public function followers(User $user)
     {
         return $followers = $user->followers
-                                    ->load('followers','followers');
+                                    ->load('followers', 'followers');
     }
 }

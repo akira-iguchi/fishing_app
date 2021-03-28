@@ -28,7 +28,7 @@
                 <a v-bind:href="`/spots/${spot.id}`">
                     <div class="spot_card">
                             <div class="spot_card_img">
-                                <img :src="`/storage/${spot.spot_images[0].spot_image}`" alt="釣りスポットの画像">
+                                <img :src="`${spot.spot_images[0].spot_image}`" alt="釣りスポットの画像">
                             </div>
 
                         <div class="spot_card_content">
@@ -38,7 +38,6 @@
 
                             <div class="card_detail">
                                 <div class="card_item">
-                                    <!-- お気に入りボタン -->
                                     <i class="fas fa-heart heart_text"></i>
                                     {{ spot.spot_favorites.length }}
                                 </div>
@@ -52,7 +51,7 @@
                                 </div>
 
                                 <a v-bind:href="`/users/${spot.user_id}`">
-                                    <img :src="`/storage/${spot.user.user_image}`" alt="釣りスポット投稿者の画像">
+                                    <img :src="`${spot.user.user_image}`" alt="釣りスポット投稿者の画像">
                                 </a>
                             </div>
 
@@ -79,7 +78,7 @@
                 <a v-bind:href="`/spots/${spot.id}`">
                     <div class="spot_card">
                             <div class="spot_card_img">
-                                <img :src="`/storage/${spot.spot_images[0].spot_image}`" alt="釣りスポットの画像">
+                                <img :src="`${spot.spot_images[0].spot_image}`" alt="釣りスポットの画像">
                             </div>
 
                         <div class="spot_card_content">
@@ -103,7 +102,7 @@
                                 </div>
 
                                 <a v-bind:href="`/users/${spot.user_id}`">
-                                    <img :src="`/storage/${spot.user.user_image}`" alt="釣りスポット投稿者の画像">
+                                    <img :src="`${spot.user.user_image}`" alt="釣りスポット投稿者の画像">
                                 </a>
                             </div>
 
@@ -128,7 +127,7 @@
         <div class="row" v-show="tab === 'followingsTab'">
             <div v-for="user in followings" :key="user.id" class="mx-auto d-block col-xl-3 col-lg-4 col-md-6 mt-4 mb-5 text-center">
                 <div class="profile_image">
-                    <img :src="`/storage/${user.user_image}`" alt="ユーザーの画像">
+                    <img :src="`${user.user_image}`" alt="ユーザーの画像">
                 </div>
 
                 <div class="profile_content">
@@ -158,7 +157,7 @@
         <div class="row" v-show="tab === 'followersTab'">
             <div v-for="user in followers" :key="user.id" class="mx-auto d-block col-lg-4 col-md-6 mt-4 mb-5 text-center">
                 <div class="profile_image">
-                    <img :src="`/storage/${user.user_image}`" alt="ユーザーの画像">
+                    <img :src="`${user.user_image}`" alt="ユーザーの画像">
                 </div>
 
                 <div class="profile_content">
