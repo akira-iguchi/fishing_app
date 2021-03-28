@@ -12,7 +12,7 @@ jobs:
           - DB_TESTING_USERNAME=root
           - DB_TESTING_PASSWORD=turiaki9314
           - MAIL_DRIVER=log
-          - APP_ENV=testing
+          - APP_ENV=local
           - APP_URL=http://localhost
           - APP_KEY=base64:iwPDYSfAhkC+xSc6/dOuW1siSai9Pynly+gw7N4lwZA=
 
