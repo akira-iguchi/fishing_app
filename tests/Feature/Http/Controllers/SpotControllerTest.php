@@ -26,7 +26,7 @@ class SpotControllerTest extends TestCase
         parent::setUp();
     }
 
-    // public function testIndex()
+    // public function testIndex_logged_in()
     // {
     //     $spot = $this->createSpot();
     //     $tag = Tag::factory()->create(['name' => 'よく釣れる']);
@@ -41,6 +41,15 @@ class SpotControllerTest extends TestCase
                     // ->assertSee('よく釣れる');
                     // ->assertSee($fishing_type->fishing_type_name);
                     // ->assertSee('サビキ釣り');
+    // }
+
+    // public function testIndex_guest()
+    // {
+    //     $response = $this->get('/');
+
+    //     $response->assertStatus(Response::HTTP_OK)
+    //                 ->assertDontSee('かもめ大橋')
+    //                 ->assertSee('Fishing Spotとは？');
     // }
 
     /**
