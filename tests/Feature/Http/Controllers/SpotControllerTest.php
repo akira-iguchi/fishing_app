@@ -29,9 +29,7 @@ class SpotControllerTest extends TestCase
     // public function testIndex()
     // {
     //     $spot = $this->createSpot();
-
     //     $tag = Tag::factory()->create(['name' => 'よく釣れる']);
-
     //     $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
     //     $response = $this->get('/');
@@ -45,16 +43,85 @@ class SpotControllerTest extends TestCase
                     // ->assertSee('サビキ釣り');
     // }
 
-    public function testSearch()
+    /**
+     * 検索結果（該当あり）
+     *
+     * @return void
+     */
+    public function testSearch_available()
     {
-        $spot = $this->createSpot();
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+                ->create(['spot_name' => 'かもめ大橋']);
+        $other_spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+                ->create(['spot_name' => '貝塚人工島']);
+        $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
-        $response = $this->get('spots/search');
+        $response = $this->from('/')->get('spots/search', [
+            'spot' => [
+                'searchWord' => $spot->spot_name,
+                'fishing_types' => $fishing_type->id,
+            ]
+        ]);
 
         $response->assertStatus(Response::HTTP_OK)
+                ->assertSee('1件')
                 ->assertSee($spot->spot_name)
                 ->assertSee('かもめ大橋');
     }
+
+    // /**
+    //  * 検索結果（該当なし）
+    //  *
+    //  * @return void
+    //  */
+    // public function testSearch_notAvailable()
+    // {
+    //     $user = User::factory()->create();
+    //     $this->actingAs($user);
+    //     $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+    //             ->create(['spot_name' => 'かもめ大橋']);
+    //     $other_spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+    //             ->create(['spot_name' => '貝塚人工島']);
+    //     $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
+
+    //     $response = $this->from('/')->get('spots/search', [
+    //         'searchWord' => 'とっとパーク小島',
+    //         'fishing_types' => 2,
+    //     ]);
+
+    //     $response->assertStatus(Response::HTTP_OK)
+    //             ->assertDontSee($spot->spot_name)
+    //             ->assertDontSee('かもめ大橋')
+    //             ->assertDontSee($other_spot->spot_name)
+    //             ->assertDontSee('貝塚人工島');
+    // }
+
+    // /**
+    //  * すべての投稿（検索フォームに記入なし）
+    //  *
+    //  * @return void
+    //  */
+    // public function testSearchAll()
+    // {
+    //     $user = User::factory()->create();
+    //     $this->actingAs($user);
+    //     $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+    //             ->create(['spot_name' => 'かもめ大橋']);
+    //     $other_spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+    //             ->create(['spot_name' => '貝塚人工島']);
+    //     $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
+
+    //     $response = $this->from('/')->get('spots/search');
+
+    //     $response->assertStatus(Response::HTTP_OK)
+    //             ->assertSee('すべての投稿')
+    //             ->assertSee($spot->spot_name)
+    //             ->assertSee('かもめ大橋')
+    //             ->assertSee($other_spot->spot_name)
+    //             ->assertSee('貝塚人工島');
+    // }
 
     // public function testShow()
     // {
@@ -71,7 +138,6 @@ class SpotControllerTest extends TestCase
     // {
     //     $user = User::factory()->create();
     //     $this->actingAs($user);
-
     //     $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
     //     $response = $this->get('/spots/create');
@@ -92,12 +158,10 @@ class SpotControllerTest extends TestCase
     // {
     //     $user = User::factory()->create();
     //     $this->actingAs($user);
-
     //     $tag = Tag::factory()->create(['name' => 'よく釣れる']);
-
     //     $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
-    //     $response = $this->post(route('spots.store'), $params['requestData']);
+    //     $response = $this->from('/spots/create')->post(route('spots.store'), $params['requestData']);
 
     //     $response->assertStatus(Response::HTTP_FOUND)
     //             ->assertRedirect('/');
@@ -147,7 +211,7 @@ class SpotControllerTest extends TestCase
     //     $user = User::factory()->create();
     //     $this->actingAs($user);
 
-    //     $response = $this->post(route('spots.store'), $params['requestData']);
+    //     $response = $this->from('/spots/create')->post(route('spots.store'), $params['requestData']);
 
     //     $response->assertStatus(Response::HTTP_FOUND)
     //             ->assertSessionHasErrors();
@@ -170,7 +234,6 @@ class SpotControllerTest extends TestCase
     // function testEdit()
     // {
     //     $spot = $this->createSpot();
-
     //     $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
     //     $response = $this->get("/spots/{$spot->id}/edit");
@@ -192,13 +255,11 @@ class SpotControllerTest extends TestCase
     // {
     //     $user = User::factory()->create();
     //     $this->actingAs($user);
-
     //     $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
-
     //     $spot = Spot::factory()->for($user)->create(['spot_name' => '貝塚人工島']);
     //     $spot_image = SpotImage::factory()->for($spot)->create(['spot_image' => 'fishing.jpg']);
 
-    //     $response = $this->put(route('spots.update', $spot->id), $params['requestData']);
+    //     $response = $this->from("/spots/{$spot->id}/edit")->put(route('spots.update', $spot->id), $params['requestData']);
 
     //     $this->assertDatabaseHas('spots', [
     //         'id'             => 1,
@@ -239,7 +300,6 @@ class SpotControllerTest extends TestCase
     // {
     //     $user = User::factory()->create();
     //     $this->actingAs($user);
-
     //     $spot = Spot::factory()->for($user)->create();
 
     //     $response = $this->put(route('spots.favorite', [$spot->id, $user->id]));
@@ -256,7 +316,6 @@ class SpotControllerTest extends TestCase
     // {
     //     $user = User::factory()->create();
     //     $this->actingAs($user);
-
     //     $spot = Spot::factory()->for($user)->create();
 
     //     // 事前にリレーション
