@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (deleteConfirm) {
                 $.ajax({
                     url: `/users/${userId}/event/${info.event.id}/ajax/deleteEvent`,
-                    type: "POST",
+                    type: "DELETE",
                     data: {
                         id: info.event.id,
                         type: 'delete'

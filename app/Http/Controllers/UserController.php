@@ -54,10 +54,6 @@ class UserController extends Controller
 
     public function unfollow(Request $request, User $user)
     {
-        if ($user->id === $request->user()->id) {
-            return abort('404', 'あなた自信をフォローすることはできません');
-        }
-
         $request->user()->followings()->detach($user);
 
         return [

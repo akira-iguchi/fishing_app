@@ -17,7 +17,7 @@ function editEventDate(info) {
 
     $.ajax({
         url: `/users/${userId}/ajax/editEventDate`,
-        type: 'POST',
+        type: 'PUT',
         data:{
             "id": event_id,
             "newDate": newDate

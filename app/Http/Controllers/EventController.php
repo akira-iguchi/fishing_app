@@ -22,8 +22,8 @@ class EventController extends Controller
         ]);
     }
 
-    public function setEvents(Request $request, User $user){
-
+    public function setEvents(Request $request, User $user)
+    {
         $start = $this->formatDate($request->all()['start']);
         $end = $this->formatDate($request->all()['end']);
         //表示した月のカレンダーの始まりの日を終わりの日をそれぞれ取得。
@@ -32,7 +32,7 @@ class EventController extends Controller
         //カレンダーの期間内のイベントを取得
 
         $newArr = [];
-        foreach($events as $item){
+        foreach ($events as $item) {
             $newItem["id"] = $item["id"];
             $newItem["title"] = $item["fishing_type"];
             $newItem["start"] = $item["date"];
@@ -57,7 +57,8 @@ class EventController extends Controller
         return response()->json($event);
     }
 
-    public function editEventDate(Request $request){
+    public function editEventDate(Request $request)
+    {
         $data = $request->all();
         $event = Event::find($data['id']);
         $event->date = $data['newDate'];
@@ -65,7 +66,8 @@ class EventController extends Controller
         return null;
     }
 
-    public function formatDate($date){
+    public function formatDate($date)
+    {
         return str_replace('T00:00:00+09:00', '', $date);
     }
 
@@ -97,6 +99,8 @@ class EventController extends Controller
         if (\Auth::id() === $event->user_id) {
             $event->delete();
             return response()->json();
+        } else {
+            return redirect('/')->with('flash_message', '自信の投稿のみ削除できます');
         }
     }
 }

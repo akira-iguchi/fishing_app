@@ -37,65 +37,61 @@ class UserControllerTest extends TestCase
     //             ->assertSee('ゲスト');
     // }
 
-    // public function testCreate()
-    // {
-    //     $response = $this->get('/signup');
+    public function testSpots()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+                ->create(['spot_name' => 'かもめ大橋']);
 
-    //     $response->assertStatus(Response::HTTP_OK)
-    //             ->assertSee('新規登録');
-    // }
+        $response = $this->get("/users/{$user->id}/spots");
 
-    // /**
-    //  * 正常系
-    //  *
-    //  * @dataProvider UserData
-    //  * @return void
-    //  */
-    // public function testRegister_success($params)
-    // {
-    //     $response = $this->from('/signup')->post(route('signup.post'), $params['requestData']);
+        $response->assertStatus(Response::HTTP_OK)
+                ->assertJson([['spot_name' => $spot->spot_name]]);
+    }
 
-    //     $response->assertStatus(Response::HTTP_FOUND)
-    //             ->assertRedirect('/');
+    public function testFavoriteSpots()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+                ->create(['spot_name' => 'かもめ大橋']);
 
-    //     $this->assertCount(1, User::all());
+        $user->favoriteSpots()->attach($spot);
 
-    //     $this->assertDatabaseHas('users', [
-    //         'id'             => 1,
-    //         'user_name'      => $params['requestData']['user_name'],
-    //     ]);
+        $response = $this->get("/users/{$user->id}/favoriteSpots");
 
-    //     // S3に画像を保存(fake使用)
-    //     Storage::fake('s3');
-    //     $uploadedFile = UploadedFile::fake()->image($params['requestData']['user_image']);
-    //     $uploadedFile->storeAs('', $params['requestData']['user_image'], ['disk' => 's3']);
-    //     Storage::disk('s3')->assertExists('defaultUser.jpg');
-    // }
+        $response->assertStatus(Response::HTTP_OK)
+                ->assertJson([['spot_name' => $spot->spot_name]]);
+    }
 
-    // /**
-    //  * 異常系: バリデーションに引っかかる
-    //  *
-    //  * @dataProvider validationUserErrorData
-    //  * @return void
-    //  */
-    // public function testRegister_validationError($params)
-    // {
-    //     $response = $this->from('/signup')->post(route('signup.post'), $params['requestData']);
+    public function testFollowings()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $other_user = User::factory()->create();
 
-    //     $response->assertStatus(Response::HTTP_FOUND)
-    //             ->assertRedirect('/signup')
-    //             ->assertSessionHasErrors();
+        $user->followings()->attach($other_user);
 
-    //     $error = session('errors')->first();
-    //     $this->assertStringContainsString('ユーザー名を入力してください', $error);
+        $response = $this->get("/users/{$user->id}/followings");
 
-    //     $this->assertCount(0, User::all());
+        $response->assertStatus(Response::HTTP_OK)
+                ->assertJson([['user_name' => $other_user->user_name]]);
+    }
 
-    //     $this->assertDatabaseMissing('users', [
-    //         'id'             => 1,
-    //         'user_name'      => $params['requestData']['user_name'],
-    //     ]);
-    // }
+    public function testFollowers()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $other_user = User::factory()->create();
+
+        $user->followers()->attach($other_user);
+
+        $response = $this->get("/users/{$user->id}/followers");
+
+        $response->assertStatus(Response::HTTP_OK)
+                ->assertJson([['user_name' => $other_user->user_name]]);
+    }
 
     // /**
     //  * ゲストユーザー以外（id > 1）はアクセスできる
@@ -132,69 +128,112 @@ class UserControllerTest extends TestCase
     //             ->assertDontSee('ゲスト');
     // }
 
-    /**
-     * 正常系
-     *
-     * @dataProvider UpdateUserData
-     * @return void
-     */
-    function testUpdate($params)
-    {
-        $user = User::factory()->create(['user_name' => 'テスト']);
-        $this->actingAs($user);
-
-        $response = $this->from("/users/{$user->id}/edit")->put(route('users.update', $user->id), $params['requestData']);
-
-        $this->assertDatabaseHas('users', [
-            'user_name'      => 'ゲスト',  // 「テスト」が「ゲスト」に変更（$user（変数）に変更はない）
-            'email' => 'guest@example.com',
-            'user_image' => 'defaultAvatar.jpg',
-            'introduction' => 'よろしくお願いいたします!!!',
-            'password' => 'guest123',
-        ]);
-
-        $response->assertStatus(Response::HTTP_FOUND)
-                ->assertRedirect("/users/{$user->id}");
-
-        // S3に画像を保存(fake使用)
-        Storage::fake('s3');
-        $uploadedFile = UploadedFile::fake()->image($params['requestData']['user_image']);
-        $uploadedFile->storeAs('', $params['requestData']['user_image'], ['disk' => 's3']);
-        Storage::disk('s3')->assertExists('defaultAvatar.jpg');
-    }
-
-    // public function testFavorite()
+    // /**
+    //  * 正常系
+    //  *
+    //  * @dataProvider UserData
+    //  * @return void
+    //  */
+    // function testUpdate($params)
     // {
-    //     $user = User::factory()->create();
+    //     $user = User::factory()->create(['user_name' => 'テスト']);
     //     $this->actingAs($user);
-    //     $spot = Spot::factory()->for($user)->create();
 
-    //     $response = $this->put(route('spots.favorite', [$spot->id, $user->id]));
+    //     Storage::fake('s3');
+    //     $response = $this->from("/users/{$user->id}/edit")->put(route('users.update', $user->id), $params['requestData']);
 
-    //     $response->assertStatus(Response::HTTP_OK);
+    //     $this->assertDatabaseHas('users', [
+    //         'user_name'      => 'ゲスト',  // 「テスト」が「ゲスト」に変更（$user（変数）に変更はない）
+    //     ]);
 
-    //     $this->assertDatabaseHas('spot_favorite', [
-    //         'spot_id' => $spot->id,
-    //         'user_id' => $user->id,
+    //     $response->assertStatus(Response::HTTP_FOUND)
+    //             ->assertRedirect("/users/{$user->id}");
+
+    //     // S3に画像を保存(fake使用)
+    //     $uploadedFile = $params['requestData']['user_image'];
+    //     $uploadedFile->storeAs('', $params['requestData']['user_image'], ['disk' => 's3']);
+    //     Storage::disk('s3')->assertExists($uploadedFile);
+    // }
+
+    // /**
+    //  * 異常系: バリデーションに引っかかる
+    //  *
+    //  * @dataProvider validationUserErrorData
+    //  * @return void
+    //  */
+    // function testUpdate($params)
+    // {
+    //     $user = User::factory()->create(['user_name' => 'テスト']);
+    //     $this->actingAs($user);
+
+    //     $response = $this->from("/users/{$user->id}/edit")->put(route('users.update', $user->id), $params['requestData']);
+
+    //     $response->assertStatus(Response::HTTP_FOUND)
+    //             ->assertRedirect("/users/{$user->id}/edit")
+    //             ->assertSessionHasErrors();
+
+    //     $error = session('errors')->first();
+    //     $this->assertStringContainsString('ユーザー名を入力してください', $error);
+
+    //     $this->assertDatabaseMissing('users', [
+    //         'user_name'      => 'ゲスト',
     //     ]);
     // }
 
-    // public function testUnFavorite()
+    // public function testFollow()
     // {
     //     $user = User::factory()->create();
     //     $this->actingAs($user);
-    //     $spot = Spot::factory()->for($user)->create();
+    //     $other_user = User::factory()->create();
+    //     $this->actingAs($other_user);
 
-    //     // 事前にリレーション
-    //     $spot->spot_favorites()->attach($user);
-
-    //     $response = $this->delete(route('spots.unfavorite', [$spot->id, $user->id]));
+    //     $response = $this->put(route('users.follow', [$user->id, $other_user->id]));
 
     //     $response->assertStatus(Response::HTTP_OK);
 
-    //     $this->assertDatabaseMissing('spot_favorite', [
-    //         'spot_id' => $spot->id,
-    //         'user_id' => $user->id,
+    //     $this->assertDatabaseHas('follows', [
+    //         'followee_id' => $user->id,
+    //         'follower_id' => $other_user->id,
+    //     ]);
+    // }
+
+    // /**
+    //  * 自信をフォローはできない
+    //  *
+    //  * @return void
+    //  */
+    // public function testFollow_myself()
+    // {
+    //     $user = User::factory()->create();
+    //     $this->actingAs($user);
+
+    //     $response = $this->put(route('users.follow', [$user->id, $user->id]));
+
+    //     $response->assertStatus(404);
+
+    //     $this->assertDatabaseMissing('follows', [
+    //         'followee_id' => $user->id,
+    //         'follower_id' => $user->id,
+    //     ]);
+    // }
+
+    // public function testUnFollow()
+    // {
+    //     $user = User::factory()->create();
+    //     $this->actingAs($user);
+    //     $other_user = User::factory()->create();
+    //     $this->actingAs($other_user);
+
+    //     // 事前にリレーション
+    //     $user->followings()->attach($other_user);
+
+    //     $response = $this->delete(route('users.unfollow', [$user->id, $other_user->id]));
+
+    //     $response->assertStatus(Response::HTTP_OK);
+
+    //     $this->assertDatabaseMissing('follows', [
+    //         'followee_id' => $user->id,
+    //         'follower_id' => $other_user->id,
     //     ]);
     // }
 
@@ -206,25 +245,7 @@ class UserControllerTest extends TestCase
                     'requestData' => [
                         'user_name' => 'ゲスト',
                         'email' => 'guest@example.com',
-                        'user_image' => 'defaultUser.jpg',
-                        'introduction' => 'よろしくお願いいたします。',
-                        'password' => 'guest123',
-                        'password_confirmation' => 'guest123',
-                    ],
-                ]
-            ]
-        ];
-    }
-
-    public function UpdateUserData()
-    {
-        return [
-            'valid data' => [
-                [
-                    'requestData' => [
-                        'user_name' => 'ゲスト',
-                        'email' => 'guest@example.com',
-                        'user_image' => 'defaultAvatar.jpg',
+                        'user_image' => UploadedFile::fake()->image('defaultAvatar.jpg'),
                         'introduction' => 'よろしくお願いいたします!!!',
                     ],
                 ]
@@ -241,10 +262,6 @@ class UserControllerTest extends TestCase
                     'requestData' => [
                         'user_name' => null,
                         'email' => 'guest@example.com',
-                        'user_image' => 'defaultUser.jpg',
-                        'introduction' => 'よろしくお願いいたします。',
-                        'password' => 'guest123',
-                        'password_confirmation' => 'guest123',
                     ],
                 ]
             ],

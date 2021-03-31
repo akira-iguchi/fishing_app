@@ -1,57 +1,45 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controllers\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use DatabaseMigrations;
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Http\Response;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use DatabaseMigrations;
 
-class LoginTest extends TestCase
+class LoginControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    /**
-     * ログイン画面を表示
-     */
     public function testLoginView()
     {
         $response = $this->get('/login');
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         // 認証されていないことを確認
         $this->assertGuest();
     }
 
-    /**
-     * ログイン処理を実行
-     */
     public function testLogin()
     {
-        // 認証されていないことを確認
         $this->assertGuest();
         // ダミーログイン
         $response = $this->dummyLogin();
-        $response->assertStatus(200);
-        // 認証を確認
+        $response->assertStatus(Response::HTTP_OK);
+
         $this->assertAuthenticated();
     }
 
-    /**
-     * ログアウト処理を実行
-     */
     public function testLogout()
     {
-        // ダミーログイン
         $response = $this->dummyLogin();
-        // 認証を確認
+
         $this->assertAuthenticated();
         $response = $this->get('/logout');
-        // ホーム画面にリダイレクト
+
         $response->assertStatus(302)
                 ->assertRedirect('/');
-        // 認証されていないことを確認
+
         $this->assertGuest();
     }
 

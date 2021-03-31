@@ -31,13 +31,14 @@ class SpotCommentController extends Controller
         $spot_comment->save();
     }
 
-    public function destroy($id, $comment)
+    public function destroy($spot, $comment)
     {
         $comment = SpotComment::findOrFail($comment);
 
-        // 認証済みユーザ（閲覧者）がその投稿の所有者である場合は、投稿を削除
         if (\Auth::id() === $comment->user_id) {
             $comment->delete();
+        } else {
+            return redirect('/')->with('flash_message', '自信の投稿のみ削除できます');
         }
     }
 }

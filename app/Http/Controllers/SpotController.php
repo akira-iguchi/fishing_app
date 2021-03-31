@@ -34,7 +34,8 @@ class SpotController extends Controller
             // フォローしたユーザーの釣りスポット
             if (Auth::user()->count_followings !== 0) {
                 $followUserSpots = Spot::query()->where('user_id', Auth::user()->followings()->pluck('followee_id'))
-                            ->with(['user', 'spot_images', 'spot_favorites', 'spot_comments'])->take(8)->get()->sortByDesc('id');
+                                    ->with(['user', 'spot_images', 'spot_favorites', 'spot_comments'])->take(8)
+                                    ->get()->sortByDesc('id');
             } else {
                 $followUserSpots = null;
             }
@@ -73,18 +74,18 @@ class SpotController extends Controller
 
         if (isset($searchWord) && is_array($fishingTypes)) {
             // （釣りスポット名または所在地）かつ、その釣りスポットにおすすめの釣り方を取得。釣りスポットは、釣り方を１つでも含んでいたら表示
-            $query->where(function($query) use($searchWord, $fishingTypes) {
+            $query->where(function ($query) use ($searchWord, $fishingTypes) {
                 $query->where('spot_name', 'like', '%' . self::escapeLike($searchWord) . '%')
                 ->orWhere('address', 'like', '%' . self::escapeLike($searchWord) . '%');
             })
-            ->whereHas('fishing_types', function($query) use($fishingTypes){
+            ->whereHas('fishing_types', function ($query) use ($fishingTypes) {
                 $query->where('fishing_type_id', $fishingTypes);
             });
 
             $searchFishingTypes = FishingType::whereIn('id', $fishingTypes)->pluck('fishing_type_name');
         } else {
             if (is_array($fishingTypes)) {
-                $query->whereHas('fishing_types', function($query) use($fishingTypes){
+                $query->whereHas('fishing_types', function ($query) use ($fishingTypes) {
                     $query->where('fishing_type_id', $fishingTypes);
                 });
 
@@ -94,7 +95,7 @@ class SpotController extends Controller
             }
 
             if (isset($searchWord)) {
-                $query->where(function($query) use($searchWord) {
+                $query->where(function ($query) use ($searchWord) {
                     $query->where('spot_name', 'like', '%' . self::escapeLike($searchWord) . '%')
                     ->orWhere('address', 'like', '%' . self::escapeLike($searchWord) . '%');
                 });
@@ -116,9 +117,8 @@ class SpotController extends Controller
     public function show(Spot $spot)
     {
         // その他の釣りスポット
-        $otherSpots = Spot::where('id','!=', $spot->id)->get()->shuffle()
-                ->take(4)
-                ->load(['user', 'spot_images', 'spot_favorites', 'spot_comments', 'fishing_types']);
+        $otherSpots = Spot::where('id', '!=', $spot->id)->get()->shuffle()->take(4)
+                    ->load(['user', 'spot_images', 'spot_favorites', 'spot_comments', 'fishing_types']);
 
         return view('spots.show', [
             'spot' => $spot,
@@ -152,7 +152,9 @@ class SpotController extends Controller
         // 画像（小テーブル）とリレーション
         if ($request->hasFile('spot_image1') || $request->hasFile('spot_image2') || $request->hasFile('spot_image3')) {
             $spot_image->spot_id = $spot->id;
-            if ($request->hasFile('spot_image1') && $request->hasFile('spot_image2') && $request->hasFile('spot_image3')) {
+            if ($request->hasFile('spot_image1')
+                && $request->hasFile('spot_image2')
+                && $request->hasFile('spot_image3')) {
                 SpotTrait::imageUpload($spot, $request, $image1);
                 SpotTrait::imageUpload($spot, $request, $image2);
                 SpotTrait::imageUpload($spot, $request, $image3);
@@ -226,7 +228,9 @@ class SpotController extends Controller
         if ($request->hasFile('spot_image1') || $request->hasFile('spot_image2') || $request->hasFile('spot_image3')) {
             $spot->spot_images()->delete();
             $spot_image->spot_id = $spot->id;
-            if ($request->hasFile('spot_image1') && $request->hasFile('spot_image2') && $request->hasFile('spot_image3')) {
+            if ($request->hasFile('spot_image1')
+                && $request->hasFile('spot_image2')
+                && $request->hasFile('spot_image3')) {
                 SpotTrait::imageUpload($spot, $request, $image1);
                 SpotTrait::imageUpload($spot, $request, $image2);
                 SpotTrait::imageUpload($spot, $request, $image3);
@@ -270,7 +274,7 @@ class SpotController extends Controller
             $spot->delete();
             return redirect('/')->with('flash_message', '釣りスポットを削除しました');
         } else {
-            return redirect('/')->with('flash_message', '釣りスポットを削除できませんでした');
+            return redirect('/')->with('flash_message', '自信の投稿のみ削除できます');
         }
     }
 

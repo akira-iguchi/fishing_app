@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Spot;
+use App\Models\SpotComment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class SpotFactory extends Factory
+class SpotCommentFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Spot::class;
+    protected $model = SpotComment::class;
 
     /**
      * Define the model's default state.
@@ -22,11 +22,7 @@ class SpotFactory extends Factory
     public function definition()
     {
         return [
-            'spot_name' => 'かもめ大橋',
-            'explanation' => 'テスト',
-            'address' => '住之江区',
-            'latitude' => 34.23,
-            'longitude' => 135.63,
+            'comment' => 'テスト',
         ];
     }
 }

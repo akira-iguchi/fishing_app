@@ -28,7 +28,7 @@
                     </div>
 
                 <a href="{{ route('users.show', $spot->user_id)}}">
-                    <img src="{{ $spot->user->user_image }}" alt="釣りスポットの画像">
+                    <img src="{{ $spot->user->user_image }}" alt="釣りスポット投稿者の画像">
                     <!-- <img src="{{ asset('storage/'.$spot->user->user_image) }}" alt="釣りスポット投稿者の画像"> -->
                 </a>
                 </div>

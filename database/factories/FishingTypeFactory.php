@@ -23,7 +23,7 @@ class FishingTypeFactory extends Factory
     {
         return [
             'fishing_type_name' => 'サビキ釣り',
-            'fishing_type_image' => 'defaultSpot.jpg',
+            'fishing_type_image' => 'default.jpg',
             'content' => '「サビキ」と呼ばれる６本以上の擬似餌バリで釣る方法。',
         ];
     }

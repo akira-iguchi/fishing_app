@@ -39,20 +39,20 @@ Route::group(['middleware' => ['auth']], function () {
 
          // カレンダー機能
         Route::get('/events', 'EventController@index')->name('events');
-        Route::get('/setEvents', 'EventController@setEvents');
-        Route::get('/event/{event}/editEvent', 'EventController@editEvent');
-        Route::post('/ajax/addEvent', 'EventController@addEvent');
+        Route::get('/setEvents', 'EventController@setEvents')->name('setEvents');
+        Route::get('/event/{event}/editEvent', 'EventController@editEvent')->name('editEvent');
+        Route::post('/ajax/addEvent', 'EventController@addEvent')->name('addEvent');
         Route::put('/event/{event}/updateEvent', 'EventController@updateEvent')->name('events.update');
-        Route::post('/event/{event}/ajax/deleteEvent', 'EventController@deleteEvent');
-        Route::post('/ajax/editEventDate', 'EventController@editEventDate');
+        Route::delete('/event/{event}/ajax/deleteEvent', 'EventController@deleteEvent')->name('deleteEvent');
+        Route::put('/ajax/editEventDate', 'EventController@editEventDate')->name('editEventDate');
     });
 
     Route::group(['prefix' => 'spots/{spot}'], function () {
         Route::put('/favorite', 'SpotController@favorite')->name('spots.favorite');
         Route::delete('/favorite', 'SpotController@unfavorite')->name('spots.unfavorite');
-        Route::get('comments', 'SpotCommentController@index');
-        Route::post('comments', 'SpotCommentController@store');
-        Route::delete('comments/{comment}', 'SpotCommentController@destroy');
+        Route::get('comments', 'SpotCommentController@index')->name('spots.comments');
+        Route::post('comments', 'SpotCommentController@store')->name('spots.comment');
+        Route::delete('comments/{comment}', 'SpotCommentController@destroy')->name('comment.delete');
     });
 
     // タグの釣りスポット一覧
