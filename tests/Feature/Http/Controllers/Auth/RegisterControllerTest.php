@@ -35,6 +35,7 @@ class RegisterControllerTest extends TestCase
      */
     public function testRegister_success($params)
     {
+        Storage::fake('s3');
         $response = $this->from('/signup')->post(route('signup.post'), $params['requestData']);
 
         $response->assertStatus(Response::HTTP_FOUND)
@@ -43,15 +44,13 @@ class RegisterControllerTest extends TestCase
         $this->assertCount(1, User::all());
 
         $this->assertDatabaseHas('users', [
-            'id'             => 1,
             'user_name'      => $params['requestData']['user_name'],
         ]);
 
         // S3に画像を保存(fake使用)
-        Storage::fake('s3');
         $uploadedFile = UploadedFile::fake()->image($params['requestData']['user_image']);
-        $uploadedFile->storeAs('', $params['requestData']['user_image'], ['disk' => 's3']);
-        Storage::disk('s3')->assertExists('defaultUser.jpg');
+        $uploadedFile->storeAs('', $uploadedFile, ['disk' => 's3']);
+        Storage::disk('s3')->assertExists($uploadedFile);
     }
 
     /**
@@ -87,7 +86,7 @@ class RegisterControllerTest extends TestCase
                     'requestData' => [
                         'user_name' => 'ゲスト',
                         'email' => 'guest@example.com',
-                        'user_image' => 'defaultUser.jpg',
+                        'user_image' => UploadedFile::fake()->image('defaultUser.jpg'),
                         'introduction' => 'よろしくお願いいたします。',
                         'password' => 'guest123',
                         'password_confirmation' => 'guest123',
@@ -106,7 +105,6 @@ class RegisterControllerTest extends TestCase
                     'requestData' => [
                         'user_name' => null,
                         'email' => 'guest@example.com',
-                        'user_image' => 'defaultUser.jpg',
                         'introduction' => 'よろしくお願いいたします。',
                         'password' => 'guest123',
                         'password_confirmation' => 'guest123',

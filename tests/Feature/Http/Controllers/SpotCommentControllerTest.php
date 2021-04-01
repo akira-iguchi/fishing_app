@@ -62,7 +62,7 @@ class SpotCommentControllerTest extends TestCase
 
         // S3に画像を保存(fake使用)
         $uploadedFile = $params['requestData']['comment_image'];
-        $uploadedFile->storeAs('', $params['requestData']['comment_image'], ['disk' => 's3']);
+        $uploadedFile->storeAs('', $uploadedFile, ['disk' => 's3']);
         Storage::disk('s3')->assertExists($uploadedFile);
     }
 

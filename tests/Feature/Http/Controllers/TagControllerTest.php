@@ -49,7 +49,7 @@ class TagControllerTest extends TestCase
      *
      * @return void
      */
-    public function testSearch_notAvailable()
+    public function testShow_notAvailable()
     {
         $spot = $this->createSpot();
         $tag = Tag::factory()->create(['name' => 'よく釣れる']);
