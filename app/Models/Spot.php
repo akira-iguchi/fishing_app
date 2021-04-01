@@ -32,21 +32,15 @@ class Spot extends Model
         return $this->belongsTo(User::class);
     }
 
-    // フォローしたユーザーの釣りスポット
-    public function followings()
-    {
-        return $this->query()->where('user_id', Auth::user()->followings()->pluck('followee_id'));
-    }
-
     /**
      * 釣りスポットの画像
      */
-    public function spot_images(): HasMany
+    public function spotImages(): HasMany
     {
         return $this->hasMany(SpotImage::class);
     }
 
-    public function first_spot_image()
+    public function firstSpotImage()
     {
         return $this->spot_images->first()->spot_image;
     }
@@ -54,7 +48,7 @@ class Spot extends Model
     /**
      * 釣りスポットのコメント
      */
-    public function spot_comments(): HasMany
+    public function spotComments(): HasMany
     {
         return $this->hasMany(SpotComment::class);
     }
@@ -67,7 +61,7 @@ class Spot extends Model
     /**
      * お気に入り
      */
-    public function spot_favorites(): BelongsToMany
+    public function spotFavorites(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'spot_favorite')->withTimestamps();
     }
@@ -95,7 +89,7 @@ class Spot extends Model
     /**
      * 釣り方
      */
-    public function fishing_types(): BelongsToMany
+    public function fishingTypes(): BelongsToMany
     {
         return $this->belongsToMany(FishingType::class, 'spot_fishing_type')->withTimestamps();
     }

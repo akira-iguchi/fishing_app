@@ -59,7 +59,7 @@ class User extends Authenticatable
     }
 
     /**
-     *  予定`
+     *  イベント
      */
     public function events(): HasMany
     {
@@ -82,7 +82,7 @@ class User extends Authenticatable
     /**
      * 釣りスポットのコメント
      */
-    public function spot_comments(): HasMany
+    public function spotComments(): HasMany
     {
         return $this->hasMany(SpotComment::class);
     }
@@ -95,14 +95,14 @@ class User extends Authenticatable
     /**
      * フォロー
      */
-    public function followers(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'follows', 'followee_id', 'follower_id')->withTimestamps();
-    }
-
     public function followings(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'follows', 'follower_id', 'followee_id')->withTimestamps();
+    }
+
+    public function followers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'follows', 'followee_id', 'follower_id')->withTimestamps();
     }
 
     public function isFollowedBy(?User $user): bool

@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Tests\TestCase;
-use App\Models\Tag;
 use App\Models\Spot;
 use App\Models\User;
 use App\Models\SpotImage;
