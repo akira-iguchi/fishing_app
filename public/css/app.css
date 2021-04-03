@@ -1,5 +1,7 @@
+@charset "UTF-8";
+
 body {
-  font-family: 'Osaka', sans-serif;
+  font-family: "Osaka", sans-serif;
   /* background-color: #EEFFFF; */
   background-color: #fff;
   display: flex;
@@ -28,7 +30,7 @@ header {
   top: 0;
   width: 100%;
   height: 70px;
-  background-color: rgba(0,100,255,0.7);
+  background-color: rgba(0, 100, 255, 0.7);
   color: #fff;
   z-index: 10;
 }
@@ -74,11 +76,10 @@ header:focus-within {
 
 .nav-content li a:hover {
   text-decoration: none;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255, 255, 255, 0.7);
 }
 
-@media screen and (max-width:800px) {
-
+@media screen and (max-width: 800px) {
   .nav-container {
     position: fixed;
     z-index: 10;
@@ -96,13 +97,13 @@ header:focus-within {
     height: calc(100% - 70px);
     visibility: hidden;
     opacity: 0;
-    transition: .5s;
+    transition: 0.5s;
     background: #000;
   }
 
   .nav-container:focus-within .nav-bg {
     visibility: visible;
-    opacity: .6;
+    opacity: 0.6;
   }
 
   .nav-container * {
@@ -128,7 +129,7 @@ header:focus-within {
     width: 100%;
     height: 3px;
     background: white;
-    transition: .3s;
+    transition: 0.3s;
   }
 
   .nav-icon-bar + .nav-icon-bar {
@@ -141,7 +142,7 @@ header:focus-within {
   }
 
   .nav-container:focus-within .nav-icon-bar:nth-of-type(1) {
-    transform: translate3d(0,8px,0) rotate(45deg);
+    transform: translate3d(0, 8px, 0) rotate(45deg);
   }
 
   .nav-container:focus-within .nav-icon-bar:nth-of-type(2) {
@@ -149,7 +150,7 @@ header:focus-within {
   }
 
   .nav-container:focus-within .nav-icon-bar:nth-of-type(3) {
-    transform: translate3d(0,-8px,0) rotate(-45deg);
+    transform: translate3d(0, -8px, 0) rotate(-45deg);
   }
 
   .nav-content {
@@ -163,9 +164,9 @@ header:focus-within {
     height: calc(100% - 70px);
     background: #ececec;
     pointer-events: auto;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     transform: translateX(100%);
-    transition: transform .2s;
+    transition: transform 0.2s;
     will-change: transform;
     contain: paint;
     transition-delay: 0.4s;
@@ -179,10 +180,10 @@ header:focus-within {
   }
 
   .nav-content li a {
-    color:#555555;
+    color: #555555;
     padding: 10px 5px;
     display: block;
-    transition: color .1s;
+    transition: color 0.1s;
   }
 
   .nav-content li a:hover {
@@ -203,10 +204,11 @@ header:focus-within {
   padding: 15px 0;
   width: 300px;
   z-index: 20;
-  animation: fadeout 1.5s ease 2.3s 1 forwards;
+  -webkit-animation: fadeout 1.5s ease 2.3s 1 forwards;
+          animation: fadeout 1.5s ease 2.3s 1 forwards;
   font-weight: bold;
   color: #fff;
-  background-color:#28a745;
+  background-color: #28a745;
   border-radius: 20px;
   margin-left: 20px;
 }
@@ -220,18 +222,30 @@ header:focus-within {
   padding: 15px 10px;
   width: 253px;
   z-index: 20;
-  animation: fadeout 1.5s ease 2.3s 1 forwards;
+  -webkit-animation: fadeout 1.5s ease 2.3s 1 forwards;
+          animation: fadeout 1.5s ease 2.3s 1 forwards;
   font-weight: bold;
   color: #fff;
-  background-color:#FF6699;
+  background-color: #FF6699;
   border-radius: 20px;
   margin-left: 20px;
+}
+
+@-webkit-keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes fadeout {
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
@@ -266,20 +280,35 @@ header:focus-within {
   transition: all 1s;
   background-color: #0bd;
 }
+
 .js-spinner {
   width: 100px;
   height: 100px;
   margin: 200px auto;
   background-color: #fff;
   border-radius: 100%;
-  animation: sk-scaleout 1.0s infinite ease-in-out;
+  -webkit-animation: sk-scaleout 1s infinite ease-in-out;
+          animation: sk-scaleout 1s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-scaleout {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
 }
 
 @keyframes sk-scaleout {
   0% {
     transform: scale(0);
-  } 100% {
-    transform: scale(1.0);
+  }
+
+  100% {
+    transform: scale(1);
     opacity: 0;
   }
 }
@@ -333,9 +362,8 @@ header:focus-within {
   text-decoration: none;
   font-size: 20px;
   font-weight: bold;
-  -webkit-transition: .8s;
-  transition: .8s;
-  box-shadow: 5px 5px 10px 0 rgb(0 0 0 / 50%);
+  transition: 0.8s;
+  box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.5);
 }
 
 .top a span {
@@ -351,8 +379,7 @@ header:focus-within {
   display: block;
   width: 50%;
   height: 100%;
-  -webkit-transition: .2s;
-  transition: .2s;
+  transition: 0.2s;
 }
 
 .top a::before {
@@ -380,18 +407,18 @@ header:focus-within {
 .top-login-button::after,
 .top-login-button:hover::before,
 .top-login-button:hover::after {
-  background-color:  rgba(0,100,255,0.8);
+  background-color: rgba(0, 100, 255, 0.8);
 }
 
 .top-login-button:hover {
-  color: rgba(0,100,255,1);
+  color: #0064ff;
 }
 
 .top-signup-button::before,
 .top-signup-button::after,
 .top-signup-button:hover::before,
 .top-signup-button:hover::after {
-  background:rgba(255,0,0,0.8);
+  background: rgba(255, 0, 0, 0.8);
 }
 
 .top-signup-button:hover {
@@ -406,7 +433,7 @@ header:focus-within {
 .top-guest_login-button::after,
 .top-guest_login-button:hover::before,
 .top-guest_login-button:hover::after {
-  background: rgba(22,163,21,0.8);
+  background: rgba(22, 163, 21, 0.8);
 }
 
 .top-guest_login-button:hover {
@@ -508,7 +535,7 @@ header:focus-within {
 
 .self-intro_image img {
   width: 100%;
-  box-shadow: 5px 5px 10px 0 rgb(0 0 0 / 50%);
+  box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.5);
   border-radius: 3px;
 }
 
@@ -536,11 +563,11 @@ header:focus-within {
     display: block;
     margin: auto;
     width: 60%;
-    box-shadow: 5px 5px 10px 0 rgb(0 0 0 / 50%);
+    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.5);
     border-radius: 3px;
   }
 
-  .self-intro_image  {
+  .self-intro_image {
     display: none;
   }
 
@@ -559,14 +586,14 @@ header:focus-within {
 /* 新規登録ページ、ログインページ */
 
 .signup_body {
-  background-image: url('/images/signout.jpeg');
+  background-image: url("/images/signout.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 70rem;
 }
 
 .login_body {
-  background-image: url('/images/signout.jpeg');
+  background-image: url("/images/signout.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 50rem;
@@ -580,16 +607,16 @@ header:focus-within {
 
 .login-signup-header h1 {
   margin-top: 30px;
-  color:#fff;
+  color: #fff;
   text-align: center;
   font-size: 250%;
 }
 
 .login-signup-form {
-  background-color: rgba(255,255,255,0.1);
-  border:.5px solid #fff;
-  border-radius:10px;
-  box-shadow:0px 0px 10px #000;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 0.5px solid #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px #000;
   padding: 2em 0;
 }
 
@@ -610,28 +637,38 @@ header:focus-within {
 .login-signup-form p {
   position: relative;
   margin: auto;
-  text-align:left;
+  text-align: left;
   font-size: large;
   font-weight: bold;
   width: 75%;
 }
 
 .login-signup-form {
-  box-sizing:border-box;
+  box-sizing: border-box;
   padding-top: 25px;
   margin: 5% auto;
-  text-align:center;
+  text-align: center;
 }
 
 .login-signup textarea,
-.login-signup input[type="text"],
-.login-signup input[type="email"],
-.login-signup input[type="password"] {
+.login-signup input[type=text],
+.login-signup input[type=email],
+.login-signup input[type=password] {
   margin: auto;
-  border-radius:5px;
+  border-radius: 5px;
   border: 2px solid #f2f2f2;
   outline: none;
   width: 75%;
+}
+
+.login-signup input::-moz-placeholder {
+  font-weight: bold;
+  opacity: 0.7;
+}
+
+.login-signup input:-ms-input-placeholder {
+  font-weight: bold;
+  opacity: 0.7;
 }
 
 .login-signup input::placeholder {
@@ -643,41 +680,41 @@ header:focus-within {
   background: #DDDDDD;
 }
 
-.login-signup input[type="file"] {
+.login-signup input[type=file] {
   margin: auto;
   width: 76%;
 }
 
 .login-signup-button {
-  height:30px;
-  width:100px;
-  background:#fff;
-  border:1px solid #f2f2f2;
-  border-radius:20px;
+  height: 30px;
+  width: 100px;
+  background: #fff;
+  border: 1px solid #f2f2f2;
+  border-radius: 20px;
   color: slategrey;
-  text-transform:uppercase;
-  cursor:pointer;
+  text-transform: uppercase;
+  cursor: pointer;
   margin-top: 30px;
   outline: none;
 }
 
 .login-signup-button:hover {
-  background:#EEEEEE;
+  background: #EEEEEE;
 }
 
 .login-signup-button:focus-within {
   outline: none;
 }
 
-.sign-up{
+.sign-up {
   font-size: 18px;
-  color:#f2f2f2;
-  margin-left:-70%;
-  cursor:pointer;
+  color: #f2f2f2;
+  margin-left: -70%;
+  cursor: pointer;
 }
 
 .sign-up:hover {
-  color:#f2f2f2;
+  color: #f2f2f2;
 }
 
 .login-signup-password {
@@ -705,3 +742,5 @@ header:focus-within {
   right: 56px;
   cursor: pointer;
 }
+
+
