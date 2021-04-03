@@ -4,26 +4,29 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Event;
+use App\Models\Spot;
+use App\Models\SpotImage;
+use Tests\Factories\Traits\CreateSpot;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class EventTest extends TestCase
+class SpotImageTest extends TestCase
 {
     use RefreshDatabase;
+    use CreateSpot;
 
     public function testFactoryable()
     {
-        $eloquent = app(Event::class);
+        $eloquent = app(SpotImage::class);
         $this->assertEmpty($eloquent->get());
-        $user = User::factory()->create();
-        $event = Event::factory()->for($user)->create();
+        $spot = $this->createSpot();
         $this->assertNotEmpty($eloquent->get());
     }
 
-    public function testEventBelongsToUser()
+    public function testSpotImageBelongsToSpot()
     {
         $user = User::factory()->create();
-        $event = Event::factory()->for($user)->create();
-        $this->assertNotEmpty($event->user);
+        $spot = Spot::factory()->for($user)->create();
+        $spot_image = SpotImage::factory()->for($spot)->create();
+        $this->assertNotEmpty($spot_image->spot);
     }
 }

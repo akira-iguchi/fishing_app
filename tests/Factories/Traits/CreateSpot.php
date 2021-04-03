@@ -13,7 +13,7 @@ trait CreateSpot
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => 'かもめ大橋']);
 
         return $spot;

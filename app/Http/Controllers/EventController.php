@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EventRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -86,11 +87,13 @@ class EventController extends Controller
 
     public function updateEvent(EventRequest $request, User $user, Event $event)
     {
-        $event->user_id = Auth::id();
-        $event->fill($request->all())->save();
+        return DB::transaction(function () use ($event, $request) {
+            $event->user_id = Auth::id();
+            $event->fill($request->all())->save();
 
-        session()->flash('flash_message', 'イベントをを更新しました');
-        return redirect()->route('events', ['user' => Auth::user()]);
+            session()->flash('flash_message', 'イベントをを更新しました');
+            return redirect()->route('events', ['user' => Auth::user()]);
+        });
     }
 
     public function deleteEvent(User $user, Event $event)

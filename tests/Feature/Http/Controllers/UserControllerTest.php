@@ -184,7 +184,7 @@ class UserControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => 'かもめ大橋']);
 
         $response = $this->get("/users/{$user->id}/spots");
@@ -197,7 +197,7 @@ class UserControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => 'かもめ大橋']);
 
         $user->favoriteSpots()->attach($spot);

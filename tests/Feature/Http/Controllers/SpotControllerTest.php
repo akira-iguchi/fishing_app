@@ -61,9 +61,9 @@ class SpotControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => 'かもめ大橋']);
-        $other_spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+        $other_spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => '貝塚人工島']);
         $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
@@ -78,7 +78,7 @@ class SpotControllerTest extends TestCase
                 ->assertDontSee($other_spot->spot_name)
                 ->assertDontSee('貝塚人工島');
 
-        $spot->fishing_types()->attach($fishing_type);
+        $spot->fishingTypes()->attach($fishing_type);
 
         $response = $this->from('/')->get(route('spots.search', [
                 'fishing_types' => [$fishing_type->id],
@@ -101,9 +101,9 @@ class SpotControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => 'かもめ大橋']);
-        $other_spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+        $other_spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => '貝塚人工島']);
         $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
@@ -128,9 +128,9 @@ class SpotControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => 'かもめ大橋']);
-        $other_spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spot_images')
+        $other_spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => '貝塚人工島']);
         $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
@@ -277,7 +277,7 @@ class SpotControllerTest extends TestCase
         Storage::fake('s3');
 
         // 事前にリレーション
-        $spot->fishing_types()->attach($fishing_type);
+        $spot->fishingTypes()->attach($fishing_type);
 
         $response = $this->from("/spots/{$spot->id}/edit")->put(route('spots.update', $spot->id), $params['requestData']);
 
@@ -369,7 +369,7 @@ class SpotControllerTest extends TestCase
         $spot = Spot::factory()->for($user)->create();
 
         // 事前にリレーション
-        $spot->spot_favorites()->attach($user);
+        $spot->spotFavorites()->attach($user);
 
         $response = $this->delete(route('spots.unfavorite', [$spot->id, $user->id]));
 

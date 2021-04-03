@@ -28,7 +28,7 @@
                 <a v-bind:href="`/spots/${spot.id}`">
                     <div class="spot_card">
                             <div class="spot_card_img">
-                                <img :src="`${spot.spot_images[0].spot_image}`" alt="釣りスポットの画像">
+                                <img :src="`${spot.spotImages[0].spot_image}`" alt="釣りスポットの画像">
                             </div>
 
                         <div class="spot_card_content">
@@ -78,7 +78,7 @@
                 <a v-bind:href="`/spots/${spot.id}`">
                     <div class="spot_card">
                             <div class="spot_card_img">
-                                <img :src="`${spot.spot_images[0].spot_image}`" alt="釣りスポットの画像">
+                                <img :src="`${spot.spotImages[0].spot_image}`" alt="釣りスポットの画像">
                             </div>
 
                         <div class="spot_card_content">

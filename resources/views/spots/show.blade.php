@@ -26,9 +26,9 @@
                             <div class="swiper-slide">
                                 <div id="show_map"></div>
                             </div>
-                            @foreach($spot->spot_images as $image)
+                            @foreach($spot->spotImages as $image)
                                 <div class="swiper-slide">
-                                    <img src="{{ $spot->first_spot_image() }}" alt="釣りスポットの画像">
+                                    <img src="{{ $spot->firstSpotImage() }}" alt="釣りスポットの画像">
                                     <!-- <img src="{{ asset('storage/'.$image->spot_image) }}" alt="釣りスポットの画像"> -->
                                 </div>
                             @endforeach
@@ -51,11 +51,11 @@
                                     <td><span>{{ $spot->address }}</span></td>
                                 </tr>
                             @endif
-                            @if(isset($spot->fishing_types[0]))
+                            @if(isset($spot->fishingTypes[0]))
                                 <tr>
                                     <th><a href="/fishing_types">おすすめの釣り方</a></th>
                                     <td>
-                                        @foreach($spot->fishing_types as $fishing_type)
+                                        @foreach($spot->fishingTypes as $fishing_type)
                                             <ul class="spot-fishing_type">
                                                 <li>{{ $fishing_type->fishing_type_name }}</li>
                                             </ul>

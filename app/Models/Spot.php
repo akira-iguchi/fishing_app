@@ -42,7 +42,7 @@ class Spot extends Model
 
     public function firstSpotImage()
     {
-        return $this->spot_images->first()->spot_image;
+        return $this->spotImages->first()->spot_image;
     }
 
     /**
@@ -55,7 +55,7 @@ class Spot extends Model
 
     public function getCountSpotCommentsAttribute(): int
     {
-        return $this->spot_comments->count();
+        return $this->spotComments->count();
     }
 
     /**
@@ -69,13 +69,13 @@ class Spot extends Model
     public function isLikedBy(?User $user): bool
     {
         return $user
-            ? (bool)$this->spot_favorites->where('id', $user->id)->count()
+            ? (bool)$this->spotFavorites->where('id', $user->id)->count()
             : false;
     }
 
     public function getCountSpotFavoritesAttribute(): int
     {
-        return $this->spot_favorites->count();
+        return $this->spotFavorites->count();
     }
 
     /**

@@ -22,7 +22,7 @@ class SpotTest extends TestCase
         $eloquent = app(Spot::class);
         $this->assertEmpty($eloquent->get());
         $user = User::factory()->create();
-        $user = Spot::factory()->for($user)->create();
+        $spot = Spot::factory()->for($user)->create();
         $this->assertNotEmpty($eloquent->get());
     }
 

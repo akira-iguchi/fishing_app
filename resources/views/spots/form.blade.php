@@ -44,7 +44,7 @@
         @foreach ($allFishingTypeNames as $fishingType)
             <label class="mr-2" for="{{ $fishingType->id }}">
                 <input id="{{ $fishingType->id }}" type="checkbox" name="fishing_types[]" value="{{ $fishingType->id }}"
-                    {{ $spot->fishing_types->contains('id', $fishingType->id) ? 'checked="checked"' : '' }}
+                    {{ $spot->fishingTypes->contains('id', $fishingType->id) ? 'checked="checked"' : '' }}
                 > {{ $fishingType->fishing_type_name }}
             </label>
         @endforeach

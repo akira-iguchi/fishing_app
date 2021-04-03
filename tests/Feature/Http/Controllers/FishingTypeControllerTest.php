@@ -29,7 +29,7 @@ class FishingTypeControllerTest extends TestCase
     {
         $spot = $this->createSpot();
         $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
-        $spot->fishing_types()->attach($fishing_type);
+        $spot->fishingTypes()->attach($fishing_type);
 
         $response = $this->get('/fishing_types');
 

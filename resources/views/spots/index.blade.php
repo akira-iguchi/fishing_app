@@ -19,8 +19,8 @@
                                 <div class="spot_card spot-hidden">
                                     <a href="{{ route('spots.show', $spot->id)}}">
                                         <div class="spot_card_img">
-                                            <img src="{{ $spot->first_spot_image() }}" alt="釣り場の画像">
-                                            <!-- <img src="{{ asset('storage/'.$spot->first_spot_image()) }}" alt="釣りスポットの画像"> -->
+                                            <img src="{{ $spot->firstSpotImage() }}" alt="釣り場の画像">
+                                            <!-- <img src="{{ asset('storage/'.$spot->firstSpotImage()) }}" alt="釣りスポットの画像"> -->
                                         </div>
                                     </a>
 

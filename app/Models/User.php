@@ -89,7 +89,7 @@ class User extends Authenticatable
 
     public function getCountSpotCommentsAttribute(): int
     {
-        return $this->spot_comments->count();
+        return $this->spotComments->count();
     }
 
     /**
