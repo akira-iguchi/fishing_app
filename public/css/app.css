@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+/* 変数宣言 */
+
 body {
   font-family: "Osaka", sans-serif;
   /* background-color: #EEFFFF; */
@@ -16,11 +18,6 @@ body {
 
 .error_msg {
   color: red;
-}
-
-.pagination {
-  margin-top: 50px;
-  justify-content: center;
 }
 
 /* header */
@@ -56,10 +53,6 @@ header:focus-within {
   list-style: none;
 }
 
-.nav-content:focus-within {
-  outline: none;
-}
-
 .nav-content li {
   position: relative;
   right: 2%;
@@ -74,12 +67,16 @@ header:focus-within {
   color: #fff;
 }
 
-.nav-content li a:hover {
+.nav-content li:hover {
   text-decoration: none;
   color: rgba(255, 255, 255, 0.7);
 }
 
-@media screen and (max-width: 800px) {
+.nav-content:focus-within {
+  outline: none;
+}
+
+@media screen and (max-width: 875px) {
   .nav-container {
     position: fixed;
     z-index: 10;

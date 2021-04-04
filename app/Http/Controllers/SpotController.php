@@ -217,7 +217,7 @@ class SpotController extends Controller
 
     public function update(SpotRequest $request, Spot $spot, SpotImage $spot_image)
     {
-        return DB::transaction(function () use ($spot, $request) {
+        return DB::transaction(function () use ($spot, $spot_image, $request) {
             $spot->user_id = auth()->id();
             $spot->fill($request->all())->save();
             $image1 = 'spot_image1';

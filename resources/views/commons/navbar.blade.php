@@ -1,4 +1,4 @@
-<header tabindex="0"><a class="nav-title" href="/"><i class="fas fa-fish"></i>&thinsp;Fishing Spot</a>
+<header><a class="nav-title" href="/"><i class="fas fa-fish"></i>&thinsp;Fishing Spot</a>
     <nav class="nav-container">
         <nav class="nav-bg"></nav>
         <nav class="nav-button" tabindex="0">
@@ -13,7 +13,7 @@
                     {{-- ログアウトへのリンク --}}
                     <li><a href="{{ url('/logout') }}" onclick="return confirm('ログアウトしますか？')">ログアウト</a></li>
                     {{-- 予定ページへのリンク --}}
-                    <li><a href="{{ route('events', Auth::user()) }}">予定<i class="fas fa-pen"></i></a></li>
+                    <li><a href="{{ route('events', Auth::user()) }}">予定・記録<i class="fas fa-pen"></i></a></li>
                     {{-- 釣り方一覧ページへのリンク --}}
                     <li><a href="{{ url('/fishing_types') }}">釣り方一覧</a></li>
                     {{-- 釣りスポット作成ページへのリンク --}}
