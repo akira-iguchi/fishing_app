@@ -15,7 +15,7 @@
                     <div class="row">
                         <!-- カードの大きさが違うため直書き -->
                         @foreach ($rankSpots as $spot)
-                            <div class="mx-auto d-block col-lg-6 col-11">
+                            <div class="mx-auto d-block col-md-6 col-11">
                                 <div class="spot_card spot-hidden">
                                     <a href="{{ route('spots.show', $spot->id)}}">
                                         <div class="spot_card_img">

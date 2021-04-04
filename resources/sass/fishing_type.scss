@@ -1,62 +1,62 @@
 /* index */
 
 .fishing_type_body {
-    background-image: url("/images/spot-create.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color:rgba(255,255,255,0.6);
-    box-shadow: 0px 0px 5px rgb(0 0 0 / 50%);
-    background-blend-mode: lighten;
-    border-radius: 10px;
-    width: auto;
-    margin-top: 100px;
-    margin-bottom: 30px;
-    padding: 2em;
-  }
+  background-image: url("/images/spot-create.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color:rgba(255,255,255,0.6);
+  box-shadow: 0px 0px 5px rgb(0 0 0 / 50%);
+  background-blend-mode: lighten;
+  border-radius: 10px;
+  width: auto;
+  margin-top: 100px;
+  margin-bottom: 30px;
+  padding: 2em;
+}
 
-  .fishing_type_title {
-    text-align: center;
-    padding-bottom: 5px;
-    color: #364e96;
-    border-bottom: double 5px #A4C6FF;
-    font-weight: bold;
-  }
+.fishing_type_title {
+  text-align: center;
+  padding-bottom: 5px;
+  color: #364e96;
+  border-bottom: double 5px #A4C6FF;
+  font-weight: bold;
+}
 
-  .fishing_type_card {
-    position: relative;
-    width: 90%;
-    height: max-content;
-    margin-top: 60px;
-    margin-bottom: 15px;
-    padding: 1.2em 1em 1em;
-    background-color: #fff;
-    border: 3px double #999999;
-    box-shadow: 10px 10px 10px rgba(0,0,0,0.6);
-  }
+.fishing_type_card {
+  position: relative;
+  width: 90%;
+  height: max-content;
+  margin-top: 60px;
+  margin-bottom: 15px;
+  padding: 1.2em 1em 1em;
+  background-color: #fff;
+  border: 3px double #999999;
+  box-shadow: 3px 3px 8px rgb(0 0 0 / 40%);
 
-  .fishing_type_card_title {
-    position: absolute;
-    display: inline-block;
-    top: -38px;
-    left: -3px;
-    padding: 0 10px;
-    height: 35px;
-    font-size: 23px;
-    font-weight: bold;
-    color: #fff;
-    background-color: #a0a0a0;
-    border: 1px solid #999999;
-    border-radius: 5px 5px 0 0;
-  }
-
-  .fishing_type_card img {
+  img {
     cursor: pointer;
     margin-top: 1em;
     width: 7em;
     background-color: #fff;
   }
+}
 
-  .fishing_type-spot {
-    list-style: none;
-    float: left;
-  }
+.fishing_type_card_title {
+  position: absolute;
+  display: inline-block;
+  top: -38px;
+  left: -3px;
+  padding: 0 10px;
+  height: 35px;
+  font-size: 23px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #a0a0a0;
+  border: 1px solid #999999;
+  border-radius: 5px 5px 0 0;
+}
+
+.fishing_type-spot {
+  list-style: none;
+  float: left;
+}

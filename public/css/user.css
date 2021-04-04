@@ -28,6 +28,14 @@
   padding-left: 60px;
 }
 
+@media screen and (max-width: 896px) {
+  .profile_top {
+    display: inline-block;
+    text-align: center;
+    padding: 0;
+  }
+}
+
 .profile_image img {
   width: 120px;
   height: 120px;
@@ -43,6 +51,16 @@
   font-weight: bold;
 }
 
+@media screen and (max-width: 896px) {
+  .profile_name {
+    left: 0;
+  }
+}
+
+.profile_content span {
+  left: 0;
+}
+
 .profile_content span,
 .profile_content button {
   position: relative;
@@ -55,15 +73,40 @@
   cursor: pointer;
 }
 
+@media screen and (max-width: 896px) {
+  .profile_content button {
+    display: block;
+    top: 0;
+    left: 0;
+    margin: auto;
+    margin-top: 26px;
+  }
+}
+
 .profile_edit_link {
   position: absolute;
   margin-bottom: 20px;
   right: 0;
 }
 
+@media screen and (max-width: 896px) {
+  .profile_edit_link {
+    position: relative;
+    margin-top: 30px;
+  }
+}
+
 .profile_under {
   width: 100%;
   padding-left: 12.5rem;
+}
+
+@media screen and (max-width: 896px) {
+  .profile_under {
+    max-width: 25rem;
+    margin: 15px auto 0;
+    padding: 0;
+  }
 }
 
 .user-tabs {
@@ -97,38 +140,6 @@
   color: rgba(0, 100, 255, 0.9);
 }
 
-@media only screen and (max-width: 769px) {
-  .profile_top {
-    display: inline-block;
-    text-align: center;
-    padding: 0;
-  }
-
-  .profile_name,
-  .profile_content span {
-    left: 0;
-  }
-
-  .profile_content button {
-    display: block;
-    top: 0;
-    left: 0;
-    margin: auto;
-    margin-top: 26px;
-  }
-
-  .profile_edit_link {
-    position: relative;
-    margin-top: 30px;
-  }
-
-  .profile_under {
-    max-width: 25rem;
-    margin: 15px auto 0;
-    padding: 0;
-  }
-}
-
 /* edit */
 
 .user-edit_body {
@@ -160,6 +171,10 @@
   margin-top: 20px;
 }
 
+.user_edit_form div:last-child {
+  text-align: center;
+}
+
 .user-edit_text {
   position: relative;
 }
@@ -175,8 +190,8 @@
 }
 
 .user-edit_text input[type=text]:focus,
-.user-edit_text input[type=email]:focus,
 .user-edit_text input[type=text]:focus::after,
+.user-edit_text input[type=email]:focus,
 .user-edit_text input[type=email]:focus::after {
   outline: none;
 }
@@ -193,6 +208,11 @@
   font: 18px sans-serif;
 }
 
+.user-edit_text textarea:focus,
+.user-edit_text textarea:focus::after {
+  outline: none;
+}
+
 .user-edit_text::after {
   display: block;
   width: 100%;
@@ -202,10 +222,6 @@
   border-width: 0 1px 1px 1px;
   border-style: solid;
   border-color: #da3c41;
-}
-
-.user_edit_form div:last-child {
-  text-align: center;
 }
 
 .user_edit-button {

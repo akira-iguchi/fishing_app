@@ -12,17 +12,13 @@ use Illuminate\Http\Request;
 use App\Traits\SpotTrait;
 use App\Traits\TagNameTrait;
 use App\Http\Requests\SpotRequest;
+use App\Http\Requests\SearchSpotRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class SpotController extends Controller
 {
-    public static function escapeLike($str)
-    {
-        return str_replace(['\\', '%', '_'], ['\\\\', '\%', '\_'], $str);
-    }
-
     public function index(Request $request)
     {
         if (Auth::check()) {
@@ -64,46 +60,16 @@ class SpotController extends Controller
         }
     }
 
-    public function search(Request $request)
+    public function search(SearchSpotRequest $request)
     {
         $allFishingTypeNames = FishingType::all();
         $searchWord = $request->input('searchWord');
         $fishingTypes = $request->input('fishing_types');
         $tags = Tag::all()->take(15);
 
-        $query = Spot::query();
+        $spots = $request->filters($searchWord, $fishingTypes)->get();
 
-        if (isset($searchWord) && is_array($fishingTypes)) {
-            // （釣りスポット名または所在地）かつ、その釣りスポットにおすすめの釣り方を取得。釣りスポットは、釣り方を１つでも含んでいたら表示
-            $query->where(function ($query) use ($searchWord, $fishingTypes) {
-                $query->where('spot_name', 'like', '%' . self::escapeLike($searchWord) . '%')
-                ->orWhere('address', 'like', '%' . self::escapeLike($searchWord) . '%');
-            })
-            ->whereHas('fishingTypes', function ($query) use ($fishingTypes) {
-                $query->where('fishing_type_id', $fishingTypes);
-            });
-
-            $searchFishingTypes = FishingType::whereIn('id', $fishingTypes)->pluck('fishing_type_name');
-        } else {
-            if (is_array($fishingTypes)) {
-                $query->whereHas('fishingTypes', function ($query) use ($fishingTypes) {
-                    $query->where('fishing_type_id', $fishingTypes);
-                });
-
-                $searchFishingTypes = FishingType::whereIn('id', $fishingTypes)->pluck('fishing_type_name');
-            } else {
-                $searchFishingTypes = null;
-            }
-
-            if (isset($searchWord)) {
-                $query->where(function ($query) use ($searchWord) {
-                    $query->where('spot_name', 'like', '%' . self::escapeLike($searchWord) . '%')
-                    ->orWhere('address', 'like', '%' . self::escapeLike($searchWord) . '%');
-                });
-            }
-        }
-
-        $spots = $query->get();
+        $searchFishingTypes = $request->filtersName($searchWord, $fishingTypes);
 
         return view('spots.searches.search', compact(
             'spots',
@@ -155,7 +121,8 @@ class SpotController extends Controller
             $spot_image->spot_id = $spot->id;
             if ($request->hasFile('spot_image1')
                 && $request->hasFile('spot_image2')
-                && $request->hasFile('spot_image3')) {
+                && $request->hasFile('spot_image3')
+            ) {
                 SpotTrait::imageUpload($spot, $request, $image1);
                 SpotTrait::imageUpload($spot, $request, $image2);
                 SpotTrait::imageUpload($spot, $request, $image3);
