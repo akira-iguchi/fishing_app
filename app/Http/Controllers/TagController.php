@@ -12,9 +12,9 @@ class TagController extends Controller
     public function show(string $name, Request $request)
     {
         $tag = Tag::where('name', $name)->first();
-        $tags = Tag::all()->take(15);
 
         // 検索機能
+        $tags = Tag::all()->take(15);
         $allFishingTypeNames = FishingType::all();
         $searchWord = $request->input('searchWord');
         $fishingTypes = $request->input('fishing_types');
