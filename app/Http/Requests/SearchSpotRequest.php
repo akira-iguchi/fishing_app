@@ -50,16 +50,16 @@ class SearchSpotRequest extends FormRequest
                 $query->where('fishing_type_id', $fishingTypes);
             });
 
-            $searchFishingTypes = FishingType::whereIn('id', $fishingTypes)->pluck('fishing_type_name');
+            $searchFishingTypeName = FishingType::whereIn('id', $fishingTypes)->pluck('fishing_type_name');
         } else {
             if (is_array($fishingTypes)) {
                 $query->whereHas('fishingTypes', function ($query) use ($fishingTypes) {
                     $query->where('fishing_type_id', $fishingTypes);
                 });
 
-                $searchFishingTypes = FishingType::whereIn('id', $fishingTypes)->pluck('fishing_type_name');
+                $searchFishingTypeName = FishingType::whereIn('id', $fishingTypes)->pluck('fishing_type_name');
             } else {
-                $searchFishingTypes = null;
+                $searchFishingTypeName = null;
             }
 
             if (isset($searchWord)) {
@@ -70,43 +70,6 @@ class SearchSpotRequest extends FormRequest
             }
         }
 
-        return $query;
-    }
-
-    public function filtersName($searchWord, $fishingTypes)
-    {
-        $query = Spot::query();
-
-        if (isset($searchWord) && is_array($fishingTypes)) {
-            // （釣りスポット名または所在地）かつ、その釣りスポットにおすすめの釣り方を取得。釣りスポットは、釣り方を１つでも含んでいたら表示
-            $query->where(function ($query) use ($searchWord, $fishingTypes) {
-                $query->where('spot_name', 'like', '%' . self::escapeLike($searchWord) . '%')
-                ->orWhere('address', 'like', '%' . self::escapeLike($searchWord) . '%');
-            })
-            ->whereHas('fishingTypes', function ($query) use ($fishingTypes) {
-                $query->where('fishing_type_id', $fishingTypes);
-            });
-
-            $searchFishingTypes = FishingType::whereIn('id', $fishingTypes)->pluck('fishing_type_name');
-        } else {
-            if (is_array($fishingTypes)) {
-                $query->whereHas('fishingTypes', function ($query) use ($fishingTypes) {
-                    $query->where('fishing_type_id', $fishingTypes);
-                });
-
-                $searchFishingTypes = FishingType::whereIn('id', $fishingTypes)->pluck('fishing_type_name');
-            } else {
-                $searchFishingTypes = null;
-            }
-
-            if (isset($searchWord)) {
-                $query->where(function ($query) use ($searchWord) {
-                    $query->where('spot_name', 'like', '%' . self::escapeLike($searchWord) . '%')
-                    ->orWhere('address', 'like', '%' . self::escapeLike($searchWord) . '%');
-                });
-            }
-        }
-
-        return $searchFishingTypes;
+        return [$query, $searchFishingTypeName];
     }
 }

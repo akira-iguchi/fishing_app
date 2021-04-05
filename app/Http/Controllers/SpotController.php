@@ -19,6 +19,14 @@ use Illuminate\Support\Facades\Storage;
 
 class SpotController extends Controller
 {
+    public function __construct(SearchSpotRequest $request)
+    {
+        $allFishingTypeNames = FishingType::all();
+        $searchWord = $request->input('searchWord');
+        $fishingTypes = $request->input('fishing_types');
+        $tags = Tag::all()->take(15);
+    }
+
     public function index(Request $request)
     {
         if (Auth::check()) {
@@ -26,10 +34,8 @@ class SpotController extends Controller
             $recentSpots = Spot::all()->sortByDesc('id')->take(12)
                         ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
 
-            $tags = Tag::all()->take(15);
-
             // フォローしたユーザーの釣りスポット
-            if (Auth::user()->count_followings !== 0) {
+            if (Auth::user()->count_followings > 0) {
                 $followUserSpots = Spot::where('user_id', Auth::user()->followings()->pluck('followee_id'))
                                     ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(8)
                                     ->get()->sortByDesc('id');
@@ -40,11 +46,6 @@ class SpotController extends Controller
             // いいねランキング
             $rankSpots = Spot::withCount('spotFavorites')->orderBy('spot_favorites_count', 'desc')
                         ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(4)->get();
-
-            // 検索機能
-            $allFishingTypeNames = FishingType::all();
-            $searchWord = $request->input('searchWord');
-            $fishingTypes = $request->input('fishing_types');
 
             return view('spots.index', compact(
                 'recentSpots',
@@ -62,14 +63,11 @@ class SpotController extends Controller
 
     public function search(SearchSpotRequest $request)
     {
-        $allFishingTypeNames = FishingType::all();
-        $searchWord = $request->input('searchWord');
-        $fishingTypes = $request->input('fishing_types');
-        $tags = Tag::all()->take(15);
+        list($query, $searchFishingTypeName) = $request->filters($searchWord, $fishingTypes);
 
-        $spots = $request->filters($searchWord, $fishingTypes)->get();
+        $spots = $query->get();
 
-        $searchFishingTypes = $request->filtersName($searchWord, $fishingTypes);
+        $searchFishingTypes = $searchFishingTypeName;
 
         return view('spots.searches.search', compact(
             'spots',
