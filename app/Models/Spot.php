@@ -33,6 +33,14 @@ class Spot extends Model
     }
 
     /**
+     * 最近の投稿
+     */
+    public function recentSpots(): HasMany
+    {
+        return $this->hasMany(SpotComment::class);
+    }
+
+    /**
      * 釣りスポットの画像
      */
     public function spotImages(): HasMany

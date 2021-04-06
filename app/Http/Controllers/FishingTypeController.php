@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class FishingTypeController extends Controller
 {
-    public function index()
+    public function __invoke()
     {
         $fishing_types = FishingType::all()->sortByDesc('created_at')->load('spots');
 

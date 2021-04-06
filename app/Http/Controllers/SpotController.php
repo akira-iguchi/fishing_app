@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Storage;
 
 class SpotController extends Controller
 {
-    public function index(Request $request)
+    public function index(SearchSpotRequest $request)
     {
         $allFishingTypeNames = FishingType::all();
         $searchWord = $request->input('searchWord');
@@ -112,40 +112,7 @@ class SpotController extends Controller
         $spot->user_id = auth()->id();
         $spot->save();
 
-        $image1 = 'spot_image1';
-        $image2 = 'spot_image2';
-        $image3 = 'spot_image3';
-
-        // 画像（小テーブル）とリレーション
-        if ($request->hasFile('spot_image1') || $request->hasFile('spot_image2') || $request->hasFile('spot_image3')) {
-            $spot_image->spot_id = $spot->id;
-            if ($request->hasFile('spot_image1')
-                && $request->hasFile('spot_image2')
-                && $request->hasFile('spot_image3')
-            ) {
-                SpotTrait::imageUpload($spot, $request, $image1);
-                SpotTrait::imageUpload($spot, $request, $image2);
-                SpotTrait::imageUpload($spot, $request, $image3);
-            } elseif ($request->hasFile('spot_image1') && $request->hasFile('spot_image2')) {
-                SpotTrait::imageUpload($spot, $request, $image1);
-                SpotTrait::imageUpload($spot, $request, $image2);
-            } elseif ($request->hasFile('spot_image2') && $request->hasFile('spot_image3')) {
-                SpotTrait::imageUpload($spot, $request, $image2);
-                SpotTrait::imageUpload($spot, $request, $image3);
-            } elseif ($request->hasFile('spot_image1') && $request->hasFile('spot_image3')) {
-                SpotTrait::imageUpload($spot, $request, $image1);
-                SpotTrait::imageUpload($spot, $request, $image3);
-            } elseif ($request->hasFile('spot_image1')) {
-                SpotTrait::imageUpload($spot, $request, $image1);
-            } elseif ($request->hasFile('spot_image2')) {
-                SpotTrait::imageUpload($spot, $request, $image2);
-            } else {
-                SpotTrait::imageUpload($spot, $request, $image3);
-            }
-        } else {
-            $spot_image->spot_id = $spot->id;
-            $spot_image->save();
-        }
+        SpotTrait::imageUploadCase($spot, $request, $spot_image);
 
         // タグとリレーション
         $request->tags->each(function ($tagName) use ($spot) {

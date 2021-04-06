@@ -15,11 +15,11 @@ use App\Helpers\ClientReq;
 
 class SpotSearchComposer
 {
-    public function compose(View $view, SearchSpotRequest $request)
+    public function compose(View $view, $req)
     {
         $allFishingTypeNames = FishingType::all();
-        $searchWord = $request->input('searchWord');
-        $fishingTypes = $request->input('fishing_types');
+        $searchWord = $req->input('searchWord');
+        $fishingTypes = $req->input('fishing_types');
         $tags = Tag::all()->take(15);
 
         $view->with('allFishingTypeNames', $allFishingTypeNames);

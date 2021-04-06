@@ -62,7 +62,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', 'UserController');
 
     // 釣り方一覧
-    Route::get('/fishing_types','FishingTypeController@index');
+    Route::get('/fishing_types','FishingTypeController');
 
     // 釣りスポット機能
     Route::get('/spots/search','SpotController@search')->name('spots.search');
