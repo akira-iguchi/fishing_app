@@ -21,6 +21,11 @@ class SpotController extends Controller
 {
     public function index(Request $request)
     {
+        $allFishingTypeNames = FishingType::all();
+        $searchWord = $request->input('searchWord');
+        $fishingTypes = $request->input('fishing_types');
+        $tags = Tag::all()->take(15);
+
         if (Auth::check()) {
             // 最近の投稿
             $recentSpots = Spot::all()->sortByDesc('id')->take(12)
@@ -41,8 +46,12 @@ class SpotController extends Controller
 
             return view('spots.index', compact(
                 'recentSpots',
+                'tags',
                 'followUserSpots',
                 'rankSpots',
+                'allFishingTypeNames',
+                'searchWord',
+                'fishingTypes',
             ));
         } else {
             return view('spots.index');
@@ -51,6 +60,11 @@ class SpotController extends Controller
 
     public function search(SearchSpotRequest $request)
     {
+        $allFishingTypeNames = FishingType::all();
+        $searchWord = $request->input('searchWord');
+        $fishingTypes = $request->input('fishing_types');
+        $tags = Tag::all()->take(15);
+
         list($query, $searchFishingTypeName) = $request->filters($searchWord, $fishingTypes);
 
         $spots = $query->get();
@@ -59,6 +73,10 @@ class SpotController extends Controller
 
         return view('spots.searches.search', compact(
             'spots',
+            'tags',
+            'allFishingTypeNames',
+            'searchWord',
+            'fishingTypes',
             'searchFishingTypes',
         ));
     }

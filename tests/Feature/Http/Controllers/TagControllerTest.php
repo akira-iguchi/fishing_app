@@ -34,7 +34,7 @@ class TagControllerTest extends TestCase
 
         $spot->tags()->attach($tag);
 
-        $response = $this->from('/')->get(route('tags.show', ['name' => $tag->name]));
+        $response = $this->from('/')->get(route('tags', ['name' => $tag->name]));
 
         $response->assertStatus(Response::HTTP_OK)
                 ->assertSee('1件')

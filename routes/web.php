@@ -56,7 +56,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     // タグの釣りスポット一覧
-    Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
+    Route::get('/tags/{name}', 'TagController')->name('tags');
 
     // ユーザーの基本機能
     Route::resource('users', 'UserController');

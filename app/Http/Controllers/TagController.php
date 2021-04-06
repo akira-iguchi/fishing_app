@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-    public function show(string $name, Request $request)
+    public function __invoke(string $name, Request $request)
     {
         $tag = Tag::where('name', $name)->first();
 

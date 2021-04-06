@@ -27,6 +27,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        View::composer('*', 'App\Http\Composers\SpotSearchComposer');
+        // View::composer('*', 'App\Http\Composers\SpotSearchComposer');
     }
 }
