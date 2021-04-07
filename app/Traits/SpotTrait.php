@@ -24,15 +24,15 @@ trait SpotTrait
     }
 
 
-    public static function imageUploadCase($spot, $req, $spot_image)
+    public static function imageUploadByCase($spot, $req, $spot_image)
     {
         $image1 = 'spot_image1';
         $image2 = 'spot_image2';
         $image3 = 'spot_image3';
 
-        $spot_image->spot_id = $spot->id;
-
         if ($req->hasFile('spot_image1') || $req->hasFile('spot_image2') || $req->hasFile('spot_image3')) {
+            $spot_image->spot_id = $spot->id;
+            $spot->spotImages()->delete();
             if ($req->hasFile('spot_image1')
                 && $req->hasFile('spot_image2')
                 && $req->hasFile('spot_image3')

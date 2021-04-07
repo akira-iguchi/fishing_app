@@ -26,8 +26,6 @@ class UserController extends Controller
         return DB::transaction(function () use ($user, $request) {
             if ($request->hasFile('user_image')) {
                 Storage::delete('public' . $user->user_image);
-                // $filePath = $request->file('user_image')->store('public');
-                // $user->user_image = basename($filePath);
                 $upload_info = Storage::disk('s3')->putFile('/user', $request->file('user_image'), 'public');
                 $path = Storage::disk('s3')->url($upload_info);
                 $user->user_image = $path;

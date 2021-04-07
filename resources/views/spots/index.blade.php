@@ -19,7 +19,7 @@
                                 <div class="spot_card spot-hidden">
                                     <a href="{{ route('spots.show', $spot->id)}}">
                                         <div class="spot_card_img">
-                                            <img src="{{ $spot->firstSpotImage() }}" alt="釣り場の画像">
+                                            <img src="{{ $spot->firstSpotImage() }}" alt="釣りスポットの画像">
                                             <!-- <img src="{{ asset('storage/'.$spot->firstSpotImage()) }}" alt="釣りスポットの画像"> -->
                                         </div>
                                     </a>
@@ -44,8 +44,8 @@
                                             </div>
 
                                         <a href="{{ route('users.show', $spot->user_id)}}">
-                                            <img src="{{ $spot->user->user_image }}" alt="釣りスポットの画像">
-                                            <!-- <img src="{{ asset('storage/'.$spot->user->user_image) }}" alt="釣り場投稿者の画像"> -->
+                                            <img src="{{ $spot->user->user_image }}" alt="釣りスポット投稿者の画像">
+                                            <!-- <img src="{{ asset('storage/'.$spot->user->user_image) }}" alt="釣りスポット投稿者の画像"> -->
                                         </a>
                                         </div>
 
@@ -74,12 +74,12 @@
 
             <hr>
 
-            @if (Auth::user()->count_followings !== 0)
-            <h2 class="toppage_heading">フォローしたユーザーの投稿</h2>
+            @if ($followUserSpots->count() > 0)
+                <h2 class="toppage_heading">フォローしたユーザーの投稿</h2>
                 <div class="row">
                     @include('spots.cards.card', ['spots' => $followUserSpots])
                 </div>
-            <hr>
+                <hr>
             @endif
 
 

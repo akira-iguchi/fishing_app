@@ -28,7 +28,7 @@
                             </div>
                             @foreach($spot->spotImages as $image)
                                 <div class="swiper-slide">
-                                    <img src="{{ $spot->firstSpotImage() }}" alt="釣りスポットの画像">
+                                    <img src="{{ $image->spot_image }}" alt="釣りスポットの画像">
                                     <!-- <img src="{{ asset('storage/'.$image->spot_image) }}" alt="釣りスポットの画像"> -->
                                 </div>
                             @endforeach

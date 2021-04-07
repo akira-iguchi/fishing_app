@@ -112,7 +112,7 @@ class SpotController extends Controller
         $spot->user_id = auth()->id();
         $spot->save();
 
-        SpotTrait::imageUploadCase($spot, $request, $spot_image);
+        SpotTrait::imageUploadByCase($spot, $request, $spot_image);
 
         // タグとリレーション
         $request->tags->each(function ($tagName) use ($spot) {
@@ -154,42 +154,8 @@ class SpotController extends Controller
         return DB::transaction(function () use ($spot, $spot_image, $request) {
             $spot->user_id = auth()->id();
             $spot->fill($request->all())->save();
-            $image1 = 'spot_image1';
-            $image2 = 'spot_image2';
-            $image3 = 'spot_image3';
 
-            // 画像（小テーブル）とリレーション
-            if ($request->hasFile('spot_image1')
-                || $request->hasFile('spot_image2')
-                || $request->hasFile('spot_image3')
-            ) {
-                $spot->spotImages()->delete();
-                $spot_image->spot_id = $spot->id;
-                if ($request->hasFile('spot_image1')
-                    && $request->hasFile('spot_image2')
-                    && $request->hasFile('spot_image3')) {
-                    SpotTrait::imageUpload($spot, $request, $image1);
-                    SpotTrait::imageUpload($spot, $request, $image2);
-                    SpotTrait::imageUpload($spot, $request, $image3);
-                } elseif ($request->hasFile('spot_image1') && $request->hasFile('spot_image2')) {
-                    SpotTrait::imageUpload($spot, $request, $image1);
-                    SpotTrait::imageUpload($spot, $request, $image2);
-                } elseif ($request->hasFile('spot_image2') && $request->hasFile('spot_image3')) {
-                    SpotTrait::imageUpload($spot, $request, $image2);
-                    SpotTrait::imageUpload($spot, $request, $image3);
-                } elseif ($request->hasFile('spot_image1') && $request->hasFile('spot_image3')) {
-                    SpotTrait::imageUpload($spot, $request, $image1);
-                    SpotTrait::imageUpload($spot, $request, $image3);
-                } elseif ($request->hasFile('spot_image1')) {
-                    SpotTrait::imageUpload($spot, $request, $image1);
-                } elseif ($request->hasFile('spot_image2')) {
-                    SpotTrait::imageUpload($spot, $request, $image2);
-                } elseif ($request->hasFile('spot_image3')) {
-                    SpotTrait::imageUpload($spot, $request, $image3);
-                } else {
-                    $spot_image->save();
-                }
-            }
+            SpotTrait::imageUploadByCase($spot, $request, $spot_image);
 
             $spot->tags()->detach();
             $request->tags->each(function ($tagName) use ($spot) {
