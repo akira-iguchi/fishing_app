@@ -249,7 +249,7 @@ class SpotControllerTest extends TestCase
     {
         $spot = $this->createSpot();
         $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
-        $tag = Tag::factory()->create(['name' => 'よく釣れる']);
+        $tag = Tag::factory()->create(['tag_name' => 'よく釣れる']);
 
         $spot->tags()->attach($tag);
 
@@ -351,41 +351,6 @@ class SpotControllerTest extends TestCase
         $response->assertRedirect('/');
 
         $this->assertCount(0, Spot::all());
-    }
-
-    public function testFavorite()
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->create();
-
-        $response = $this->put(route('spots.favorite', [$spot->id, $user->id]));
-
-        $response->assertStatus(Response::HTTP_OK);
-
-        $this->assertDatabaseHas('spot_favorite', [
-            'spot_id' => $spot->id,
-            'user_id' => $user->id,
-        ]);
-    }
-
-    public function testUnFavorite()
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->create();
-
-        // 事前にリレーション
-        $spot->spotFavorites()->attach($user);
-
-        $response = $this->delete(route('spots.unfavorite', [$spot->id, $user->id]));
-
-        $response->assertStatus(Response::HTTP_OK);
-
-        $this->assertDatabaseMissing('spot_favorite', [
-            'spot_id' => $spot->id,
-            'user_id' => $user->id,
-        ]);
     }
 
     public function SpotData()

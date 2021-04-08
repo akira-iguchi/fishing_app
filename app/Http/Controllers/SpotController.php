@@ -158,7 +158,7 @@ class SpotController extends Controller
 
             $spot->tags()->detach();
             $request->tags->each(function ($tagName) use ($spot) {
-                $tag = Tag::firstOrCreate(['name' => $tagName]);
+                $tag = Tag::firstOrCreate(['tag_name' => $tagName]);
                 $spot->tags()->attach($tag);
             });
 

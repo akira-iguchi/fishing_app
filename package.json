@@ -45,6 +45,7 @@
         "swiper": "^6.4.14",
         "vue-axios": "^3.2.4",
         "vue-full-calendar": "^2.8.1-0",
+        "vue-router": "^3.5.1",
         "vuejs-paginate": "^2.1.0",
         "vuex": "^3.6.2"
     }

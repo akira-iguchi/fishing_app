@@ -18,7 +18,7 @@ class Tag extends Model
 
     public function getHashtagAttribute(): string
     {
-        return '#' . $this->name;
+        return '#' . $this->tag_name;
     }
 
     /**

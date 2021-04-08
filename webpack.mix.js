@@ -11,10 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix.browserSync('vuesplash.test')
+    .js('resources/js/app.js', 'public/js')
     .vue()
     .sass('resources/sass/app.scss', 'public/css')
-    .sass('resources/sass/spot.scss', 'public/css')
-    .sass('resources/sass/user.scss', 'public/css')
-    .sass('resources/sass/fishing_type.scss', 'public/css')
     .version();
