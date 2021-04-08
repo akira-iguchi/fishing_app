@@ -13,7 +13,7 @@ trait TagNameTrait
     public static function getAllTagNames()
     {
         $allTagNames = Tag::all()->map(function ($tag) {
-            return ['text' => $tag->name];
+            return ['text' => $tag->tag_name];
         });
         return $allTagNames;
     }

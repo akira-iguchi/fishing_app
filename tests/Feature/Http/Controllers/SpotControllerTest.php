@@ -29,7 +29,7 @@ class SpotControllerTest extends TestCase
     public function testIndex_logged_in()
     {
         $spot = $this->createSpot();
-        $tag = Tag::factory()->create(['name' => 'よく釣れる']);
+        $tag = Tag::factory()->create(['tag_name' => 'よく釣れる']);
         $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
         $response = $this->get('/');
@@ -37,7 +37,7 @@ class SpotControllerTest extends TestCase
         $response->assertStatus(Response::HTTP_OK)
                     ->assertSee($spot->spot_name)
                     ->assertSee('かもめ大橋')
-                    ->assertSee($tag->name)
+                    ->assertSee($tag->tag_name)
                     ->assertSee('よく釣れる')
                     ->assertSee($fishing_type->fishing_type_name)
                     ->assertSee('サビキ釣り');
@@ -255,14 +255,14 @@ class SpotControllerTest extends TestCase
 
         $response = $this->get("/spots/{$spot->id}/edit");
 
-        $tagName = json_encode($tag->name);
+        $tagName = json_encode($tag->tag_name);
 
         $response->assertStatus(Response::HTTP_OK)
                 ->assertSee($spot->spot_name)
                 ->assertSee('かもめ大橋')
                 ->assertSee($fishing_type->fishing_type_name)
                 ->assertSee('サビキ釣り')
-                ->assertSee(trim(json_encode($tag->name), '"'))
+                ->assertSee(trim(json_encode($tag->tag_name), '"'))
                 ->assertSee(trim(json_encode('よく釣れる'), '"'));
     }
 

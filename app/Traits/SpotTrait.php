@@ -30,8 +30,9 @@ trait SpotTrait
         $image2 = 'spot_image2';
         $image3 = 'spot_image3';
 
+        $spot_image->spot_id = $spot->id;
+
         if ($req->hasFile('spot_image1') || $req->hasFile('spot_image2') || $req->hasFile('spot_image3')) {
-            $spot_image->spot_id = $spot->id;
             $spot->spotImages()->delete();
             if ($req->hasFile('spot_image1')
                 && $req->hasFile('spot_image2')

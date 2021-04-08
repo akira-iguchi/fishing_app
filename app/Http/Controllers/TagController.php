@@ -22,7 +22,7 @@ class TagController extends Controller
 
     public function __invoke(string $name, SearchSpotRequest $request)
     {
-        $tag = Tag::where('name', $name)->first();
+        $tag = Tag::where('tag_name', $name)->first();
 
         $searchData = $this->searchItems($request);
 

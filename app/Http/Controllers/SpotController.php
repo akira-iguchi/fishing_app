@@ -129,7 +129,7 @@ class SpotController extends Controller
     {
         if (\Auth::id() === $spot->user_id) {
             $tagNames = $spot->tags->map(function ($tag) {
-                return ['text' => $tag->name];
+                return ['text' => $tag->tag_name];
             });
 
             $allTagNames = TagNameTrait::getAllTagNames();

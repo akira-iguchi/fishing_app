@@ -29,12 +29,12 @@ class TagControllerTest extends TestCase
     public function testShow_available()
     {
         $spot = $this->createSpot();
-        $tag = Tag::factory()->create(['name' => 'よく釣れる']);
+        $tag = Tag::factory()->create(['tag_name' => 'よく釣れる']);
         $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
         $spot->tags()->attach($tag);
 
-        $response = $this->from('/')->get(route('tags', ['name' => $tag->name]));
+        $response = $this->from('/')->get(route('tags', ['name' => $tag->tag_name]));
 
         $response->assertStatus(Response::HTTP_OK)
                 ->assertSee('1件')
@@ -52,10 +52,10 @@ class TagControllerTest extends TestCase
     public function testShow_notAvailable()
     {
         $spot = $this->createSpot();
-        $tag = Tag::factory()->create(['name' => 'よく釣れる']);
+        $tag = Tag::factory()->create(['tag_name' => 'よく釣れる']);
         $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
-        $response = $this->from('/')->get(route('tags.show', ['name' => $tag->name]));
+        $response = $this->from('/')->get(route('tags', ['name' => $tag->tag_name]));
 
         $response->assertStatus(Response::HTTP_OK)
                 ->assertSee('0件')

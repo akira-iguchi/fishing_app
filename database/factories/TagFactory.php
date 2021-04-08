@@ -22,7 +22,7 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'よく釣れる'
+            'tag_name' => 'よく釣れる'
         ];
     }
 }

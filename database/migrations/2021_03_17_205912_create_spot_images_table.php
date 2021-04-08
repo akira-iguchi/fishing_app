@@ -15,7 +15,7 @@ class CreateSpotImagesTable extends Migration
     {
         Schema::create('spot_images', function (Blueprint $table) {
             $table->id();
-            $table->string('spot_image')->default('defaultSpot.jpg');
+            $table->string('spot_image')->default('https://osakafish.s3-us-west-1.amazonaws.com/spot/defaultSpot.jpg');
             $table->timestamps();
 
             $table->unsignedBigInteger('spot_id')->default(0);

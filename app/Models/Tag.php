@@ -13,7 +13,7 @@ class Tag extends Model
     protected $table = 'tags';
 
     protected $fillable = [
-        'name',
+        'tag_name',
     ];
 
     public function getHashtagAttribute(): string

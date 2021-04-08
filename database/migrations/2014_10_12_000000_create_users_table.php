@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('user_image')->default('defaultUser.jpg');
+            $table->string('user_image')->default('https://osakafish.s3-us-west-1.amazonaws.com/user/defaultUser.jpg');
             $table->longText('introduction')->nullable();
             $table->rememberToken();
             $table->timestamps();
