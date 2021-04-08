@@ -105,8 +105,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const popup = document.querySelector('.popup-wrapper'),
             private = document.querySelector('.event_private');
         document.getElementById('modal-date').innerHTML = info.event.start.toLocaleDateString();
-        document.getElementById('modal-spot').innerHTML = info.event.extendedProps.spot;
-        document.getElementById('modal-fishing_type').innerHTML = info.event.title;
+        document.getElementById('modal-spot').innerHTML = info.event.title;
+        document.getElementById('modal-fishing_type').innerHTML = info.event.extendedProps.fishing_type;
         document.getElementById('modal-bait').innerHTML = info.event.extendedProps.bait;
         document.getElementById('modal-weather').innerHTML = info.event.extendedProps.weather;
         if (info.event.extendedProps.fishing_start_time !== null) {

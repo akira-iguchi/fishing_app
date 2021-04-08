@@ -61699,7 +61699,7 @@ var render = function() {
                   _c("div", { staticClass: "spot_card_img" }, [
                     _c("img", {
                       attrs: {
-                        src: "" + spot.spotImages[0].spot_image,
+                        src: "" + spot.spot_images[0].spot_image,
                         alt: "釣りスポットの画像"
                       }
                     })
@@ -61810,7 +61810,7 @@ var render = function() {
                   _c("div", { staticClass: "spot_card_img" }, [
                     _c("img", {
                       attrs: {
-                        src: "" + spot.spotImages[0].spot_image,
+                        src: "" + spot.spot_images[0].spot_image,
                         alt: "釣りスポットの画像"
                       }
                     })

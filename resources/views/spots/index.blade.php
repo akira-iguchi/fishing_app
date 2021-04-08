@@ -74,7 +74,7 @@
 
             <hr>
 
-            @if ($followUserSpots->count() > 0)
+            @if ($followUserSpots !== null && $followUserSpots->count() > 0)
                 <h2 class="toppage_heading">フォローしたユーザーの投稿</h2>
                 <div class="row">
                     @include('spots.cards.card', ['spots' => $followUserSpots])

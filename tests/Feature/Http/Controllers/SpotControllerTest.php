@@ -282,6 +282,7 @@ class SpotControllerTest extends TestCase
         $spot_image = SpotImage::factory()->for($spot)->create(['spot_image' => 'fishing.jpg']);
         Storage::fake('s3');
 
+
         // 事前にリレーション
         $spot->fishingTypes()->attach($fishing_type);
 
@@ -325,7 +326,6 @@ class SpotControllerTest extends TestCase
         $spot = Spot::factory()->for($user)->create(['spot_name' => '貝塚人工島']);
 
         $response = $this->from("/spots/{$spot->id}/edit")->put(route('spots.update', $spot->id), $params['requestData']);
-        dd($spot->spot_name);
 
         $response->assertStatus(Response::HTTP_FOUND)
                 ->assertSessionHasErrors();

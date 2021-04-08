@@ -138,6 +138,29 @@
   margin: 2.3rem 0;
   font-size: 2rem;
   color: rgba(0, 100, 255, 0.9);
+  opacity: 0;
+  -webkit-animation: fadeIn 0.1s linear 1s 1 normal forwards;
+          animation: fadeIn 0.1s linear 1s 1 normal forwards;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 /* edit */

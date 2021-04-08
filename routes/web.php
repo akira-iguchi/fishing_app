@@ -32,10 +32,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/follow', 'UserController@unfollow')->name('users.unfollow');
 
         // ユーザーページのタブ
-        Route::get('/spots', 'UserController@spots');
-        Route::get('/favoriteSpots', 'UserController@favoriteSpots');
-        Route::get('/followings', 'UserController@followings');
-        Route::get('/followers', 'UserController@followers');
+        Route::get('/spots', 'UserTabController@spots');
+        Route::get('/favoriteSpots', 'UserTabController@favoriteSpots');
+        Route::get('/followings', 'UserTabController@followings');
+        Route::get('/followers', 'UserTabController@followers');
 
          // カレンダー機能
         Route::get('/events', 'EventController@index')->name('events');
@@ -48,8 +48,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => 'spots/{spot}'], function () {
-        Route::put('/favorite', 'SpotController@favorite')->name('spots.favorite');
-        Route::delete('/favorite', 'SpotController@unfavorite')->name('spots.unfavorite');
+        Route::put('/favorite', 'SpotFavoriteController@favorite')->name('spots.favorite');
+        Route::delete('/favorite', 'SpotFavoriteController@unfavorite')->name('spots.unfavorite');
         Route::get('comments', 'SpotCommentController@index')->name('spots.comments');
         Route::post('comments', 'SpotCommentController@store')->name('spots.comment');
         Route::delete('comments/{comment}', 'SpotCommentController@destroy')->name('comment.delete');

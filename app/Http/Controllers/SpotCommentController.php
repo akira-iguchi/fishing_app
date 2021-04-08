@@ -22,8 +22,6 @@ class SpotCommentController extends Controller
         $spot_comment->spot_id = $spot->id;
         $spot_comment->user_id = Auth::id();
         if ($request->hasFile('comment_image')) {
-            // $filePath = $request->file('comment_image')->store('public');
-            // $spot_comment->comment_image = basename($filePath);
             $upload_info = Storage::disk('s3')->putFile('/comment', $request->file('comment_image'), 'public');
             $path = Storage::disk('s3')->url($upload_info);
             $spot_comment->comment_image = $path;

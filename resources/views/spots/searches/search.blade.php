@@ -6,12 +6,12 @@
             @include('spots.searches.search_form')
 
             <h2 class="search-result">
-                @if (isset($searchWord) || is_array($fishingTypes))
-                    @if (isset($searchWord))
-                        <span>{{ $searchWord }}</span>
+                @if (isset($searchData[1]) || is_array($searchData[2]))
+                    @if (isset($searchData[1]))
+                        <span>{{ $searchData[1] }}</span>
                     @endif
 
-                    @if (is_array($fishingTypes))
+                    @if (is_array($searchData[2]))
                         @foreach($searchFishingTypes as $fishing_type_name)
                             <span>{{ $fishing_type_name }}</span>
                         @endforeach
@@ -22,7 +22,7 @@
                 @endif
             </h2>
 
-            <p class="search_count">{{ isset($searchWord) || is_array($fishingTypes) ? $spots->count() . '件' : 'すべての投稿' }}</p><br>
+            <p class="search_count">{{ isset($searchData[1]) || is_array($searchData[2]) ? $spots->count() . '件' : 'すべての投稿' }}</p><br>
 
             <div class="row">
                 @if (!empty($spots))

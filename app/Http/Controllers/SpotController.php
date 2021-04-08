@@ -19,14 +19,22 @@ use Illuminate\Support\Facades\Storage;
 
 class SpotController extends Controller
 {
-    public function index(SearchSpotRequest $request)
+    public function searchItems($request)
     {
         $allFishingTypeNames = FishingType::all();
         $searchWord = $request->input('searchWord');
         $fishingTypes = $request->input('fishing_types');
         $tags = Tag::all()->take(15);
 
+        return [$allFishingTypeNames, $searchWord, $fishingTypes, $tags];
+    }
+
+    public function index(SearchSpotRequest $request)
+    {
+
         if (Auth::check()) {
+            $searchData = $this->searchItems($request);
+
             // 最近の投稿
             $recentSpots = Spot::all()->sortByDesc('id')->take(12)
                         ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
@@ -45,13 +53,10 @@ class SpotController extends Controller
                         ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(4)->get();
 
             return view('spots.index', compact(
+                'searchData',
                 'recentSpots',
-                'tags',
                 'followUserSpots',
                 'rankSpots',
-                'allFishingTypeNames',
-                'searchWord',
-                'fishingTypes',
             ));
         } else {
             return view('spots.index');
@@ -60,23 +65,17 @@ class SpotController extends Controller
 
     public function search(SearchSpotRequest $request)
     {
-        $allFishingTypeNames = FishingType::all();
-        $searchWord = $request->input('searchWord');
-        $fishingTypes = $request->input('fishing_types');
-        $tags = Tag::all()->take(15);
+        $searchData = $this->searchItems($request);
 
-        list($query, $searchFishingTypeName) = $request->filters($searchWord, $fishingTypes);
+        list($query, $searchFishingTypeName) = $request->filters($searchData[1], $searchData[2]);
 
         $spots = $query->get();
 
         $searchFishingTypes = $searchFishingTypeName;
 
         return view('spots.searches.search', compact(
+            'searchData',
             'spots',
-            'tags',
-            'allFishingTypeNames',
-            'searchWord',
-            'fishingTypes',
             'searchFishingTypes',
         ));
     }
@@ -179,26 +178,5 @@ class SpotController extends Controller
         } else {
             return redirect('/')->with('flash_message', '自信の投稿のみ削除できます');
         }
-    }
-
-    public function favorite(Request $request, Spot $spot)
-    {
-        $spot->spotFavorites()->detach($request->user()->id);
-        $spot->spotFavorites()->attach($request->user()->id);
-
-        return [
-            'spot' => $spot,
-            'countSpotFavorites' => $spot->count_spot_favorites,
-        ];
-    }
-
-    public function unfavorite(Request $request, Spot $spot)
-    {
-        $spot->spotFavorites()->detach($request->user()->id);
-
-        return [
-            'spot' => $spot,
-            'countSpotFavorites' => $spot->count_spot_favorites,
-        ];
     }
 }
