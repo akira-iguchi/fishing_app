@@ -33,18 +33,20 @@ class RegisterController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    public function register(Request $request)
+    public function register(Request $request, $user)
     {
-        $this->validator($request->all())->validate();
+        // $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+        // event(new Registered($user = $this->create($request->all())));
 
-        $this->guard()->login($user);
+        // $this->guard()->login($user);
 
-        session()->flash('flash_message', 'ユーザー登録が完了しました');
+        // session()->flash('flash_message', 'ユーザー登録が完了しました');
 
-        return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath());
+        // return $this->registered($request, $user)
+        //                 ?: redirect($this->redirectPath());
+
+        return $user;
     }
 
     /**

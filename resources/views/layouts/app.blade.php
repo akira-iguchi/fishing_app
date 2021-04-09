@@ -19,18 +19,9 @@
 
     <body>
 
-        {{-- ナビゲーションバー --}}
-        @include('commons.navbar')
-
-        {{-- フラッシュメッセージ --}}
-        @include('commons.flash_message')
-
         <div id="app">
-            <main>@yield('content')</main>
+            <!-- <main>@yield('content')</main> -->
         </div>
-
-        {{-- フッター --}}
-        @include('commons.footer')
 
         <script>let weatherApiKey = "{{ config('services.weather.apikey') }}";</script>
         <script src="{{ mix('/js/app.js') }}"></script>

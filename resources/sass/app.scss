@@ -17,14 +17,12 @@ body {
   font-family: 'Osaka', sans-serif;
   /* background-color: #EEFFFF; */
   background-color: #fff;
-  display: flex;
-  flex-flow: column;
   min-height: 100vh;
 }
 
 #app {
-  flex: 1;
-  position: relative;
+  display: flex;
+  flex-flow: column;
 }
 
 .error_msg {
@@ -697,7 +695,7 @@ header {
   padding-right: 2.5em;
 }
 
-.js-password-toggle {
+.password_toggle {
   position: absolute;
   top: 13px;
   right: 60px;
@@ -707,7 +705,7 @@ header {
   opacity: 0;
 }
 
-.js-password-label {
+.password_label {
   position: absolute;
   top: 7px;
   right: 56px;

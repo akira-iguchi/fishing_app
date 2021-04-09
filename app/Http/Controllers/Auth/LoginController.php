@@ -28,8 +28,14 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected function redirectTo() {
+    protected function redirectTo()
+    {
         session()->flash('flash_message', 'ログインしました');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        return $user;
     }
 
     /**
@@ -45,9 +51,11 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        session()->flash('flash_message', 'ログアウトしました');
+        // session()->flash('flash_message', 'ログアウトしました');
 
-        return $this->loggedOut($request) ?: redirect('/');
+        // return $this->loggedOut($request) ?: redirect('/');
+
+        return response()->json();
     }
 
     // ゲストユーザー用のユーザーIDを定数として定義

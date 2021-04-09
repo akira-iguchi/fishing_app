@@ -36,7 +36,7 @@ class RegisterControllerTest extends TestCase
     public function testRegister_success($params)
     {
         Storage::fake('s3');
-        $response = $this->from('/signup')->post(route('signup.post'), $params['requestData']);
+        $response = $this->from('/signup')->json(route('signup.post'), $params['requestData']);
 
         $response->assertStatus(Response::HTTP_FOUND)
                 ->assertRedirect('/');
