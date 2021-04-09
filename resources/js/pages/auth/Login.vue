@@ -52,8 +52,10 @@
         },
 
         methods: {
-            login () {
-                console.log(this.loginForm)
+            async login () {
+                await this.$store.dispatch('auth/login', this.loginForm)
+
+                this.$router.push('/')
             },
             inputChange: function() {
                 this.isChecked = !this.isChecked;

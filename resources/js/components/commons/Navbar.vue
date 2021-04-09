@@ -15,8 +15,22 @@
                     <!-- ログインページへのリンク -->
                     <li><RouterLink to="/login"><i class="fas fa-sign-in-alt"></i>&thinsp;ログイン</RouterLink></li>
                     <!-- ゲストログインへのリンク -->
+
+                    <li><span @click="logout"><i class="fas fa-sign-in-alt"></i>&thinsp;ログアウト</span></li>
                 </ul>
             </nav>
         </nav>
     </header>
 </template>
+
+<script>
+export default {
+    methods: {
+        async logout () {
+            await this.$store.dispatch('auth/logout')
+
+            this.$router.push('/')
+        }
+    }
+}
+</script>
