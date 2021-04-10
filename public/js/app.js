@@ -1967,7 +1967,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.$store.dispatch('auth/logout');
 
               case 2:
-                _this.$router.push('/login');
+                _this.$router.push('/', function () {});
 
               case 3:
               case "end":
@@ -1989,7 +1989,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this2.$store.dispatch('auth/guestLogin');
 
               case 2:
-                _this2.$router.push('/');
+                _this2.$router.push('/', function () {});
 
               case 3:
               case "end":
@@ -2015,6 +2015,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2085,6 +2093,30 @@ __webpack_require__.r(__webpack_exports__);
     },
     username: function username() {
       return this.$store.getters['auth/username'];
+    }
+  },
+  methods: {
+    guestLogin: function guestLogin() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _this.$store.dispatch('auth/guestLogin');
+
+              case 2:
+                _this.$router.push('/', function () {});
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   }
 });
@@ -4562,42 +4594,50 @@ var render = function() {
     _vm.isLogin
       ? _c("div", { staticClass: "signup_body" }, [_vm._m(0)])
       : _c("div", [
-          _c(
-            "div",
-            { staticClass: "top text-center" },
-            [
-              _c("h1", { staticClass: "top-title" }, [_vm._v("Fishing Spot")]),
-              _vm._v(" "),
-              _vm._m(1),
-              _vm._v(" "),
-              _c(
-                "RouterLink",
-                { staticClass: "top-login-button", attrs: { to: "/login" } },
-                [
+          _c("div", { staticClass: "top text-center" }, [
+            _c("h1", { staticClass: "top-title" }, [_vm._v("Fishing Spot")]),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "top_login_button" },
+              [
+                _c("RouterLink", { attrs: { to: "/login" } }, [
                   _c("span", [
                     _c("i", { staticClass: "fas fa-user-plus mr-1" }),
                     _vm._v("ログイン")
                   ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "RouterLink",
-                { staticClass: "top-signup-button", attrs: { to: "/signup" } },
-                [
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "top_signup_button" },
+              [
+                _c("RouterLink", { attrs: { to: "/signup" } }, [
                   _c("span", [
                     _c("i", { staticClass: "fas fa-sign-in-alt mr-1" }),
                     _vm._v("新規登録")
                   ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _vm._m(2)
-            ],
-            1
-          ),
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "top_guest_login_button",
+                on: { click: _vm.guestLogin }
+              },
+              [_vm._m(2)]
+            )
+          ]),
           _vm._v(" "),
           _vm._m(3),
           _vm._v(" "),
@@ -4633,7 +4673,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "top-guest_login-button" }, [
+    return _c("span", [
       _c("i", { staticClass: "fas fa-sign-in-alt mr-1" }),
       _vm._v("ゲストログイン")
     ])

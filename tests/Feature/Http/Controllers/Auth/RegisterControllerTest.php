@@ -19,13 +19,12 @@ class RegisterControllerTest extends TestCase
         parent::setUp();
     }
 
-    // public function testRegisterView()
-    // {
-    //     $response = $this->get('/signup');
+    public function testRegisterView()
+    {
+        $response = $this->json('GET', url('/signup'));
 
-    //     $response->assertStatus(Response::HTTP_OK)
-    //             ->assertSee('新規登録');
-    // }
+        $response->assertStatus(Response::HTTP_OK);
+    }
 
     /**
      * 正常系

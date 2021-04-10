@@ -20,10 +20,10 @@
             <div class="top text-center">
                 <h1 class="top-title">Fishing Spot</h1>
                 <p>釣り場を投稿して、<span>共有し合おう！</span></p>
-                <RouterLink to="/login" class="top-login-button"><span><i class="fas fa-user-plus mr-1"></i>ログイン</span></RouterLink>
-                <RouterLink to="/signup" class="top-signup-button"><span><i class="fas fa-sign-in-alt mr-1"></i>新規登録</span></RouterLink>
+                <button class="top_login_button"><RouterLink to="/login"><span><i class="fas fa-user-plus mr-1"></i>ログイン</span></RouterLink></button>
+                <button class="top_signup_button"><RouterLink to="/signup"><span><i class="fas fa-sign-in-alt mr-1"></i>新規登録</span></RouterLink></button>
                 <br>
-                <span class="top-guest_login-button"><i class="fas fa-sign-in-alt mr-1"></i>ゲストログイン</span>
+                <button @click="guestLogin" class="top_guest_login_button"><span><i class="fas fa-sign-in-alt mr-1"></i>ゲストログイン</span></button>
             </div>
 
             <div class="top-slider">
@@ -71,5 +71,12 @@
                 return this.$store.getters['auth/username']
             }
         },
+        methods: {
+        async guestLogin () {
+            await this.$store.dispatch('auth/guestLogin')
+
+            this.$router.push('/', () => {})
+        }
+    }
     }
 </script>

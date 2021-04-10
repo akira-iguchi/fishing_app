@@ -35,12 +35,22 @@ class LoginControllerTest extends TestCase
         $response = $this->dummyLogin();
 
         $this->assertAuthenticated();
-        $response = $this->get('/logout');
+        $response = $this->json('POST', route('logout'));
 
-        $response->assertStatus(302)
-                ->assertRedirect('/');
+        $response->assertStatus(Response::HTTP_OK);
 
         $this->assertGuest();
+    }
+
+    public function testGuestLogin()
+    {
+        $this->assertGuest();
+        $this->user = User::factory()->create(['id' => 1]);
+        // ダミーログイン
+        $response = $this->json('POST', route('guestLogin'));
+        $response->assertStatus(Response::HTTP_OK);
+
+        $this->assertAuthenticated();
     }
 
     /**

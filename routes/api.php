@@ -22,4 +22,4 @@ Route::get('/user', function() {
 })->name('user');
 
 # ゲストユーザーログイン
-Route::post('guest', 'Auth\LoginController@guestLogin')->name('guest');
+Route::post('guest', 'Auth\LoginController@guestLogin')->name('guestLogin');

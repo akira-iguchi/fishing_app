@@ -335,14 +335,15 @@ header:focus-within {
   display: inline-block;
 }
 
-.top a {
+.top button {
   position: relative;
   display: inline-block;
   padding: 10px 20px;
   border: 2px solid #ffffff;
   background: #ffffff;
+  color: #fff;
   border-radius: 4px;
-  color: #ffffff;
+  cursor: pointer;
   text-decoration: none;
   font-size: 20px;
   font-weight: bold;
@@ -350,13 +351,19 @@ header:focus-within {
   box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.5);
 }
 
-.top a span {
+.top button a {
+  transition: 0.8s;
+  color: #fff;
+  text-decoration: none;
+}
+
+.top button span {
   position: relative;
   z-index: 1;
 }
 
-.top a::before,
-.top a::after {
+.top button::before,
+.top button::after {
   content: "";
   position: absolute;
   top: 0;
@@ -366,21 +373,25 @@ header:focus-within {
   transition: 0.2s;
 }
 
-.top a::before {
+.top button::before {
   left: 0;
 }
 
-.top a::after {
+.top button::after {
   right: 0;
 }
 
-.top a:hover::before,
-.top a:hover::after {
+.top button:hover::before,
+.top button:hover::after {
   width: 0;
 }
 
-.top a:hover {
+.top button:hover {
   text-decoration: none;
+}
+
+.top button:focus-within {
+  outline: none;
 }
 
 .top-title {
@@ -392,44 +403,44 @@ header:focus-within {
   text-shadow: 5px 5px 5px #808080;
 }
 
-.top-login-button {
+.top_login_button {
   margin: 70px 20px 0 0;
 }
 
-.top-login-button:hover {
+.top_login_button:hover a {
   color: #0064ff;
 }
 
-.top-login-button::before,
-.top-login-button::after,
-.top-login-button:hover::before,
-.top-login-button:hover::after {
+.top_login_button::before,
+.top_login_button::after,
+.top_login_button:hover::before,
+.top_login_button:hover::after {
   background-color: rgba(0, 100, 255, 0.8);
 }
 
-.top-signup-button::before,
-.top-signup-button::after,
-.top-signup-button:hover::before,
-.top-signup-button:hover::after {
+.top_signup_button::before,
+.top_signup_button::after,
+.top_signup_button:hover::before,
+.top_signup_button:hover::after {
   background: rgba(255, 0, 0, 0.8);
 }
 
-.top-signup-button:hover {
+.top_signup_button:hover a {
   color: #e41313;
 }
 
-.top-guest_login-button {
+.top_guest_login_button {
   margin-top: 20px;
 }
 
-.top-guest_login-button:hover {
+.top_guest_login_button:hover {
   color: #28a745;
 }
 
-.top-guest_login-button::before,
-.top-guest_login-button::after,
-.top-guest_login-button:hover::before,
-.top-guest_login-button:hover::after {
+.top_guest_login_button::before,
+.top_guest_login_button::after,
+.top_guest_login_button:hover::before,
+.top_guest_login_button:hover::after {
   background: rgba(22, 163, 21, 0.8);
 }
 

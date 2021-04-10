@@ -322,20 +322,28 @@ header {
     }
   }
 
-  a {
+  button {
     position: relative;
     display: inline-block;
     padding: 10px 20px;
     border: 2px solid #ffffff;
     background: #ffffff;
+    color: #fff;
     border-radius: 4px;
-    color: #ffffff;
+    cursor: pointer;
     text-decoration: none;
     font-size: 20px;
     font-weight: bold;
     -webkit-transition: .8s;
     transition: .8s;
     box-shadow: 5px 5px 10px 0 rgb(0 0 0 / 50%);
+
+    a {
+      -webkit-transition: .8s;
+      transition: .8s;
+      color: #fff;
+      text-decoration: none;
+    }
 
     span {
       position: relative;
@@ -370,6 +378,10 @@ header {
     &:hover {
       text-decoration: none;
     }
+
+    &:focus-within {
+      outline: none;
+    }
   }
 }
 
@@ -382,33 +394,37 @@ header {
   text-shadow: 5px 5px 5px #808080;
 }
 
-.top-login-button {
+.top_login_button {
   margin: 70px 20px 0 0;
 
   &:hover {
-    color: rgba(0,100,255,1);
+    a {
+      color: rgba(0,100,255,1);
+    }
   }
 }
 
-.top-login-button::before,
-.top-login-button::after,
-.top-login-button:hover::before,
-.top-login-button:hover::after {
+.top_login_button::before,
+.top_login_button::after,
+.top_login_button:hover::before,
+.top_login_button:hover::after {
   background-color:  rgba(0,100,255,0.8);
 }
 
-.top-signup-button::before,
-.top-signup-button::after,
-.top-signup-button:hover::before,
-.top-signup-button:hover::after {
+.top_signup_button::before,
+.top_signup_button::after,
+.top_signup_button:hover::before,
+.top_signup_button:hover::after {
   background:rgba(255,0,0,0.8);
 }
 
-.top-signup-button:hover {
-  color: #e41313;
+.top_signup_button:hover {
+  a {
+    color: #e41313;
+  }
 }
 
-.top-guest_login-button {
+.top_guest_login_button {
   margin-top: 20px;
 
   &:hover {
@@ -416,10 +432,10 @@ header {
   }
 }
 
-.top-guest_login-button::before,
-.top-guest_login-button::after,
-.top-guest_login-button:hover::before,
-.top-guest_login-button:hover::after {
+.top_guest_login_button::before,
+.top_guest_login_button::after,
+.top_guest_login_button:hover::before,
+.top_guest_login_button:hover::after {
   background: rgba(22,163,21,0.8);
 }
 

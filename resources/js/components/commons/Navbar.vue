@@ -39,13 +39,13 @@ export default {
         async logout () {
             await this.$store.dispatch('auth/logout')
 
-            this.$router.push('/login')
+            this.$router.push('/', () => {})
         },
         async guestLogin () {
             await this.$store.dispatch('auth/guestLogin')
 
-            this.$router.push('/')
+            this.$router.push('/', () => {})
         }
-    }
+    },
 }
 </script>
