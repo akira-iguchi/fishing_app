@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('signup', 'Auth\RegisterController@register')->name('signup');
-
 Route::post('login', 'Auth\LoginController@login')->name('login');
-
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-
 Route::get('/user', function() {
     return Auth::user();
 })->name('user');
+
+# ゲストユーザーログイン
+Route::post('guest', 'Auth\LoginController@guestLogin')->name('guest');

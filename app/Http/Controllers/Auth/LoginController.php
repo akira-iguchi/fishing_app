@@ -61,9 +61,9 @@ class LoginController extends Controller
     {
         // id=1 のゲストユーザー情報がDBに存在すれば、ゲストログインする
         if (Auth::loginUsingId(self::GUEST_USER_ID)) {
-            return redirect('/')->with('flash_message', 'ゲストユーザーとしてログインしました');
+            return response()->json();
         }
 
-        return redirect('/');
+        return response()->json();
     }
 }

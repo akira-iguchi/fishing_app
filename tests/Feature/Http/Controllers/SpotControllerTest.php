@@ -182,10 +182,9 @@ class SpotControllerTest extends TestCase
         $fishing_type = FishingType::factory()->create(['id' => 1]);
         Storage::fake('s3');
 
-        $response = $this->from('/spots/create')->post(route('spots.store'), $params['requestData']);
+        $response = $this->from('/spots/create')->json('POST', route('spots.store'), $params['requestData']);
 
-        $response->assertStatus(Response::HTTP_FOUND)
-                ->assertRedirect('/');
+        $response->assertStatus(Response::HTTP_CREATED);
 
         $this->assertCount(1, Spot::all());
 

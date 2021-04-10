@@ -11,6 +11,11 @@
                         <form  @submit.prevent="login">
                             <label for="email">メールアドレス</label>
                             <input id="email" type="email" class="form-control" autocomplete="email" autofocus v-model="loginForm.email">
+                            <div v-if="loginErrors">
+                                <ul v-if="loginErrors.email">
+                                    <li class="text-danger" v-for="msg in loginErrors.email" :key="msg"><p>{{ msg }}</p></li>
+                                </ul>
+                            </div>
 
                             <label for="password">パスワード</label>
                             <div class="login-signup-password">
@@ -18,6 +23,12 @@
                                 <input class="password_toggle" type="checkbox" @click="inputChange">
                                 <div class="password_label"><i :class="iconType"></i></div>
                             </div>
+                            <div v-if="loginErrors">
+                                <ul v-if="loginErrors.password">
+                                    <li class="text-danger" v-for="msg in loginErrors.password" :key="msg"><p>{{ msg }}</p></li>
+                                </ul>
+                            </div>
+
 
                             <button type="submit" class="login-signup-button">
                                 ログイン
@@ -31,6 +42,8 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex'
+
     export default {
         data () {
             return {
@@ -43,6 +56,10 @@
         },
 
         computed: {
+            ...mapState({
+                apiStatus: state => state.auth.apiStatus,
+                loginErrors: state => state.auth.loginErrorMessages
+            }),
             inputType: function () {
                 return this.isChecked ? "text" : "password";
             },
@@ -55,11 +72,19 @@
             async login () {
                 await this.$store.dispatch('auth/login', this.loginForm)
 
-                this.$router.push('/')
+                if (this.apiStatus) {
+                    this.$router.push('/')
+                }
+            },
+            clearError () {
+                this.$store.commit('auth/setLoginErrorMessages', null)
             },
             inputChange: function() {
                 this.isChecked = !this.isChecked;
             }
+        },
+        created () {
+            this.clearError()
         }
     }
 </script>

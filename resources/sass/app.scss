@@ -70,8 +70,10 @@ header {
     top: 3px;
     z-index: 11;
 
-    a {
+    a,
+    span {
       text-decoration: none;
+      cursor: pointer;
       font-size: 20px;
       margin-left: 25px;
       color: #fff;
@@ -180,7 +182,8 @@ header {
       }
 
       li {
-        a {
+        a,
+        span {
           color:#555555;
           padding: 10px 5px;
           display: block;
@@ -627,7 +630,7 @@ header {
   box-sizing:border-box;
   padding-top: 25px;
   margin: 5% auto;
-  text-align:center;
+  text-align: center;
 
   label {
     display: block;
@@ -636,6 +639,15 @@ header {
     margin: 20px 0 10px 20px;
     padding-left: 1em;
     font-size: 1.4em;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  li {
+    position: relative;
+    right: 35px;
   }
 
   p {

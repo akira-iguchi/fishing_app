@@ -16,9 +16,9 @@
                     <!-- ユーザ登録ページへのリンク -->
                     <li><RouterLink to="/signup"><i class="fas fa-user-plus"></i>&thinsp;新規登録</RouterLink></li>
                     <!-- ログインページへのリンク -->
-                    <li ><RouterLink to="/login"><i class="fas fa-sign-in-alt"></i>&thinsp;ログイン</RouterLink></li>
+                    <li><RouterLink to="/login"><i class="fas fa-sign-in-alt"></i>&thinsp;ログイン</RouterLink></li>
                     <!-- ゲストログインへのリンク -->
-
+                    <li><span @click="guestLogin"><i class="fas fa-sign-in-alt"></i>&thinsp;ゲストログイン</span></li>
                 </ul>
             </nav>
         </nav>
@@ -40,6 +40,11 @@ export default {
             await this.$store.dispatch('auth/logout')
 
             this.$router.push('/login')
+        },
+        async guestLogin () {
+            await this.$store.dispatch('auth/guestLogin')
+
+            this.$router.push('/')
         }
     }
 }

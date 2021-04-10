@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Spots from './pages/Spots.vue'
 import Login from './pages/auth/Login.vue'
 import Register from './pages/auth/Register.vue'
+import SystemError from './pages/errors/System.vue'
 
 import store from './store'
 
@@ -13,6 +14,10 @@ const routes = [
     {
         path: '/',
         component: Spots
+    },
+    {
+        path: '/500',
+        component: SystemError
     },
     {
         path: '/login',

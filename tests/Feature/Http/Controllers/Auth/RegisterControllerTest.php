@@ -37,7 +37,7 @@ class RegisterControllerTest extends TestCase
     {
         $response = $this->from('/signup')->json('POST', route('signup'), $params['requestData']);
 
-        $response->assertStatus(201);
+        $response->assertStatus(Response::HTTP_CREATED);
 
         $this->assertCount(1, User::all());
 

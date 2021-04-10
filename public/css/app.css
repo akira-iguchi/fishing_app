@@ -57,14 +57,17 @@ header:focus-within {
   z-index: 11;
 }
 
-.nav-content li a {
+.nav-content li a,
+.nav-content li span {
   text-decoration: none;
+  cursor: pointer;
   font-size: 20px;
   margin-left: 25px;
   color: #fff;
 }
 
-.nav-content li a:hover {
+.nav-content li a:hover,
+.nav-content li span:hover {
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -166,7 +169,8 @@ header:focus-within {
     list-style: none;
   }
 
-  .nav-container .nav-content li a {
+  .nav-container .nav-content li a,
+  .nav-container .nav-content li span {
     color: #555555;
     padding: 10px 5px;
     display: block;
@@ -174,7 +178,8 @@ header:focus-within {
     transition: color 0.1s;
   }
 
-  .nav-container .nav-content li a:hover {
+  .nav-container .nav-content li a:hover,
+  .nav-container .nav-content li span:hover {
     color: #BF7497;
   }
 
@@ -664,6 +669,15 @@ header:focus-within {
   margin: 20px 0 10px 20px;
   padding-left: 1em;
   font-size: 1.4em;
+}
+
+.login-signup-form ul {
+  list-style: none;
+}
+
+.login-signup-form li {
+  position: relative;
+  right: 35px;
 }
 
 .login-signup-form p {
