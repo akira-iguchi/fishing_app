@@ -11,7 +11,7 @@
                         <form @submit.prevent="register">
 
                             <label for="user_name" class="required">ユーザー名</label>
-                            <input id="user_name" type="text" class="form-control" v-model="registerForm.userName" autocomplete="user_name" placeholder="10文字以内" autofocus>
+                            <input id="user_name" type="text" class="form-control" v-model="registerForm.user_name" autocomplete="user_name" placeholder="10文字以内" autofocus>
 
                             <label for="email" class="required">メールアドレス</label>
                                 <input id="email" type="email" class="form-control" v-model="registerForm.email" autocomplete="email">
@@ -30,7 +30,7 @@
                             </div>
 
                             <label for="password-confirm" class="required">パスワード（確認）</label>
-                            <input id="password-confirm" type="password" class="form-control" v-model="registerForm.password_confirm" autocomplete="new-password">
+                            <input id="password-confirm" :type="inputType" class="form-control" v-model="registerForm.password_confirmation" autocomplete="new-password">
 
                             <button type="submit" class="login-signup-button">
                                 登録
@@ -48,11 +48,11 @@
         data () {
             return {
                 registerForm: {
-                    userName: '',
+                    user_name: '',
                     email: '',
                     introduction: '',
                     password: '',
-                    password_confirm: ''
+                    password_confirmation: ''
                 },
                 isChecked: false,
                 wordLimit: 100,

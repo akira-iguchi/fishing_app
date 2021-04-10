@@ -9,14 +9,16 @@
             </nav>
 
             <nav class="nav-content" tabindex="0">
-                <ul>
+                <ul v-if="isLogin">
+                    <li><span @click="logout"><i class="fas fa-sign-in-alt"></i>&thinsp;ログアウト</span></li>
+                </ul>
+                <ul v-else>
                     <!-- ユーザ登録ページへのリンク -->
                     <li><RouterLink to="/signup"><i class="fas fa-user-plus"></i>&thinsp;新規登録</RouterLink></li>
                     <!-- ログインページへのリンク -->
-                    <li><RouterLink to="/login"><i class="fas fa-sign-in-alt"></i>&thinsp;ログイン</RouterLink></li>
+                    <li ><RouterLink to="/login"><i class="fas fa-sign-in-alt"></i>&thinsp;ログイン</RouterLink></li>
                     <!-- ゲストログインへのリンク -->
 
-                    <li><span @click="logout"><i class="fas fa-sign-in-alt"></i>&thinsp;ログアウト</span></li>
                 </ul>
             </nav>
         </nav>
@@ -25,11 +27,19 @@
 
 <script>
 export default {
+    computed: {
+        isLogin () {
+            return this.$store.getters['auth/check']
+        },
+        username () {
+            return this.$store.getters['auth/username']
+        }
+    },
     methods: {
         async logout () {
             await this.$store.dispatch('auth/logout')
 
-            this.$router.push('/')
+            this.$router.push('/login')
         }
     }
 }

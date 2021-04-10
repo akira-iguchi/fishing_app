@@ -23,16 +23,6 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected function redirectTo()
-    {
-        session()->flash('flash_message', 'ログインしました');
-    }
-
     protected function authenticated(Request $request, $user)
     {
         return $user;
@@ -51,9 +41,14 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        // session()->flash('flash_message', 'ログアウトしました');
+        session()->flash('flash_message', 'ログアウトしました');
 
-        // return $this->loggedOut($request) ?: redirect('/');
+        return $this->loggedOut($request) ?: redirect('/');
+    }
+
+    protected function loggedOut(Request $request)
+    {
+        $request->session()->regenerate();
 
         return response()->json();
     }
