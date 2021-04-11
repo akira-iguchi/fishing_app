@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Spots from './pages/Spots.vue'
+import Spots from './pages/spots/Spots.vue'
+import CreateSpot from './pages/spots/CreateSpot.vue'
 import Login from './pages/auth/Login.vue'
 import Register from './pages/auth/Register.vue'
 import SystemError from './pages/errors/System.vue'
@@ -32,7 +33,25 @@ const routes = [
     },
     {
         path: '/signup',
-        component: Register
+        component: Register,
+        beforeEnter (to, from, next) {
+            if (store.getters['auth/check']) {
+                next('/')
+            } else {
+                next()
+            }
+        }
+    },
+    {
+        path: '/spots/create',
+        component: CreateSpot,
+        beforeEnter (to, from, next) {
+            if (store.getters['auth/check']) {
+                next()
+            } else {
+                next('/')
+            }
+        }
     },
 ]
 

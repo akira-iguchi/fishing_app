@@ -23,10 +23,12 @@
             <!-- <main>@yield('content')</main> -->
         </div>
 
-        <script>let weatherApiKey = "{{ config('services.weather.apikey') }}";</script>
+        <script>const weatherApiKey = "{{ config('services.weather.apikey') }}"
+                    googleMapApiKey = "{{ config('services.google-map.apikey') }}"
+        </script>
         <script src="{{ mix('/js/app.js') }}"></script>
         @stack('js')
-        <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{ config('services.google-map.apikey') }}&callback=initMap"></script> -->
+        <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key={{ config('services.google-map.apikey') }}"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
         <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>

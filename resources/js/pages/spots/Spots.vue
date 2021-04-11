@@ -13,9 +13,9 @@
         </div>
 
         <div v-else>
-            <!-- <div id="js-loading">
+            <div v-bind:class="{ 'js-loaded': isActive }" id="js-loading">
                 <div class="js-spinner"></div>
-            </div> -->
+            </div>
 
             <div class="top text-center">
                 <h1 class="top-title">Fishing Spot</h1>
@@ -26,7 +26,7 @@
                 <button @click="guestLogin" class="top_guest_login_button"><span><i class="fas fa-sign-in-alt mr-1"></i>ゲストログイン</span></button>
             </div>
 
-            <div class="top-slider">
+            <div ref="first_slide" class="top-slider" v-bind:class="{ 'show': visible1 }">
                 <div class="spot-intro_image">
                     <img src="/images/fishing_boat_man.png" alt="釣り画像">
                 </div>
@@ -42,7 +42,7 @@
                 </div>
             </div>
 
-            <div class="top-slider">
+            <div ref="second_slide" class="top-slider" v-bind:class="{ 'show': visible2 }">
                 <div class="self-intro_expla">
                     <p>自己紹介</p>
                     <img src="/images/akira.jpeg" alt="自己紹介の画像">
@@ -63,6 +63,13 @@
 
 <script>
     export default {
+        data () {
+            return {
+                isActive: false,
+                visible1: false,
+                visible2: false,
+            }
+        },
         computed: {
             isLogin () {
                 return this.$store.getters['auth/check']
@@ -71,12 +78,30 @@
                 return this.$store.getters['auth/username']
             }
         },
+        created() {
+            window.addEventListener("scroll", this.handleScroll);
+        },
+        mounted: function() {
+            this.isActive = true
+        },
         methods: {
-        async guestLogin () {
-            await this.$store.dispatch('auth/guestLogin')
+            async guestLogin () {
+                await this.$store.dispatch('auth/guestLogin')
 
-            this.$router.push('/', () => {})
-        }
-    }
+                this.$router.push('/', () => {})
+            },
+            handleScroll() {
+                const targetElement1 = this.$refs.first_slide
+                const targetElement2 = this.$refs.second_slide
+                const getElementDistance1 = targetElement1.getBoundingClientRect().top + targetElement1.clientHeight * .6
+                if (window.innerHeight > getElementDistance1) {
+                    this.visible1 = true
+                }
+                const getElementDistance2 = targetElement2.getBoundingClientRect().top + targetElement2.clientHeight * .6
+                if (window.innerHeight > getElementDistance2) {
+                    this.visible2 = true
+                }
+            },
+        },
     }
 </script>

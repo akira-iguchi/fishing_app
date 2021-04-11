@@ -107,9 +107,8 @@ class SpotController extends Controller
 
     public function store(SpotRequest $request, Spot $spot, SpotImage $spot_image)
     {
-        $spot->fill($request->all());
         $spot->user_id = auth()->id();
-        $spot->save();
+        $spot->fill($request->all())->save();
 
         SpotTrait::imageUploadByCase($spot, $request, $spot_image);
 
@@ -122,7 +121,7 @@ class SpotController extends Controller
         // 釣り方とリレーション
         $spot->fishingTypes()->attach($request->fishing_types);
 
-        return redirect('/')->with('flash_message', '釣りスポットを投稿しました');
+        return response($spot, 201);
     }
 
     public function edit(Spot $spot)
