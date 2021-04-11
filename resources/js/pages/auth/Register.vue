@@ -29,7 +29,7 @@
                             <label for="textArea">自己紹介</label>
                             <div v-if="0 > wordCount" v-on="changeTrue()"></div>
                             <div v-else-if="0 <= wordCount" v-on="changeFalse()"></div>
-                            <textarea rows="4" id="textArea" class="form-control" v-on:keydown.enter="$event.stopPropagation()" v-model="registerForm.introduction"></textarea></textarea>
+                            <textarea rows="4" id="textArea" class="form-control" v-on:keydown.enter="$event.stopPropagation()" v-model="registerForm.introduction"></textarea>
                             <p>残り<span v-bind:class="{ 'text-danger':isActive }">{{ wordCount }}</span>文字</p>
                             <div v-if="registerErrors">
                                 <ul v-if="registerErrors.introduction">

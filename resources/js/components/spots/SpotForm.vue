@@ -1,7 +1,5 @@
 <template>
     <div>
-        <input id="spot_latitude" type="number" :value="latitude">
-        <input id="spot_longitude" type="number" :value="longitude">
 
         <div class="form-group">
             <label for="spot_name" class="required">釣りスポット名</label>
@@ -66,21 +64,5 @@
 
 <script>
     export default {
-        data(){
-            return {
-                latitude: 35.6594666,
-                longitude: 139.7005536,
-            }
-        },
-        created() {
-            marker.addEventListener("dragend", this.setLocation);
-        },
-        methods: {
-            setLocation() {
-                console.log("dragend");
-                this.latitude = this.myLatLng.lat
-                this.longitude = this.myLatLng.lng
-            },
-        },
     }
 </script>

@@ -46,7 +46,6 @@
                 残り<span v-bind:class="{ 'text-danger':isActive }">{{ wordCount }}</span>文字
             </div>
 
-
             <div class="form-group">
                 <label for="comment_image">画像</label>
                 <input id="comment_image" @change="confirmImage" type="file" v-if="view">

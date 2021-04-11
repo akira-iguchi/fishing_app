@@ -2077,26 +2077,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {
-      latitude: 35.6594666,
-      longitude: 139.7005536
-    };
-  },
-  created: function created() {
-    marker.addEventListener("dragend", this.setLocation);
-  },
-  methods: {
-    setLocation: function setLocation() {
-      console.log("dragend");
-      this.latitude = this.myLatLng.lat;
-      this.longitude = this.myLatLng.lng;
-    }
-  }
-});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
 
@@ -2486,27 +2467,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2514,13 +2474,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      mapStartLocation: {
+      message: "",
+      mapLocation: {
         lat: 35.6594666,
         lng: 139.7005536
       },
       mapAddress: "",
+      explanation: "",
       latitude: 35.6594666,
-      longitude: 139.7005536
+      longitude: 139.7005536,
+      wordLimit: 300,
+      spot_image: "",
+      confirmedImage: ""
     };
   },
   computed: {
@@ -2529,14 +2494,66 @@ __webpack_require__.r(__webpack_exports__);
     },
     username: function username() {
       return this.$store.getters['auth/username'];
+    },
+    wordCount: function wordCount() {
+      return this.wordLimit - this.explanation.length;
     }
   },
   methods: {
     updateLocation: function updateLocation(location) {
-      this.latitude = location.latLng.lat(), this.longitude = location.latLng.lat(), this.mapStartLocation.lat = location.latLng.lat(), this.mapStartLocation.lng = location.latLng.lng();
+      this.latitude = location.latLng.lat();
+      this.longitude = location.latLng.lng();
+      this.mapLocation.lat = location.latLng.lat();
+      this.mapLocation.lng = location.latLng.lng();
     },
     searchAddress: function searchAddress() {
-      console.log(this.mapAddress);
+      var geocoder = new google.maps.Geocoder();
+      var that = this;
+      geocoder.geocode({
+        'address': this.mapAddress
+      }, function (results, status) {
+        if (status === 'OK') {
+          var lat = results[0].geometry.location.lat();
+          var lng = results[0].geometry.location.lng();
+          that.latitude = lat;
+          that.longitude = lng;
+          that.mapLocation.lat = lat;
+          that.mapLocation.lng = lng;
+        } else {
+          alert('該当する結果がありませんでした');
+        }
+      });
+    },
+    // 文字数
+    changeTrue: function changeTrue() {
+      this.isActive = true;
+    },
+    changeFalse: function changeFalse() {
+      this.isActive = false;
+    },
+    // 画像確認
+    confirmImage: function confirmImage(e) {
+      this.message = "";
+      this.spot_image = e.target.files[0];
+
+      if (!this.spot_image.type.match("image.*")) {
+        this.message = "画像ファイルを選択して下さい";
+        this.confirmedImage = "";
+        return;
+      }
+
+      this.createImage(this.spot_image);
+    },
+    // 画像プレビュー
+    createImage: function createImage(spot_image) {
+      var _this = this;
+
+      var reader = new FileReader();
+      reader.readAsDataURL(spot_image);
+
+      reader.onload = function (e) {
+        _this.confirmedImage = e.target.result;
+      };
     }
   }
 });
@@ -6151,97 +6168,61 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("input", {
-      attrs: { id: "spot_latitude", type: "number" },
-      domProps: { value: _vm.latitude }
-    }),
-    _vm._v(" "),
-    _c("input", {
-      attrs: { id: "spot_longitude", type: "number" },
-      domProps: { value: _vm.longitude }
-    }),
-    _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
-    _vm._m(2),
-    _vm._v(" "),
-    _vm._m(3),
-    _vm._v(" "),
-    _vm._m(4),
-    _vm._v(" "),
-    _vm._m(5)
-  ])
+  return _vm._m(0)
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "required", attrs: { for: "spot_name" } }, [
-        _vm._v("釣りスポット名")
+    return _c("div", [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { staticClass: "required", attrs: { for: "spot_name" } }, [
+          _vm._v("釣りスポット名")
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: {
+            id: "spot_name",
+            type: "text",
+            name: "spot_name",
+            placeholder: "例） 〇〇釣り公園",
+            required: ""
+          }
+        })
       ]),
       _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          id: "spot_name",
-          type: "text",
-          name: "spot_name",
-          placeholder: "例） 〇〇釣り公園",
-          required: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "spot_address" } }, [_vm._v("所在地")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          id: "spot_address",
-          type: "text",
-          name: "address",
-          placeholder: "例） 〇〇県〇〇市〇〇区〇〇町1-1-1"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("画像（３つまで）")]),
-      _c("br"),
-      _vm._v(" "),
-      _c("input", {
-        attrs: { id: "image1", type: "file", name: "spot_image1" }
-      }),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-danger", attrs: { id: "file1_hidden" } }, [
-        _vm._v("画像ファイルを選択してください")
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "spot_address" } }, [_vm._v("所在地")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: {
+            id: "spot_address",
+            type: "text",
+            name: "address",
+            placeholder: "例） 〇〇県〇〇市〇〇区〇〇町1-1-1"
+          }
+        })
       ]),
       _vm._v(" "),
-      _c("p", [_c("img", { attrs: { id: "file1-preview" } })])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "form-group", attrs: { id: "image2_hidden" } },
-      [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", [_vm._v("画像（３つまで）")]),
+        _c("br"),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { id: "image1", type: "file", name: "spot_image1" }
+        }),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-danger", attrs: { id: "file1_hidden" } }, [
+          _vm._v("画像ファイルを選択してください")
+        ]),
+        _vm._v(" "),
+        _c("p", [_c("img", { attrs: { id: "file1-preview" } })])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group", attrs: { id: "image2_hidden" } }, [
         _c("input", {
           attrs: { id: "image2", type: "file", name: "spot_image2" }
         }),
@@ -6251,17 +6232,9 @@ var staticRenderFns = [
         ]),
         _vm._v(" "),
         _c("p", [_c("img", { attrs: { id: "file2-preview" } })])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "form-group", attrs: { id: "image3_hidden" } },
-      [
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group", attrs: { id: "image3_hidden" } }, [
         _c("input", {
           attrs: { id: "image3", type: "file", name: "spot_image3" }
         }),
@@ -6271,41 +6244,37 @@ var staticRenderFns = [
         ]),
         _vm._v(" "),
         _c("p", [_c("img", { attrs: { id: "file3-preview" } })])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c(
-        "label",
-        { staticClass: "required", attrs: { for: "textAreaExplanation" } },
-        [_vm._v("説明")]
-      ),
+      ]),
       _vm._v(" "),
-      _c("textarea", {
-        staticClass: "form-control",
-        attrs: {
-          rows: "6",
-          id: "textAreaExplanation",
-          name: "explanation",
-          placeholder: "例） 風が弱くて釣りやすい釣り場です。",
-          required: ""
-        }
-      }),
-      _vm._v("\n        残り"),
-      _c("span", { attrs: { id: "textLestExplanation" } }, [_vm._v("300")]),
-      _vm._v("文字\n        "),
-      _c(
-        "p",
-        {
-          staticStyle: { display: "none", color: "red" },
-          attrs: { id: "textAttentionExplanation" }
-        },
-        [_vm._v("入力文字数が多すぎます。")]
-      )
+      _c("div", { staticClass: "form-group" }, [
+        _c(
+          "label",
+          { staticClass: "required", attrs: { for: "textAreaExplanation" } },
+          [_vm._v("説明")]
+        ),
+        _vm._v(" "),
+        _c("textarea", {
+          staticClass: "form-control",
+          attrs: {
+            rows: "6",
+            id: "textAreaExplanation",
+            name: "explanation",
+            placeholder: "例） 風が弱くて釣りやすい釣り場です。",
+            required: ""
+          }
+        }),
+        _vm._v("\n        残り"),
+        _c("span", { attrs: { id: "textLestExplanation" } }, [_vm._v("300")]),
+        _vm._v("文字\n        "),
+        _c(
+          "p",
+          {
+            staticStyle: { display: "none", color: "red" },
+            attrs: { id: "textAttentionExplanation" }
+          },
+          [_vm._v("入力文字数が多すぎます。")]
+        )
+      ])
     ])
   }
 ]
@@ -7191,30 +7160,6 @@ var render = function() {
                 [_c("i", { staticClass: "fas fa-search" })]
               ),
               _vm._v(" "),
-              _c(
-                "GmapMap",
-                {
-                  attrs: {
-                    center: _vm.mapStartLocation,
-                    zoom: 15,
-                    "map-type-id": "terrain",
-                    id: "map"
-                  },
-                  on: { click: _vm.updateLocation }
-                },
-                [
-                  _c("GmapMarker", {
-                    attrs: {
-                      position: _vm.mapStartLocation,
-                      clickable: true,
-                      draggable: true
-                    },
-                    on: { dragend: _vm.updateLocation }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
               _c("p", [_vm._v("マーカーの移動も可能だよ！")]),
               _vm._v(" "),
               _c("form", [
@@ -7232,15 +7177,103 @@ var render = function() {
                 _vm._v(" "),
                 _vm._m(1),
                 _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("画像（３つまで）")]),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("input", {
+                    attrs: { id: "image1", type: "file" },
+                    on: { change: _vm.confirmImage }
+                  }),
+                  _vm._v(" "),
+                  _vm.confirmedImage
+                    ? _c("p", [
+                        _c("img", {
+                          attrs: {
+                            id: "file1-preview",
+                            src: _vm.confirmedImage
+                          }
+                        })
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "error_msg" }, [
+                  _c("p", [_vm._v(_vm._s(_vm.message))])
+                ]),
+                _vm._v(" "),
                 _vm._m(2),
                 _vm._v(" "),
                 _vm._m(3),
                 _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  0 > _vm.wordCount
+                    ? _c("div", _vm._g({}, _vm.changeTrue()))
+                    : 0 <= _vm.wordCount
+                    ? _c("div", _vm._g({}, _vm.changeFalse()))
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "required",
+                      attrs: { for: "textAreaExplanation" }
+                    },
+                    [_vm._v("説明")]
+                  ),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.explanation,
+                        expression: "explanation"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      rows: "6",
+                      id: "textAreaExplanation",
+                      placeholder: "例） 風が弱くて釣りやすい釣り場です。",
+                      required: ""
+                    },
+                    domProps: { value: _vm.explanation },
+                    on: {
+                      keydown: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return $event.stopPropagation()
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.explanation = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("残り"),
+                    _c("span", { class: { "text-danger": _vm.isActive } }, [
+                      _vm._v(_vm._s(_vm.wordCount))
+                    ]),
+                    _vm._v("文字")
+                  ])
+                ]),
+                _vm._v(" "),
                 _vm._m(4),
-                _vm._v(" "),
-                _vm._m(5),
-                _vm._v(" "),
-                _vm._m(6),
                 _vm._v(" "),
                 _c(
                   "button",
@@ -7251,8 +7284,7 @@ var render = function() {
                   [_vm._v("戻る")]
                 )
               ])
-            ],
-            1
+            ]
           )
         ])
       ])
@@ -7273,7 +7305,6 @@ var staticRenderFns = [
         attrs: {
           id: "spot_name",
           type: "text",
-          name: "spot_name",
           placeholder: "例） 〇〇釣り公園",
           required: ""
         }
@@ -7292,29 +7323,9 @@ var staticRenderFns = [
         attrs: {
           id: "spot_address",
           type: "text",
-          name: "address",
           placeholder: "例） 〇〇県〇〇市〇〇区〇〇町1-1-1"
         }
       })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("画像（３つまで）")]),
-      _c("br"),
-      _vm._v(" "),
-      _c("input", {
-        attrs: { id: "image1", type: "file", name: "spot_image1" }
-      }),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-danger", attrs: { id: "file1_hidden" } }, [
-        _vm._v("画像ファイルを選択してください")
-      ]),
-      _vm._v(" "),
-      _c("p", [_c("img", { attrs: { id: "file1-preview" } })])
     ])
   },
   function() {
@@ -7325,9 +7336,7 @@ var staticRenderFns = [
       "div",
       { staticClass: "form-group", attrs: { id: "image2_hidden" } },
       [
-        _c("input", {
-          attrs: { id: "image2", type: "file", name: "spot_image2" }
-        }),
+        _c("input", { attrs: { id: "image2", type: "file" } }),
         _vm._v(" "),
         _c("p", { staticClass: "text-danger", attrs: { id: "file2_hidden" } }, [
           _vm._v("画像ファイルを選択してください")
@@ -7345,9 +7354,7 @@ var staticRenderFns = [
       "div",
       { staticClass: "form-group", attrs: { id: "image3_hidden" } },
       [
-        _c("input", {
-          attrs: { id: "image3", type: "file", name: "spot_image3" }
-        }),
+        _c("input", { attrs: { id: "image3", type: "file" } }),
         _vm._v(" "),
         _c("p", { staticClass: "text-danger", attrs: { id: "file3_hidden" } }, [
           _vm._v("画像ファイルを選択してください")
@@ -7356,40 +7363,6 @@ var staticRenderFns = [
         _c("p", [_c("img", { attrs: { id: "file3-preview" } })])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c(
-        "label",
-        { staticClass: "required", attrs: { for: "textAreaExplanation" } },
-        [_vm._v("説明")]
-      ),
-      _vm._v(" "),
-      _c("textarea", {
-        staticClass: "form-control",
-        attrs: {
-          rows: "6",
-          id: "textAreaExplanation",
-          name: "explanation",
-          placeholder: "例） 風が弱くて釣りやすい釣り場です。",
-          required: ""
-        }
-      }),
-      _vm._v("\n        残り"),
-      _c("span", { attrs: { id: "textLestExplanation" } }, [_vm._v("300")]),
-      _vm._v("文字\n        "),
-      _c(
-        "p",
-        {
-          staticStyle: { display: "none", color: "red" },
-          attrs: { id: "textAttentionExplanation" }
-        },
-        [_vm._v("入力文字数が多すぎます。")]
-      )
-    ])
   },
   function() {
     var _vm = this
