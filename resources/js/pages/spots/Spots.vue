@@ -26,7 +26,7 @@
                 <button @click="guestLogin" class="top_guest_login_button"><span><i class="fas fa-sign-in-alt mr-1"></i>ゲストログイン</span></button>
             </div>
 
-            <div ref="first_slide" class="top-slider" v-bind:class="{ 'show': visible1 }">
+            <div class="top-slider">
                 <div class="spot-intro_image">
                     <img src="/images/fishing_boat_man.png" alt="釣り画像">
                 </div>
@@ -42,7 +42,7 @@
                 </div>
             </div>
 
-            <div ref="second_slide" class="top-slider" v-bind:class="{ 'show': visible2 }">
+            <div class="top-slider">
                 <div class="self-intro_expla">
                     <p>自己紹介</p>
                     <img src="/images/akira.jpeg" alt="自己紹介の画像">
@@ -66,8 +66,6 @@
         data () {
             return {
                 isActive: false,
-                visible1: false,
-                visible2: false,
             }
         },
         computed: {
@@ -91,15 +89,15 @@
                 this.$router.push('/', () => {})
             },
             handleScroll() {
-                const targetElement1 = this.$refs.first_slide
-                const targetElement2 = this.$refs.second_slide
-                const getElementDistance1 = targetElement1.getBoundingClientRect().top + targetElement1.clientHeight * .6
-                if (window.innerHeight > getElementDistance1) {
-                    this.visible1 = true
-                }
-                const getElementDistance2 = targetElement2.getBoundingClientRect().top + targetElement2.clientHeight * .6
-                if (window.innerHeight > getElementDistance2) {
-                    this.visible2 = true
+                const targetElement = this.$el.querySelectorAll('.top-slider') || null
+                if (targetElement !== null) {
+                    for(let i = 0; i < targetElement.length; i++) {
+                        const getElementDistance = targetElement[i].getBoundingClientRect().top
+                        + targetElement[i].clientHeight * .6
+                        if (window.innerHeight > getElementDistance) {
+                            targetElement[i].classList.add("show");
+                        }
+                    }
                 }
             },
         },

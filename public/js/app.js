@@ -2396,7 +2396,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _components_spots_SpotForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/spots/SpotForm */ "./resources/js/components/spots/SpotForm.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_spots_SpotForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/spots/SpotForm */ "./resources/js/components/spots/SpotForm.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2470,22 +2487,32 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    SpotForm: _components_spots_SpotForm__WEBPACK_IMPORTED_MODULE_0__.default
+    SpotForm: _components_spots_SpotForm__WEBPACK_IMPORTED_MODULE_1__.default
   },
   data: function data() {
     return {
-      message: "",
       mapLocation: {
         lat: 35.6594666,
         lng: 139.7005536
       },
       mapAddress: "",
-      explanation: "",
       latitude: 35.6594666,
       longitude: 139.7005536,
       wordLimit: 300,
-      spot_image: "",
-      confirmedImage: ""
+      image2: false,
+      image3: false,
+      spotImage1Message: "",
+      spotImage2Message: "",
+      spotImage3Message: "",
+      preview1: null,
+      preview2: null,
+      preview3: null,
+      name: "",
+      address: "",
+      explanation: "",
+      spotImage1: null,
+      spotImage2: null,
+      spotImage3: null
     };
   },
   computed: {
@@ -2531,29 +2558,123 @@ __webpack_require__.r(__webpack_exports__);
     changeFalse: function changeFalse() {
       this.isActive = false;
     },
-    // 画像確認
-    confirmImage: function confirmImage(e) {
-      this.message = "";
-      this.spot_image = e.target.files[0];
-
-      if (!this.spot_image.type.match("image.*")) {
-        this.message = "画像ファイルを選択して下さい";
-        this.confirmedImage = "";
-        return;
-      }
-
-      this.createImage(this.spot_image);
-    },
-    // 画像プレビュー
-    createImage: function createImage(spot_image) {
+    onFile1Change: function onFile1Change(event) {
       var _this = this;
 
+      if (event.target.files.length === 0) {
+        this.spotImage1Message = "";
+        this.preview1 = null;
+        return false;
+      }
+
+      if (!event.target.files[0].type.match('image.*')) {
+        this.spotImage1Message = "画像ファイルを選択して下さい";
+        this.preview1 = null;
+        return false;
+      }
+
       var reader = new FileReader();
-      reader.readAsDataURL(spot_image);
 
       reader.onload = function (e) {
-        _this.confirmedImage = e.target.result;
+        _this.preview1 = e.target.result;
       };
+
+      reader.readAsDataURL(event.target.files[0]);
+      this.spotImage1 = event.target.files[0];
+      this.image2 = true;
+      this.spotImage1Message = "";
+    },
+    onFile2Change: function onFile2Change(event) {
+      var _this2 = this;
+
+      if (event.target.files.length === 0) {
+        this.spotImage2Message = "";
+        this.preview2 = null;
+        return false;
+      }
+
+      if (!event.target.files[0].type.match('image.*')) {
+        this.spotImage2Message = "画像ファイルを選択して下さい";
+        this.preview2 = null;
+        return false;
+      }
+
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        _this2.preview2 = e.target.result;
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+      this.spotImage2 = event.target.files[0];
+      this.image3 = true;
+      this.spotImage2Message = "";
+    },
+    onFile3Change: function onFile3Change(event) {
+      var _this3 = this;
+
+      if (event.target.files.length === 0) {
+        this.spotImage3Message = "";
+        this.preview3 = null;
+        return false;
+      }
+
+      if (!event.target.files[0].type.match('image.*')) {
+        this.spotImage3Message = "画像ファイルを選択して下さい";
+        this.preview3 = null;
+        return false;
+      }
+
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        _this3.preview3 = e.target.result;
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+      this.spotImage3 = event.target.files[0];
+      this.spotImage3Message = "";
+    },
+    Createspot: function Createspot() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var formData, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                formData = new FormData();
+                formData.append('latitude', _this4.photo);
+                formData.append('longitude', _this4.photo);
+                formData.append('photo', _this4.photo);
+                formData.append('photo', _this4.photo);
+                formData.append('photo', _this4.photo);
+                formData.append('photo', _this4.photo);
+                formData.append('photo', _this4.photo);
+                _context.next = 10;
+                return axios.post('/api/photos', formData);
+
+              case 10:
+                response = _context.sent;
+                _this4.spotImage1Message = "";
+                _this4.spotImage2Message = "";
+                _this4.spotImage3Message = "";
+                _this4.preview1 = null;
+                _this4.preview2 = null;
+                _this4.preview3 = null;
+
+                _this4.$emit('input', false);
+
+                _this4.$router.push("/spots/".concat(response.data.id));
+
+              case 19:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   }
 });
@@ -2645,9 +2766,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      isActive: false,
-      visible1: false,
-      visible2: false
+      isActive: false
     };
   },
   computed: {
@@ -2688,18 +2807,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     handleScroll: function handleScroll() {
-      var targetElement1 = this.$refs.first_slide;
-      var targetElement2 = this.$refs.second_slide;
-      var getElementDistance1 = targetElement1.getBoundingClientRect().top + targetElement1.clientHeight * .6;
+      var targetElement = this.$el.querySelectorAll('.top-slider') || null;
 
-      if (window.innerHeight > getElementDistance1) {
-        this.visible1 = true;
-      }
+      if (targetElement !== null) {
+        for (var i = 0; i < targetElement.length; i++) {
+          var getElementDistance = targetElement[i].getBoundingClientRect().top + targetElement[i].clientHeight * .6;
 
-      var getElementDistance2 = targetElement2.getBoundingClientRect().top + targetElement2.clientHeight * .6;
-
-      if (window.innerHeight > getElementDistance2) {
-        this.visible2 = true;
+          if (window.innerHeight > getElementDistance) {
+            targetElement[i].classList.add("show");
+          }
+        }
       }
     }
   }
@@ -2813,14 +2930,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _pages_spots_Spots_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pages/spots/Spots.vue */ "./resources/js/pages/spots/Spots.vue");
 /* harmony import */ var _pages_spots_CreateSpot_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pages/spots/CreateSpot.vue */ "./resources/js/pages/spots/CreateSpot.vue");
-/* harmony import */ var _pages_auth_Login_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/auth/Login.vue */ "./resources/js/pages/auth/Login.vue");
-/* harmony import */ var _pages_auth_Register_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/auth/Register.vue */ "./resources/js/pages/auth/Register.vue");
-/* harmony import */ var _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/errors/System.vue */ "./resources/js/pages/errors/System.vue");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _pages_spots_SpotDetail_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/spots/SpotDetail.vue */ "./resources/js/pages/spots/SpotDetail.vue");
+/* harmony import */ var _pages_auth_Login_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/auth/Login.vue */ "./resources/js/pages/auth/Login.vue");
+/* harmony import */ var _pages_auth_Register_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/auth/Register.vue */ "./resources/js/pages/auth/Register.vue");
+/* harmony import */ var _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/errors/System.vue */ "./resources/js/pages/errors/System.vue");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 
 
 
@@ -2829,18 +2947,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_6__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_7__.default);
+
+vue__WEBPACK_IMPORTED_MODULE_7__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_8__.default);
 var routes = [{
   path: '/',
   component: _pages_spots_Spots_vue__WEBPACK_IMPORTED_MODULE_0__.default
 }, {
   path: '/500',
-  component: _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_4__.default
+  component: _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_5__.default
 }, {
   path: '/login',
-  component: _pages_auth_Login_vue__WEBPACK_IMPORTED_MODULE_2__.default,
+  component: _pages_auth_Login_vue__WEBPACK_IMPORTED_MODULE_3__.default,
   beforeEnter: function beforeEnter(to, from, next) {
-    if (_store__WEBPACK_IMPORTED_MODULE_5__.default.getters["auth/check"]) {
+    if (_store__WEBPACK_IMPORTED_MODULE_6__.default.getters["auth/check"]) {
       next('/');
     } else {
       next();
@@ -2848,9 +2967,9 @@ var routes = [{
   }
 }, {
   path: '/signup',
-  component: _pages_auth_Register_vue__WEBPACK_IMPORTED_MODULE_3__.default,
+  component: _pages_auth_Register_vue__WEBPACK_IMPORTED_MODULE_4__.default,
   beforeEnter: function beforeEnter(to, from, next) {
-    if (_store__WEBPACK_IMPORTED_MODULE_5__.default.getters["auth/check"]) {
+    if (_store__WEBPACK_IMPORTED_MODULE_6__.default.getters["auth/check"]) {
       next('/');
     } else {
       next();
@@ -2860,14 +2979,25 @@ var routes = [{
   path: '/spots/create',
   component: _pages_spots_CreateSpot_vue__WEBPACK_IMPORTED_MODULE_1__.default,
   beforeEnter: function beforeEnter(to, from, next) {
-    if (_store__WEBPACK_IMPORTED_MODULE_5__.default.getters["auth/check"]) {
+    if (_store__WEBPACK_IMPORTED_MODULE_6__.default.getters["auth/check"]) {
+      next();
+    } else {
+      next('/');
+    }
+  }
+}, {
+  path: '/spots/:id',
+  component: _pages_spots_SpotDetail_vue__WEBPACK_IMPORTED_MODULE_2__.default,
+  props: true,
+  beforeEnter: function beforeEnter(to, from, next) {
+    if (_store__WEBPACK_IMPORTED_MODULE_6__.default.getters["auth/check"]) {
       next();
     } else {
       next('/');
     }
   }
 }];
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_7__.default({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_8__.default({
   mode: 'history',
   routes: routes
 });
@@ -5321,6 +5451,43 @@ component.options.__file = "resources/js/pages/spots/CreateSpot.vue"
 
 /***/ }),
 
+/***/ "./resources/js/pages/spots/SpotDetail.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/pages/spots/SpotDetail.vue ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _SpotDetail_vue_vue_type_template_id_9ea8f3cc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SpotDetail.vue?vue&type=template&id=9ea8f3cc& */ "./resources/js/pages/spots/SpotDetail.vue?vue&type=template&id=9ea8f3cc&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__.default)(
+  script,
+  _SpotDetail_vue_vue_type_template_id_9ea8f3cc___WEBPACK_IMPORTED_MODULE_0__.render,
+  _SpotDetail_vue_vue_type_template_id_9ea8f3cc___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/spots/SpotDetail.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/pages/spots/Spots.vue":
 /*!********************************************!*\
   !*** ./resources/js/pages/spots/Spots.vue ***!
@@ -5779,6 +5946,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSpot_vue_vue_type_template_id_b8561676___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateSpot_vue_vue_type_template_id_b8561676___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CreateSpot.vue?vue&type=template&id=b8561676& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/spots/CreateSpot.vue?vue&type=template&id=b8561676&");
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/spots/SpotDetail.vue?vue&type=template&id=9ea8f3cc&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/pages/spots/SpotDetail.vue?vue&type=template&id=9ea8f3cc& ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpotDetail_vue_vue_type_template_id_9ea8f3cc___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpotDetail_vue_vue_type_template_id_9ea8f3cc___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpotDetail_vue_vue_type_template_id_9ea8f3cc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SpotDetail.vue?vue&type=template&id=9ea8f3cc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/spots/SpotDetail.vue?vue&type=template&id=9ea8f3cc&");
 
 
 /***/ }),
@@ -7162,128 +7346,262 @@ var render = function() {
               _vm._v(" "),
               _c("p", [_vm._v("マーカーの移動も可能だよ！")]),
               _vm._v(" "),
-              _c("form", [
-                _c("input", {
-                  attrs: { id: "spot_latitude", type: "number" },
-                  domProps: { value: _vm.latitude }
-                }),
-                _vm._v(" "),
-                _c("input", {
-                  attrs: { id: "spot_longitude", type: "number" },
-                  domProps: { value: _vm.longitude }
-                }),
-                _vm._v(" "),
-                _vm._m(0),
-                _vm._v(" "),
-                _vm._m(1),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", [_vm._v("画像（３つまで）")]),
-                  _c("br"),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.Createspot($event)
+                    }
+                  }
+                },
+                [
+                  _c("input", {
+                    attrs: { id: "spot_latitude", type: "number" },
+                    domProps: { value: _vm.latitude }
+                  }),
                   _vm._v(" "),
                   _c("input", {
-                    attrs: { id: "image1", type: "file" },
-                    on: { change: _vm.confirmImage }
+                    attrs: { id: "spot_longitude", type: "number" },
+                    domProps: { value: _vm.longitude }
                   }),
                   _vm._v(" "),
-                  _vm.confirmedImage
-                    ? _c("p", [
-                        _c("img", {
-                          attrs: {
-                            id: "file1-preview",
-                            src: _vm.confirmedImage
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      { staticClass: "required", attrs: { for: "spot_name" } },
+                      [_vm._v("釣りスポット名")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.name,
+                          expression: "name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "spot_name",
+                        type: "text",
+                        placeholder: "例） 〇〇釣り公園",
+                        required: ""
+                      },
+                      domProps: { value: _vm.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
                           }
-                        })
-                      ])
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "error_msg" }, [
-                  _c("p", [_vm._v(_vm._s(_vm.message))])
-                ]),
-                _vm._v(" "),
-                _vm._m(2),
-                _vm._v(" "),
-                _vm._m(3),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  0 > _vm.wordCount
-                    ? _c("div", _vm._g({}, _vm.changeTrue()))
-                    : 0 <= _vm.wordCount
-                    ? _c("div", _vm._g({}, _vm.changeFalse()))
-                    : _vm._e(),
+                          _vm.name = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "spot_address" } }, [
+                      _vm._v("所在地")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.address,
+                          expression: "address"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "spot_address",
+                        type: "text",
+                        placeholder: "例） 〇〇県〇〇市〇〇区〇〇町1-1-1"
+                      },
+                      domProps: { value: _vm.address },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.address = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("画像（３つまで）")]),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("input", {
+                      attrs: { id: "image1", type: "file" },
+                      on: { change: _vm.onFile1Change }
+                    }),
+                    _vm._v(" "),
+                    _vm.preview1
+                      ? _c("p", [
+                          _c("img", {
+                            staticClass: "file_preview",
+                            attrs: { src: _vm.preview1, alt: "" }
+                          })
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "error_msg" }, [
+                      _c("p", [_vm._v(_vm._s(_vm.spotImage1Message))])
+                    ])
+                  ]),
                   _vm._v(" "),
                   _c(
-                    "label",
+                    "div",
                     {
-                      staticClass: "required",
-                      attrs: { for: "textAreaExplanation" }
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.image2,
+                          expression: "image2"
+                        }
+                      ],
+                      staticClass: "form-group"
                     },
-                    [_vm._v("説明")]
+                    [
+                      _c("input", {
+                        attrs: { id: "image2", type: "file" },
+                        on: { change: _vm.onFile2Change }
+                      }),
+                      _vm._v(" "),
+                      _vm.preview2
+                        ? _c("p", [
+                            _c("img", {
+                              staticClass: "file_preview",
+                              attrs: { src: _vm.preview2, alt: "" }
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "error_msg" }, [
+                        _c("p", [_vm._v(_vm._s(_vm.spotImage2Message))])
+                      ])
+                    ]
                   ),
                   _vm._v(" "),
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.explanation,
-                        expression: "explanation"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      rows: "6",
-                      id: "textAreaExplanation",
-                      placeholder: "例） 風が弱くて釣りやすい釣り場です。",
-                      required: ""
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.image3,
+                          expression: "image3"
+                        }
+                      ],
+                      staticClass: "form-group",
+                      on: { change: _vm.onFile3Change }
                     },
-                    domProps: { value: _vm.explanation },
-                    on: {
-                      keydown: function($event) {
-                        if (
-                          !$event.type.indexOf("key") &&
-                          _vm._k(
-                            $event.keyCode,
-                            "enter",
-                            13,
-                            $event.key,
-                            "Enter"
-                          )
-                        ) {
-                          return null
-                        }
-                        return $event.stopPropagation()
-                      },
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.explanation = $event.target.value
-                      }
-                    }
-                  }),
+                    [
+                      _c("input", { attrs: { id: "image3", type: "file" } }),
+                      _vm._v(" "),
+                      _vm.preview3
+                        ? _c("p", [
+                            _c("img", {
+                              staticClass: "file_preview",
+                              attrs: { src: _vm.preview3, alt: "" }
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "error_msg" }, [
+                        _c("p", [_vm._v(_vm._s(_vm.spotImage3Message))])
+                      ])
+                    ]
+                  ),
                   _vm._v(" "),
-                  _c("p", [
-                    _vm._v("残り"),
-                    _c("span", { class: { "text-danger": _vm.isActive } }, [
-                      _vm._v(_vm._s(_vm.wordCount))
-                    ]),
-                    _vm._v("文字")
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(4),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "back_button",
-                    attrs: { type: "button", onclick: "history.back()" }
-                  },
-                  [_vm._v("戻る")]
-                )
-              ])
+                  _c("div", { staticClass: "form-group" }, [
+                    0 > _vm.wordCount
+                      ? _c("div", _vm._g({}, _vm.changeTrue()))
+                      : 0 <= _vm.wordCount
+                      ? _c("div", _vm._g({}, _vm.changeFalse()))
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "required",
+                        attrs: { for: "textAreaExplanation" }
+                      },
+                      [_vm._v("説明")]
+                    ),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.explanation,
+                          expression: "explanation"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        rows: "6",
+                        id: "textAreaExplanation",
+                        placeholder: "例） 風が弱くて釣りやすい釣り場です。",
+                        required: ""
+                      },
+                      domProps: { value: _vm.explanation },
+                      on: {
+                        keydown: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return $event.stopPropagation()
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.explanation = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v("残り"),
+                      _c("span", { class: { "text-danger": _vm.isActive } }, [
+                        _vm._v(_vm._s(_vm.wordCount))
+                      ]),
+                      _vm._v("文字")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "back_button",
+                      attrs: { type: "button", onclick: "history.back()" }
+                    },
+                    [_vm._v("戻る")]
+                  )
+                ]
+              )
             ]
           )
         ])
@@ -7295,85 +7613,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "required", attrs: { for: "spot_name" } }, [
-        _vm._v("釣りスポット名")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          id: "spot_name",
-          type: "text",
-          placeholder: "例） 〇〇釣り公園",
-          required: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "spot_address" } }, [_vm._v("所在地")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          id: "spot_address",
-          type: "text",
-          placeholder: "例） 〇〇県〇〇市〇〇区〇〇町1-1-1"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "form-group", attrs: { id: "image2_hidden" } },
-      [
-        _c("input", { attrs: { id: "image2", type: "file" } }),
-        _vm._v(" "),
-        _c("p", { staticClass: "text-danger", attrs: { id: "file2_hidden" } }, [
-          _vm._v("画像ファイルを選択してください")
-        ]),
-        _vm._v(" "),
-        _c("p", [_c("img", { attrs: { id: "file2-preview" } })])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "form-group", attrs: { id: "image3_hidden" } },
-      [
-        _c("input", { attrs: { id: "image3", type: "file" } }),
-        _vm._v(" "),
-        _c("p", { staticClass: "text-danger", attrs: { id: "file3_hidden" } }, [
-          _vm._v("画像ファイルを選択してください")
-        ]),
-        _vm._v(" "),
-        _c("p", [_c("img", { attrs: { id: "file3-preview" } })])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("button", { staticClass: "spot-create-edit-button" }, [
       _c("i", { staticClass: "fas fa-pencil-alt" }),
       _vm._v(" 投稿")
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/spots/SpotDetail.vue?vue&type=template&id=9ea8f3cc&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/spots/SpotDetail.vue?vue&type=template&id=9ea8f3cc& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("h1", [_vm._v("Photo Detail")])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -7454,25 +7724,9 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              ref: "first_slide",
-              staticClass: "top-slider",
-              class: { show: _vm.visible1 }
-            },
-            [_vm._m(3), _vm._v(" "), _vm._m(4)]
-          ),
+          _vm._m(3),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              ref: "second_slide",
-              staticClass: "top-slider",
-              class: { show: _vm.visible2 }
-            },
-            [_vm._m(5), _vm._v(" "), _vm._m(6)]
-          )
+          _vm._m(4)
         ])
   ])
 }
@@ -7513,27 +7767,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "spot-intro_image" }, [
-      _c("img", {
-        attrs: { src: "/images/fishing_boat_man.png", alt: "釣り画像" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "spot-intro_expla" }, [
-      _c("p", [_vm._v("Fishing Spotとは？")]),
+    return _c("div", { staticClass: "top-slider" }, [
+      _c("div", { staticClass: "spot-intro_image" }, [
+        _c("img", {
+          attrs: { src: "/images/fishing_boat_man.png", alt: "釣り画像" }
+        })
+      ]),
       _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "\n                     Fishing Spotとは、釣り場を投稿し、釣り場にコメントして釣果などを共有するアプリです。また、釣り場におすすめの釣り方を選択することもできます。\n                    さらに、カレンダーで釣りの予定、記録をすることができ、このアプリ１つで満足できます。\n                    "
-        ),
-        _c("br"),
-        _vm._v(
-          "\n                     最近は、釣りの技術が進み、釣りを始める人も多くなっています。そこで、釣り初心者の方でもこのアプリ1つで釣りを知り、楽しんでもらえるように、このアプリを作成しました。\n                "
-        )
+      _c("div", { staticClass: "spot-intro_expla" }, [
+        _c("p", [_vm._v("Fishing Spotとは？")]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "\n                     Fishing Spotとは、釣り場を投稿し、釣り場にコメントして釣果などを共有するアプリです。また、釣り場におすすめの釣り方を選択することもできます。\n                    さらに、カレンダーで釣りの予定、記録をすることができ、このアプリ１つで満足できます。\n                    "
+          ),
+          _c("br"),
+          _vm._v(
+            "\n                     最近は、釣りの技術が進み、釣りを始める人も多くなっています。そこで、釣り初心者の方でもこのアプリ1つで釣りを知り、楽しんでもらえるように、このアプリを作成しました。\n                "
+          )
+        ])
       ])
     ])
   },
@@ -7541,30 +7793,30 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "self-intro_expla" }, [
-      _c("p", [_vm._v("自己紹介")]),
+    return _c("div", { staticClass: "top-slider" }, [
+      _c("div", { staticClass: "self-intro_expla" }, [
+        _c("p", [_vm._v("自己紹介")]),
+        _vm._v(" "),
+        _c("img", {
+          attrs: { src: "/images/akira.jpeg", alt: "自己紹介の画像" }
+        }),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "\n                     井口 晶。19歳。プログラミングに励む、田舎好きな大阪生まれ育ちの都会男子です。関西大学第一高等学校入学。そのまま関西大学法学部へ進学(現在1年生)。\n                    "
+          ),
+          _c("br"),
+          _vm._v(
+            "\n                     趣味は、釣りと筋トレ。釣りで自然と戯れつつ、筋トレで自分を追い込んでます。\n                "
+          )
+        ])
+      ]),
       _vm._v(" "),
-      _c("img", {
-        attrs: { src: "/images/akira.jpeg", alt: "自己紹介の画像" }
-      }),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "\n                     井口 晶。19歳。プログラミングに励む、田舎好きな大阪生まれ育ちの都会男子です。関西大学第一高等学校入学。そのまま関西大学法学部へ進学(現在1年生)。\n                    "
-        ),
-        _c("br"),
-        _vm._v(
-          "\n                     趣味は、釣りと筋トレ。釣りで自然と戯れつつ、筋トレで自分を追い込んでます。\n                "
-        )
+      _c("div", { staticClass: "self-intro_image" }, [
+        _c("img", {
+          attrs: { src: "/images/akira.jpeg", alt: "自己紹介の画像" }
+        })
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "self-intro_image" }, [
-      _c("img", { attrs: { src: "/images/akira.jpeg", alt: "自己紹介の画像" } })
     ])
   }
 ]

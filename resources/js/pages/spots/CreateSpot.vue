@@ -13,42 +13,51 @@
                 </GmapMap> -->
                 <p>マーカーの移動も可能だよ！</p>
 
-                <form>
+                <form @submit.prevent="Createspot">
                     <input id="spot_latitude" type="number" :value="latitude">
                     <input id="spot_longitude" type="number" :value="longitude">
 
                     <div class="form-group">
                         <label for="spot_name" class="required">釣りスポット名</label>
-                        <input id="spot_name" type="text" class="form-control" placeholder="例） 〇〇釣り公園" required>
+                        <input id="spot_name" type="text" class="form-control" placeholder="例） 〇〇釣り公園" v-model="name" required>
                     </div>
 
                     <div class="form-group">
                         <label for="spot_address">所在地</label>
-                        <input id="spot_address" type="text" class="form-control" placeholder="例） 〇〇県〇〇市〇〇区〇〇町1-1-1">
+                        <input id="spot_address" type="text" class="form-control" placeholder="例） 〇〇県〇〇市〇〇区〇〇町1-1-1" v-model="address">
                     </div>
 
                     <div class="form-group">
                         <label>画像（３つまで）</label><br>
-                        <input id="image1" type="file" @change="confirmImage">
-                        <p v-if="confirmedImage">
-                            <img id="file1-preview" :src="confirmedImage" />
+
+                        <input id="image1" type="file" @change="onFile1Change">
+                        <p v-if="preview1">
+                            <img class="file_preview" :src="preview1" alt="">
                         </p>
+                        <span class="error_msg">
+                            <p>{{ spotImage1Message }}</p>
+                        </span>
                     </div>
 
-                    <span class="error_msg">
-                        <p>{{ message }}</p>
-                    </span>
 
-                    <div class="form-group" id="image2_hidden">
-                        <input id="image2" type="file">
-                        <p class="text-danger" id="file2_hidden">画像ファイルを選択してください</p>
-                        <p><img id="file2-preview"></p>
+                    <div class="form-group" v-show="image2">
+                        <input id="image2" type="file" @change="onFile2Change">
+                        <p v-if="preview2">
+                            <img class="file_preview" :src="preview2" alt="">
+                        </p>
+                        <span class="error_msg">
+                            <p>{{ spotImage2Message }}</p>
+                        </span>
                     </div>
 
-                    <div class="form-group" id="image3_hidden">
+                    <div class="form-group" v-show="image3" @change="onFile3Change">
                         <input id="image3" type="file">
-                        <p class="text-danger" id="file3_hidden">画像ファイルを選択してください</p>
-                        <p><img id="file3-preview"></p>
+                        <p v-if="preview3">
+                            <img class="file_preview" :src="preview3" alt="">
+                        </p>
+                        <span class="error_msg">
+                            <p>{{ spotImage3Message }}</p>
+                        </span>
                     </div>
 
                     <div class="form-group">
@@ -75,18 +84,28 @@
         components: { SpotForm },
         data(){
             return {
-                message: "",
                 mapLocation: {
                     lat: 35.6594666,
                     lng: 139.7005536,
                 },
                 mapAddress: "",
-                explanation: "",
                 latitude: 35.6594666,
                 longitude: 139.7005536,
                 wordLimit: 300,
-                spot_image: "",
-                confirmedImage: "",
+                image2: false,
+                image3: false,
+                spotImage1Message: "",
+                spotImage2Message: "",
+                spotImage3Message: "",
+                preview1: null,
+                preview2: null,
+                preview3: null,
+                name: "",
+                address: "",
+                explanation: "",
+                spotImage1: null,
+                spotImage2: null,
+                spotImage3: null,
             }
         },
         computed: {
@@ -131,26 +150,85 @@
             changeFalse: function() {
                 this.isActive = false
             },
-            // 画像確認
-            confirmImage(e) {
-                this.message = "";
-                this.spot_image = e.target.files[0];
-                if (!this.spot_image.type.match("image.*")) {
-                    this.message = "画像ファイルを選択して下さい";
-                    this.confirmedImage = "";
-                    return;
+            onFile1Change (event) {
+                if (event.target.files.length === 0) {
+                    this.spotImage1Message = ""
+                    this.preview1 = null
+                    return false
                 }
-                this.createImage(this.spot_image);
-            },
-
-            // 画像プレビュー
-            createImage(spot_image) {
-                let reader = new FileReader();
-                reader.readAsDataURL(spot_image);
+                if (! event.target.files[0].type.match('image.*')) {
+                    this.spotImage1Message = "画像ファイルを選択して下さい"
+                    this.preview1 = null
+                    return false
+                }
+                const reader = new FileReader()
                 reader.onload = e => {
-                    this.confirmedImage = e.target.result;
-                };
+                    this.preview1 = e.target.result
+                }
+                reader.readAsDataURL(event.target.files[0])
+                this.spotImage1 = event.target.files[0]
+                this.image2 = true
+                this.spotImage1Message = ""
             },
+            onFile2Change (event) {
+                if (event.target.files.length === 0) {
+                    this.spotImage2Message = ""
+                    this.preview2 = null
+                    return false
+                }
+                if (! event.target.files[0].type.match('image.*')) {
+                    this.spotImage2Message = "画像ファイルを選択して下さい"
+                    this.preview2 = null
+                    return false
+                }
+                const reader = new FileReader()
+                reader.onload = e => {
+                    this.preview2 = e.target.result
+                }
+                reader.readAsDataURL(event.target.files[0])
+                this.spotImage2 = event.target.files[0]
+                this.image3 = true
+                this.spotImage2Message = ""
+            },
+            onFile3Change (event) {
+                if (event.target.files.length === 0) {
+                    this.spotImage3Message = ""
+                    this.preview3 = null
+                    return false
+                }
+                if (! event.target.files[0].type.match('image.*')) {
+                    this.spotImage3Message = "画像ファイルを選択して下さい"
+                    this.preview3 = null
+                    return false
+                }
+                const reader = new FileReader()
+                reader.onload = e => {
+                    this.preview3 = e.target.result
+                }
+                reader.readAsDataURL(event.target.files[0])
+                this.spotImage3 = event.target.files[0]
+                this.spotImage3Message = ""
+            },
+            async Createspot () {
+                const formData = new FormData()
+                formData.append('latitude', this.photo)
+                formData.append('longitude', this.photo)
+                formData.append('photo', this.photo)
+                formData.append('photo', this.photo)
+                formData.append('photo', this.photo)
+                formData.append('photo', this.photo)
+                formData.append('photo', this.photo)
+                const response = await axios.post('/api/photos', formData)
+
+                this.spotImage1Message = ""
+                this.spotImage2Message = ""
+                this.spotImage3Message = ""
+                this.preview1 = null
+                this.preview2 = null
+                this.preview3 = null
+                this.$emit('input', false)
+                this.$router.push(`/spots/${response.data.id}`)
+            }
         },
     }
 </script>
