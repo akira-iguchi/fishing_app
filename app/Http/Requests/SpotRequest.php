@@ -29,9 +29,9 @@ class SpotRequest extends FormRequest
             'address' => 'max:50',
             'latitude' => 'required',
             'longitude' => 'required',
-            'spot_image1' => 'image|mimes:jpeg,png,jpg',
-            'spot_image2' => 'image|mimes:jpeg,png,jpg',
-            'spot_image3' => 'image|mimes:jpeg,png,jpg',
+            'spot_image1' => 'nullable|image|mimes:jpeg,png,jpg',
+            'spot_image2' => 'nullable|image|mimes:jpeg,png,jpg',
+            'spot_image3' => 'nullable|image|mimes:jpeg,png,jpg',
             'tags' => 'json|distinct|regex:/^(?!.*\s).+$/u|regex:/^(?!.*\/).*$/u',
         ];
     }

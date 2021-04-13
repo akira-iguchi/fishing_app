@@ -2399,6 +2399,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_spots_SpotForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/spots/SpotForm */ "./resources/js/components/spots/SpotForm.vue");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2484,6 +2485,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2510,9 +2518,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       name: "",
       address: "",
       explanation: "",
-      spotImage1: null,
-      spotImage2: null,
-      spotImage3: null
+      spotImage1: "",
+      spotImage2: "",
+      spotImage3: "",
+      errors: null
     };
   },
   computed: {
@@ -2645,18 +2654,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 formData = new FormData();
-                formData.append('latitude', _this4.photo);
-                formData.append('longitude', _this4.photo);
-                formData.append('photo', _this4.photo);
-                formData.append('photo', _this4.photo);
-                formData.append('photo', _this4.photo);
-                formData.append('photo', _this4.photo);
-                formData.append('photo', _this4.photo);
-                _context.next = 10;
-                return axios.post('/api/photos', formData);
+                formData.append('latitude', _this4.latitude);
+                formData.append('longitude', _this4.longitude);
+                formData.append('spot_name', _this4.name);
+                formData.append('address', _this4.address);
+                formData.append('explanation', _this4.explanation);
+                formData.append('spot_image1', _this4.spotImage1);
+                formData.append('spot_image2', _this4.spotImage2);
+                formData.append('spot_image3', _this4.spotImage3);
+                _context.next = 11;
+                return axios.post('/api/spots', formData);
 
-              case 10:
+              case 11:
                 response = _context.sent;
+
+                if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_2__.UNPROCESSABLE_ENTITY)) {
+                  _context.next = 15;
+                  break;
+                }
+
+                _this4.errors = response.data.errors;
+                return _context.abrupt("return", false);
+
+              case 15:
                 _this4.spotImage1Message = "";
                 _this4.spotImage2Message = "";
                 _this4.spotImage3Message = "";
@@ -2666,9 +2686,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this4.$emit('input', false);
 
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__.CREATED)) {
+                  _context.next = 25;
+                  break;
+                }
+
+                _this4.$store.commit('error/setCode', response.status);
+
+                return _context.abrupt("return", false);
+
+              case 25:
                 _this4.$router.push("/spots/".concat(response.data.id));
 
-              case 19:
+              case 26:
               case "end":
                 return _context.stop();
             }
@@ -7309,6 +7339,20 @@ var render = function() {
             [
               _c("h1", [_vm._v("釣りスポット作成")]),
               _vm._v(" "),
+              _vm.errors
+                ? _c("div", { staticClass: "errors" }, [
+                    _vm.errors.name
+                      ? _c(
+                          "ul",
+                          _vm._l(_vm.errors.name, function(msg) {
+                            return _c("li", { key: msg }, [_vm._v(_vm._s(msg))])
+                          }),
+                          0
+                        )
+                      : _vm._e()
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c("input", {
                 directives: [
                   {
@@ -7358,12 +7402,20 @@ var render = function() {
                 },
                 [
                   _c("input", {
-                    attrs: { id: "spot_latitude", type: "number" },
+                    attrs: {
+                      id: "spot_latitude",
+                      type: "number",
+                      step: "0.0000000001"
+                    },
                     domProps: { value: _vm.latitude }
                   }),
                   _vm._v(" "),
                   _c("input", {
-                    attrs: { id: "spot_longitude", type: "number" },
+                    attrs: {
+                      id: "spot_longitude",
+                      type: "number",
+                      step: "0.000000000001"
+                    },
                     domProps: { value: _vm.longitude }
                   }),
                   _vm._v(" "),

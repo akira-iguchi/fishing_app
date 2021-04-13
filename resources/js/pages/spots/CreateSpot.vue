@@ -5,6 +5,12 @@
 
                 <h1>釣りスポット作成</h1>
 
+                 <div class="errors" v-if="errors">
+    <ul v-if="errors.name">
+      <li v-for="msg in errors.name" :key="msg">{{ msg }}</li>
+    </ul>
+  </div>
+
                 <input class="spot_search" id="address" type="text" v-model="mapAddress" placeholder="所在地を入力"/>
                 <button @click="searchAddress" class="spot_search_button"><i class="fas fa-search"></i></button>
 
@@ -14,8 +20,8 @@
                 <p>マーカーの移動も可能だよ！</p>
 
                 <form @submit.prevent="Createspot">
-                    <input id="spot_latitude" type="number" :value="latitude">
-                    <input id="spot_longitude" type="number" :value="longitude">
+                    <input id="spot_latitude" type="number" step="0.0000000001" :value="latitude">
+                    <input id="spot_longitude" type="number" step="0.000000000001" :value="longitude">
 
                     <div class="form-group">
                         <label for="spot_name" class="required">釣りスポット名</label>
@@ -79,6 +85,7 @@
 
 <script>
     import SpotForm from "../../components/spots/SpotForm";
+    import { CREATED, UNPROCESSABLE_ENTITY } from '../../util'
 
     export default {
         components: { SpotForm },
@@ -103,9 +110,10 @@
                 name: "",
                 address: "",
                 explanation: "",
-                spotImage1: null,
-                spotImage2: null,
-                spotImage3: null,
+                spotImage1: "",
+                spotImage2: "",
+                spotImage3: "",
+                errors: null,
             }
         },
         computed: {
@@ -211,14 +219,20 @@
             },
             async Createspot () {
                 const formData = new FormData()
-                formData.append('latitude', this.photo)
-                formData.append('longitude', this.photo)
-                formData.append('photo', this.photo)
-                formData.append('photo', this.photo)
-                formData.append('photo', this.photo)
-                formData.append('photo', this.photo)
-                formData.append('photo', this.photo)
-                const response = await axios.post('/api/photos', formData)
+                formData.append('latitude', this.latitude)
+                formData.append('longitude', this.longitude)
+                formData.append('spot_name', this.name)
+                formData.append('address', this.address)
+                formData.append('explanation', this.explanation)
+                formData.append('spot_image1', this.spotImage1)
+                formData.append('spot_image2', this.spotImage2)
+                formData.append('spot_image3', this.spotImage3)
+                const response = await axios.post('/api/spots', formData)
+
+                if (response.status === UNPROCESSABLE_ENTITY) {
+                    this.errors = response.data.errors
+                    return false
+                }
 
                 this.spotImage1Message = ""
                 this.spotImage2Message = ""
@@ -227,6 +241,12 @@
                 this.preview2 = null
                 this.preview3 = null
                 this.$emit('input', false)
+
+                if (response.status !== CREATED) {
+                    this.$store.commit('error/setCode', response.status)
+                    return false
+                }
+
                 this.$router.push(`/spots/${response.data.id}`)
             }
         },
