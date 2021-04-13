@@ -2491,6 +2491,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -7339,20 +7363,6 @@ var render = function() {
             [
               _c("h1", [_vm._v("釣りスポット作成")]),
               _vm._v(" "),
-              _vm.errors
-                ? _c("div", { staticClass: "errors" }, [
-                    _vm.errors.name
-                      ? _c(
-                          "ul",
-                          _vm._l(_vm.errors.name, function(msg) {
-                            return _c("li", { key: msg }, [_vm._v(_vm._s(msg))])
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
               _c("input", {
                 directives: [
                   {
@@ -7454,6 +7464,24 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
+                  _vm.errors
+                    ? _c("div", [
+                        _vm.errors.spot_name
+                          ? _c(
+                              "ul",
+                              _vm._l(_vm.errors.spot_name, function(msg) {
+                                return _c(
+                                  "li",
+                                  { key: msg, staticClass: "text-danger" },
+                                  [_vm._v(_vm._s(msg))]
+                                )
+                              }),
+                              0
+                            )
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", { attrs: { for: "spot_address" } }, [
                       _vm._v("所在地")
@@ -7486,6 +7514,24 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
+                  _vm.errors
+                    ? _c("div", [
+                        _vm.errors.address
+                          ? _c(
+                              "ul",
+                              _vm._l(_vm.errors.address, function(msg) {
+                                return _c(
+                                  "li",
+                                  { key: msg, staticClass: "text-danger" },
+                                  [_vm._v(_vm._s(msg))]
+                                )
+                              }),
+                              0
+                            )
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", [_vm._v("画像（３つまで）")]),
                     _c("br"),
@@ -7508,6 +7554,60 @@ var render = function() {
                       _c("p", [_vm._v(_vm._s(_vm.spotImage1Message))])
                     ])
                   ]),
+                  _vm._v(" "),
+                  _vm.errors
+                    ? _c("div", [
+                        _vm.errors.spotImage1
+                          ? _c(
+                              "ul",
+                              _vm._l(_vm.errors.spotImage1, function(msg) {
+                                return _c(
+                                  "li",
+                                  { key: msg, staticClass: "text-danger" },
+                                  [_vm._v(_vm._s(msg))]
+                                )
+                              }),
+                              0
+                            )
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.errors
+                    ? _c("div", [
+                        _vm.errors.spotImage2
+                          ? _c(
+                              "ul",
+                              _vm._l(_vm.errors.spotImage2, function(msg) {
+                                return _c(
+                                  "li",
+                                  { key: msg, staticClass: "text-danger" },
+                                  [_vm._v(_vm._s(msg))]
+                                )
+                              }),
+                              0
+                            )
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.errors
+                    ? _c("div", [
+                        _vm.errors.spotImage3
+                          ? _c(
+                              "ul",
+                              _vm._l(_vm.errors.spotImage3, function(msg) {
+                                return _c(
+                                  "li",
+                                  { key: msg, staticClass: "text-danger" },
+                                  [_vm._v(_vm._s(msg))]
+                                )
+                              }),
+                              0
+                            )
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -7641,6 +7741,24 @@ var render = function() {
                       _vm._v("文字")
                     ])
                   ]),
+                  _vm._v(" "),
+                  _vm.errors
+                    ? _c("div", [
+                        _vm.errors.explanation
+                          ? _c(
+                              "ul",
+                              _vm._l(_vm.errors.explanation, function(msg) {
+                                return _c(
+                                  "li",
+                                  { key: msg, staticClass: "text-danger" },
+                                  [_vm._v(_vm._s(msg))]
+                                )
+                              }),
+                              0
+                            )
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
                   _vm._m(0),
                   _vm._v(" "),

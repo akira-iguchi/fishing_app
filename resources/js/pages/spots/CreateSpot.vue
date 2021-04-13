@@ -5,12 +5,6 @@
 
                 <h1>釣りスポット作成</h1>
 
-                 <div class="errors" v-if="errors">
-    <ul v-if="errors.name">
-      <li v-for="msg in errors.name" :key="msg">{{ msg }}</li>
-    </ul>
-  </div>
-
                 <input class="spot_search" id="address" type="text" v-model="mapAddress" placeholder="所在地を入力"/>
                 <button @click="searchAddress" class="spot_search_button"><i class="fas fa-search"></i></button>
 
@@ -27,10 +21,20 @@
                         <label for="spot_name" class="required">釣りスポット名</label>
                         <input id="spot_name" type="text" class="form-control" placeholder="例） 〇〇釣り公園" v-model="name" required>
                     </div>
+                    <div v-if="errors">
+                        <ul v-if="errors.spot_name">
+                            <li class="text-danger" v-for="msg in errors.spot_name" :key="msg">{{ msg }}</li>
+                        </ul>
+                    </div>
 
                     <div class="form-group">
                         <label for="spot_address">所在地</label>
                         <input id="spot_address" type="text" class="form-control" placeholder="例） 〇〇県〇〇市〇〇区〇〇町1-1-1" v-model="address">
+                    </div>
+                    <div v-if="errors">
+                        <ul v-if="errors.address">
+                            <li class="text-danger" v-for="msg in errors.address" :key="msg">{{ msg }}</li>
+                        </ul>
                     </div>
 
                     <div class="form-group">
@@ -43,6 +47,21 @@
                         <span class="error_msg">
                             <p>{{ spotImage1Message }}</p>
                         </span>
+                    </div>
+                    <div v-if="errors">
+                        <ul v-if="errors.spotImage1">
+                            <li class="text-danger" v-for="msg in errors.spotImage1" :key="msg">{{ msg }}</li>
+                        </ul>
+                    </div>
+                    <div v-if="errors">
+                        <ul v-if="errors.spotImage2">
+                            <li class="text-danger" v-for="msg in errors.spotImage2" :key="msg">{{ msg }}</li>
+                        </ul>
+                    </div>
+                    <div v-if="errors">
+                        <ul v-if="errors.spotImage3">
+                            <li class="text-danger" v-for="msg in errors.spotImage3" :key="msg">{{ msg }}</li>
+                        </ul>
                     </div>
 
 
@@ -72,6 +91,11 @@
                         <label for="textAreaExplanation" class="required">説明</label>
                         <textarea rows="6" id="textAreaExplanation" class="form-control" v-model="explanation" v-on:keydown.enter="$event.stopPropagation()" placeholder="例） 風が弱くて釣りやすい釣り場です。" required></textarea>
                         <p>残り<span v-bind:class="{ 'text-danger':isActive }">{{ wordCount }}</span>文字</p>
+                    </div>
+                    <div v-if="errors">
+                        <ul v-if="errors.explanation">
+                            <li class="text-danger" v-for="msg in errors.explanation" :key="msg">{{ msg }}</li>
+                        </ul>
                     </div>
 
                     <button class="spot-create-edit-button"><i class="fas fa-pencil-alt"></i>&thinsp;投稿</button>

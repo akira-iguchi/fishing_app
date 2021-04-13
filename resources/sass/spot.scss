@@ -385,6 +385,13 @@ $breakpoint-tablet: 896px;
   border-radius: 5px;
   padding: 3em 8em;
   width: 120%;
+
+  ul {
+    list-style: none;
+    position: relative;
+    bottom: 10px;
+    right: 40px;
+  }
 }
 
 @media screen and (max-width:1000px) {
