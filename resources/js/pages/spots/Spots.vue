@@ -1,14 +1,56 @@
 <template>
     <div>
-        <div v-if="isLogin" class="signup_body">
+        <div v-if="isLogin">
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="login-signup">
-                        <div class="login-signup-header">
-                            <h1>トップページ</h1>
+                <!-- @include('spots.searches.search_form') -->
+
+                <div class="text-center">
+                    <li><RouterLink to="/spots/create" class="btn create_btn">釣りスポットを投稿</RouterLink></li>
+                </div>
+
+                <div class="toppage_under">
+                    <div class="w-100">
+                        <h2 class="toppage_heading">人気の釣りスポット<i class="fas fa-crown"></i></h2>
+                        <div class="row">
+                            <!-- カードの大きさが違うため直書き -->
                         </div>
                     </div>
+
+                    <aside class="aside_hidden">
+                        <select id="js-prefectures">
+                            <!-- @include('weathers.prefecture') -->
+                        </select>
+
+                        <div class="entire_weather">
+                            <div id="city-name"></div>
+                            <div id="weather"></div>
+                        </div>
+                    </aside>
                 </div>
+
+                <hr>
+
+                <div v-if="followUserSpots && followUserSpots.length > 0">
+                    <h2 class="toppage_heading">フォローしたユーザーの投稿</h2>
+                    <div class="row">
+                        <SpotCard
+                            v-for="spot in followUserSpots"
+                            :key="spot.id"
+                            :item="spot"
+                        />
+                    </div>
+                    <hr>
+                </div>
+
+                <h2 class="toppage_heading">最近の投稿</h2>
+                <div class="row">
+                    <SpotCard
+                        v-for="spot in recentSpots"
+                        :key="spot.id"
+                        :item="spot"
+                    />
+                </div>
+
             </div>
         </div>
 
@@ -62,9 +104,17 @@
 </template>
 
 <script>
+    import { OK } from '../../util'
+    import SpotCard from '../../components/spots/cards/SpotCard.vue'
+
     export default {
+        components: {
+            SpotCard
+        },
         data () {
             return {
+                followUserSpots: [],
+                recentSpots: [],
                 isActive: false,
             }
         },
@@ -82,7 +132,26 @@
         mounted: function() {
             this.isActive = true
         },
+        watch: {
+            $route: {
+                async handler () {
+                    await this.fetchSpots()
+                },
+                immediate: true
+            }
+        },
         methods: {
+            async fetchSpots () {
+                const response = await axios.get('/api/')
+
+                if (response.status !== OK) {
+                    this.$store.commit('error/setCode', response.status)
+                    return false
+                }
+
+                this.followUserSpots = response.data[2]
+                this.recentSpots = response.data[1]
+            },
             async guestLogin () {
                 await this.$store.dispatch('auth/guestLogin')
 

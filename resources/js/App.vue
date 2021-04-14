@@ -2,6 +2,7 @@
     <div>
         <Navbar />
         <main>
+            <Message />
             <RouterView />
         </main>
         <Footer />
@@ -10,13 +11,15 @@
 
 <script>
 import { INTERNAL_SERVER_ERROR } from './util'
+import Message from './components/commons/Message.vue'
 import Navbar from './components/commons/Navbar.vue'
 import Footer from './components/commons/Footer.vue'
 
 export default {
     components: {
+        Message,
         Navbar,
-        Footer
+        Footer,
     },
     computed: {
         errorCode () {

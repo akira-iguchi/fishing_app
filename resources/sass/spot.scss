@@ -573,11 +573,18 @@ $breakpoint-tablet: 896px;
   color: #fff;
 }
 
-.swiper-container {
+.hooper-container {
   max-height: 47rem;
+  margin-bottom: 10px;
+
+  &:hover .hooper-prev,
+  &:hover .hooper-next {
+    transition: .3s;
+    transform: none;
+  }
 }
 
-.swiper-slide {
+.hooper-slide {
   margin: auto;
 
   img {
@@ -586,22 +593,14 @@ $breakpoint-tablet: 896px;
   }
 }
 
-.swiper-button-prev{
+.hooper-prev{
   transition: .1s;
   transform: translateX(-2.2rem);
 }
 
-.swiper-button-next {
+.hooper-next {
   transition: .1s;
   transform: translateX(2.2rem);
-}
-
-.swiper-container {
-  &:hover .swiper-button-prev,
-  &:hover .swiper-button-next {
-    transition: .3s;
-    transform: none;
-  }
 }
 
 #show_map {

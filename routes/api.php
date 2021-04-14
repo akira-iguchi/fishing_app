@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/', 'SpotController@index')->name('spots.index');
 
 Route::post('signup', 'Auth\RegisterController@register')->name('signup');
 Route::post('login', 'Auth\LoginController@login')->name('login');
@@ -58,7 +59,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/tags/{name}', 'TagController')->name('tags');
 
     // ユーザーの基本機能
-    Route::resource('users', 'UserController');
+    Route::resource('users', 'UserController')->except(['index']);;
 
     // 釣り方一覧
     Route::get('/fishing_types','FishingTypeController');

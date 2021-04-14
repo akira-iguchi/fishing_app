@@ -52,14 +52,9 @@ class SpotController extends Controller
             $rankSpots = Spot::withCount('spotFavorites')->orderBy('spot_favorites_count', 'desc')
                         ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(4)->get();
 
-            return view('spots.index', compact(
-                'searchData',
-                'recentSpots',
-                'followUserSpots',
-                'rankSpots',
-            ));
+            return [$searchData, $recentSpots, $followUserSpots, $rankSpots];
         } else {
-            return view('spots.index');
+            return response()->json();
         }
     }
 
@@ -80,16 +75,14 @@ class SpotController extends Controller
         ));
     }
 
-    public function show(Spot $spot)
+    public function show(String $id)
     {
+        $spot = Spot::findOrFail($id)->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
         // その他の釣りスポット
         $otherSpots = Spot::where('id', '!=', $spot->id)->get()->shuffle()->take(4)
-                    ->load(['user', 'spotImages', 'spotFavorites', 'spotComments', 'fishingTypes']);
+                    ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
 
-        return view('spots.show', [
-            'spot' => $spot,
-            'otherSpots' => $otherSpots,
-        ]);
+        return [$spot, $otherSpots] ?? abort(404);
     }
 
     public function create(Spot $spot)

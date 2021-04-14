@@ -271,6 +271,11 @@
                     return false
                 }
 
+                this.$store.commit('message/setContent', {
+                    content: '釣りスポットを投稿しました',
+                    timeout: 6000
+                })
+
                 this.$router.push(`/spots/${response.data.id}`)
             }
         },

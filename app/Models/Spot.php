@@ -50,7 +50,7 @@ class Spot extends Model
 
     public function firstSpotImage()
     {
-        return $this->spotImages->first()->spot_image;
+        return $this->spot_images->first()->spot_image;
     }
 
     /**
