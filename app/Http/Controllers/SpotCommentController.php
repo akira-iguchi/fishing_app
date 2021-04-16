@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Storage;
 
 class SpotCommentController extends Controller
 {
-    public function index(Spot $spot)
-    {
-        return $spot->spotComments()->with('user')->orderBy('id', 'desc')->get();
-    }
-
     public function store(SpotCommentRequest $request, Spot $spot, SpotComment $spot_comment)
     {
         $spot_comment->fill($request->except('comment_image'));
@@ -27,6 +22,10 @@ class SpotCommentController extends Controller
             $spot_comment->comment_image = $path;
         }
         $spot_comment->save();
+
+        $new_comment = SpotComment::where('id', $spot_comment->id)->with('user')->first();
+
+        return response($new_comment, 201);
     }
 
     public function destroy($spot, $comment)

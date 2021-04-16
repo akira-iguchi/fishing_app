@@ -556,33 +556,49 @@
   color: #fff;
 }
 
-.swiper-container {
+.hooper-container {
+  overflow: hidden;
   max-height: 47rem;
+  margin-bottom: 10px;
 }
 
-.swiper-slide {
+.hooper-container:hover .hooper-prev,
+.hooper-container:hover .hooper-next {
+  transition: 0.3s;
+  transform: none;
+}
+
+.hooper-prev,
+.hooper-next {
+  transform: translateY(0);
+}
+
+.hooper-prev:focus-within,
+.hooper-next:focus-within {
+  outline: none;
+}
+
+.hooper-slide {
   margin: auto;
 }
 
-.swiper-slide img {
+.hooper-slide img {
+  position: absolute;
+  top: 0;
+  bottom: 1px;
+  margin: auto;
   width: 100%;
   max-height: 47rem;
 }
 
-.swiper-button-prev {
+.hooper-prev {
   transition: 0.1s;
   transform: translateX(-2.2rem);
 }
 
-.swiper-button-next {
+.hooper-next {
   transition: 0.1s;
   transform: translateX(2.2rem);
-}
-
-.swiper-container:hover .swiper-button-prev,
-.swiper-container:hover .swiper-button-next {
-  transition: 0.3s;
-  transform: none;
 }
 
 #show_map {
@@ -590,25 +606,6 @@
   margin-top: 10px;
   border: 3px solid #FFCC33;
 }
-
-/* .swiper-button-prev,
-.swiper-button-next {
-  width: 40px;
-  height: 40px;
-  margin-top: -16px;
-}
-.swiper-button-prev {
-    background: url(https://haniwaman.com/wp/wp-content/uploads/2018/05/swiper3.png) no-repeat center center / contain;
-}
-.swiper-button-prev::after {
-    content: "";
-}
-.swiper-button-next {
-    background: url(https://haniwaman.com/wp/wp-content/uploads/2018/05/swiper4.png) no-repeat center center / contain;
-}
-.swiper-button-next::after {
-    content: "";
-} */
 
 .spot-fishing_type {
   position: relative;
@@ -756,6 +753,12 @@
   .other-spot {
     display: none;
   }
+}
+
+.comment_errors {
+  list-style: none;
+  position: relative;
+  right: 40px;
 }
 
 #textAttentionComment {

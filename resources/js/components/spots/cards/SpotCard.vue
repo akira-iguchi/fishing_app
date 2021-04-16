@@ -19,7 +19,7 @@
                     </div> -->
 
                     <div class="card_item mr-2">
-                        <i class="fa fa-comment mr-1"></i>{{ item.spot_comments.length }}
+                        <i class="fa fa-comment mr-1"></i>{{ item.count_spot_comments }}
                     </div>
 
                     <div class="card_item">

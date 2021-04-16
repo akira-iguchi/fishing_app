@@ -281,3 +281,11 @@
         },
     }
 </script>
+
+<style>
+    .commentImg {
+        margin-top: 15px;
+        width: 10em;
+        border-radius: 10px;
+    }
+</style>

@@ -24,20 +24,16 @@ class Spot extends Model
         'longitude'
     ];
 
+    protected $appends = [
+        'count_spot_favorites', 'count_spot_comments'
+    ];
+
     /**
      * ユーザー
      */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * 最近の投稿
-     */
-    public function recentSpots(): HasMany
-    {
-        return $this->hasMany(SpotComment::class);
     }
 
     /**

@@ -45,6 +45,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = [
+        'count_spots', 'count_favorite_spots', 'count_spot_comments', 'count_followings', 'count_followers'
+    ];
+
     /**
      * 釣りスポット
      */
@@ -112,13 +116,13 @@ class User extends Authenticatable
             : false;
     }
 
-    public function getCountFollowersAttribute(): int
-    {
-        return $this->followers->count();
-    }
-
     public function getCountFollowingsAttribute(): int
     {
         return $this->followings->count();
+    }
+
+    public function getCountFollowersAttribute(): int
+    {
+        return $this->followers->count();
     }
 }

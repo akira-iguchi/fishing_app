@@ -50,7 +50,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'spots/{spot}'], function () {
         Route::put('/favorite', 'SpotFavoriteController@favorite')->name('spots.favorite');
         Route::delete('/favorite', 'SpotFavoriteController@unfavorite')->name('spots.unfavorite');
-        Route::get('comments', 'SpotCommentController@index')->name('spots.comments');
         Route::post('comments', 'SpotCommentController@store')->name('spots.comment');
         Route::delete('comments/{comment}', 'SpotCommentController@destroy')->name('comment.delete');
     });

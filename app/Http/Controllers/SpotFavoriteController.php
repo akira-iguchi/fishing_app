@@ -4,27 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Models\Spot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SpotFavoriteController extends Controller
 {
-    public function favorite(Request $request, Spot $spot)
+    public function favorite(String $id)
     {
-        $spot->spotFavorites()->detach($request->user()->id);
-        $spot->spotFavorites()->attach($request->user()->id);
+        $spot = Spot::where('id', $id)->with('spotFavorites')->first();
 
-        return [
-            'spot' => $spot,
-            'countSpotFavorites' => $spot->count_spot_favorites,
-        ];
+        if (! $spot) {
+            abort(404);
+        }
+
+        $spot->spotFavorites()->detach(Auth::user()->id);
+        $spot->spotFavorites()->attach(Auth::user()->id);
+
+        return ["spot_id" => $id];
     }
 
-    public function unfavorite(Request $request, Spot $spot)
+    public function unfavorite(String $id)
     {
-        $spot->spotFavorites()->detach($request->user()->id);
+        $spot = Spot::where('id', $id)->with('spotFavorites')->first();
 
-        return [
-            'spot' => $spot,
-            'countSpotFavorites' => $spot->count_spot_favorites,
-        ];
+        if (! $spot) {
+            abort(404);
+        }
+
+        $spot->spotFavorites()->detach(Auth::user()->id);
+
+        // return [
+        //     'spot' => $spot,
+        //     'countSpotFavorites' => $spot->count_spot_favorites,
+        // ];
+        return ["spot_id" => $id];
     }
 }

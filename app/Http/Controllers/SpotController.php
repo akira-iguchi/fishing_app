@@ -77,7 +77,11 @@ class SpotController extends Controller
 
     public function show(String $id)
     {
-        $spot = Spot::findOrFail($id)->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
+        $spot = Spot::findOrFail($id)
+            ->load(
+                ['user', 'spotImages', 'spotFavorites', 'spotComments', 'spotComments.user']
+            );
+
         // その他の釣りスポット
         $otherSpots = Spot::where('id', '!=', $spot->id)->get()->shuffle()->take(4)
                     ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
