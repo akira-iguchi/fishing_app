@@ -36,7 +36,7 @@
                     <div class="mr-2">
                         <button
                             class="btn m-0 p-0 shadow-none"
-                            :class="{ 'text-danger' : spot.liked_by_user, 'animated heartBeat fast' : this.gotToLike }"
+                            :class="{ 'text-danger' : spot.liked_by_user }"
                             @click="onFavoriteClick"
                         >
                             <i class="fas fa-heart"></i>
@@ -229,7 +229,6 @@
                 commentImageMessage: "",
                 preview: null,
                 commentErrors: null,
-                gotToLike: false,
             }
         },
         filters: {
@@ -271,7 +270,6 @@
                     return false
                 }
 
-                this.gotToLike = true,
                 this.spot.count_spot_favorites += 1
                 this.spot.liked_by_user = true
             },
@@ -283,7 +281,6 @@
                     return false
                 }
 
-                this.gotToLike = false,
                 this.spot.count_spot_favorites -= 1
                 this.spot.liked_by_user = false
             },

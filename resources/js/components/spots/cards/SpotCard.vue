@@ -17,7 +17,7 @@
                     <div class="card_item mr-2">
                         <button
                             class="btn m-0 p-0 shadow-none"
-                            :class="{ 'text-danger' : item.liked_by_user, 'animated heartBeat fast' : this.gotToLike }"
+                            :class="{ 'text-danger' : item.liked_by_user }"
                             @click.prevent="favorite"
                         >
                             <i class="fas fa-heart"></i>
@@ -56,16 +56,7 @@
                 type: Object,
                 required: true
             },
-            gotToLike: {
-                type: Boolean,
-                default: false,
-            }
         },
-        data() {
-            return {
-                    gotToLike: false,
-                }
-            },
         filters: {
             moment: function (date) {
                 return moment(date).format('MM/DD');
@@ -76,7 +67,6 @@
                 this.$emit('favorite', {
                     id: this.item.id,
                     liked: this.item.liked_by_user,
-                    gotToLike: this.gotToLike,
                 })
             }
         }

@@ -7,6 +7,7 @@ import SpotDetail from './pages/spots/SpotDetail.vue'
 import Login from './pages/auth/Login.vue'
 import Register from './pages/auth/Register.vue'
 import SystemError from './pages/errors/System.vue'
+import NotFound from './pages/errors/NotFound.vue'
 
 import store from './store'
 
@@ -20,6 +21,10 @@ const routes = [
     {
         path: '/500',
         component: SystemError
+    },
+    {
+        path: '*',
+        component: NotFound
     },
     {
         path: '/login',

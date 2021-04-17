@@ -170,14 +170,14 @@
                     }
                 }
             },
-            onFavoriteClick ({ id, liked, gotToLike }) {
+            onFavoriteClick ({ id, liked }) {
                 if (liked) {
                     this.unfavorite(id)
                 } else {
-                    this.favorite(id, gotToLike)
+                    this.favorite(id)
                 }
             },
-            async favorite (id, gotToLike) {
+            async favorite (id) {
                 const response = await axios.put(`/api/spots/${id}/favorite`)
 
                 if (response.status !== OK) {
@@ -192,10 +192,6 @@
                     }
                     return spot
                 })
-
-                gotToLike = true
-                return gotToLike
-                // console.log(gotToLike)
             },
             async unfavorite (id) {
                 const response = await axios.delete(`/api/spots/${id}/favorite`)
