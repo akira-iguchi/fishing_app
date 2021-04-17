@@ -33,7 +33,17 @@
                 </hooper>
 
                 <div class="d-flex">
-                    <!-- @include('favorites.favorite_button') -->
+                    <div class="mr-2">
+                        <button
+                            class="btn m-0 p-0 shadow-none"
+                            :class="{ 'text-danger' : spot.liked_by_user, 'animated heartBeat fast' : this.gotToLike }"
+                            @click="onFavoriteClick"
+                        >
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        {{ spot.count_spot_favorites }}
+                    </div>
+
                     <i class="fas fa-clock ml-2 mt-1"></i>&nbsp;{{ spot.created_at | moment }}
                 </div>
 
@@ -143,8 +153,8 @@
                     </RouterLink>
 
                     <span>
-                        <strong v-if="user.followings && user.followings.length >= 0">{{ user.count_followings }}</strong>フォロー
-                        <strong v-if="user.followers && user.followers.length >= 0">{{ user.count_followers }}</strong>フォロワー
+                        <strong>{{ user.count_followings }}</strong>フォロー
+                        <strong>{{ user.count_followers }}</strong>フォロワー
                     </span>
                 </div>
 
@@ -155,7 +165,7 @@
                     <div class="mini_card"  v-for="otherSpot in otherSpots" :key="otherSpot.id">
                         <RouterLink :to="`/spots/${otherSpot.id}`">
                             <div class="mini_card_img">
-                                <img :src="`${otherSpot.spot_images[0].spot_image}`" alt="釣りスポットの画像">
+                                <img :src="`${otherSpot.first_spot_image}`" alt="釣りスポットの画像">
                             </div>
                         </RouterLink>
 
@@ -219,6 +229,7 @@
                 commentImageMessage: "",
                 preview: null,
                 commentErrors: null,
+                gotToLike: false,
             }
         },
         filters: {
@@ -244,6 +255,37 @@
                 this.user = this.spot.user
                 this.spotPosition = {lat: this.spot.latitude, lng: this.spot.longitude}
                 this.otherSpots = response.data[1]
+            },
+            onFavoriteClick () {
+                if (this.spot.liked_by_user) {
+                    this.unfavorite()
+                } else {
+                    this.favorite()
+                }
+            },
+            async favorite () {
+                const response = await axios.put(`/api/spots/${this.id}/favorite`)
+
+                if (response.status !== OK) {
+                    this.$store.commit('error/setCode', response.status)
+                    return false
+                }
+
+                this.gotToLike = true,
+                this.spot.count_spot_favorites += 1
+                this.spot.liked_by_user = true
+            },
+            async unfavorite () {
+                const response = await axios.delete(`/api/spots/${this.id}/favorite`)
+
+                if (response.status !== OK) {
+                    this.$store.commit('error/setCode', response.status)
+                    return false
+                }
+
+                this.gotToLike = false,
+                this.spot.count_spot_favorites -= 1
+                this.spot.liked_by_user = false
             },
             async addComment () {
                 const formData = new FormData()

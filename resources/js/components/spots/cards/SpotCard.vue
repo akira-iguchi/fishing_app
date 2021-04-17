@@ -3,7 +3,7 @@
         <div class="spot_card">
             <RouterLink :to="`/spots/${item.id}`">
                 <div class="spot_card_img">
-                    <img :src="`${item.spot_images[0].spot_image}`" alt="釣りスポットの画像">
+                    <img :src="`${item.first_spot_image}`" alt="釣りスポットの画像">
                 </div>
             </RouterLink>
 
@@ -14,9 +14,16 @@
 
                 <div class="card_detail">
 
-                    <!-- <div class="card_item">
-                        @include('favorites.favorite_button')
-                    </div> -->
+                    <div class="card_item mr-2">
+                        <button
+                            class="btn m-0 p-0 shadow-none"
+                            :class="{ 'text-danger' : item.liked_by_user, 'animated heartBeat fast' : this.gotToLike }"
+                            @click.prevent="favorite"
+                        >
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        {{ item.count_spot_favorites }}
+                    </div>
 
                     <div class="card_item mr-2">
                         <i class="fa fa-comment mr-1"></i>{{ item.count_spot_comments }}
@@ -34,7 +41,7 @@
                 <p v-if="item.address && item.address.length > 0">
                     {{ item.address }}
                 </p>
-                <!-- <p>{{ $spot->explanation }}</p> -->
+                <!-- <p>{{ spot.explanation }}</p> -->
             </div>
         </div>
     </div>
@@ -48,13 +55,30 @@
             item: {
                 type: Object,
                 required: true
+            },
+            gotToLike: {
+                type: Boolean,
+                default: false,
             }
         },
-
+        data() {
+            return {
+                    gotToLike: false,
+                }
+            },
         filters: {
             moment: function (date) {
                 return moment(date).format('MM/DD');
             }
         },
+        methods: {
+            favorite () {
+                this.$emit('favorite', {
+                    id: this.item.id,
+                    liked: this.item.liked_by_user,
+                    gotToLike: this.gotToLike,
+                })
+            }
+        }
     }
 </script>

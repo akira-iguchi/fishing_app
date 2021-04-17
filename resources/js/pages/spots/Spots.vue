@@ -48,6 +48,7 @@
                         v-for="spot in recentSpots"
                         :key="spot.id"
                         :item="spot"
+                        @favorite="onFavoriteClick"
                     />
                 </div>
 
@@ -141,6 +142,11 @@
             }
         },
         methods: {
+            async guestLogin () {
+                await this.$store.dispatch('auth/guestLogin')
+
+                this.$router.push('/', () => {})
+            },
             async fetchSpots () {
                 const response = await axios.get('/api/')
 
@@ -149,13 +155,8 @@
                     return false
                 }
 
-                this.followUserSpots = response.data[2]
-                this.recentSpots = response.data[1]
-            },
-            async guestLogin () {
-                await this.$store.dispatch('auth/guestLogin')
-
-                this.$router.push('/', () => {})
+                this.followUserSpots = Object.values(response.data[2])
+                this.recentSpots = Object.values(response.data[1])
             },
             handleScroll() {
                 const targetElement = this.$el.querySelectorAll('.top-slider') || null
@@ -168,6 +169,49 @@
                         }
                     }
                 }
+            },
+            onFavoriteClick ({ id, liked, gotToLike }) {
+                if (liked) {
+                    this.unfavorite(id)
+                } else {
+                    this.favorite(id, gotToLike)
+                }
+            },
+            async favorite (id, gotToLike) {
+                const response = await axios.put(`/api/spots/${id}/favorite`)
+
+                if (response.status !== OK) {
+                    this.$store.commit('error/setCode', response.status)
+                    return false
+                }
+
+                this.recentSpots = this.recentSpots.map(spot => {
+                    if (spot.id == response.data.spot_id) {
+                        spot.count_spot_favorites += 1
+                        spot.liked_by_user = true
+                    }
+                    return spot
+                })
+
+                gotToLike = true
+                return gotToLike
+                // console.log(gotToLike)
+            },
+            async unfavorite (id) {
+                const response = await axios.delete(`/api/spots/${id}/favorite`)
+
+                if (response.status !== OK) {
+                    this.$store.commit('error/setCode', response.status)
+                    return false
+                }
+
+                this.recentSpots = this.recentSpots.map(spot => {
+                    if (spot.id == response.data.spot_id) {
+                        spot.count_spot_favorites -= 1
+                        spot.liked_by_user = false
+                    }
+                    return spot
+                })
             },
         },
     }

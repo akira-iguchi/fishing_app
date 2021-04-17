@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\TagNameTrait;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,7 +26,7 @@ class Spot extends Model
     ];
 
     protected $appends = [
-        'count_spot_favorites', 'count_spot_comments'
+        'first_spot_image', 'count_spot_favorites', 'count_spot_comments', 'liked_by_user',
     ];
 
     /**
@@ -44,9 +45,9 @@ class Spot extends Model
         return $this->hasMany(SpotImage::class);
     }
 
-    public function firstSpotImage()
+    public function getFirstSpotImageAttribute()
     {
-        return $this->spot_images->first()->spot_image;
+        return $this->spotImages->first()->spot_image;
     }
 
     /**
@@ -70,11 +71,13 @@ class Spot extends Model
         return $this->belongsToMany(User::class, 'spot_favorite')->withTimestamps();
     }
 
-    public function isLikedBy(?User $user): bool
+    public function getLikedByUserAttribute(): bool
     {
-        return $user
-            ? (bool)$this->spotFavorites->where('id', $user->id)->count()
-            : false;
+        if (Auth::guest()) {
+            return false;
+        }
+
+        return $this->spotFavorites->contains(Auth::user());
     }
 
     public function getCountSpotFavoritesAttribute(): int

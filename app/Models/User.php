@@ -45,9 +45,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $appends = [
-        'count_spots', 'count_favorite_spots', 'count_spot_comments', 'count_followings', 'count_followers'
-    ];
+    // protected $appends = [
+    //     'count_followings', 'count_followers'
+    // ];
 
     /**
      * 釣りスポット
