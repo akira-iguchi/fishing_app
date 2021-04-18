@@ -18,14 +18,24 @@
                     @endif
                 @endforeach -->
 
-                <hooper :autoPlay="true" :wheelControl="false" :playSpeed="4000" :infiniteScroll="true" class="hooper-container">
+                <hooper
+                    class="hooper-container"
+                    :autoPlay="true"
+                    :wheelControl="false"
+                    :playSpeed="4000"
+                    :infiniteScroll="true"
+                >
                     <slide class="hooper-slide">
                         <div id="show_map"></div>
                         <!-- <GmapMap id="show_map" :center="spotPosition" :zoom="15" map-type-id="terrain">
                             <GmapMarker :animation="2" :position="spotPosition" />
                         </GmapMap> -->
                     </slide>
-                    <slide class="hooper-slide" v-for="image in spot.spot_images" :key="image.id">
+                    <slide
+                        class="hooper-slide"
+                        v-for="image in spot.spot_images"
+                        :key="image.id"
+                    >
                         <img :src="`${ image.spot_image }`" alt="釣りスポットの画像">
                     </slide>
                     <hooper-navigation slot="hooper-addons"></hooper-navigation>
@@ -34,17 +44,11 @@
 
                 <div class="d-flex">
                     <div class="mr-2">
-                        <button
-                            class="btn m-0 p-0 shadow-none"
-                            :class="{ 'text-danger' : spot.liked_by_user }"
-                            @click="onFavoriteClick"
-                        >
-                            <i class="fas fa-heart"></i>
-                        </button>
-                        {{ spot.count_spot_favorites }}
+                        <FavoriteButton
+                            :spot="spot"
+                        />
+                        <i class="fas fa-clock ml-2 mt-1"></i>&nbsp;{{ spot.created_at | moment }}
                     </div>
-
-                    <i class="fas fa-clock ml-2 mt-1"></i>&nbsp;{{ spot.created_at | moment }}
                 </div>
 
                 <table>
@@ -77,8 +81,11 @@
                 <h2 class="mt-3">コメント一覧</h2>
                 <i class="fa fa-comment mr-1"></i>{{ spot.count_spot_comments }}
 
-                <div v-if="spot.spot_comments && spot.spot_comments.length > 0" class="comment_index">
-                    <div v-for="comment in spot.spot_comments" :key="comment.id">
+                <div
+                    class="comment_index"
+                    v-if="spot.spot_comments && spot.spot_comments.length > 0"
+                    >
+                    <div v-for="(comment, index) in spot.spot_comments" :key="comment.id">
                         <div class="comment">
                             <div class="comment_top">
                                 <div class="comment_created_at">{{ comment.created_at | moment }}</div>
@@ -92,20 +99,23 @@
                                 {{ comment.comment }}
                             </div>
 
-                            <div v-if="comment.comment_image && comment.comment_image.length > 0" class="comment_img">
+                            <div
+                                class="comment_img"
+                                v-if="comment.comment_image && comment.comment_image.length > 0"
+                            >
                                 <img :src="`${comment.comment_image}`" alt="釣り場コメントの画像" />
                             </div>
 
-                            <!-- <div class="comment_delete">
+                            <div class="comment_delete">
                                 <button
-                                    v-if="comment.user_id == user_id"
-                                    @click.prevent="deleteComment(comment.id)"
+                                    v-if="comment.user_id == AuthUser.id"
+                                    @click.prevent="deleteComment(comment.id, index)"
                                     type="button"
                                     onclick="return confirm('本当に削除しますか？')"
                                 >
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -114,12 +124,23 @@
                     <div class="form-group">
                         <div v-if="0 > wordCount" v-on="changeTrue()"></div>
                         <div v-else-if="0 <= wordCount" v-on="changeFalse()"></div>
-                        <textarea rows="4" class="form-control mt-4" v-model="commentContent" placeholder="コメントしよう！"></textarea>
+                        <textarea
+                            rows="4"
+                            class="form-control mt-4"
+                            placeholder="コメントしよう！"
+                            v-model="commentContent"
+                        ></textarea>
                         残り<span v-bind:class="{ 'text-danger':isActive }">{{ wordCount }}</span>文字
                     </div>
                     <div v-if="commentErrors">
                         <ul class="comment_errors" v-if="commentErrors.comment">
-                            <li class="text-danger" v-for="msg in commentErrors.comment" :key="msg">{{ msg }}</li>
+                            <li
+                                class="text-danger"
+                                v-for="msg in commentErrors.comment"
+                                :key="msg"
+                            >
+                                {{ msg }}
+                            </li>
                         </ul>
                     </div>
 
@@ -136,7 +157,13 @@
                     </div>
                     <div v-if="commentErrors">
                         <ul class="comment_errors" v-if="commentErrors.comment_image">
-                            <li class="text-danger" v-for="msg in commentErrors.comment_image" :key="msg">{{ msg }}</li>
+                            <li
+                                class="text-danger"
+                                v-for="msg in commentErrors.comment_image"
+                                :key="msg"
+                            >
+                                {{ msg }}
+                            </li>
                         </ul>
                     </div>
 
@@ -199,12 +226,14 @@
 
 <script>
     import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../../util'
+    import FavoriteButton from '../../components/spots/FavoriteButton.vue'
     import moment from 'moment';
     import {Hooper, Slide, Pagination as HooperPagination, Navigation as HooperNavigation} from 'hooper';
     import 'hooper/dist/hooper.css';
 
     export default {
         components: {
+            FavoriteButton,
             Hooper,
             Slide,
             HooperPagination,
@@ -239,7 +268,10 @@
         computed: {
             wordCount(){
                 return this.wordLimit - this.commentContent.length
-            }
+            },
+            AuthUser () {
+                return this.$store.getters['auth/AuthUser']
+            },
         },
         methods: {
             async fetchSpot () {
@@ -255,35 +287,6 @@
                 this.spotPosition = {lat: this.spot.latitude, lng: this.spot.longitude}
                 this.otherSpots = response.data[1]
             },
-            onFavoriteClick () {
-                if (this.spot.liked_by_user) {
-                    this.unfavorite()
-                } else {
-                    this.favorite()
-                }
-            },
-            async favorite () {
-                const response = await axios.put(`/api/spots/${this.id}/favorite`)
-
-                if (response.status !== OK) {
-                    this.$store.commit('error/setCode', response.status)
-                    return false
-                }
-
-                this.spot.count_spot_favorites += 1
-                this.spot.liked_by_user = true
-            },
-            async unfavorite () {
-                const response = await axios.delete(`/api/spots/${this.id}/favorite`)
-
-                if (response.status !== OK) {
-                    this.$store.commit('error/setCode', response.status)
-                    return false
-                }
-
-                this.spot.count_spot_favorites -= 1
-                this.spot.liked_by_user = false
-            },
             async addComment () {
                 const formData = new FormData()
                 formData.append('comment', this.commentContent)
@@ -295,6 +298,7 @@
                     return false
                 }
 
+                this.spot.count_spot_comments += 1
                 this.commentImageMessage = ""
                 this.preview = null
                 this.commentContent = ''
@@ -313,6 +317,19 @@
                 this.$store.commit('message/setContent', {
                     content: 'コメントを投稿しました',
                     timeout: 6000
+                })
+            },
+            // コメント削除
+            async deleteComment(comment, index) {
+                const response = await axios.delete(`/api/spots/${this.id}/comments/${comment}`)
+
+                this.spot.count_spot_comments -= 1
+
+                this.spot.spot_comments.splice(index, 1)
+
+                this.$store.commit('message/setContent', {
+                    content: 'コメントを削除しました',
+                    timeout: 5000
                 })
             },
             // 文字数

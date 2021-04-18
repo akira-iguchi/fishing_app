@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Spots from './pages/spots/Spots.vue'
 import CreateSpot from './pages/spots/CreateSpot.vue'
 import SpotDetail from './pages/spots/SpotDetail.vue'
+import UserProfile from './pages/users/UserProfile.vue'
 import Login from './pages/auth/Login.vue'
 import Register from './pages/auth/Register.vue'
 import SystemError from './pages/errors/System.vue'
@@ -62,6 +63,18 @@ const routes = [
     {
         path: '/spots/:id',
         component: SpotDetail,
+        props: true,
+        beforeEnter (to, from, next) {
+            if (store.getters['auth/check']) {
+                next()
+            } else {
+                next('/')
+            }
+        }
+    },
+    {
+        path: '/users/:id',
+        component: UserProfile,
         props: true,
         beforeEnter (to, from, next) {
             if (store.getters['auth/check']) {

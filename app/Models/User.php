@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
@@ -46,7 +47,7 @@ class User extends Authenticatable
     ];
 
     // protected $appends = [
-    //     'count_followings', 'count_followers'
+    //     'count_followings', 'count_followers', 'followed_by'
     // ];
 
     /**
@@ -109,11 +110,13 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'follows', 'followee_id', 'follower_id')->withTimestamps();
     }
 
-    public function isFollowedBy(?User $user): bool
+    public function getFollowedByAttribute(): bool
     {
-        return $user
-            ? (bool)$this->followers->where('id', $user->id)->count()
-            : false;
+        if (Auth::guest()) {
+            return false;
+        }
+
+        return $this->followers->contains(Auth::user());
     }
 
     public function getCountFollowingsAttribute(): int

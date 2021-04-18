@@ -23,7 +23,7 @@ Route::get('/user', function() {
 })->name('user');
 
 // トークンリフレッシュ
-Route::get('/reflesh-token', function (Illuminate\Http\Request $request) {
+Route::get('/reflesh-token', function (Request $request) {
     $request->session()->regenerateToken();
 
     return response()->json();
@@ -35,8 +35,8 @@ Route::post('guest', 'Auth\LoginController@guestLogin')->name('guestLogin');
 Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['prefix' => 'users/{user}'], function () {
-        Route::put('/follow', 'UserController@follow')->name('users.follow');
-        Route::delete('/follow', 'UserController@unfollow')->name('users.unfollow');
+        Route::put('/follow', 'FollowController@follow')->name('users.follow');
+        Route::delete('/follow', 'FollowController@unfollow')->name('users.unfollow');
 
         // ユーザーページのタブ
         Route::get('/spots', 'UserTabController@spots');

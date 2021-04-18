@@ -12,6 +12,7 @@
                 <ul v-if="isLogin">
                     <li><span @click="logout"><i class="fas fa-sign-in-alt"></i>&thinsp;ログアウト</span></li>
                     <li><RouterLink to="/spots/create">投稿</RouterLink></li>
+                    <li><RouterLink :to="`/users/${ AuthUser.id }`">{{ AuthUser.user_name }}</RouterLink></li>
                 </ul>
                 <ul v-else>
                     <li><RouterLink to="/signup"><i class="fas fa-user-plus"></i>&thinsp;新規登録</RouterLink></li>
@@ -29,8 +30,8 @@ export default {
         isLogin () {
             return this.$store.getters['auth/check']
         },
-        username () {
-            return this.$store.getters['auth/username']
+        AuthUser () {
+            return this.$store.getters['auth/AuthUser']
         }
     },
     methods: {

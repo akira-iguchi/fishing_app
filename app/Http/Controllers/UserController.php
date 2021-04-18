@@ -37,20 +37,14 @@ class UserController extends Controller
         });
     }
 
-    public function follow(Request $request, User $user)
+    public function follow(String $id)
     {
-        if ($user->id === $request->user()->id) {
-            return abort('404', 'あなた自信をフォローすることはできません');
-        }
+        $user = User::where('id', $id)->with('followings')->first();
 
-        $request->user()->followings()->detach($user);
-        $request->user()->followings()->attach($user);
+        $user->followings()->detach($user);
+        $user->followings()->attach($user);
 
-        return [
-            'user' => $user,
-            'countFollowings' => $user->count_followings,
-            'countFollowers' => $user->count_followers,
-        ];
+        return ["user_id" => $id];
     }
 
     public function unfollow(Request $request, User $user)
@@ -64,10 +58,13 @@ class UserController extends Controller
         ];
     }
 
-    public function show(User $user)
+    public function show(String $id)
     {
-        return view('users.show', [
-            'user' => $user->load('followings', 'followers'),
-        ]);
+        $user = User::findOrFail($id)
+            ->load(
+                ['followings', 'followers']
+            );
+
+        return $user ?? abort(404);
     }
 }

@@ -15,14 +15,9 @@
                 <div class="card_detail">
 
                     <div class="card_item mr-2">
-                        <button
-                            class="btn m-0 p-0 shadow-none"
-                            :class="{ 'text-danger' : item.liked_by_user }"
-                            @click.prevent="favorite"
-                        >
-                            <i class="fas fa-heart"></i>
-                        </button>
-                        {{ item.count_spot_favorites }}
+                        <FavoriteButton
+                            :spot="item"
+                        />
                     </div>
 
                     <div class="card_item mr-2">
@@ -48,9 +43,13 @@
 </template>
 
 <script>
+    import FavoriteButton from '../FavoriteButton.vue'
     import moment from 'moment';
 
     export default {
+        components: {
+            FavoriteButton,
+        },
         props: {
             item: {
                 type: Object,

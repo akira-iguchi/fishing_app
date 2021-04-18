@@ -17,7 +17,8 @@ class SpotCommentController extends Controller
         $spot_comment->spot_id = $spot->id;
         $spot_comment->user_id = Auth::id();
         if ($request->hasFile('comment_image')) {
-            $upload_info = Storage::disk('s3')->putFile('/comment', $request->file('comment_image'), 'public');
+            $upload_info = Storage::disk('s3')
+                ->putFile('/comment', $request->file('comment_image'), 'public');
             $path = Storage::disk('s3')->url($upload_info);
             $spot_comment->comment_image = $path;
         }
@@ -34,6 +35,7 @@ class SpotCommentController extends Controller
 
         if (\Auth::id() === $comment->user_id) {
             $comment->delete();
+            return response()->json();
         } else {
             return redirect('/')->with('flash_message', '自信の投稿のみ削除できます');
         }

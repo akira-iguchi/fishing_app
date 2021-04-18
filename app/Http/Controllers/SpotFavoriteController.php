@@ -32,10 +32,6 @@ class SpotFavoriteController extends Controller
 
         $spot->spotFavorites()->detach(Auth::user()->id);
 
-        // return [
-        //     'spot' => $spot,
-        //     'countSpotFavorites' => $spot->count_spot_favorites,
-        // ];
         return ["spot_id" => $id];
     }
 }
