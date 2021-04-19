@@ -41,8 +41,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        session()->flash('flash_message', 'ログアウトしました');
-
         return $this->loggedOut($request) ?: redirect('/');
     }
 

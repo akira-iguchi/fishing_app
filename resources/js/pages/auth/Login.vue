@@ -75,6 +75,11 @@
                 if (this.apiStatus) {
                     this.$router.push('/')
                 }
+
+                this.$store.commit('message/setContent', {
+                    content: 'ログインしました',
+                    timeout: 5000
+                })
             },
             clearError () {
                 this.$store.commit('auth/setLoginErrorMessages', null)

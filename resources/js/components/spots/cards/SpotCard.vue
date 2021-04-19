@@ -61,13 +61,5 @@
                 return moment(date).format('MM/DD');
             }
         },
-        methods: {
-            favorite () {
-                this.$emit('favorite', {
-                    id: this.item.id,
-                    liked: this.item.liked_by_user,
-                })
-            }
-        }
     }
 </script>

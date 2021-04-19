@@ -37,27 +37,6 @@ class UserController extends Controller
         });
     }
 
-    public function follow(String $id)
-    {
-        $user = User::where('id', $id)->with('followings')->first();
-
-        $user->followings()->detach($user);
-        $user->followings()->attach($user);
-
-        return ["user_id" => $id];
-    }
-
-    public function unfollow(Request $request, User $user)
-    {
-        $request->user()->followings()->detach($user);
-
-        return [
-            'user' => $user,
-            'countFollowings' => $user->count_followings,
-            'countFollowers' => $user->count_followers,
-        ];
-    }
-
     public function show(String $id)
     {
         $user = User::findOrFail($id)

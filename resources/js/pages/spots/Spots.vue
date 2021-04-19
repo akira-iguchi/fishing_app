@@ -158,15 +158,18 @@
                 this.$router.push('/', () => {})
             },
             async fetchSpots () {
-                const response = await axios.get('/api/')
+                console.log(this.isLogin)
+                if (this.isLogin === true) {
+                    const response = await axios.get('/api/')
 
-                if (response.status !== OK) {
-                    this.$store.commit('error/setCode', response.status)
-                    return false
+                    if (response.status !== OK) {
+                        this.$store.commit('error/setCode', response.status)
+                        return false
+                    }
+
+                    this.followUserSpots = Object.values(response.data[2])
+                    this.recentSpots = Object.values(response.data[1])
                 }
-
-                this.followUserSpots = Object.values(response.data[2])
-                this.recentSpots = Object.values(response.data[1])
             },
             handleScroll() {
                 const targetElement = this.$el.querySelectorAll('.top-slider') || null

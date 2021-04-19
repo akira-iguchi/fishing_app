@@ -26,7 +26,10 @@ class Spot extends Model
     ];
 
     protected $appends = [
-        'first_spot_image', 'count_spot_favorites', 'count_spot_comments', 'liked_by_user',
+        'first_spot_image',
+        'count_spot_favorites',
+        'count_spot_comments',
+        'liked_by_user',
     ];
 
     /**

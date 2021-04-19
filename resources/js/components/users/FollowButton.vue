@@ -29,10 +29,6 @@
             },
 
         },
-        data() {
-            return {
-            }
-        },
         computed: {
             AuthUser () {
                 return this.$store.getters['auth/AuthUser']
@@ -74,10 +70,10 @@
                     return false
                 }
 
-                this.user.count_followergs += 1
+                this.user.count_followers += 1
                 this.user.followed_by = true
             },
-            async unfavorite () {
+            async unfollow () {
                 const response = await axios.delete(`/api/users/${this.user.id}/follow`)
 
                 if (response.status !== OK) {
@@ -89,7 +85,7 @@
                     return false
                 }
 
-                this.user.count_followergs -= 1
+                this.user.count_followers -= 1
                 this.user.followed_by = false
             },
         },

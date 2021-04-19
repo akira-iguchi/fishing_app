@@ -39,11 +39,22 @@ export default {
             await this.$store.dispatch('auth/logout')
 
             this.$router.push('/', () => {})
+
+            this.$store.commit('message/setContent', {
+                content: 'ログアウトしました',
+                timeout: 5000
+            })
         },
         async guestLogin () {
             await this.$store.dispatch('auth/guestLogin')
 
+            // this.$store.commit('message/setContent', {
+            //     content: 'ゲストユーザーでログインしました',
+            //     timeout: 5000
+            // })
+
             this.$router.push('/', () => {})
+
         }
     },
 }
