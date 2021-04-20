@@ -4192,10 +4192,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  _context.next = 2;
+                  if (!(_this.isLogin === true)) {
+                    _context.next = 3;
+                    break;
+                  }
+
+                  _context.next = 3;
                   return _this.fetchSpots();
 
-                case 2:
+                case 3:
                 case "end":
                   return _context.stop();
               }

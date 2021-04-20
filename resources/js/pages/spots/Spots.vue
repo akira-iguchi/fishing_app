@@ -146,7 +146,9 @@
         watch: {
             $route: {
                 async handler () {
-                    await this.fetchSpots()
+                    if (this.isLogin === true) {
+                        await this.fetchSpots()
+                    }
                 },
                 immediate: true
             }
