@@ -2081,16 +2081,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return _this2.$store.dispatch('auth/guestLogin');
+                return _this2.$store.dispatch('auth/guestLogin', {
+                  email: 'guest@example.com',
+                  password: 'guest123'
+                });
 
               case 2:
-                // this.$store.commit('message/setContent', {
-                //     content: 'ゲストユーザーでログインしました',
-                //     timeout: 5000
-                // })
                 _this2.$router.push('/', function () {});
 
-              case 3:
+                _this2.$store.commit('message/setContent', {
+                  content: 'ゲストユーザーでログインしました',
+                  timeout: 5000
+                });
+
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -2957,14 +2961,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 2:
                 if (_this.apiStatus) {
                   _this.$router.push('/');
+
+                  _this.$store.commit('message/setContent', {
+                    content: 'ログインしました',
+                    timeout: 5000
+                  });
                 }
 
-                _this.$store.commit('message/setContent', {
-                  content: 'ログインしました',
-                  timeout: 5000
-                });
-
-              case 4:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -3125,14 +3129,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 2:
                 if (_this.apiStatus) {
                   _this.$router.push('/');
+
+                  _this.$store.commit('message/setContent', {
+                    content: 'ユーザー登録しました',
+                    timeout: 5000
+                  });
                 }
 
-                _this.$store.commit('message/setContent', {
-                  content: 'ユーザー登録しました',
-                  timeout: 5000
-                });
-
-              case 4:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -4178,8 +4182,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     window.addEventListener("scroll", this.handleScroll);
-  },
-  mounted: function mounted() {
     this.isActive = true;
   },
   watch: {
@@ -4192,15 +4194,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  if (!(_this.isLogin === true)) {
-                    _context.next = 3;
-                    break;
-                  }
-
-                  _context.next = 3;
+                  _context.next = 2;
                   return _this.fetchSpots();
 
-                case 3:
+                case 2:
                 case "end":
                   return _context.stop();
               }
@@ -4226,7 +4223,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 _this2.$router.push('/', function () {});
 
-              case 3:
+                _this2.$store.commit('message/setContent', {
+                  content: 'ゲストユーザーでログインしました',
+                  timeout: 5000
+                });
+
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -4243,21 +4245,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                console.log(_this3.isLogin);
-
-                if (!(_this3.isLogin === true)) {
-                  _context3.next = 10;
-                  break;
-                }
-
-                _context3.next = 4;
+                _context3.next = 2;
                 return axios.get('/api/');
 
-              case 4:
+              case 2:
                 response = _context3.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                  _context3.next = 8;
+                  _context3.next = 6;
                   break;
                 }
 
@@ -4265,11 +4260,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context3.abrupt("return", false);
 
-              case 8:
-                _this3.followUserSpots = Object.values(response.data[2]);
-                _this3.recentSpots = Object.values(response.data[1]);
+              case 6:
+                _this3.followUserSpots = response.data[2];
+                _this3.recentSpots = response.data[1];
 
-              case 10:
+              case 8:
               case "end":
                 return _context3.stop();
             }
@@ -4796,7 +4791,7 @@ var actions = {
       }, _callee2);
     }))();
   },
-  logout: function logout(context) {
+  guestLogin: function guestLogin(context, data) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
       var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -4805,19 +4800,62 @@ var actions = {
             case 0:
               context.commit('setApiStatus', null);
               _context3.next = 3;
-              return axios.post('/api/logout');
+              return axios.post('/api/guest', data);
 
             case 3:
               response = _context3.sent;
+              console.log(response.data);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                _context3.next = 8;
+                _context3.next = 9;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              context.commit('setUser', response.data);
+              return _context3.abrupt("return", false);
+
+            case 9:
+              context.commit('setApiStatus', false);
+
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY) {
+                context.commit('setLoginErrorMessages', response.data.errors);
+              } else {
+                context.commit('error/setCode', response.status, {
+                  root: true
+                });
+              }
+
+            case 11:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+  logout: function logout(context) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              context.commit('setApiStatus', null);
+              _context4.next = 3;
+              return axios.post('/api/logout');
+
+            case 3:
+              response = _context4.sent;
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
+                _context4.next = 8;
                 break;
               }
 
               context.commit('setApiStatus', true);
               context.commit('setUser', null);
-              return _context3.abrupt("return", false);
+              return _context4.abrupt("return", false);
 
             case 8:
               context.commit('setApiStatus', false);
@@ -4827,51 +4865,13 @@ var actions = {
 
             case 10:
             case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3);
-    }))();
-  },
-  currentUser: function currentUser(context) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-      var response, user;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              context.commit('setApiStatus', null);
-              _context4.next = 3;
-              return axios.get('/api/user');
-
-            case 3:
-              response = _context4.sent;
-              user = response.data || null;
-
-              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                _context4.next = 9;
-                break;
-              }
-
-              context.commit('setApiStatus', true);
-              context.commit('setUser', user);
-              return _context4.abrupt("return", false);
-
-            case 9:
-              context.commit('setApiStatus', false);
-              context.commit('error/setCode', response.status, {
-                root: true
-              });
-
-            case 11:
-            case "end":
               return _context4.stop();
           }
         }
       }, _callee4);
     }))();
   },
-  guestLogin: function guestLogin(context) {
+  currentUser: function currentUser(context) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
       var response, user;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
@@ -4880,7 +4880,7 @@ var actions = {
             case 0:
               context.commit('setApiStatus', null);
               _context5.next = 3;
-              return axios.post('/api/guest');
+              return axios.get('/api/user');
 
             case 3:
               response = _context5.sent;

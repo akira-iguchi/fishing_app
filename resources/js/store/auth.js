@@ -62,6 +62,24 @@ const actions = {
             context.commit('error/setCode', response.status, { root: true })
         }
     },
+    async guestLogin (context, data) {
+        context.commit('setApiStatus', null)
+        const response = await axios.post('/api/guest', data)
+
+        console.log(response.data)
+        if (response.status === OK) {
+            context.commit('setApiStatus', true)
+            context.commit('setUser', response.data)
+            return false
+        }
+
+        context.commit('setApiStatus', false)
+        if (response.status === UNPROCESSABLE_ENTITY) {
+            context.commit('setLoginErrorMessages', response.data.errors)
+        } else {
+            context.commit('error/setCode', response.status, { root: true })
+        }
+    },
     async logout (context) {
         context.commit('setApiStatus', null)
         const response = await axios.post('/api/logout')
@@ -78,20 +96,6 @@ const actions = {
     async currentUser (context) {
         context.commit('setApiStatus', null)
         const response = await axios.get('/api/user')
-        const user = response.data || null
-
-        if (response.status === OK) {
-            context.commit('setApiStatus', true)
-            context.commit('setUser', user)
-            return false
-        }
-
-        context.commit('setApiStatus', false)
-        context.commit('error/setCode', response.status, { root: true })
-    },
-    async guestLogin (context) {
-        context.commit('setApiStatus', null)
-        const response = await axios.post('/api/guest')
         const user = response.data || null
 
         if (response.status === OK) {

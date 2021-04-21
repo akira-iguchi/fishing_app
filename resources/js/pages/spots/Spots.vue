@@ -139,16 +139,12 @@
         },
         created() {
             window.addEventListener("scroll", this.handleScroll);
-        },
-        mounted: function() {
             this.isActive = true
         },
         watch: {
             $route: {
                 async handler () {
-                    if (this.isLogin === true) {
-                        await this.fetchSpots()
-                    }
+                    await this.fetchSpots()
                 },
                 immediate: true
             }
@@ -158,20 +154,22 @@
                 await this.$store.dispatch('auth/guestLogin')
 
                 this.$router.push('/', () => {})
+
+                this.$store.commit('message/setContent', {
+                    content: 'ゲストユーザーでログインしました',
+                    timeout: 5000
+                })
             },
             async fetchSpots () {
-                console.log(this.isLogin)
-                if (this.isLogin === true) {
-                    const response = await axios.get('/api/')
+                const response = await axios.get('/api/')
 
-                    if (response.status !== OK) {
-                        this.$store.commit('error/setCode', response.status)
-                        return false
-                    }
-
-                    this.followUserSpots = Object.values(response.data[2])
-                    this.recentSpots = Object.values(response.data[1])
+                if (response.status !== OK) {
+                    this.$store.commit('error/setCode', response.status)
+                    return false
                 }
+
+                this.followUserSpots = response.data[2]
+                this.recentSpots = response.data[1]
             },
             handleScroll() {
                 const targetElement = this.$el.querySelectorAll('.top-slider') || null

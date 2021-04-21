@@ -103,12 +103,12 @@
 
                 if (this.apiStatus) {
                     this.$router.push('/')
+                    this.$store.commit('message/setContent', {
+                        content: 'ユーザー登録しました',
+                        timeout: 5000
+                    })
                 }
 
-                this.$store.commit('message/setContent', {
-                    content: 'ユーザー登録しました',
-                    timeout: 5000
-                })
             },
             clearError () {
                 this.$store.commit('auth/setRegisterErrorMessages', null)
