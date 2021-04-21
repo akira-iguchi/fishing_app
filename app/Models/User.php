@@ -48,11 +48,11 @@ class User extends Authenticatable
 
 
     protected $appends = [
-        'followed_by',
+        // 'followed_by',
         // 'count_spots',
         // 'count_favorite_spots',
         // 'count_followings',
-        'count_followers',
+        // 'count_followers',
     ];
 
     /**

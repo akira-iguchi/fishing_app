@@ -27,7 +27,7 @@
 
                     <RouterLink
                         class="btn btn-primary profile_edit_link"
-                        v-if="AuthUser && AuthUser.id !== 1"
+                        v-if="user.id === AuthUser.id && AuthUser.id !== 1"
                         :to="`/users/${user.id}/edit`"
                     >
                         プロフィールの編集

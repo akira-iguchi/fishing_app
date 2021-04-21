@@ -36,11 +36,38 @@
   box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
 }
 
+.fishing_type_card p {
+  text-align: center;
+  cursor: pointer;
+}
+
 .fishing_type_card img {
   cursor: pointer;
   margin-top: 1em;
-  width: 7em;
+  width: 10em;
   background-color: #fff;
+}
+
+.full_screen_wrapper {
+  background: rgba(0, 0, 0, 0.1);
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.full_screen_image {
+  text-align: center;
+  width: 100% !important;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  max-width: 50rem;
+  margin-top: 4em !important;
+  border-radius: 3px;
 }
 
 .fishing_type_card_title {

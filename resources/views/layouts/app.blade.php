@@ -12,8 +12,8 @@
         <link rel="stylesheet" href="{{ asset('css/spot.css') }}">
         <link rel="stylesheet" href="{{ asset('css/user.css') }}">
         <link rel="stylesheet" href="{{ asset('css/fishing_type.css') }}">
-        <link rel="stylesheet" href="{{ asset('/css/fullcalendar/core/main.css') }}">
-        <link rel="stylesheet" href="{{ asset('/css/fullcalendar/daygrid/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/fullcalendar/core/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/fullcalendar/daygrid/main.css') }}">
     </head>
 
     <body>

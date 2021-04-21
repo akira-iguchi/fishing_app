@@ -57,18 +57,22 @@
                             <th>所在地</th>
                             <td><span>{{ spot.address }}</span></td>
                         </tr>
-                        <!-- @if(isset($spot->fishingTypes[0]))
-                            <tr>
-                                <th><a href="/fishing_types">おすすめの釣り方</a></th>
-                                <td>
-                                    @foreach($spot->fishingTypes as $fishing_type)
-                                        <ul class="spot-fishing_type">
-                                            <li>{{ $fishing_type->fishing_type_name }}</li>
-                                        </ul>
-                                    @endforeach
-                                </td>
-                            </tr>
-                        @endif -->
+                        <tr v-if="spot.fishing_types && spot.fishing_types.length > 0">
+                            <th>
+                                <RouterLink to="/fishing_types">
+                                    おすすめの釣り方
+                                </RouterLink>
+                            </th>
+                            <td>
+                                <ul class="spot-fishing_type">
+                                    <li v-for="fishing_type in spot.fishing_types"
+                                        :key="fishing_type.id"
+                                    >
+                                        {{ fishing_type.fishing_type_name }}
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
                         <tr>
                             <th>説明</th>
                             <td><span>{{ spot.explanation }}</span></td>

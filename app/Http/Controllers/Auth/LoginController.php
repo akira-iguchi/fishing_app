@@ -52,15 +52,10 @@ class LoginController extends Controller
     }
 
     // ゲストログイン処理
-    public function guestLogin()
+    public function guestLogin(Request $request)
     {
-        $email = 'guest@example.com';
-        $password = 'guest123';
+        Auth::attempt($request->all());
 
-        if (Auth::attempt(['email' => $email, 'password' => $password])) {
-            return response()->json();
-        }
-
-        return response()->json();
+        return $this->authenticated($request, $this->guard()->user());
     }
 }

@@ -79,7 +79,7 @@ class SpotController extends Controller
     {
         $spot = Spot::findOrFail($id)
             ->load(
-                ['user', 'spotImages', 'spotFavorites', 'spotComments', 'spotComments.user']
+                ['user', 'spotImages', 'spotFavorites', 'fishingTypes', 'spotComments', 'spotComments.user']
             );
 
         // その他の釣りスポット
@@ -95,11 +95,7 @@ class SpotController extends Controller
 
         $allFishingTypeNames = FishingType::all();
 
-        return view('spots.create', compact(
-            'spot',
-            'allTagNames',
-            'allFishingTypeNames',
-        ));
+        return [$allTagNames, $allFishingTypeNames];
     }
 
     public function store(SpotRequest $request, Spot $spot, SpotImage $spot_image)
@@ -116,7 +112,10 @@ class SpotController extends Controller
         });
 
         // 釣り方とリレーション
-        $spot->fishingTypes()->attach($request->fishing_types);
+        $request->fishing_types->each(function ($id) use ($spot) {
+            $fishing_type = FishingType::findOrFail($id);
+            $spot->fishingTypes()->attach($fishing_type);
+        });
 
         return response($spot, 201);
     }

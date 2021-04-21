@@ -151,7 +151,10 @@
         },
         methods: {
             async guestLogin () {
-                await this.$store.dispatch('auth/guestLogin')
+                await this.$store.dispatch('auth/guestLogin', {
+                    email: 'guest@example.com',
+                    password: 'guest123'
+                })
 
                 this.$router.push('/', () => {})
 
@@ -159,6 +162,8 @@
                     content: 'ゲストユーザーでログインしました',
                     timeout: 5000
                 })
+                console.log(this.AuthUser)
+
             },
             async fetchSpots () {
                 const response = await axios.get('/api/')

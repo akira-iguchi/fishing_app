@@ -38,6 +38,33 @@
                     </div>
 
                     <div class="form-group">
+                        <label>おすすめの釣り方</label><br>
+
+                        <div class="fishing_type_form">
+                            <span
+                                class="mr-2"
+                                v-for="fishingType in allFishingTypeNames"
+                                :key="fishingType.id"
+                            >
+                                <label :for="`${ fishingType.id }`">
+                                    <input
+                                        type="checkbox"
+                                        :id="`${ fishingType.id }`"
+                                        :value="`${ fishingType.id }`"
+                                        v-model="fishing_types"
+                                    > {{ fishingType.fishing_type_name }}
+                                </label>
+                            </span>
+                        </div>
+
+                        <div v-if="errors">
+                            <ul v-if="errors.fishing_types">
+                                <li class="text-danger" v-for="msg in errors.fishing_types" :key="msg">{{ msg }}</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label>画像（３つまで）</label><br>
 
                         <input id="image1" type="file" @change="onFile1Change">
@@ -89,7 +116,15 @@
                         <div v-if="0 > wordCount" v-on="changeTrue()"></div>
                         <div v-else-if="0 <= wordCount" v-on="changeFalse()"></div>
                         <label for="textAreaExplanation" class="required">説明</label>
-                        <textarea rows="6" id="textAreaExplanation" class="form-control" v-model="explanation" v-on:keydown.enter="$event.stopPropagation()" placeholder="例） 風が弱くて釣りやすい釣り場です。" required></textarea>
+                        <textarea
+                            rows="6"
+                            id="textAreaExplanation"
+                            class="form-control"
+                            v-model="explanation"
+                            v-on:keydown.enter="$event.stopPropagation()"
+                            placeholder="例） 風が弱くて釣りやすい釣り場です。"
+                            required>
+                        </textarea>
                         <p>残り<span v-bind:class="{ 'text-danger':isActive }">{{ wordCount }}</span>文字</p>
                     </div>
                     <div v-if="errors">
@@ -109,7 +144,7 @@
 
 <script>
     import SpotForm from "../../components/spots/SpotForm";
-    import { CREATED, UNPROCESSABLE_ENTITY } from '../../util'
+    import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../../util'
 
     export default {
         components: { SpotForm },
@@ -137,6 +172,8 @@
                 spotImage1: "",
                 spotImage2: "",
                 spotImage3: "",
+                allFishingTypeNames: [],
+                fishing_types: [],
                 errors: null,
             }
         },
@@ -151,7 +188,25 @@
                 return this.wordLimit - this.explanation.length
             },
         },
+        watch: {
+            $route: {
+                async handler () {
+                    await this.fetchCreateSpot()
+                },
+                immediate: true
+            }
+        },
         methods: {
+            async fetchCreateSpot () {
+                const response = await axios.get('/api/spots/create')
+
+                if (response.status !== OK) {
+                    this.$store.commit('error/setCode', response.status)
+                    return false
+                }
+
+                this.allFishingTypeNames = response.data[1]
+            },
             updateLocation(location) {
                 this.latitude = location.latLng.lat()
                 this.longitude = location.latLng.lng()
@@ -182,6 +237,7 @@
             changeFalse: function() {
                 this.isActive = false
             },
+            // 画像ファイルをプレビュー、エラーメッセージ処理（３つ）
             onFile1Change (event) {
                 if (event.target.files.length === 0) {
                     this.spotImage1Message = ""
@@ -242,11 +298,13 @@
                 this.spotImage3Message = ""
             },
             async Createspot () {
+                console.log(this.fishing_types)
                 const formData = new FormData()
                 formData.append('latitude', this.latitude)
                 formData.append('longitude', this.longitude)
                 formData.append('spot_name', this.name)
                 formData.append('address', this.address)
+                formData.append('fishing_types', this.fishing_types)
                 formData.append('explanation', this.explanation)
                 formData.append('spot_image1', this.spotImage1)
                 formData.append('spot_image2', this.spotImage2)

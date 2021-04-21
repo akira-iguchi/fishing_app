@@ -27,6 +27,6 @@ class UserTabController extends Controller
     public function followers(User $user)
     {
         return $followers = $user->followers
-                                ->load('followers', 'followers');
+                                ->load('followings', 'followers');
     }
 }

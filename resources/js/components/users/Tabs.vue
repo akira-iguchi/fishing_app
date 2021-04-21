@@ -44,7 +44,7 @@
         <div class="row" v-show="tab === 'followingsTab'">
             <div
                 class="mx-auto d-block col-xl-3 col-lg-4 col-md-6 mt-4 mb-5 text-center"
-                v-for="user in followings"
+                v-for="user in userFollowings"
                 :key="user.id"
             >
                 <div class="profile_image">
@@ -67,13 +67,13 @@
                 </div>
             </div>
 
-            <div class="tabItem_none" v-if="(followings.length) <= 0">フォローしていません</div>
+            <div class="tabItem_none" v-if="(userFollowings.length) <= 0">フォローしていません</div>
         </div>
 
         <div class="row" v-show="tab === 'followersTab'">
             <div
                 class="mx-auto d-block col-lg-4 col-md-6 mt-4 mb-5 text-center"
-                v-for="user in followers"
+                v-for="user in userFollowers"
                 :key="user.id"
             >
                 <div class="profile_image">
@@ -92,7 +92,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tabItem_none" v-if="(followers.length) <= 0">フォローされていません</div>
+            <div class="tabItem_none" v-if="(userFollowers.length) <= 0">フォローされていません</div>
         </div>
     </div>
 </template>
@@ -131,7 +131,7 @@
         },
         methods: {
             // ユーザーの釣りスポット一覧
-            getUserSpots() {
+            async getUserSpots() {
                 // this.tab = 'spotsTab';
                 // const response = await axios.get(`/api/users/${this.user.id}/spots`)
 
