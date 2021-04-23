@@ -112,8 +112,8 @@ class SpotController extends Controller
         });
 
         // 釣り方とリレーション
-        clock($request->fishing_types);
-        if ($request->has('fishing_types')) {
+        if ($request->filled('fishing_types')) {
+            // 配列化
             $fishingTypeId = explode(",", $request->fishing_types);
             $spot->fishingTypes()->attach($fishingTypeId);
         }
