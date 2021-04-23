@@ -32,7 +32,8 @@ class SpotRequest extends FormRequest
             'spot_image1' => 'nullable|image|mimes:jpeg,png,jpg',
             'spot_image2' => 'nullable|image|mimes:jpeg,png,jpg',
             'spot_image3' => 'nullable|image|mimes:jpeg,png,jpg',
-            'tags' => 'json|distinct|regex:/^(?!.*\s).+$/u|regex:/^(?!.*\/).*$/u',
+            'fishing_types' => 'nullable',
+            'tags' => 'nullable|json|distinct|regex:/^(?!.*\s).+$/u|regex:/^(?!.*\/).*$/u',
         ];
     }
 
@@ -59,8 +60,5 @@ class SpotRequest extends FormRequest
             ->map(function ($requestTag) {
                 return $requestTag->text;
             });
-
-        $this->fishing_types = collect($this->fishing_types)
-            ->slice(0, 8);
     }
 }

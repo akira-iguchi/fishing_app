@@ -4,19 +4,15 @@
             <div class="mx-auto d-block col-lg-8 spot_container">
                 <h1 class="spot_name">{{ spot.spot_name }}</h1>
 
-                <!-- @foreach($spot->tags as $tag)
-                    @if($loop->first)
                     <div class="card-body pt-3 pb-4 pl-3">
                         <div class="card-text line-height">
-                    @endif
-                        <a href="{{ route('tags', ['name' => $tag->tag_name]) }}" class="spot_tag">
-                            {{ $tag->hashtag }}
-                        </a>
-                    @if($loop->last)
+                            <span v-for="tag in spot.tags" :key="tag.id">
+                                <RouterLink class="spot_tag" :to="`/tags/${tag.tag_name}`">
+                                    {{ tag.hashtag }}
+                                </RouterLink>
+                            </span>
                         </div>
                     </div>
-                    @endif
-                @endforeach -->
 
                 <hooper
                     class="hooper-container"
@@ -207,12 +203,14 @@
 
                             <div class="mini_card_detail">
 
-                                <div class="card_item">
-                                    <!-- @include('favorites.favorite_button') -->
+                                <div class="card_item mr-1">
+                                    <FavoriteButton
+                                        :spot="otherSpot"
+                                    />
                                 </div>
 
                                 <div class="card_item">
-                                    <i class="fa fa-comment mr-1"></i>{{ otherSpot.spot_comments.length }}
+                                    <i class="fa fa-comment ml-1 mr-1"></i>{{ otherSpot.spot_comments.length }}
                                 </div>
 
                                 <RouterLink :to="`/users/${otherSpot.user_id}`">

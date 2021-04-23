@@ -22,7 +22,7 @@
                         <input id="spot_name" type="text" class="form-control" placeholder="例） 〇〇釣り公園" v-model="name" required>
                     </div>
                     <div v-if="errors">
-                        <ul v-if="errors.spot_name">
+                        <ul class="spot_errors" v-if="errors.spot_name">
                             <li class="text-danger" v-for="msg in errors.spot_name" :key="msg">{{ msg }}</li>
                         </ul>
                     </div>
@@ -32,8 +32,21 @@
                         <input id="spot_address" type="text" class="form-control" placeholder="例） 〇〇県〇〇市〇〇区〇〇町1-1-1" v-model="address">
                     </div>
                     <div v-if="errors">
-                        <ul v-if="errors.address">
+                        <ul class="spot_errors" v-if="errors.address">
                             <li class="text-danger" v-for="msg in errors.address" :key="msg">{{ msg }}</li>
+                        </ul>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tags">タグ（５つまで）</label>
+                        <SpotTagsInput
+                            :autocomplete-items="allTagNames || []"
+                            @tagsInput="getTag"
+                        />
+                    </div>
+                    <div v-if="errors">
+                        <ul class="spot_errors mt-3" v-if="errors.tags">
+                            <li class="text-danger" v-for="msg in errors.tags" :key="msg">{{ msg }}</li>
                         </ul>
                     </div>
 
@@ -58,7 +71,7 @@
                         </div>
 
                         <div v-if="errors">
-                            <ul v-if="errors.fishing_types">
+                            <ul class="spot_errors" v-if="errors.fishing_types">
                                 <li class="text-danger" v-for="msg in errors.fishing_types" :key="msg">{{ msg }}</li>
                             </ul>
                         </div>
@@ -76,17 +89,17 @@
                         </span>
                     </div>
                     <div v-if="errors">
-                        <ul v-if="errors.spotImage1">
+                        <ul class="spot_errors" v-if="errors.spotImage1">
                             <li class="text-danger" v-for="msg in errors.spotImage1" :key="msg">{{ msg }}</li>
                         </ul>
                     </div>
                     <div v-if="errors">
-                        <ul v-if="errors.spotImage2">
+                        <ul class="spot_errors" v-if="errors.spotImage2">
                             <li class="text-danger" v-for="msg in errors.spotImage2" :key="msg">{{ msg }}</li>
                         </ul>
                     </div>
                     <div v-if="errors">
-                        <ul v-if="errors.spotImage3">
+                        <ul class="spot_errors" v-if="errors.spotImage3">
                             <li class="text-danger" v-for="msg in errors.spotImage3" :key="msg">{{ msg }}</li>
                         </ul>
                     </div>
@@ -128,7 +141,7 @@
                         <p>残り<span v-bind:class="{ 'text-danger':isActive }">{{ wordCount }}</span>文字</p>
                     </div>
                     <div v-if="errors">
-                        <ul v-if="errors.explanation">
+                        <ul class="spot_errors" v-if="errors.explanation">
                             <li class="text-danger" v-for="msg in errors.explanation" :key="msg">{{ msg }}</li>
                         </ul>
                     </div>
@@ -144,10 +157,14 @@
 
 <script>
     import SpotForm from "../../components/spots/SpotForm";
+    import SpotTagsInput from '../../components/tags/SpotTagsInput.vue'
     import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../../util'
 
     export default {
-        components: { SpotForm },
+        components: {
+            SpotForm,
+            SpotTagsInput,
+        },
         data(){
             return {
                 mapLocation: {
@@ -172,8 +189,10 @@
                 spotImage1: "",
                 spotImage2: "",
                 spotImage3: "",
+                allTagNames: [],
                 allFishingTypeNames: [],
                 fishing_types: [],
+                tags: [],
                 errors: null,
             }
         },
@@ -205,6 +224,7 @@
                     return false
                 }
 
+                this.allTagNames = response.data[0]
                 this.allFishingTypeNames = response.data[1]
             },
             updateLocation(location) {
@@ -297,13 +317,20 @@
                 this.spotImage3 = event.target.files[0]
                 this.spotImage3Message = ""
             },
+            getTag (value) {
+                this.tags = value || []
+            },
             async Createspot () {
-                console.log(this.fishing_types)
+                var nameList = this.fishing_types.map(function(obj){
+                    return obj;
+                });
+                console.log(nameList)
                 const formData = new FormData()
                 formData.append('latitude', this.latitude)
                 formData.append('longitude', this.longitude)
                 formData.append('spot_name', this.name)
                 formData.append('address', this.address)
+                formData.append('tags', this.tags)
                 formData.append('fishing_types', this.fishing_types)
                 formData.append('explanation', this.explanation)
                 formData.append('spot_image1', this.spotImage1)

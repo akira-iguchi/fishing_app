@@ -16,6 +16,10 @@ class Tag extends Model
         'tag_name',
     ];
 
+    protected $appends = [
+        'hashtag',
+    ];
+
     public function getHashtagAttribute(): string
     {
         return '#' . $this->tag_name;

@@ -162,7 +162,6 @@
                     content: 'ゲストユーザーでログインしました',
                     timeout: 5000
                 })
-                console.log(this.AuthUser)
 
             },
             async fetchSpots () {
