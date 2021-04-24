@@ -2979,16 +2979,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    axios.get('https://api.openweathermap.org/data/2.5/weather?q=Osaka,jp&units=metric&appid=', {
+    axios.get('https://api.openweathermap.org/data/2.5/weather?q=Osaka,jp&units=metric&appid=fd147a76560ede8d326036a373f1ea0d', {
       headers: {
         'Access-Control-Allow-Origin': 'http://localhost',
         'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
         'Access-Control-Allow-Methods': 'GET',
-        'Access-Control-Allow-Credentials': true,
-        'HTTP/1.1 200 OK': true
+        'Access-Control-Allow-Credentials': true // 'HTTP OK': true,
+
       }
     }).then(function (response) {
-      console.log(response.data);
+      console.log(response);
     }.bind(this))["catch"](function (error) {
       console.log(error);
     });

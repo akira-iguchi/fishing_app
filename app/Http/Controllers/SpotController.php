@@ -31,6 +31,7 @@ class SpotController extends Controller
 
     public function index(SearchSpotRequest $request)
     {
+        $client = new \GuzzleHttp\Client();
 
         if (Auth::check()) {
             $searchData = $this->searchItems($request);
