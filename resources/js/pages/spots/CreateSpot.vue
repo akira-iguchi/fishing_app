@@ -321,10 +321,6 @@
                 this.tags = value || []
             },
             async Createspot () {
-                var nameList = this.fishing_types.map(function(obj){
-                    return obj;
-                });
-                console.log(nameList)
                 const formData = new FormData()
                 formData.append('latitude', this.latitude)
                 formData.append('longitude', this.longitude)

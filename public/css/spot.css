@@ -563,12 +563,16 @@
 .hooper-container:hover .hooper-prev,
 .hooper-container:hover .hooper-next {
   transition: 0.3s;
+  opacity: 1;
   transform: none;
 }
 
 .hooper-prev,
 .hooper-next {
+  border: solid 1px silver;
   transform: translateY(0);
+  opacity: 0;
+  height: 5em;
 }
 
 .hooper-prev:focus-within,
@@ -590,11 +594,13 @@
 }
 
 .hooper-prev {
+  box-shadow: 2px 1px 3px #888;
   transition: 0.1s;
   transform: translateX(-2.2rem);
 }
 
 .hooper-next {
+  box-shadow: -2px 1px 3px #888;
   transition: 0.1s;
   transform: translateX(2.2rem);
 }

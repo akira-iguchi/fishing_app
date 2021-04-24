@@ -19,14 +19,8 @@
                     </div>
 
                     <aside class="aside_hidden">
-                        <select id="js-prefectures">
-                            <!-- @include('weathers.prefecture') -->
-                        </select>
-
-                        <div class="entire_weather">
-                            <div id="city-name"></div>
-                            <div id="weather"></div>
-                        </div>
+                        <!-- 天気予報 -->
+                        <WeatherForecast />
                     </aside>
                 </div>
 
@@ -117,10 +111,12 @@
 <script>
     import { OK } from '../../util'
     import SpotCard from '../../components/spots/cards/SpotCard.vue'
+    import WeatherForecast from '../../components/weathers/WeatherForecast.vue'
 
     export default {
         components: {
-            SpotCard
+            SpotCard,
+            WeatherForecast
         },
         data () {
             return {

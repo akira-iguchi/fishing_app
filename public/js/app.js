@@ -2941,6 +2941,63 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/WeatherForecast.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/WeatherForecast.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {},
+  data: function data() {
+    return {
+      day: "",
+      main: ""
+    };
+  },
+  mounted: function mounted() {
+    axios.get('https://api.openweathermap.org/data/2.5/weather?q=Osaka,jp&units=metric&appid=', {
+      headers: {
+        'Access-Control-Allow-Origin': 'http://localhost',
+        'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
+        'Access-Control-Allow-Methods': 'GET',
+        'Access-Control-Allow-Credentials': true,
+        'HTTP/1.1 200 OK': true
+      }
+    }).then(function (response) {
+      console.log(response.data);
+    }.bind(this))["catch"](function (error) {
+      console.log(error);
+    });
+    axios.defaults.withCredentials = true;
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/auth/Login.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/auth/Login.vue?vue&type=script&lang=js& ***!
@@ -3805,15 +3862,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var nameList, formData, response;
+        var formData, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                nameList = _this6.fishing_types.map(function (obj) {
-                  return obj;
-                });
-                console.log(nameList);
                 formData = new FormData();
                 formData.append('latitude', _this6.latitude);
                 formData.append('longitude', _this6.longitude);
@@ -3825,21 +3878,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append('spot_image1', _this6.spotImage1);
                 formData.append('spot_image2', _this6.spotImage2);
                 formData.append('spot_image3', _this6.spotImage3);
-                _context3.next = 15;
+                _context3.next = 13;
                 return axios.post('/api/spots', formData);
 
-              case 15:
+              case 13:
                 response = _context3.sent;
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_3__.UNPROCESSABLE_ENTITY)) {
-                  _context3.next = 19;
+                  _context3.next = 17;
                   break;
                 }
 
                 _this6.errors = response.data.errors;
                 return _context3.abrupt("return", false);
 
-              case 19:
+              case 17:
                 _this6.spotImage1Message = "";
                 _this6.spotImage2Message = "";
                 _this6.spotImage3Message = "";
@@ -3850,7 +3903,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this6.$emit('input', false);
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_3__.CREATED)) {
-                  _context3.next = 29;
+                  _context3.next = 27;
                   break;
                 }
 
@@ -3858,7 +3911,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context3.abrupt("return", false);
 
-              case 29:
+              case 27:
                 _this6.$store.commit('message/setContent', {
                   content: '釣りスポットを投稿しました',
                   timeout: 6000
@@ -3866,7 +3919,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this6.$router.push("/spots/".concat(response.data.id));
 
-              case 31:
+              case 29:
               case "end":
                 return _context3.stop();
             }
@@ -4398,6 +4451,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
 /* harmony import */ var _components_spots_cards_SpotCard_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/spots/cards/SpotCard.vue */ "./resources/js/components/spots/cards/SpotCard.vue");
+/* harmony import */ var _components_weathers_WeatherForecast_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/weathers/WeatherForecast.vue */ "./resources/js/components/weathers/WeatherForecast.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -4514,17 +4568,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    SpotCard: _components_spots_cards_SpotCard_vue__WEBPACK_IMPORTED_MODULE_2__.default
+    SpotCard: _components_spots_cards_SpotCard_vue__WEBPACK_IMPORTED_MODULE_2__.default,
+    WeatherForecast: _components_weathers_WeatherForecast_vue__WEBPACK_IMPORTED_MODULE_3__.default
   },
   data: function data() {
     return {
@@ -42823,6 +42873,45 @@ component.options.__file = "resources/js/components/users/Tabs.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/weathers/WeatherForecast.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/weathers/WeatherForecast.vue ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _WeatherForecast_vue_vue_type_template_id_1c4e02aa___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WeatherForecast.vue?vue&type=template&id=1c4e02aa& */ "./resources/js/components/weathers/WeatherForecast.vue?vue&type=template&id=1c4e02aa&");
+/* harmony import */ var _WeatherForecast_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./WeatherForecast.vue?vue&type=script&lang=js& */ "./resources/js/components/weathers/WeatherForecast.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _WeatherForecast_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _WeatherForecast_vue_vue_type_template_id_1c4e02aa___WEBPACK_IMPORTED_MODULE_0__.render,
+  _WeatherForecast_vue_vue_type_template_id_1c4e02aa___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/weathers/WeatherForecast.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/pages/auth/Login.vue":
 /*!*******************************************!*\
   !*** ./resources/js/pages/auth/Login.vue ***!
@@ -43318,6 +43407,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/weathers/WeatherForecast.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/weathers/WeatherForecast.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WeatherForecast_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./WeatherForecast.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/WeatherForecast.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WeatherForecast_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/pages/auth/Login.vue?vue&type=script&lang=js&":
 /*!********************************************************************!*\
   !*** ./resources/js/pages/auth/Login.vue?vue&type=script&lang=js& ***!
@@ -43810,6 +43915,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabs_vue_vue_type_template_id_41e6a550___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabs_vue_vue_type_template_id_41e6a550___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Tabs.vue?vue&type=template&id=41e6a550& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/users/Tabs.vue?vue&type=template&id=41e6a550&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/weathers/WeatherForecast.vue?vue&type=template&id=1c4e02aa&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/weathers/WeatherForecast.vue?vue&type=template&id=1c4e02aa& ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WeatherForecast_vue_vue_type_template_id_1c4e02aa___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WeatherForecast_vue_vue_type_template_id_1c4e02aa___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WeatherForecast_vue_vue_type_template_id_1c4e02aa___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./WeatherForecast.vue?vue&type=template&id=1c4e02aa& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/WeatherForecast.vue?vue&type=template&id=1c4e02aa&");
 
 
 /***/ }),
@@ -45037,6 +45159,47 @@ var render = function() {
       ],
       2
     )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/WeatherForecast.vue?vue&type=template&id=1c4e02aa&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/WeatherForecast.vue?vue&type=template&id=1c4e02aa& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("select", { attrs: { id: "js-prefectures" } }),
+    _vm._v(" "),
+    _c("div", { staticClass: "entire_weather" }, [
+      _c("div", { attrs: { id: "city-name" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "weather-report" }, [
+        _c("div", { staticClass: "weather-date" }, [
+          _vm._v("  " + _vm._s(_vm.day) + "  ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "weather-main" }, [
+          _vm._v(" " + _vm._s(_vm.main) + "  ")
+        ])
+      ])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -47151,7 +47314,16 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(0),
+            _c("div", { staticClass: "toppage_under" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "aside",
+                { staticClass: "aside_hidden" },
+                [_c("WeatherForecast")],
+                1
+              )
+            ]),
             _vm._v(" "),
             _c("hr"),
             _vm._v(" "),
@@ -47257,25 +47429,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "toppage_under" }, [
-      _c("div", { staticClass: "w-100" }, [
-        _c("h2", { staticClass: "toppage_heading" }, [
-          _vm._v("人気の釣りスポット"),
-          _c("i", { staticClass: "fas fa-crown" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" })
+    return _c("div", { staticClass: "w-100" }, [
+      _c("h2", { staticClass: "toppage_heading" }, [
+        _vm._v("人気の釣りスポット"),
+        _c("i", { staticClass: "fas fa-crown" })
       ]),
       _vm._v(" "),
-      _c("aside", { staticClass: "aside_hidden" }, [
-        _c("select", { attrs: { id: "js-prefectures" } }),
-        _vm._v(" "),
-        _c("div", { staticClass: "entire_weather" }, [
-          _c("div", { attrs: { id: "city-name" } }),
-          _vm._v(" "),
-          _c("div", { attrs: { id: "weather" } })
-        ])
-      ])
+      _c("div", { staticClass: "row" })
     ])
   },
   function() {

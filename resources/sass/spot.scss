@@ -578,13 +578,17 @@ $breakpoint-tablet: 896px;
   &:hover .hooper-prev,
   &:hover .hooper-next {
     transition: .3s;
+    opacity: 1;
     transform: none;
   }
 }
 
 .hooper-prev,
 .hooper-next {
+  border: solid 1px silver;
   transform: translateY(0);
+  opacity: 0;
+  height: 5em;
 
   &:focus-within {
     outline: none;
@@ -605,11 +609,13 @@ $breakpoint-tablet: 896px;
 }
 
 .hooper-prev{
+  box-shadow: 2px 1px 3px #888;
   transition: .1s;
   transform: translateX(-2.2rem);
 }
 
 .hooper-next {
+  box-shadow: -2px 1px 3px #888;
   transition: .1s;
   transform: translateX(2.2rem);
 }
