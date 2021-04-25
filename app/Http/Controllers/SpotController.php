@@ -31,27 +31,25 @@ class SpotController extends Controller
 
     public function index(SearchSpotRequest $request)
     {
-        $client = new \GuzzleHttp\Client();
-
         if (Auth::check()) {
             $searchData = $this->searchItems($request);
 
             // 最近の投稿
             $recentSpots = Spot::all()->sortByDesc('id')->take(12)
-                        ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
+            ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
 
             // フォローしたユーザーの釣りスポット
             if (Auth::user()->count_followings > 0) {
                 $followUserSpots = Spot::where('user_id', Auth::user()->followings()->pluck('followee_id'))
-                                    ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(8)
-                                    ->get()->sortByDesc('id');
+                ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(8)
+                ->get()->sortByDesc('id');
             } else {
                 $followUserSpots = null;
             }
 
             // いいねランキング
             $rankSpots = Spot::withCount('spotFavorites')->orderBy('spot_favorites_count', 'desc')
-                        ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(4)->get();
+            ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(4)->get();
 
             return [$searchData, $recentSpots, $followUserSpots, $rankSpots];
         } else {

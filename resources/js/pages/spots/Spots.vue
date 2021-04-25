@@ -20,7 +20,9 @@
 
                     <aside class="aside_hidden">
                         <!-- 天気予報 -->
-                        <WeatherForecast />
+                        <WeatherForecast
+                            :weather="weatherData"
+                        />
                     </aside>
                 </div>
 
@@ -122,6 +124,7 @@
             return {
                 followUserSpots: [],
                 recentSpots: [],
+                weatherData: {},
                 isActive: false,
             }
         },
@@ -168,8 +171,9 @@
                     return false
                 }
 
-                this.followUserSpots = response.data[2]
                 this.recentSpots = response.data[1]
+                this.followUserSpots = response.data[2]
+                this.weatherData = response.data[4]
             },
             handleScroll() {
                 const targetElement = this.$el.querySelectorAll('.top-slider') || null

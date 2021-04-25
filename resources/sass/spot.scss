@@ -250,7 +250,7 @@ $breakpoint-tablet: 896px;
   display: none;
 }
 
-#js-prefectures {
+.prefectures {
   position: relative;
   left: 20px;
   margin-top: 40px;
@@ -312,7 +312,7 @@ $breakpoint-tablet: 896px;
   margin-left: 20px;
   margin-bottom: 20px;
   text-align: center;
-  padding: 1.5em;
+  padding: .7em 1.5em 0 1.5em;
   width: 353px;
   height: 695px;
   border: 1px solid rgb(0 0 0 / 20%);;
@@ -320,8 +320,9 @@ $breakpoint-tablet: 896px;
   box-shadow: 0px 0px 3px rgb(0 0 0 / 20%);
 }
 
-#city-name {
-  margin-bottom: 30px;
+.city_name {
+  font-size: 2em;
+  margin-bottom: 22px;
   text-shadow: 0px 2px 7px #808080;
 }
 
@@ -340,7 +341,7 @@ $breakpoint-tablet: 896px;
 
 .weather-icon {
   border-style: hidden;
-  width: 100px;
+  width: 90px;
   height: 100px;
 }
 

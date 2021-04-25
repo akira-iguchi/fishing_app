@@ -24,7 +24,7 @@
                 $('#weather').html(insertHTML);
             })
             .fail(function(data) {
-                console.log(this.data);
+                console.log(data);
             });
         });
 

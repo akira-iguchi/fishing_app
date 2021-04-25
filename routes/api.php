@@ -62,16 +62,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('comments/{comment}', 'SpotCommentController@destroy')->name('comment.delete');
     });
 
-    // タグの釣りスポット一覧
     Route::get('/tags/{name}', 'TagController')->name('tags');
 
-    // ユーザーの基本機能
     Route::resource('users', 'UserController')->except(['index']);;
 
-    // 釣り方一覧
     Route::get('/fishing_types','FishingTypeController');
 
-    // 釣りスポット機能
+    Route::get('/weathers','WeatherController');
+
     Route::get('/spots/search','SpotController@search')->name('spots.search');
     Route::resource('/spots', 'SpotController')->except(['index']);
 });

@@ -22,8 +22,7 @@
             <!-- <main>@yield('content')</main> -->
         </div>
 
-        <script>const weatherApiKey = "{{ config('services.weather.apikey') }}"
-                    googleMapApiKey = "{{ config('services.google-map.apikey') }}"
+        <script>const googleMapApiKey = "{{ config('services.google-map.apikey') }}"
         </script>
         <script src="{{ mix('/js/app.js') }}"></script>
         @stack('js')
