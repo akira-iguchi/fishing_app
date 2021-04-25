@@ -3,7 +3,7 @@
         class="prefectures"
         @change="changePrefecture"
     >
-        <option disabled value="" selected>都道府県を選んでね</option>
+        <option disabled value="" selected>都道府県を選択してください</option>
         <option value="tokyo">東京</option>
         <option value="osaka">大阪</option>
         <option value="hokkaido">北海道</option>
