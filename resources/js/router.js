@@ -74,6 +74,18 @@ const routes = [
         }
     },
     {
+        path: '/spots/search',
+        component: SearchSpots,
+        props: true,
+        beforeEnter (to, from, next) {
+            if (store.getters['auth/check']) {
+                next()
+            } else {
+                next('/')
+            }
+        }
+    },
+    {
         path: '/users/:id',
         component: UserProfile,
         props: true,

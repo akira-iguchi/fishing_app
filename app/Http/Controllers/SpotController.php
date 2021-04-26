@@ -67,11 +67,7 @@ class SpotController extends Controller
 
         $searchFishingTypes = $searchFishingTypeName;
 
-        return view('spots.searches.search', compact(
-            'searchData',
-            'spots',
-            'searchFishingTypes',
-        ));
+        return [$searchData, $spots, $searchFishingTypes];
     }
 
     public function show(String $id)

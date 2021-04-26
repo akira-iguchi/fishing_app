@@ -2,12 +2,15 @@
     <div>
         <div v-if="isLogin">
             <div class="container">
-                <!-- @include('spots.searches.search_form') -->
+                <SearchForm
+                    :fishingTypeNames="fishingTypeNames"
+                    :tagNames="tagNames"
+                />
 
                 <div class="text-center">
-                    <li>
+                    <span>
                         <RouterLink to="/spots/create" class="btn create_btn">釣りスポットを投稿</RouterLink>
-                    </li>
+                    </span>
                 </div>
 
                 <div class="toppage_under">
@@ -20,9 +23,7 @@
 
                     <aside class="aside_hidden">
                         <!-- 天気予報 -->
-                        <WeatherForecast
-                            :weather="weatherData"
-                        />
+                        <WeatherForecast />
                     </aside>
                 </div>
 
@@ -113,18 +114,21 @@
 <script>
     import { OK } from '../../util'
     import SpotCard from '../../components/spots/cards/SpotCard.vue'
+    import SearchForm from '../../components/spots/searches/SearchForm.vue'
     import WeatherForecast from '../../components/weathers/WeatherForecast.vue'
 
     export default {
         components: {
             SpotCard,
+            SearchForm,
             WeatherForecast
         },
         data () {
             return {
+                fishingTypeNames: [],
                 followUserSpots: [],
                 recentSpots: [],
-                weatherData: {},
+                tagNames: [],
                 isActive: false,
             }
         },
@@ -171,9 +175,10 @@
                     return false
                 }
 
+                this.fishingTypeNames = response.data[0][0]
+                this.tagNames = response.data[0][3]
                 this.recentSpots = response.data[1]
                 this.followUserSpots = response.data[2]
-                this.weatherData = response.data[4]
             },
             handleScroll() {
                 const targetElement = this.$el.querySelectorAll('.top-slider') || null

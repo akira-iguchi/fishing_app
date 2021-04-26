@@ -2410,6 +2410,112 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/searches/SearchForm.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/searches/SearchForm.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    fishingTypeNames: {
+      type: Array,
+      required: true
+    },
+    tagNames: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    addComment: function addComment() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var formData, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                formData = new FormData();
+                formData.append('comment', _this.commentContent);
+                formData.append('comment_image', _this.commentImage);
+                _context.next = 5;
+                return axios.post("/api/spots/".concat(_this.id, "/comments"), formData);
+
+              case 5:
+                response = _context.sent;
+
+                if (!(response.status === UNPROCESSABLE_ENTITY)) {
+                  _context.next = 9;
+                  break;
+                }
+
+                _this.commentErrors = response.data.errors;
+                return _context.abrupt("return", false);
+
+              case 9:
+                _this.spot.count_spot_comments += 1;
+                _this.commentImageMessage = "";
+                _this.preview = null;
+                _this.commentContent = '';
+                _this.commentErrors = null;
+
+              case 14:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tags/SpotTagsInput.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/tags/SpotTagsInput.vue?vue&type=script&lang=js& ***!
@@ -4661,7 +4767,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
 /* harmony import */ var _components_spots_cards_SpotCard_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/spots/cards/SpotCard.vue */ "./resources/js/components/spots/cards/SpotCard.vue");
-/* harmony import */ var _components_weathers_WeatherForecast_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/weathers/WeatherForecast.vue */ "./resources/js/components/weathers/WeatherForecast.vue");
+/* harmony import */ var _components_spots_searches_SearchForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/spots/searches/SearchForm.vue */ "./resources/js/components/spots/searches/SearchForm.vue");
+/* harmony import */ var _components_weathers_WeatherForecast_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/weathers/WeatherForecast.vue */ "./resources/js/components/weathers/WeatherForecast.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -4780,19 +4887,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     SpotCard: _components_spots_cards_SpotCard_vue__WEBPACK_IMPORTED_MODULE_2__.default,
-    WeatherForecast: _components_weathers_WeatherForecast_vue__WEBPACK_IMPORTED_MODULE_3__.default
+    SearchForm: _components_spots_searches_SearchForm_vue__WEBPACK_IMPORTED_MODULE_3__.default,
+    WeatherForecast: _components_weathers_WeatherForecast_vue__WEBPACK_IMPORTED_MODULE_4__.default
   },
   data: function data() {
     return {
+      fishingTypeNames: [],
       followUserSpots: [],
       recentSpots: [],
-      weatherData: {},
+      tagNames: [],
       isActive: false
     };
   },
@@ -4888,11 +4999,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context3.abrupt("return", false);
 
               case 6:
+                _this3.fishingTypeNames = response.data[0][0];
+                _this3.tagNames = response.data[0][3];
                 _this3.recentSpots = response.data[1];
                 _this3.followUserSpots = response.data[2];
-                _this3.weatherData = response.data[4];
 
-              case 9:
+              case 10:
               case "end":
                 return _context3.stop();
             }
@@ -5259,6 +5371,17 @@ var routes = [{
 }, {
   path: '/spots/:id',
   component: _pages_spots_SpotDetail_vue__WEBPACK_IMPORTED_MODULE_2__.default,
+  props: true,
+  beforeEnter: function beforeEnter(to, from, next) {
+    if (_store__WEBPACK_IMPORTED_MODULE_9__.default.getters["auth/check"]) {
+      next();
+    } else {
+      next('/');
+    }
+  }
+}, {
+  path: '/spots/search',
+  component: SearchSpots,
   props: true,
   beforeEnter: function beforeEnter(to, from, next) {
     if (_store__WEBPACK_IMPORTED_MODULE_9__.default.getters["auth/check"]) {
@@ -42968,6 +43091,45 @@ component.options.__file = "resources/js/components/spots/cards/SpotCard.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/spots/searches/SearchForm.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/spots/searches/SearchForm.vue ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _SearchForm_vue_vue_type_template_id_96fa0928___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchForm.vue?vue&type=template&id=96fa0928& */ "./resources/js/components/spots/searches/SearchForm.vue?vue&type=template&id=96fa0928&");
+/* harmony import */ var _SearchForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchForm.vue?vue&type=script&lang=js& */ "./resources/js/components/spots/searches/SearchForm.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _SearchForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _SearchForm_vue_vue_type_template_id_96fa0928___WEBPACK_IMPORTED_MODULE_0__.render,
+  _SearchForm_vue_vue_type_template_id_96fa0928___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/spots/searches/SearchForm.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/tags/SpotTagsInput.vue":
 /*!********************************************************!*\
   !*** ./resources/js/components/tags/SpotTagsInput.vue ***!
@@ -43612,6 +43774,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/spots/searches/SearchForm.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/spots/searches/SearchForm.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SearchForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/searches/SearchForm.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/tags/SpotTagsInput.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************!*\
   !*** ./resources/js/components/tags/SpotTagsInput.vue?vue&type=script&lang=js& ***!
@@ -44133,6 +44311,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpotCard_vue_vue_type_template_id_c0eed532___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpotCard_vue_vue_type_template_id_c0eed532___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SpotCard.vue?vue&type=template&id=c0eed532& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/cards/SpotCard.vue?vue&type=template&id=c0eed532&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/spots/searches/SearchForm.vue?vue&type=template&id=96fa0928&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/spots/searches/SearchForm.vue?vue&type=template&id=96fa0928& ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchForm_vue_vue_type_template_id_96fa0928___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchForm_vue_vue_type_template_id_96fa0928___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchForm_vue_vue_type_template_id_96fa0928___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SearchForm.vue?vue&type=template&id=96fa0928& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/searches/SearchForm.vue?vue&type=template&id=96fa0928&");
 
 
 /***/ }),
@@ -45060,6 +45255,99 @@ var render = function() {
       )
     ]
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/searches/SearchForm.vue?vue&type=template&id=96fa0928&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/searches/SearchForm.vue?vue&type=template&id=96fa0928& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "search_group" }, [
+    _c("div", { staticClass: "spotIndex_search_form" }, [
+      _c("div", { staticClass: "spot_search_top" }, [
+        _c("input", {
+          staticClass: "spotIndex_search_text",
+          attrs: { type: "text", placeholder: "キーワードを入力" }
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "spotIndex_search_button",
+            attrs: { type: "submit" },
+            on: { click: _vm.searchSpot }
+          },
+          [_c("i", { staticClass: "fas fa-search" })]
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        _vm._l(_vm.fishingTypeNames, function(fishingType) {
+          return _c("span", { key: fishingType.id }, [
+            _c("input", {
+              staticClass: "search_check",
+              attrs: { type: "checkbox", id: "" + fishingType.id },
+              domProps: { value: "" + fishingType.id }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "" + fishingType.id } }, [
+              _vm._v(_vm._s(fishingType.fishing_type_name))
+            ])
+          ])
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body mt-1" }, [
+      _c(
+        "div",
+        { staticClass: "card-text line-height" },
+        _vm._l(_vm.tagNames, function(tag) {
+          return _c(
+            "span",
+            { key: tag.id },
+            [
+              _c(
+                "RouterLink",
+                {
+                  staticClass: "spot_tag",
+                  attrs: { to: "/tags/" + tag.tag_name }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(tag.hashtag) +
+                      "\n                "
+                  )
+                ]
+              )
+            ],
+            1
+          )
+        }),
+        0
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -47742,74 +48030,84 @@ var render = function() {
   return _c("div", [
     _vm.isLogin
       ? _c("div", [
-          _c("div", { staticClass: "container" }, [
-            _c("div", { staticClass: "text-center" }, [
-              _c(
-                "li",
-                [
-                  _c(
-                    "RouterLink",
-                    {
-                      staticClass: "btn create_btn",
-                      attrs: { to: "/spots/create" }
-                    },
-                    [_vm._v("釣りスポットを投稿")]
-                  )
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "toppage_under" }, [
-              _vm._m(0),
+          _c(
+            "div",
+            { staticClass: "container" },
+            [
+              _c("SearchForm", {
+                attrs: {
+                  fishingTypeNames: _vm.fishingTypeNames,
+                  tagNames: _vm.tagNames
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "text-center" }, [
+                _c(
+                  "span",
+                  [
+                    _c(
+                      "RouterLink",
+                      {
+                        staticClass: "btn create_btn",
+                        attrs: { to: "/spots/create" }
+                      },
+                      [_vm._v("釣りスポットを投稿")]
+                    )
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "toppage_under" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "aside",
+                  { staticClass: "aside_hidden" },
+                  [_c("WeatherForecast")],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _vm.followUserSpots && _vm.followUserSpots.length > 0
+                ? _c("div", [
+                    _c("h2", { staticClass: "toppage_heading" }, [
+                      _vm._v("フォローしたユーザーの投稿")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "row" },
+                      _vm._l(_vm.followUserSpots, function(spot) {
+                        return _c("SpotCard", {
+                          key: spot.id,
+                          attrs: { item: spot }
+                        })
+                      }),
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("hr")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("h2", { staticClass: "toppage_heading" }, [
+                _vm._v("最近の投稿")
+              ]),
               _vm._v(" "),
               _c(
-                "aside",
-                { staticClass: "aside_hidden" },
-                [
-                  _c("WeatherForecast", { attrs: { weather: _vm.weatherData } })
-                ],
+                "div",
+                { staticClass: "row" },
+                _vm._l(_vm.recentSpots, function(spot) {
+                  return _c("SpotCard", { key: spot.id, attrs: { item: spot } })
+                }),
                 1
               )
-            ]),
-            _vm._v(" "),
-            _c("hr"),
-            _vm._v(" "),
-            _vm.followUserSpots && _vm.followUserSpots.length > 0
-              ? _c("div", [
-                  _c("h2", { staticClass: "toppage_heading" }, [
-                    _vm._v("フォローしたユーザーの投稿")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "row" },
-                    _vm._l(_vm.followUserSpots, function(spot) {
-                      return _c("SpotCard", {
-                        key: spot.id,
-                        attrs: { item: spot }
-                      })
-                    }),
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("hr")
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("h2", { staticClass: "toppage_heading" }, [
-              _vm._v("最近の投稿")
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "row" },
-              _vm._l(_vm.recentSpots, function(spot) {
-                return _c("SpotCard", { key: spot.id, attrs: { item: spot } })
-              }),
-              1
-            )
-          ])
+            ],
+            1
+          )
         ])
       : _c("div", [
           _c(
