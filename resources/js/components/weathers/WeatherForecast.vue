@@ -34,10 +34,7 @@
                 day: "",
                 weatherJavaneseConversion: "",
                 city: "",
-                icon: "",
                 day: "",
-                mainWeather: "",
-                temp: "",
             }
         },
         watch: {
@@ -99,8 +96,6 @@
                 const response = await axios.get('/weathers', {
                     prefectures: val.value
                 })
-
-                console.log(response.data)
             }
         },
     }

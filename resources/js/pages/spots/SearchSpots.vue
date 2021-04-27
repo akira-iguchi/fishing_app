@@ -6,10 +6,10 @@
         />
 
         <h2 class="search-result">
-            <span v-if="searchWord.length > 0 || searchFishingTypes.lrngth > 0">
-                <span v-if="searchWord.length > 0">{{ searchWord }}</span>
+            <span v-if="searchWord && searchWord.length > 0 || searchFishingTypes && searchFishingTypes.lrngth > 0">
+                <span v-if="searchWord && searchWord.length > 0">{{ searchWord }}</span>
 
-                <span v-if="searchFishingTypes.lrngth > 0">
+                <span v-if="searchFishingTypes && searchFishingTypes.length > 0">
                     <span
                         v-for="(fishinType, index) in searchFishingTypes"
                         :key="index"
@@ -22,10 +22,12 @@
             <span v-else>
                 検索結果
             </span>
-            @endif
         </h2>
 
-        <p class="search_count" v-if="searchWord.length > 0 || searchFishingTypes.lrngth > 0">
+        <p
+            class="search_count"
+            v-if="searchWord && searchWord.length > 0 || searchFishingTypes && searchFishingTypes.lrngth > 0"
+        >
             {{ spots.length }} 件
         </p>
         <p class="search_count" v-else>
@@ -34,7 +36,7 @@
 
         <br>
 
-        <div class="row" v-if="spots.length > 0">
+        <div class="row" v-if="spots && spots.length > 0">
             <SpotCard
                 v-for="spot in spots"
                 :key="spot.id"
@@ -47,7 +49,15 @@
 </template>
 
 <script>
+    import { OK } from '../../util'
+    import SpotCard from '../../components/spots/cards/SpotCard.vue'
+    import SearchForm from '../../components/spots/searches/SearchForm.vue'
+
     export default {
+        components: {
+            SpotCard,
+            SearchForm,
+        },
         data () {
             return {
                 allFishingTypeNames: [],
@@ -81,6 +91,7 @@
                 this.tagNames = response.data[0][3]
                 this.spots = response.data[1]
                 this.fishingTypeNames = response.data[2]
+                console.log(this.searchFishingTypes)
             },
         },
 

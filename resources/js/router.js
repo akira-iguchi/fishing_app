@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import Spots from './pages/spots/Spots.vue'
 import CreateSpot from './pages/spots/CreateSpot.vue'
+import SearchSpots from './pages/spots/SearchSpots.vue'
 import SpotDetail from './pages/spots/SpotDetail.vue'
 import UserProfile from './pages/users/UserProfile.vue'
 import FishingTypes from './pages/fishing_types/FishingTypes.vue'
@@ -62,8 +63,8 @@ const routes = [
         }
     },
     {
-        path: '/spots/:id',
-        component: SpotDetail,
+        path: '/spots/search',
+        component: SearchSpots,
         props: true,
         beforeEnter (to, from, next) {
             if (store.getters['auth/check']) {
@@ -74,8 +75,8 @@ const routes = [
         }
     },
     {
-        path: '/spots/search',
-        component: SearchSpots,
+        path: '/spots/:id',
+        component: SpotDetail,
         props: true,
         beforeEnter (to, from, next) {
             if (store.getters['auth/check']) {

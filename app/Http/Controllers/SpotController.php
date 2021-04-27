@@ -23,7 +23,7 @@ class SpotController extends Controller
     {
         $allFishingTypeNames = FishingType::all();
         $searchWord = $request->input('searchWord');
-        $fishingTypes = $request->input('fishing_types');
+        $fishingTypes = $request->input('fishingTypes');
         $tags = Tag::all()->take(15);
 
         return [$allFishingTypeNames, $searchWord, $fishingTypes, $tags];
@@ -63,7 +63,7 @@ class SpotController extends Controller
 
         list($query, $searchFishingTypeName) = $request->filters($searchData[1], $searchData[2]);
 
-        $spots = $query->get();
+        $spots = $query->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->get();
 
         $searchFishingTypes = $searchFishingTypeName;
 

@@ -3,14 +3,29 @@
         <div class="spotIndex_search_form">
 
             <div class="spot_search_top">
-                <input type="text" class="spotIndex_search_text" placeholder="キーワードを入力">
-                <button type="submit" class="spotIndex_search_button" @click="searchSpot"><i class="fas fa-search"></i></button>
+                <input
+                    type="text"
+                    class="spotIndex_search_text"
+                    placeholder="キーワードを入力"
+                    v-model="searchWord"
+                >
+                <button type="submit" class="spotIndex_search_button" @click="searchSpots">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
 
             <div>
                 <span v-for="fishingType in fishingTypeNames" :key="fishingType.id">
-                    <input class="search_check" type="checkbox" :id="`${ fishingType.id }`" :value="`${ fishingType.id }`">
-                    <label :for="`${ fishingType.id }`">{{ fishingType.fishing_type_name }}</label>
+                    <input
+                        class="search_check"
+                        type="checkbox"
+                        :id="`${ fishingType.id }`"
+                        :value="`${ fishingType.id }`"
+                        v-model="fishingTypes"
+                    >
+                    <label :for="`${ fishingType.id }`">
+                        {{ fishingType.fishing_type_name }}
+                    </label>
                 </span>
             </div>
         </div>
@@ -28,6 +43,8 @@
 </template>
 
 <script>
+    import { OK } from '../../../util'
+
     export default {
         props: {
             fishingTypeNames: {
@@ -39,23 +56,26 @@
                 required: true
             },
         },
+        data () {
+            return {
+                searchWord: "",
+                fishingTypes: [],
+            }
+        },
         methods: {
-            async addComment () {
-                const formData = new FormData()
-                formData.append('comment', this.commentContent)
-                formData.append('comment_image', this.commentImage)
-                const response = await axios.post(`/api/spots/${this.id}/comments`, formData)
+            async searchSpots () {
+                const response = await axios.get('/api/spots/search', {
+                    searchWord: this.searchWord,
+                    fishingTypes: this.fishingTypes
+                })
 
-                if (response.status === UNPROCESSABLE_ENTITY) {
-                    this.commentErrors = response.data.errors
+                if (response.status !== OK) {
+                    this.$store.commit('error/setCode', response.status)
                     return false
                 }
+                console.log(response.data)
 
-                this.spot.count_spot_comments += 1
-                this.commentImageMessage = ""
-                this.preview = null
-                this.commentContent = ''
-                this.commentErrors = null
+                this.$router.push('/spots/search')
             },
         }
     }

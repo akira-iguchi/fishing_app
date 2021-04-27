@@ -27,7 +27,7 @@ class SearchSpotRequest extends FormRequest
     {
         return [
             'searchWord' => 'nullable',
-            'fishing_types' => 'nullable'
+            'fishingTypes' => 'nullable'
         ];
     }
 
