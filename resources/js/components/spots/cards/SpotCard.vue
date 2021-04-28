@@ -33,7 +33,7 @@
                     </RouterLink>
                 </div>
 
-                <p v-if="item.address && item.address.length > 0">
+                <p v-if="item.address && item.address.length > 0 && item.address !== 'null'">
                     {{ item.address }}
                 </p>
                 <!-- <p>{{ spot.explanation }}</p> -->

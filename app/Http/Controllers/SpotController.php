@@ -59,6 +59,7 @@ class SpotController extends Controller
 
     public function search(SearchSpotRequest $request)
     {
+        \Log::info($request->all());
         $searchData = $this->searchItems($request);
 
         list($query, $searchFishingTypeName) = $request->filters($searchData[1], $searchData[2]);
@@ -116,10 +117,14 @@ class SpotController extends Controller
         return response($spot, 201);
     }
 
-    public function edit(Spot $spot)
+    public function edit(String $id)
     {
+        $spot = Spot::findOrFail($id)->load(['fishingTypes']);
+
         if (\Auth::id() === $spot->user_id) {
-            $tagNames = $spot->tags->map(function ($tag) {
+            $spotFishingTypeNames = $spot->fishingTypes->pluck('id');
+
+            $spotTagNames = $spot->tags->map(function ($tag) {
                 return ['text' => $tag->tag_name];
             });
 
@@ -127,15 +132,9 @@ class SpotController extends Controller
 
             $allFishingTypeNames = FishingType::all();
 
-            return view('spots.edit', [
-                'spot' => $spot,
-                'tagNames' => $tagNames,
-                'allTagNames' => $allTagNames,
-                'allFishingTypeNames' => $allFishingTypeNames,
-            ]);
+            return [$spot, $spotFishingTypeNames, $spotTagNames, $allTagNames, $allFishingTypeNames];
         } else {
-            session()->flash('error_message', '自信が投稿した釣りスポットのみ編集できます');
-            return redirect('/');
+            return response()->json();
         }
     }
 
@@ -154,10 +153,13 @@ class SpotController extends Controller
             });
 
             $spot->fishingTypes()->detach();
-            $spot->fishingTypes()->attach($request->fishing_types);
+            if ($request->filled('fishing_types')) {
+                // 配列化
+                $fishingTypeId = explode(",", $request->fishing_types);
+                $spot->fishingTypes()->attach($fishingTypeId);
+            }
 
-            session()->flash('flash_message', '釣りスポットを更新しました');
-            return redirect()->route('spots.show', [$spot]);
+            return response($spot, 201);
         });
     }
 
@@ -165,9 +167,9 @@ class SpotController extends Controller
     {
         if (\Auth::id() === $spot->user_id) {
             $spot->delete();
-            return redirect('/')->with('flash_message', '釣りスポットを削除しました');
+            return response()->json();
         } else {
-            return redirect('/')->with('flash_message', '自信の投稿のみ削除できます');
+            return response()->json();
         }
     }
 }

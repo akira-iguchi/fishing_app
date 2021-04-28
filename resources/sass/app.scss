@@ -20,9 +20,14 @@ body {
   min-height: 100vh;
 }
 
-#app {
+.page_body {
   display: flex;
   flex-flow: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
 }
 
 .error_msg {

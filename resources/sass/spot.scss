@@ -639,7 +639,7 @@ $breakpoint-tablet: 896px;
   margin-top: 15px;
   justify-content: flex-end;
 
-  button {
+  button:first-child {
     border: none;
     background: none;
   }

@@ -49,7 +49,7 @@
 
                 <table>
                     <tbody>
-                        <tr v-if="spot.address && spot.address.length > 0">
+                        <tr v-if="spot.address && spot.address.length > 0 && spot.address !== 'null'">
                             <th>所在地</th>
                             <td><span>{{ spot.address }}</span></td>
                         </tr>
@@ -76,7 +76,17 @@
                     </tbody>
                 </table>
 
-                <!-- @include('spots.private') -->
+                <div class="spot_user_private">
+
+                    <button>
+                        <RouterLink class="edit_link_button" :to="`/spots/${ spot.id }/edit`">
+                            編集
+                        </RouterLink>
+                    </button>
+                    <button class="delete_button" @click="deleteSpot">
+                        削除
+                    </button>
+                </div>
 
                 <h2 class="mt-3">コメント一覧</h2>
                 <i class="fa fa-comment mr-1"></i>{{ spot.count_spot_comments }}
@@ -289,6 +299,18 @@
                 this.spotPosition = {lat: this.spot.latitude, lng: this.spot.longitude}
                 this.otherSpots = response.data[1]
             },
+            // コメント削除
+            async deleteSpot() {
+                if (confirm('本当に削除しますか？')) {
+                    const response = await axios.delete(`/api/spots/${this.id}`)
+                    this.$store.commit('message/setContent', {
+                        content: 'コメントを削除しました',
+                        timeout: 5000
+                    })
+
+                    this.$router.push('/')
+                }
+            },
             async addComment () {
                 const formData = new FormData()
                 formData.append('comment', this.commentContent)
@@ -321,7 +343,6 @@
                     timeout: 6000
                 })
             },
-            // コメント削除
             async deleteComment(comment, index) {
                 const response = await axios.delete(`/api/spots/${this.id}/comments/${comment}`)
 

@@ -2,17 +2,17 @@
     <div class="search_group">
         <div class="spotIndex_search_form">
 
-            <div class="spot_search_top">
+            <form class="spot_search_top" @submit.prevent="searchSpots">
                 <input
                     type="text"
                     class="spotIndex_search_text"
                     placeholder="キーワードを入力"
-                    v-model="searchWord"
+                    v-model="searchForm.searchWord"
                 >
-                <button type="submit" class="spotIndex_search_button" @click="searchSpots">
+                <button type="submit" class="spotIndex_search_button">
                     <i class="fas fa-search"></i>
                 </button>
-            </div>
+            </form>
 
             <div>
                 <span v-for="fishingType in fishingTypeNames" :key="fishingType.id">
@@ -21,7 +21,7 @@
                         type="checkbox"
                         :id="`${ fishingType.id }`"
                         :value="`${ fishingType.id }`"
-                        v-model="fishingTypes"
+                        v-model="searchForm.fishingTypes"
                     >
                     <label :for="`${ fishingType.id }`">
                         {{ fishingType.fishing_type_name }}
@@ -58,12 +58,17 @@
         },
         data () {
             return {
-                searchWord: "",
-                fishingTypes: [],
+                searchForm: {
+                    searchWord: "",
+                    fishingTypes: [],
+                }
             }
         },
         methods: {
             async searchSpots () {
+                console.log(this.searchForm)
+                this.$router.push('/spots/search')
+
                 const response = await axios.get('/api/spots/search', {
                     searchWord: this.searchWord,
                     fishingTypes: this.fishingTypes
@@ -75,7 +80,6 @@
                 }
                 console.log(response.data)
 
-                this.$router.push('/spots/search')
             },
         }
     }

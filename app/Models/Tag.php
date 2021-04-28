@@ -18,6 +18,7 @@ class Tag extends Model
 
     protected $appends = [
         'hashtag',
+        'count_spots',
     ];
 
     public function getHashtagAttribute(): string
@@ -31,5 +32,10 @@ class Tag extends Model
     public function spots(): BelongsToMany
     {
         return $this->belongsToMany(Spot::class)->withTimestamps();
+    }
+
+    public function getCountSpotsAttribute(): int
+    {
+        return $this->spots->count();
     }
 }

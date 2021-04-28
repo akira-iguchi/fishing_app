@@ -18,9 +18,7 @@
 
     <body>
 
-        <div id="app">
-            <!-- <main>@yield('content')</main> -->
-        </div>
+        <div id="app"></div>
 
         <script>const googleMapApiKey = "{{ config('services.google-map.apikey') }}"
         </script>

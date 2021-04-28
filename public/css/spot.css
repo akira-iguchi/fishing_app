@@ -625,7 +625,7 @@
   justify-content: flex-end;
 }
 
-.spot_user_private button {
+.spot_user_private button:first-child {
   border: none;
   background: none;
 }

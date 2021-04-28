@@ -7,7 +7,7 @@
         <vue-tags-input
             class="input_tag"
             v-model="tag"
-            :tags="tags"
+            :tags="initialTags"
             placeholder="例） 東京、風が弱い、アジ"
             :autocomplete-items="filteredItems"
             :add-on-key="[13, 32]"
@@ -24,6 +24,10 @@
             VueTagsInput,
         },
         props: {
+            initialTags: {
+                type: Array,
+                default: [],
+            },
             autocompleteItems: {
                 type: Array,
                 default: [],

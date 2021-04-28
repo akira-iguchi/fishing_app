@@ -78,7 +78,10 @@
         },
         methods: {
             async fetchSearchSpots () {
-                const response = await axios.get('/api/spots/search')
+                const response = await axios.get('/api/spots/search', {
+                    searchWord: this.searchWord,
+                    fishingTypes: this.fishingTypes
+                })
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)

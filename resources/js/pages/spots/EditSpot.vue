@@ -40,6 +40,7 @@
                     <div class="form-group">
                         <label for="tags">タグ（５つまで）</label>
                         <SpotTagsInput
+                            :initialTags="spotTags"
                             :autocomplete-items="allTagNames || []"
                             @tagsInput="getTag"
                         />
@@ -165,8 +166,16 @@
             SpotForm,
             SpotTagsInput,
         },
+        props: {
+            id: {
+                type: String,
+                required: true
+            }
+        },
         data(){
             return {
+                spot: {},
+                spotTags: [],
                 mapLocation: {
                     lat: 35.6594666,
                     lng: 139.7005536,
@@ -204,22 +213,36 @@
         watch: {
             $route: {
                 async handler () {
-                    await this.fetchCreateSpot()
+                    await this.fetchEditSpot()
                 },
                 immediate: true
             }
         },
         methods: {
-            async fetchCreateSpot () {
-                const response = await axios.get('/api/spots/create')
+            async fetchEditSpot () {
+                const response = await axios.get(`/api/spots/${ this.id }/edit`)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
 
-                this.allTagNames = response.data[0]
-                this.allFishingTypeNames = response.data[1]
+                this.spot = response.data[0]
+                this.fishing_types = response.data[1]
+                this.spotTags = response.data[2]
+                this.allTagNames = response.data[3]
+                this.allFishingTypeNames = response.data[4]
+
+                this.latitude = this.spot.latitude
+                this.longitude = this.spot.longitude
+                this.name = this.spot.spot_name
+                this.address = this.spot.address
+                this.tags = this.spot.tags
+                this.explanation = this.spot.explanation
+
+                if (this.address === "null") {
+                    this.address = ""
+                }
             },
             updateLocation(location) {
                 this.latitude = location.latLng.lat()
@@ -326,7 +349,12 @@
                 formData.append('spot_image1', this.spotImage1)
                 formData.append('spot_image2', this.spotImage2)
                 formData.append('spot_image3', this.spotImage3)
-                const response = await axios.post('/api/spots', formData)
+                const response = await axios.post(`/api/spots/${ this.id }`, formData, {
+                    // PUTに変換
+                    headers: {
+                        'X-HTTP-Method-Override': 'PUT'
+                    }
+                })
 
                 if (response.status === UNPROCESSABLE_ENTITY) {
                     this.errors = response.data.errors
@@ -347,7 +375,7 @@
                 }
 
                 this.$store.commit('message/setContent', {
-                    content: '釣りスポットを投稿しました',
+                    content: '釣りスポットを更新しました',
                     timeout: 6000
                 })
 
