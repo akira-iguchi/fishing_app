@@ -121,7 +121,7 @@
         components: {
             SpotCard,
             SearchForm,
-            WeatherForecast
+            WeatherForecast,
         },
         data () {
             return {
@@ -168,7 +168,7 @@
 
             },
             async fetchSpots () {
-                const response = await axios.get('/api/')
+                const response = await axios.get('/api')
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)

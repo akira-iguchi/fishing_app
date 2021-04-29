@@ -51,7 +51,7 @@
                     <tbody>
                         <tr v-if="spot.address && spot.address.length > 0">
                             <th>所在地</th>
-                            <td><span>{{ spot.address }}</span></td>
+                            <td>{{ spot.address }}</td>
                         </tr>
                         <tr v-if="spot.fishing_types && spot.fishing_types.length > 0">
                             <th>

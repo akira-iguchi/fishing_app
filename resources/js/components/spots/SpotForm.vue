@@ -1,68 +1,339 @@
 <template>
     <div>
+        <h1>釣りスポット作成</h1>
 
-        <div class="form-group">
-            <label for="spot_name" class="required">釣りスポット名</label>
-            <input id="spot_name" type="text" class="form-control" name="spot_name" placeholder="例） 〇〇釣り公園" required>
-        </div>
+        <input class="spot_search" id="address" type="text" v-model="mapAddress" placeholder="所在地を入力"/>
+        <button @click="searchAddress" class="spot_search_button"><i class="fas fa-search"></i></button>
 
-        <div class="form-group">
-            <label for="spot_address">所在地</label>
-            <input id="spot_address" type="text" class="form-control" name="address" placeholder="例） 〇〇県〇〇市〇〇区〇〇町1-1-1">
-        </div>
+        <!-- <GmapMap :center="mapLocation" :zoom="15" map-type-id="terrain" id="map" @click="updateLocation">
+            <GmapMarker :animation="2" :position="mapLocation" :clickable="true" :draggable="true" @dragend="updateLocation" />
+        </GmapMap> -->
+        <p>マーカーの移動も可能だよ！</p>
 
-        <!-- <div class="form-group">
-            <label for="tags">タグ（５つまで）</label>
-            <spot-tags-input
-                :initial-tags='@json($tagNames ?? [])'
-                :autocomplete-items='@json($allTagNames ?? [])'
-            >
-            </spot-tags-input
-        </div> -->
+        <form @submit.prevent="spotData">
+            <input id="spot_latitude" type="hidden" v-model="latitude">
+            <input id="spot_longitude" type="hidden" v-model="longitude">
 
-        <!-- <div class="form-group">
-            <label>おすすめの釣り方</label><br>
-
-            <div class="fishing_type_form">
-                @foreach ($allFishingTypeNames as $fishingType)
-                    <label class="mr-2" for="{{ $fishingType->id }}">
-                        <input id="{{ $fishingType->id }}" type="checkbox" name="fishing_types[]" value="{{ $fishingType->id }}"
-                            {{ $spot->fishingTypes->contains('id', $fishingType->id) ? 'checked="checked"' : '' }}
-                        > {{ $fishingType->fishing_type_name }}
-                    </label>
-                @endforeach
+            <div class="form-group">
+                <label for="spot_name" class="required">釣りスポット名</label>
+                <input id="spot_name" type="text" class="form-control" placeholder="例） 〇〇釣り公園" v-model="spotName" required>
             </div>
-        </div> -->
+            <div v-if="errors">
+                <ul class="spot_errors" v-if="errors.spot_name">
+                    <li class="text-danger" v-for="msg in errors.spot_name" :key="msg">{{ msg }}</li>
+                </ul>
+            </div>
 
-        <div class="form-group">
-            <label>画像（３つまで）</label><br>
-            <input id="image1" type="file" name="spot_image1">
-            <p class="text-danger" id="file1_hidden">画像ファイルを選択してください</p>
-            <p><img id="file1-preview"></p>
-        </div>
+            <div class="form-group">
+                <label for="spot_address">所在地</label>
+                <input id="spot_address" type="text" class="form-control" placeholder="例） 〇〇県〇〇市〇〇区〇〇町1-1-1" v-model="address">
+            </div>
+            <div v-if="errors">
+                <ul class="spot_errors" v-if="errors.address">
+                    <li class="text-danger" v-for="msg in errors.address" :key="msg">{{ msg }}</li>
+                </ul>
+            </div>
 
-        <div class="form-group" id="image2_hidden">
-            <input id="image2" type="file" name="spot_image2">
-            <p class="text-danger" id="file2_hidden">画像ファイルを選択してください</p>
-            <p><img id="file2-preview"></p>
-        </div>
+            <div class="form-group">
+                <label for="tags">タグ（５つまで）</label>
+                <SpotTagsInput
+                    :initialTags="intialSpotTags"
+                    :autocomplete-items="tagNames"
+                    @tagsInput="getTag"
+                />
+            </div>
+            <div v-if="errors">
+                <ul class="spot_errors mt-3" v-if="errors.tags">
+                    <li class="text-danger" v-for="msg in errors.tags" :key="msg">{{ msg }}</li>
+                </ul>
+            </div>
 
-        <div class="form-group" id="image3_hidden">
-            <input id="image3" type="file" name="spot_image3">
-            <p class="text-danger" id="file3_hidden">画像ファイルを選択してください</p>
-            <p><img id="file3-preview"></p>
-        </div>
+            <div class="form-group">
+                <label>おすすめの釣り方</label><br>
 
-        <div class="form-group">
-            <label for="textAreaExplanation" class="required">説明</label>
-            <textarea rows="6" id="textAreaExplanation" class="form-control" name="explanation" placeholder="例） 風が弱くて釣りやすい釣り場です。" required></textarea>
-            残り<span id="textLestExplanation">300</span>文字
-            <p id="textAttentionExplanation" style="display:none; color:red;">入力文字数が多すぎます。</p>
-        </div>
+                <div class="fishing_type_form">
+                    <span
+                        class="mr-2"
+                        v-for="fishingType in fishingTypeNames"
+                        :key="fishingType.id"
+                    >
+                        <label :for="`${ fishingType.id }`">
+                            <input
+                                type="checkbox"
+                                :id="`${ fishingType.id }`"
+                                :value="`${ fishingType.id }`"
+                                v-model="fishingTypes"
+                            > {{ fishingType.fishing_type_name }}
+                        </label>
+                    </span>
+                </div>
+
+                <div v-if="errors">
+                    <ul class="spot_errors" v-if="errors.fishing_types">
+                        <li class="text-danger" v-for="msg in errors.fishing_types" :key="msg">{{ msg }}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>画像（３つまで）</label><br>
+
+                <input id="image1" type="file" @change="onFile1Change">
+                <p v-if="preview1">
+                    <img class="file_preview" :src="preview1" alt="">
+                </p>
+                <span class="error_msg">
+                    <p>{{ spotImage1Message }}</p>
+                </span>
+            </div>
+            <div v-if="errors">
+                <ul class="spot_errors" v-if="errors.spotImage1">
+                    <li class="text-danger" v-for="msg in errors.spotImage1" :key="msg">{{ msg }}</li>
+                </ul>
+            </div>
+            <div v-if="errors">
+                <ul class="spot_errors" v-if="errors.spotImage2">
+                    <li class="text-danger" v-for="msg in errors.spotImage2" :key="msg">{{ msg }}</li>
+                </ul>
+            </div>
+            <div v-if="errors">
+                <ul class="spot_errors" v-if="errors.spotImage3">
+                    <li class="text-danger" v-for="msg in errors.spotImage3" :key="msg">{{ msg }}</li>
+                </ul>
+            </div>
+
+            <div class="form-group" v-show="image2">
+                <input id="image2" type="file" @change="onFile2Change">
+                <p v-if="preview2">
+                    <img class="file_preview" :src="preview2" alt="">
+                </p>
+                <span class="error_msg">
+                    <p>{{ spotImage2Message }}</p>
+                </span>
+            </div>
+
+            <div class="form-group" v-show="image3" @change="onFile3Change">
+                <input id="image3" type="file">
+                <p v-if="preview3">
+                    <img class="file_preview" :src="preview3" alt="">
+                </p>
+                <span class="error_msg">
+                    <p>{{ spotImage3Message }}</p>
+                </span>
+            </div>
+
+            <div class="form-group">
+                <div v-if="0 > wordCount" v-on="changeTrue()"></div>
+                <div v-else-if="0 <= wordCount" v-on="changeFalse()"></div>
+                <label for="textAreaExplanation" class="required">説明</label>
+                <textarea
+                    rows="6"
+                    id="textAreaExplanation"
+                    class="form-control"
+                    v-model="explanation"
+                    v-on:keydown.enter="$event.stopPropagation()"
+                    placeholder="例） 風が弱くて釣りやすい釣り場です。"
+                    required>
+                </textarea>
+                <p>残り<span v-bind:class="{ 'text-danger':isActive }">{{ wordCount }}</span>文字</p>
+            </div>
+            <div v-if="errors">
+                <ul class="spot_errors" v-if="errors.explanation">
+                    <li class="text-danger" v-for="msg in errors.explanation" :key="msg">{{ msg }}</li>
+                </ul>
+            </div>
+
+            <button class="spot-create-edit-button"><i class="fas fa-pencil-alt"></i>&thinsp;投稿</button>
+
+            <button type="button" class="back_button" onclick="history.back()">戻る</button>
+        </form>
     </div>
 </template>
 
 <script>
+    import SpotTagsInput from '../tags/SpotTagsInput.vue'
+
     export default {
+        components: {
+            SpotTagsInput,
+        },
+        props: {
+            tagNames: {
+                type: Array,
+                default: () => [],
+            },
+            fishingTypeNames: {
+                type: Array,
+                default: () => [],
+            },
+            intialSpotValue: {
+                type: Object,
+                required: true,
+            },
+            intialSpotTags: {
+                type: Array,
+                default: () => [],
+            },
+            errors: {
+                type: Object,
+                required: false,
+            },
+        },
+        data () {
+            return {
+                spot: this.intialSpotValue,
+                mapLocation: {
+                    lat: 35.6594666,
+                    lng: 139.7005536,
+                },
+                mapAddress: "",
+                latitude: 35.6594666,
+                longitude: 139.7005536,
+                wordLimit: 300,
+                image2: false,
+                image3: false,
+                spotImage1Message: "",
+                spotImage2Message: "",
+                spotImage3Message: "",
+                preview1: null,
+                preview2: null,
+                preview3: null,
+                spotName: "",
+                address: "",
+                explanation: "",
+                spotImage1: "",
+                spotImage2: "",
+                spotImage3: "",
+                fishingTypes: [],
+                allFishingTypeNames: this.fishingTypeNames,
+                allTagNames: this.tagNames,
+                spotTags: this.intialSpotTags,
+                tags: [],
+            }
+        },
+        computed: {
+            wordCount () {
+                return this.wordLimit - this.explanation.length
+            },
+        },
+        mounted: function () {
+            if (this.spot === null) {
+                this.latitude = this.spot.latitude
+                this.longitude = this.spot.longitude
+                this.spotName = this.spot.spot_name
+                this.address = this.spot.address
+                this.tags = this.spot.tags
+                this.explanation = this.spot.explanation
+            }
+        },
+        methods: {
+            updateLocation(location) {
+                this.latitude = location.latLng.lat()
+                this.longitude = location.latLng.lng()
+                this.mapLocation.lat = location.latLng.lat()
+                this.mapLocation.lng = location.latLng.lng()
+            },
+            searchAddress() {
+                const geocoder = new google.maps.Geocoder()
+                const self = this
+                geocoder.geocode( { 'address': this.mapAddress}, function(results, status) {
+                    if (status === 'OK') {
+                        let lat = results[0].geometry.location.lat();
+                        let lng = results[0].geometry.location.lng();
+
+                        self.latitude = lat
+                        self.longitude = lng
+                        self.mapLocation.lat = lat
+                        self.mapLocation.lng = lng
+                    } else {
+                        alert('該当する結果がありませんでした');
+                    }
+                });
+            },
+            // 文字数
+            changeTrue: function() {
+                this.isActive = true
+            },
+            changeFalse: function() {
+                this.isActive = false
+            },
+            // 画像ファイルをプレビュー、エラーメッセージ処理（３つ）
+            onFile1Change (event) {
+                if (event.target.files.length === 0) {
+                    this.spotImage1Message = ""
+                    this.preview1 = null
+                    return false
+                }
+                if (! event.target.files[0].type.match('image.*')) {
+                    this.spotImage1Message = "画像ファイルを選択して下さい"
+                    this.preview1 = null
+                    return false
+                }
+                const reader = new FileReader()
+                reader.onload = e => {
+                    this.preview1 = e.target.result
+                }
+                reader.readAsDataURL(event.target.files[0])
+                this.spotImage1 = event.target.files[0]
+                this.image2 = true
+                this.spotImage1Message = ""
+            },
+            onFile2Change (event) {
+                if (event.target.files.length === 0) {
+                    this.spotImage2Message = ""
+                    this.preview2 = null
+                    return false
+                }
+                if (! event.target.files[0].type.match('image.*')) {
+                    this.spotImage2Message = "画像ファイルを選択して下さい"
+                    this.preview2 = null
+                    return false
+                }
+                const reader = new FileReader()
+                reader.onload = e => {
+                    this.preview2 = e.target.result
+                }
+                reader.readAsDataURL(event.target.files[0])
+                this.spotImage2 = event.target.files[0]
+                this.image3 = true
+                this.spotImage2Message = ""
+            },
+            onFile3Change (event) {
+                if (event.target.files.length === 0) {
+                    this.spotImage3Message = ""
+                    this.preview3 = null
+                    return false
+                }
+                if (! event.target.files[0].type.match('image.*')) {
+                    this.spotImage3Message = "画像ファイルを選択して下さい"
+                    this.preview3 = null
+                    return false
+                }
+                const reader = new FileReader()
+                reader.onload = e => {
+                    this.preview3 = e.target.result
+                }
+                reader.readAsDataURL(event.target.files[0])
+                this.spotImage3 = event.target.files[0]
+                this.spotImage3Message = ""
+            },
+            getTag (value) {
+                this.tags = value || []
+            },
+            spotData () {
+                this.$emit("spotData", [
+                    this.latitude,
+                    this.longitude,
+                    this.spotName,
+                    this.address,
+                    this.tags,
+                    this.fishingTypes,
+                    this.explanation,
+                    this.spotImage1,
+                    this.spotImage2,
+                    this.spotImage3,
+                ])
+            }
+        },
     }
 </script>

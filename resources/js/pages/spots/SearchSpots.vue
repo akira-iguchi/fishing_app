@@ -44,6 +44,8 @@
             />
         </div>
 
+        <Pagination :current-page="currentPage" :last-page="lastPage" />
+
         <!-- ページネーション -->
     </div>
 </template>
@@ -52,11 +54,20 @@
     import { OK } from '../../util'
     import SpotCard from '../../components/spots/cards/SpotCard.vue'
     import SearchForm from '../../components/spots/searches/SearchForm.vue'
+    import Pagination from '../../components/Pagination.vue'
 
     export default {
         components: {
             SpotCard,
             SearchForm,
+            Pagination,
+        },
+        props: {
+            page: {
+                type: Number,
+                required: false,
+                default: 1
+            }
         },
         data () {
             return {
@@ -66,6 +77,8 @@
                 tagNames: [],
                 spots: [],
                 fishingTypeNames: [],
+                currentPage: 0,
+                lastPage: 0,
             }
         },
         watch: {
@@ -78,7 +91,7 @@
         },
         methods: {
             async fetchSearchSpots () {
-                const response = await axios.get('/api/spots/search')
+                const response = await axios.get(`/api/spots/search/?page=${ this.$route.query.page }`)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
@@ -91,7 +104,10 @@
                 this.tagNames = response.data[0][3]
                 this.spots = response.data[1]
                 this.fishingTypeNames = response.data[2]
-                console.log(this.searchFishingTypes)
+                console.log(response.data)
+
+                    this.currentPage = response.data.current_page
+                    this.lastPage = response.data.last_page
             },
         },
 
