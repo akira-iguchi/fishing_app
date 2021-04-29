@@ -40,6 +40,9 @@ class SearchSpotRequest extends FormRequest
     {
         $query = Spot::query();
 
+        // 配列化
+        // $fishingTypeId = explode(",", $fishingTypes);
+
         if (isset($searchWord) && is_array($fishingTypes)) {
             // （釣りスポット名または所在地）かつ、その釣りスポットにおすすめの釣り方を取得。釣りスポットは、釣り方を１つでも含んでいたら表示
             $query->where(function ($query) use ($searchWord, $fishingTypes) {

@@ -190,7 +190,6 @@ $breakpoint-tablet: 896px;
 
   label {
     font-size: 19px;
-    margin-top: 20px;
   }
 
   div:last-child {
@@ -244,6 +243,12 @@ $breakpoint-tablet: 896px;
     border-style: solid;
     border-color: #da3c41;
   }
+}
+
+.user_errors {
+  list-style: none;
+  position: relative;
+  right: 40px;
 }
 
 .user_edit-button {

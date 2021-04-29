@@ -40,7 +40,7 @@
             <SpotCard
                 v-for="spot in spots"
                 :key="spot.id"
-                :item="spot"
+                :spot="spot"
             />
         </div>
 
@@ -78,10 +78,7 @@
         },
         methods: {
             async fetchSearchSpots () {
-                const response = await axios.get('/api/spots/search', {
-                    searchWord: this.searchWord,
-                    fishingTypes: this.fishingTypes
-                })
+                const response = await axios.get('/api/spots/search')
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)

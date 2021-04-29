@@ -49,7 +49,7 @@
 
                 <table>
                     <tbody>
-                        <tr v-if="spot.address && spot.address.length > 0 && spot.address !== 'null'">
+                        <tr v-if="spot.address && spot.address.length > 0">
                             <th>所在地</th>
                             <td><span>{{ spot.address }}</span></td>
                         </tr>
@@ -199,36 +199,11 @@
                     <hr>
                     <h3 class="text-center mt-1">他の釣りスポット</h3>
 
-                    <div class="mini_card"  v-for="otherSpot in otherSpots" :key="otherSpot.id">
-                        <RouterLink :to="`/spots/${otherSpot.id}`">
-                            <div class="mini_card_img">
-                                <img :src="`${otherSpot.first_spot_image}`" alt="釣りスポットの画像">
-                            </div>
-                        </RouterLink>
-
-                        <div class="mini_card_content">
-                            <div class="card_spot_name">
-                                {{ otherSpot.spot_name }}
-                            </div>
-
-                            <div class="mini_card_detail">
-
-                                <div class="card_item mr-1">
-                                    <FavoriteButton
-                                        :spot="otherSpot"
-                                    />
-                                </div>
-
-                                <div class="card_item">
-                                    <i class="fa fa-comment ml-1 mr-1"></i>{{ otherSpot.spot_comments.length }}
-                                </div>
-
-                                <RouterLink :to="`/users/${otherSpot.user_id}`">
-                                    <img :src="`${otherSpot.user.user_image}`" alt="釣りスポット投稿者の画像">
-                                </RouterLink>
-                            </div>
-                        </div>
-                    </div>
+                    <SpotMiniCard
+                        v-for="spot in otherSpots"
+                        :key="spot.id"
+                        :spot="spot"
+                    />
                 </div>
 
             </div>
@@ -239,6 +214,7 @@
 <script>
     import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../../util'
     import FavoriteButton from '../../components/spots/FavoriteButton.vue'
+    import SpotMiniCard from '../../components/spots/cards/SpotMiniCard.vue'
     import moment from 'moment';
     import {Hooper, Slide, Pagination as HooperPagination, Navigation as HooperNavigation} from 'hooper';
     import 'hooper/dist/hooper.css';
@@ -246,6 +222,7 @@
     export default {
         components: {
             FavoriteButton,
+            SpotMiniCard,
             Hooper,
             Slide,
             HooperPagination,

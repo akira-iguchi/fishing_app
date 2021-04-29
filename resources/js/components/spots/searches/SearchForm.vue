@@ -66,13 +66,7 @@
         },
         methods: {
             async searchSpots () {
-                console.log(this.searchForm)
-                this.$router.push('/spots/search')
-
-                const response = await axios.get('/api/spots/search', {
-                    searchWord: this.searchWord,
-                    fishingTypes: this.fishingTypes
-                })
+                const response = await axios.get('/api/spots/search', this.searchForm)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
@@ -80,6 +74,7 @@
                 }
                 console.log(response.data)
 
+                this.$router.push('/spots/search')
             },
         }
     }

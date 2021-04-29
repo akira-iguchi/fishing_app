@@ -35,7 +35,7 @@
                         <SpotCard
                             v-for="spot in followUserSpots"
                             :key="spot.id"
-                            :item="spot"
+                            :spot="spot"
                         />
                     </div>
                     <hr>
@@ -46,7 +46,7 @@
                     <SpotCard
                         v-for="spot in recentSpots"
                         :key="spot.id"
-                        :item="spot"
+                        :spot="spot"
                     />
                 </div>
 
@@ -175,10 +175,12 @@
                     return false
                 }
 
-                this.fishingTypeNames = response.data[0][0]
-                this.tagNames = response.data[0][3]
-                this.recentSpots = response.data[1]
-                this.followUserSpots = response.data[2]
+                if (this.isLogin === true) {
+                    this.fishingTypeNames = response.data[0][0]
+                    this.tagNames = response.data[0][3]
+                    this.recentSpots = response.data[1]
+                    this.followUserSpots = response.data[2]
+                }
             },
             handleScroll() {
                 const targetElement = this.$el.querySelectorAll('.top-slider') || null

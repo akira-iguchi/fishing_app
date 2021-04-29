@@ -1,40 +1,40 @@
 <template>
     <div class="mx-auto d-block col-xl-3 col-lg-4 col-md-6 col-11">
         <div class="spot_card">
-            <RouterLink :to="`/spots/${item.id}`">
+            <RouterLink :to="`/spots/${spot.id}`">
                 <div class="spot_card_img">
-                    <img :src="`${item.first_spot_image}`" alt="釣りスポットの画像">
+                    <img :src="`${spot.first_spot_image}`" alt="釣りスポットの画像">
                 </div>
             </RouterLink>
 
             <div class="spot_card_content">
                 <div class="card_spot_name">
-                    {{ item.spot_name }}
+                    {{ spot.spot_name }}
                 </div>
 
                 <div class="card_detail">
 
                     <div class="card_item mr-2">
                         <FavoriteButton
-                            :spot="item"
+                            :spot="spot"
                         />
                     </div>
 
                     <div class="card_item mr-2">
-                        <i class="fa fa-comment mr-1"></i>{{ item.count_spot_comments }}
+                        <i class="fa fa-comment mr-1"></i>{{ spot.count_spot_comments }}
                     </div>
 
                     <div class="card_item">
-                        <i class="fas fa-clock mr-1"></i>{{ item.created_at | moment }}
+                        <i class="fas fa-clock mr-1"></i>{{ spot.created_at | moment }}
                     </div>
 
-                    <RouterLink :to="`/users/${item.user_id}`">
-                        <img :src="`${item.user.user_image}`" alt="釣りスポット投稿者の画像">
+                    <RouterLink :to="`/users/${spot.user_id}`">
+                        <img :src="`${spot.user.user_image}`" alt="釣りスポット投稿者の画像">
                     </RouterLink>
                 </div>
 
-                <p v-if="item.address && item.address.length > 0 && item.address !== 'null'">
-                    {{ item.address }}
+                <p v-if="spot.address && spot.address.length > 0">
+                    {{ spot.address }}
                 </p>
                 <!-- <p>{{ spot.explanation }}</p> -->
             </div>
@@ -51,7 +51,7 @@
             FavoriteButton,
         },
         props: {
-            item: {
+            spot: {
                 type: Object,
                 required: true
             },

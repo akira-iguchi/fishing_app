@@ -45,6 +45,7 @@
             <!-- ユーザーのタブ一覧（フォロー、お気に入りボタン含む） -->
             <Tabs
                 :user="user"
+                v-if="userDataLoaded"
             >
             </Tabs>
         </div>
@@ -70,6 +71,7 @@
         data () {
             return {
                 user: {},
+                userDataLoaded: false,
             }
         },
         computed: {
@@ -87,6 +89,7 @@
                 }
 
                 this.user = response.data
+                this.userDataLoaded = true
             },
         },
         watch: {

@@ -13,12 +13,7 @@ class UserController extends Controller
 {
     public function edit(User $user)
     {
-        if ($user->id == 1) {
-            session()->flash('error_message', 'ゲストユーザーは編集できません');
-            return redirect('/');
-        } else {
-            return view('users.edit', ['user' => Auth::user() ]);
-        }
+        return $user;
     }
 
     public function update(UserRequest $request, User $user)
@@ -32,8 +27,7 @@ class UserController extends Controller
             }
             $user->fill($request->except('user_image'))->save();
 
-            session()->flash('flash_message', 'ユーザー情報を更新しました');
-            return redirect()->route('users.show', [$user]);
+            return response($user, 201);
         });
     }
 
@@ -41,7 +35,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id)
             ->load(
-                ['followings', 'followers']
+                ['spots', 'favoriteSpots', 'followings', 'followers']
             );
 
         return $user ?? abort(404);

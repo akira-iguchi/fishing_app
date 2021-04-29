@@ -35,7 +35,7 @@ Route::post('guest', 'Auth\LoginController@guestLogin')->name('guestLogin');
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::group(['prefix' => 'users/{user}'], function () {
+    Route::group(['prefix' => 'users/{id}'], function () {
         Route::put('/follow', 'FollowController@follow')->name('users.follow');
         Route::delete('/follow', 'FollowController@unfollow')->name('users.unfollow');
 
@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/ajax/editEventDate', 'EventController@editEventDate')->name('editEventDate');
     });
 
-    Route::group(['prefix' => 'spots/{spot}'], function () {
+    Route::group(['prefix' => 'spots/{id}'], function () {
         Route::put('/favorite', 'SpotFavoriteController@favorite')->name('spots.favorite');
         Route::delete('/favorite', 'SpotFavoriteController@unfavorite')->name('spots.unfavorite');
         Route::post('comments', 'SpotCommentController@store')->name('spots.comment');

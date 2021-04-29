@@ -13,7 +13,7 @@
                 </GmapMap> -->
                 <p>マーカーの移動も可能だよ！</p>
 
-                <form @submit.prevent="Createspot">
+                <form @submit.prevent="editSpot">
                     <input id="spot_latitude" type="hidden" v-model="latitude">
                     <input id="spot_longitude" type="hidden" v-model="longitude">
 
@@ -239,10 +239,6 @@
                 this.address = this.spot.address
                 this.tags = this.spot.tags
                 this.explanation = this.spot.explanation
-
-                if (this.address === "null") {
-                    this.address = ""
-                }
             },
             updateLocation(location) {
                 this.latitude = location.latLng.lat()
@@ -337,7 +333,7 @@
             getTag (value) {
                 this.tags = value || []
             },
-            async Createspot () {
+            async editSpot () {
                 const formData = new FormData()
                 formData.append('latitude', this.latitude)
                 formData.append('longitude', this.longitude)

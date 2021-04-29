@@ -27,7 +27,7 @@
             <SpotCard
                 v-for="spot in userSpots"
                 :key="spot.id"
-                :item="spot"
+                :spot="spot"
             />
             <div class="tabItem_none" v-if="(userSpots.length) <= 0">投稿していません</div>
         </div>
@@ -36,7 +36,7 @@
             <SpotCard
                 v-for="spot in userFavoriteSpots"
                 :key="spot.id"
-                :item="spot"
+                :spot="spot"
             />
             <div class="tabItem_none" v-if="(userFavoriteSpots.length) <= 0">お気に入りしていません</div>
         </div>
@@ -52,10 +52,7 @@
                 </div>
 
                 <div class="profile_content">
-                    <a v-bind:href="`/users/${user.id}`">
-                        <p class="followings_user_name"><strong>{{ user.user_name }}</strong></p>
-                    </a>
-                    <RouterLink :to="`/users/${user_id}`">
+                    <RouterLink :to="`/users/${user.id}`">
                         <p class="followings_user_name"><strong>{{ user.user_name }}</strong></p>
                     </RouterLink>
 
@@ -81,7 +78,7 @@
                 </div>
 
                 <div class="profile_content">
-                    <RouterLink :to="`/users/${user_id}`">
+                    <RouterLink :to="`/users/${user.id}`">
                         <p class="followings_user_name"><strong>{{ user.user_name }}</strong></p>
                     </RouterLink>
 
@@ -100,11 +97,13 @@
 <script>
     import { OK } from '../../util'
     import SpotCard from '../spots/cards/SpotCard.vue'
+    import FollowButton from './FollowButton.vue'
     import moment from 'moment';
 
     export default {
         components: {
-            SpotCard
+            SpotCard,
+            FollowButton,
         },
         props: {
             user: {
@@ -132,31 +131,16 @@
         methods: {
             // ユーザーの釣りスポット一覧
             async getUserSpots() {
-                // this.tab = 'spotsTab';
-                // const response = await axios.get(`/api/users/${this.user.id}/spots`)
+                this.tab = 'spotsTab';
+                const response = await axios.get(`/api/users/${this.user.id}/spots`)
 
-                // if (response.status !== OK) {
-                //     this.$store.commit('error/setCode', response.status)
-                //     return false
-                // }
+                if (response.status !== OK) {
+                    this.$store.commit('error/setCode', response.status)
+                    return false
+                }
 
-                // console.log(this.user)
-                // this.userSpots = response.data;
-
-                // const id = this.user.id
-                // const array = ["/users/",id,"/spots"];
-                // const path = array.join('')
-
-                // axios
-                //     .get(path)
-                //     .then(response => {
-                //         this.userSpots = response.data;
-                //     })
-                //     .catch(err => {
-                //         console.log(err);
-                //     });
+                this.userSpots = response.data;
             },
-
             // ユーザーのお気に入り釣りスポット一覧
             async getUserFavoriteSpots() {
                 this.tab = 'favoriteSpotsTab';
@@ -172,7 +156,7 @@
 
             // ユーザーフォロー一覧
             async getUserFollowings() {
-                this.tab = 'followings';
+                this.tab = 'followingsTab';
                 const response = await axios.get(`/api/users/${this.user.id}/followings`)
 
                 if (response.status !== OK) {

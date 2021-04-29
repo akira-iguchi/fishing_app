@@ -40,6 +40,7 @@
                     <div class="form-group">
                         <label for="tags">タグ（５つまで）</label>
                         <SpotTagsInput
+                            :initialTags="spotTags || []"
                             :autocomplete-items="allTagNames || []"
                             @tagsInput="getTag"
                         />
@@ -103,7 +104,6 @@
                             <li class="text-danger" v-for="msg in errors.spotImage3" :key="msg">{{ msg }}</li>
                         </ul>
                     </div>
-
 
                     <div class="form-group" v-show="image2">
                         <input id="image2" type="file" @change="onFile2Change">

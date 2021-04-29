@@ -15,6 +15,7 @@ mix.browserSync('vuesplash.test')
     .js('resources/js/app.js', 'public/js')
     .vue()
     .sass('resources/sass/spot.scss', 'public/css/spot.css')
+    .sass('resources/sass/user.scss', 'public/css/user.css')
     .sass('resources/sass/fishing_type.scss', 'public/css/fishing_type.css')
     .sass('resources/sass/app.scss', 'public/css')
     .version();

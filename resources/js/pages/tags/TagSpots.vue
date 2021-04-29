@@ -13,7 +13,7 @@
             <SpotCard
                 v-for="spot in tag.spots"
                 :key="spot.id"
-                :item="spot"
+                :spot="spot"
             />
         </div>
     </div>

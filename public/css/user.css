@@ -191,7 +191,6 @@
 
 .user_edit_form label {
   font-size: 19px;
-  margin-top: 20px;
 }
 
 .user_edit_form div:last-child {
@@ -245,6 +244,12 @@
   border-width: 0 1px 1px 1px;
   border-style: solid;
   border-color: #da3c41;
+}
+
+.user_errors {
+  list-style: none;
+  position: relative;
+  right: 40px;
 }
 
 .user_edit-button {
