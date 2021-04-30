@@ -2853,6 +2853,309 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/comments/SpotComments.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/comments/SpotComments.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../util */ "./resources/js/util.js");
+
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    spotData: {
+      type: Object,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      spot: this.spotData,
+      commentContent: "",
+      commentImage: "",
+      isActive: false,
+      wordLimit: 150,
+      commentImageMessage: "",
+      preview: null,
+      commentErrors: null,
+      show: true
+    };
+  },
+  filters: {
+    moment: function moment(date) {
+      return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format('YYYY/MM/DD');
+    }
+  },
+  computed: {
+    wordCount: function wordCount() {
+      return this.wordLimit - this.commentContent.length;
+    },
+    AuthUser: function AuthUser() {
+      return this.$store.getters['auth/AuthUser'];
+    },
+    spotCommentList: function spotCommentList() {
+      return this.spot.spot_comments.reverse();
+    }
+  },
+  methods: {
+    addComment: function addComment() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var formData, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                formData = new FormData();
+                formData.append('spot_id', _this.spotData.id);
+                formData.append('comment', _this.commentContent);
+                formData.append('comment_image', _this.commentImage);
+                _context.next = 6;
+                return axios.post("/api/spots/".concat(_this.spot.id, "/comments"), formData);
+
+              case 6:
+                response = _context.sent;
+
+                if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_2__.UNPROCESSABLE_ENTITY)) {
+                  _context.next = 10;
+                  break;
+                }
+
+                _this.commentErrors = response.data.errors;
+                return _context.abrupt("return", false);
+
+              case 10:
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__.CREATED)) {
+                  _context.next = 13;
+                  break;
+                }
+
+                _this.$store.commit('error/setCode', response.status);
+
+                return _context.abrupt("return", false);
+
+              case 13:
+                _this.spot.count_spot_comments += 1;
+                _this.commentImageMessage = "";
+                _this.preview = null;
+                _this.commentContent = "";
+                _this.commentErrors = null;
+                _this.show = false;
+
+                _this.$nextTick(function () {
+                  this.show = true;
+                });
+
+                _this.spot.spot_comments.push(response.data);
+
+                _this.$store.commit('message/setContent', {
+                  content: 'コメントを投稿しました',
+                  timeout: 4000
+                });
+
+              case 22:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    deleteComment: function deleteComment(comment, index) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios["delete"]("/api/spots/".concat(_this2.spot.id, "/comments/").concat(comment));
+
+              case 2:
+                response = _context2.sent;
+                _this2.spot.count_spot_comments -= 1;
+
+                _this2.spot.spot_comments.splice(index, 1);
+
+                _this2.spot.spot_comments = [response.data].concat(_toConsumableArray(_this2.spot.spot_comments));
+
+                _this2.$store.commit('message/setContent', {
+                  content: 'コメントを削除しました',
+                  timeout: 4000
+                });
+
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    // 文字数
+    changeTrue: function changeTrue() {
+      this.isActive = true;
+    },
+    changeFalse: function changeFalse() {
+      this.isActive = false;
+    },
+    onFileChange: function onFileChange(event) {
+      var _this3 = this;
+
+      if (event.target.files.length === 0) {
+        this.commentImageMessage = "";
+        this.preview = null;
+        return false;
+      }
+
+      if (!event.target.files[0].type.match('image.*')) {
+        this.commentImageMessage = "画像ファイルを選択して下さい";
+        this.preview = null;
+        return false;
+      }
+
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        _this3.preview = e.target.result;
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+      this.commentImage = event.target.files[0];
+      this.commentImageMessage = "";
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/searches/SearchForm.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/searches/SearchForm.vue?vue&type=script&lang=js& ***!
@@ -4901,23 +5204,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
 /* harmony import */ var _components_spots_FavoriteButton_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/spots/FavoriteButton.vue */ "./resources/js/components/spots/FavoriteButton.vue");
 /* harmony import */ var _components_spots_cards_SpotMiniCard_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/spots/cards/SpotMiniCard.vue */ "./resources/js/components/spots/cards/SpotMiniCard.vue");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var hooper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! hooper */ "./node_modules/hooper/dist/hooper.esm.js");
-/* harmony import */ var hooper_dist_hooper_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! hooper/dist/hooper.css */ "./node_modules/hooper/dist/hooper.css");
+/* harmony import */ var _components_spots_comments_SpotComments_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/spots/comments/SpotComments.vue */ "./resources/js/components/spots/comments/SpotComments.vue");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var hooper__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! hooper */ "./node_modules/hooper/dist/hooper.esm.js");
+/* harmony import */ var hooper_dist_hooper_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! hooper/dist/hooper.css */ "./node_modules/hooper/dist/hooper.css");
 
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -5049,93 +5341,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -5146,10 +5352,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   components: {
     FavoriteButton: _components_spots_FavoriteButton_vue__WEBPACK_IMPORTED_MODULE_2__.default,
     SpotMiniCard: _components_spots_cards_SpotMiniCard_vue__WEBPACK_IMPORTED_MODULE_3__.default,
-    Hooper: hooper__WEBPACK_IMPORTED_MODULE_5__.Hooper,
-    Slide: hooper__WEBPACK_IMPORTED_MODULE_5__.Slide,
-    HooperPagination: hooper__WEBPACK_IMPORTED_MODULE_5__.Pagination,
-    HooperNavigation: hooper__WEBPACK_IMPORTED_MODULE_5__.Navigation
+    SpotComments: _components_spots_comments_SpotComments_vue__WEBPACK_IMPORTED_MODULE_4__.default,
+    Hooper: hooper__WEBPACK_IMPORTED_MODULE_6__.Hooper,
+    Slide: hooper__WEBPACK_IMPORTED_MODULE_6__.Slide,
+    HooperPagination: hooper__WEBPACK_IMPORTED_MODULE_6__.Pagination,
+    HooperNavigation: hooper__WEBPACK_IMPORTED_MODULE_6__.Navigation
   },
   props: {
     id: {
@@ -5163,24 +5370,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       user: {},
       otherSpots: {},
       spotPosition: {},
-      commentContent: "",
-      commentImage: "",
-      isActive: false,
-      wordLimit: 150,
-      commentImageMessage: "",
-      preview: null,
-      commentErrors: null
+      spotDataLoaded: false
     };
   },
   filters: {
     moment: function moment(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_4___default()(date).format('YYYY/MM/DD');
+      return moment__WEBPACK_IMPORTED_MODULE_5___default()(date).format('YYYY/MM/DD');
     }
   },
   computed: {
-    wordCount: function wordCount() {
-      return this.wordLimit - this.commentContent.length;
-    },
     AuthUser: function AuthUser() {
       return this.$store.getters['auth/AuthUser'];
     }
@@ -5218,8 +5416,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   lng: _this.spot.longitude
                 };
                 _this.otherSpots = response.data[1];
+                _this.spotDataLoaded = true;
 
-              case 10:
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -5262,147 +5461,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
-    },
-    addComment: function addComment() {
-      var _this3 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var formData, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                formData = new FormData();
-                formData.append('comment', _this3.commentContent);
-                formData.append('comment_image', _this3.commentImage);
-                _context3.next = 5;
-                return axios.post("/api/spots/".concat(_this3.id, "/comments"), formData);
-
-              case 5:
-                response = _context3.sent;
-
-                if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY)) {
-                  _context3.next = 9;
-                  break;
-                }
-
-                _this3.commentErrors = response.data.errors;
-                return _context3.abrupt("return", false);
-
-              case 9:
-                _this3.spot.count_spot_comments += 1;
-                _this3.commentImageMessage = "";
-                _this3.preview = null;
-                _this3.commentContent = '';
-                _this3.commentErrors = null;
-                _this3.spot.spot_comments = [response.data].concat(_toConsumableArray(_this3.spot.spot_comments));
-
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.CREATED)) {
-                  _context3.next = 18;
-                  break;
-                }
-
-                _this3.$store.commit('error/setCode', response.status);
-
-                return _context3.abrupt("return", false);
-
-              case 18:
-                _this3.$store.commit('message/setContent', {
-                  content: 'コメントを投稿しました',
-                  timeout: 6000
-                });
-
-              case 19:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    },
-    deleteComment: function deleteComment(comment, index) {
-      var _this4 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.next = 2;
-                return axios["delete"]("/api/spots/".concat(_this4.id, "/comments/").concat(comment));
-
-              case 2:
-                response = _context4.sent;
-                _this4.spot.count_spot_comments -= 1;
-
-                _this4.spot.spot_comments.splice(index, 1);
-
-                _this4.$store.commit('message/setContent', {
-                  content: 'コメントを削除しました',
-                  timeout: 5000
-                });
-
-              case 6:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
-    },
-    // 文字数
-    changeTrue: function changeTrue() {
-      this.isActive = true;
-    },
-    changeFalse: function changeFalse() {
-      this.isActive = false;
-    },
-    onFileChange: function onFileChange(event) {
-      var _this5 = this;
-
-      if (event.target.files.length === 0) {
-        this.commentImageMessage = "";
-        this.preview = null;
-        return false;
-      }
-
-      if (!event.target.files[0].type.match('image.*')) {
-        this.commentImageMessage = "画像ファイルを選択して下さい";
-        this.preview = null;
-        return false;
-      }
-
-      var reader = new FileReader();
-
-      reader.onload = function (e) {
-        _this5.preview = e.target.result;
-      };
-
-      reader.readAsDataURL(event.target.files[0]);
-      this.commentImage = event.target.files[0];
-      this.commentImageMessage = "";
     }
   },
   watch: {
     $route: {
       handler: function handler() {
-        var _this6 = this;
+        var _this3 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
             while (1) {
-              switch (_context5.prev = _context5.next) {
+              switch (_context3.prev = _context3.next) {
                 case 0:
-                  _context5.next = 2;
-                  return _this6.fetchSpot();
+                  _context3.next = 2;
+                  return _this3.fetchSpot();
 
                 case 2:
                 case "end":
-                  return _context5.stop();
+                  return _context3.stop();
               }
             }
-          }, _callee5);
+          }, _callee3);
         }))();
       },
       immediate: true
@@ -44375,6 +44454,45 @@ component.options.__file = "resources/js/components/spots/cards/SpotMiniCard.vue
 
 /***/ }),
 
+/***/ "./resources/js/components/spots/comments/SpotComments.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/spots/comments/SpotComments.vue ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _SpotComments_vue_vue_type_template_id_4653f518___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SpotComments.vue?vue&type=template&id=4653f518& */ "./resources/js/components/spots/comments/SpotComments.vue?vue&type=template&id=4653f518&");
+/* harmony import */ var _SpotComments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SpotComments.vue?vue&type=script&lang=js& */ "./resources/js/components/spots/comments/SpotComments.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _SpotComments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _SpotComments_vue_vue_type_template_id_4653f518___WEBPACK_IMPORTED_MODULE_0__.render,
+  _SpotComments_vue_vue_type_template_id_4653f518___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/spots/comments/SpotComments.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/spots/searches/SearchForm.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/spots/searches/SearchForm.vue ***!
@@ -45248,6 +45366,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/spots/comments/SpotComments.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/spots/comments/SpotComments.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SpotComments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SpotComments.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/comments/SpotComments.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SpotComments_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/spots/searches/SearchForm.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************!*\
   !*** ./resources/js/components/spots/searches/SearchForm.vue?vue&type=script&lang=js& ***!
@@ -45896,6 +46030,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpotMiniCard_vue_vue_type_template_id_06a7df5e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpotMiniCard_vue_vue_type_template_id_06a7df5e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SpotMiniCard.vue?vue&type=template&id=06a7df5e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/cards/SpotMiniCard.vue?vue&type=template&id=06a7df5e&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/spots/comments/SpotComments.vue?vue&type=template&id=4653f518&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/spots/comments/SpotComments.vue?vue&type=template&id=4653f518& ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpotComments_vue_vue_type_template_id_4653f518___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpotComments_vue_vue_type_template_id_4653f518___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpotComments_vue_vue_type_template_id_4653f518___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./SpotComments.vue?vue&type=template&id=4653f518& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/comments/SpotComments.vue?vue&type=template&id=4653f518&");
 
 
 /***/ }),
@@ -47499,6 +47650,242 @@ var render = function() {
   )
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/comments/SpotComments.vue?vue&type=template&id=4653f518&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/spots/comments/SpotComments.vue?vue&type=template&id=4653f518& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("h2", { staticClass: "mt-3" }, [_vm._v("コメント一覧")]),
+    _vm._v(" "),
+    _c("i", { staticClass: "fa fa-comment mr-1" }),
+    _vm._v(_vm._s(_vm.spotData.count_spot_comments) + "\n\n    "),
+    _vm.spotData.spot_comments && _vm.spotData.spot_comments.length > 0
+      ? _c(
+          "div",
+          { staticClass: "comment_index" },
+          _vm._l(_vm.spotCommentList, function(comment, index) {
+            return _c("div", { key: comment.id }, [
+              _c("div", { staticClass: "comment" }, [
+                _c("div", { staticClass: "comment_top" }, [
+                  _c("div", { staticClass: "comment_created_at" }, [
+                    _vm._v(_vm._s(_vm._f("moment")(comment.created_at)))
+                  ]),
+                  _vm._v(" "),
+                  _c("a", { attrs: { href: "/users/" + comment.user_id } }, [
+                    _c("img", {
+                      attrs: {
+                        src: "" + comment.user.user_image,
+                        alt: "釣り場投稿者の画像"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "comment_creater_name" }, [
+                      _vm._v(_vm._s(comment.user.user_name))
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "comment_under" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(comment.comment) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                comment.comment_image && comment.comment_image.length > 0
+                  ? _c("div", { staticClass: "comment_img" }, [
+                      _c("img", {
+                        attrs: {
+                          src: "" + comment.comment_image,
+                          alt: "釣り場コメントの画像"
+                        }
+                      })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "comment_delete" }, [
+                  comment.user_id === _vm.AuthUser.id
+                    ? _c(
+                        "button",
+                        {
+                          attrs: {
+                            type: "button",
+                            onclick: "return confirm('本当に削除しますか？')"
+                          },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.deleteComment(comment.id, index)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-trash-alt" })]
+                      )
+                    : _vm._e()
+                ])
+              ])
+            ])
+          }),
+          0
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.addComment($event)
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "form-group" }, [
+          0 > _vm.wordCount
+            ? _c("div", _vm._g({}, _vm.changeTrue()))
+            : 0 <= _vm.wordCount
+            ? _c("div", _vm._g({}, _vm.changeFalse()))
+            : _vm._e(),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.commentContent,
+                expression: "commentContent"
+              }
+            ],
+            staticClass: "form-control mt-4",
+            attrs: { rows: "4", placeholder: "コメントしよう！" },
+            domProps: { value: _vm.commentContent },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.commentContent = $event.target.value
+              }
+            }
+          }),
+          _vm._v("\n            残り"),
+          _c("span", { class: { "text-danger": _vm.isActive } }, [
+            _vm._v(_vm._s(_vm.wordCount))
+          ]),
+          _vm._v("文字\n        ")
+        ]),
+        _vm._v(" "),
+        _vm.commentErrors
+          ? _c("div", [
+              _vm.commentErrors.comment
+                ? _c(
+                    "ul",
+                    { staticClass: "comment_errors" },
+                    _vm._l(_vm.commentErrors.comment, function(msg) {
+                      return _c(
+                        "li",
+                        { key: msg, staticClass: "text-danger" },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(msg) +
+                              "\n                "
+                          )
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                : _vm._e()
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "comment_image" } }, [_vm._v("画像")]),
+          _c("br"),
+          _vm._v(" "),
+          _vm.show
+            ? _c("input", {
+                attrs: { id: "comment_image", type: "file" },
+                on: { change: _vm.onFileChange }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.preview
+            ? _c("p", [
+                _c("img", {
+                  staticClass: "commentImg",
+                  attrs: { src: _vm.preview, alt: "" }
+                })
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("span", { staticClass: "error_msg" }, [
+            _c("p", [_vm._v(_vm._s(_vm.commentImageMessage))])
+          ])
+        ]),
+        _vm._v(" "),
+        _vm.commentErrors
+          ? _c("div", [
+              _vm.commentErrors.comment_image
+                ? _c(
+                    "ul",
+                    { staticClass: "comment_errors" },
+                    _vm._l(_vm.commentErrors.comment_image, function(msg) {
+                      return _c(
+                        "li",
+                        { key: msg, staticClass: "text-danger" },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(msg) +
+                              "\n                "
+                          )
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                : _vm._e()
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm._m(0)
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "spot-create-edit-button" }, [
+      _c("i", { staticClass: "fas fa-pencil-alt" }),
+      _vm._v(" コメント")
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -49698,215 +50085,9 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _c("h2", { staticClass: "mt-3" }, [_vm._v("コメント一覧")]),
-          _vm._v(" "),
-          _c("i", { staticClass: "fa fa-comment mr-1" }),
-          _vm._v(_vm._s(_vm.spot.count_spot_comments) + "\n\n            "),
-          _vm.spot.spot_comments && _vm.spot.spot_comments.length > 0
-            ? _c(
-                "div",
-                { staticClass: "comment_index" },
-                _vm._l(_vm.spot.spot_comments, function(comment, index) {
-                  return _c("div", { key: comment.id }, [
-                    _c("div", { staticClass: "comment" }, [
-                      _c("div", { staticClass: "comment_top" }, [
-                        _c("div", { staticClass: "comment_created_at" }, [
-                          _vm._v(_vm._s(_vm._f("moment")(comment.created_at)))
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          { attrs: { href: "/users/" + comment.user_id } },
-                          [
-                            _c("img", {
-                              attrs: {
-                                src: "" + comment.user.user_image,
-                                alt: "釣り場投稿者の画像"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "span",
-                              { staticClass: "comment_creater_name" },
-                              [_vm._v(_vm._s(comment.user.user_name))]
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "comment_under" }, [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(comment.comment) +
-                            "\n                        "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      comment.comment_image && comment.comment_image.length > 0
-                        ? _c("div", { staticClass: "comment_img" }, [
-                            _c("img", {
-                              attrs: {
-                                src: "" + comment.comment_image,
-                                alt: "釣り場コメントの画像"
-                              }
-                            })
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "comment_delete" }, [
-                        comment.user_id === _vm.AuthUser.id
-                          ? _c(
-                              "button",
-                              {
-                                attrs: {
-                                  type: "button",
-                                  onclick:
-                                    "return confirm('本当に削除しますか？')"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.deleteComment(comment.id, index)
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "fas fa-trash-alt" })]
-                            )
-                          : _vm._e()
-                      ])
-                    ])
-                  ])
-                }),
-                0
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "form",
-            {
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.addComment($event)
-                }
-              }
-            },
-            [
-              _c("div", { staticClass: "form-group" }, [
-                0 > _vm.wordCount
-                  ? _c("div", _vm._g({}, _vm.changeTrue()))
-                  : 0 <= _vm.wordCount
-                  ? _c("div", _vm._g({}, _vm.changeFalse()))
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.commentContent,
-                      expression: "commentContent"
-                    }
-                  ],
-                  staticClass: "form-control mt-4",
-                  attrs: { rows: "4", placeholder: "コメントしよう！" },
-                  domProps: { value: _vm.commentContent },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.commentContent = $event.target.value
-                    }
-                  }
-                }),
-                _vm._v("\n                    残り"),
-                _c("span", { class: { "text-danger": _vm.isActive } }, [
-                  _vm._v(_vm._s(_vm.wordCount))
-                ]),
-                _vm._v("文字\n                ")
-              ]),
-              _vm._v(" "),
-              _vm.commentErrors
-                ? _c("div", [
-                    _vm.commentErrors.comment
-                      ? _c(
-                          "ul",
-                          { staticClass: "comment_errors" },
-                          _vm._l(_vm.commentErrors.comment, function(msg) {
-                            return _c(
-                              "li",
-                              { key: msg, staticClass: "text-danger" },
-                              [
-                                _vm._v(
-                                  "\n                            " +
-                                    _vm._s(msg) +
-                                    "\n                        "
-                                )
-                              ]
-                            )
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "comment_image" } }, [
-                  _vm._v("画像")
-                ]),
-                _c("br"),
-                _vm._v(" "),
-                _c("input", {
-                  attrs: { id: "comment_image", type: "file" },
-                  on: { change: _vm.onFileChange }
-                }),
-                _vm._v(" "),
-                _vm.preview
-                  ? _c("p", [
-                      _c("img", {
-                        staticClass: "commentImg",
-                        attrs: { src: _vm.preview, alt: "" }
-                      })
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("span", { staticClass: "error_msg" }, [
-                  _c("p", [_vm._v(_vm._s(_vm.commentImageMessage))])
-                ])
-              ]),
-              _vm._v(" "),
-              _vm.commentErrors
-                ? _c("div", [
-                    _vm.commentErrors.comment_image
-                      ? _c(
-                          "ul",
-                          { staticClass: "comment_errors" },
-                          _vm._l(_vm.commentErrors.comment_image, function(
-                            msg
-                          ) {
-                            return _c(
-                              "li",
-                              { key: msg, staticClass: "text-danger" },
-                              [
-                                _vm._v(
-                                  "\n                            " +
-                                    _vm._s(msg) +
-                                    "\n                        "
-                                )
-                              ]
-                            )
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm._m(0)
-            ]
-          )
+          _vm.spotDataLoaded
+            ? _c("SpotComments", { attrs: { spotData: _vm.spot } })
+            : _vm._e()
         ],
         1
       ),
@@ -49962,17 +50143,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "spot-create-edit-button" }, [
-      _c("i", { staticClass: "fas fa-pencil-alt" }),
-      _vm._v(" コメント")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
