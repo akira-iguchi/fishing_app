@@ -64,7 +64,8 @@ class SpotController extends Controller
 
         list($query, $searchFishingTypeName) = $request->filters($searchData[1], $searchData[2]);
 
-        $spots = $query->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->paginate();
+        $spots = $query->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])
+        ->orderBy('id', 'desc')->paginate();
 
         $searchFishingTypes = $searchFishingTypeName;
 

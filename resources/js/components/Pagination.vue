@@ -3,16 +3,30 @@
         <RouterLink
             class="button"
             v-if="! isFirstPage"
-            :to="`/?page=${currentPage - 1}`"
+            to="/spots/search/"
         >
-            &laquo; prev
+            &lt;&lt;
+        </RouterLink>
+        <RouterLink
+            class="button"
+            v-if="! isFirstPage"
+            :to="`/spots/search/?page=${ currentPage - 1 }`"
+        >
+            &laquo; 前
         </RouterLink>
         <RouterLink
             class="button"
             v-if="! isLastPage"
-            :to="`/?page=${currentPage + 1}`"
+            :to="`/spots/search/?page=${ currentPage + 1 }`"
         >
-            next &raquo;
+            次 &raquo;
+        </RouterLink>
+        <RouterLink
+            class="button"
+            v-if="! isLastPage"
+            :to="`/spots/search/?page=${ lastPage }`"
+        >
+            &gt;&gt;
         </RouterLink>
     </div>
 </template>

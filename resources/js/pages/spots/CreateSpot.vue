@@ -26,14 +26,14 @@
         components: {
             SpotForm,
         },
-        data(){
+        data () {
             return {
                 allTagNames: [],
                 allFishingTypeNames: [],
                 spot: {},
                 spotTags: [],
                 errors: null,
-                spotDataLoaded: true,
+                spotDataLoaded: false,
             }
         },
         watch: {
@@ -55,6 +55,8 @@
 
                 this.allTagNames = response.data[0]
                 this.allFishingTypeNames = response.data[1]
+
+                this.spotDataLoaded = true
             },
             async createSpot (data) {
                 const formData = new FormData()

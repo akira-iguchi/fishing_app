@@ -1,3 +1,22 @@
+.pagination {
+  display: block !important;
+  text-align: center;
+  margin-bottom: 30px;
+  transition: 0.2s ease;
+}
+
+.pagination a {
+  display: inline-flex;
+  margin: auto;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+}
+
+.pagination a:hover {
+  color: #fff;
+  background-color: #007bff;
+}
+
 /* index, search */
 
 .search_group {
@@ -239,7 +258,7 @@
   width: 100px;
 }
 
-.seeMore {
+.see_more {
   position: relative;
   right: 0;
   bottom: 0;
@@ -258,11 +277,11 @@
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }
 
-.seeMore i {
+.see_more i {
   margin-right: 5px;
 }
 
-.seeMore:hover {
+.see_more:hover {
   background: #fff;
   color: rgba(0, 100, 255, 0.7);
 }

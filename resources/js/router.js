@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Spots from './pages/spots/Spots.vue'
+import TopPage from './pages/spots/TopPage.vue'
 import CreateSpot from './pages/spots/CreateSpot.vue'
 import SearchSpots from './pages/spots/SearchSpots.vue'
 import SpotDetail from './pages/spots/SpotDetail.vue'
@@ -22,7 +22,7 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        component: Spots
+        component: TopPage
     },
     {
         path: '/500',
@@ -144,7 +144,6 @@ const routes = [
     {
         path: '/fishing_types',
         component: FishingTypes,
-        props: true,
         beforeEnter (to, from, next) {
             if (store.getters['auth/check']) {
                 next()

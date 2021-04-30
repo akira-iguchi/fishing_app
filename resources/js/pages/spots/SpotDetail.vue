@@ -76,7 +76,7 @@
                     </tbody>
                 </table>
 
-                <div class="spot_user_private">
+                <div class="spot_user_private" v-if="spot.user_id === AuthUser.id">
 
                     <button>
                         <RouterLink class="edit_link_button" :to="`/spots/${ spot.id }/edit`">
@@ -118,7 +118,7 @@
 
                             <div class="comment_delete">
                                 <button
-                                    v-if="comment.user_id == AuthUser.id"
+                                    v-if="comment.user_id === AuthUser.id"
                                     @click.prevent="deleteComment(comment.id, index)"
                                     type="button"
                                     onclick="return confirm('本当に削除しますか？')"

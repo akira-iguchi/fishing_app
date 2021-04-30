@@ -23,73 +23,122 @@
             </li>
         </ul>
 
-        <div class="row" v-show="tab === 'spotsTab'">
-            <SpotCard
-                v-for="spot in userSpots"
-                :key="spot.id"
-                :spot="spot"
-            />
-            <div class="tabItem_none" v-if="(userSpots.length) <= 0">投稿していません</div>
-        </div>
-
-        <div class="row" v-show="tab === 'favoriteSpotsTab'">
-            <SpotCard
-                v-for="spot in userFavoriteSpots"
-                :key="spot.id"
-                :spot="spot"
-            />
-            <div class="tabItem_none" v-if="(userFavoriteSpots.length) <= 0">お気に入りしていません</div>
-        </div>
-
-        <div class="row" v-show="tab === 'followingsTab'">
-            <div
-                class="mx-auto d-block col-xl-3 col-lg-4 col-md-6 mt-4 mb-5 text-center"
-                v-for="user in userFollowings"
-                :key="user.id"
-            >
-                <div class="profile_image">
-                    <img :src="`${user.user_image}`" alt="ユーザーの画像">
-                </div>
-
-                <div class="profile_content">
-                    <RouterLink :to="`/users/${user.id}`">
-                        <p class="followings_user_name"><strong>{{ user.user_name }}</strong></p>
-                    </RouterLink>
-
-                    <div>
-                        <FollowButton
-                            :user="user"
-                        />
-                    </div>
-                </div>
+        <div v-show="tab === 'spotsTab'">
+            <div class="row">
+                <SpotCard
+                    v-for="spot in userSpotsList"
+                    :key="spot.id"
+                    :spot="spot"
+                />
+                <div class="tabItem_none" v-if="userSpots.length <= 0">投稿していません</div>
             </div>
 
-            <div class="tabItem_none" v-if="(userFollowings.length) <= 0">フォローしていません</div>
+            <div class="text-center">
+                <button
+                    class="btn see_more"
+                    @click="seeMoreSpots"
+                    v-if="(userSpots.length - userSpotsCount) >= 0"
+                >
+                    <i class="fa fa-chevron-down"></i>&nbsp;続きを見る
+                </button>
+            </div>
         </div>
 
-        <div class="row" v-show="tab === 'followersTab'">
-            <div
-                class="mx-auto d-block col-lg-4 col-md-6 mt-4 mb-5 text-center"
-                v-for="user in userFollowers"
-                :key="user.id"
-            >
-                <div class="profile_image">
-                    <img :src="`${user.user_image}`" alt="ユーザーの画像">
-                </div>
+        <div v-show="tab === 'favoriteSpotsTab'">
+            <div class="row">
+                <SpotCard
+                    v-for="spot in userFavoriteSpotsList"
+                    :key="spot.id"
+                    :spot="spot"
+                />
+                <div class="tabItem_none" v-if="(userFavoriteSpots.length) <= 0">お気に入りしていません</div>
+            </div>
 
-                <div class="profile_content">
-                    <RouterLink :to="`/users/${user.id}`">
-                        <p class="followings_user_name"><strong>{{ user.user_name }}</strong></p>
-                    </RouterLink>
+            <div class="text-center">
+                <button
+                    class="btn see_more"
+                    @click="seeMoreFavoriteSpots"
+                    v-if="(userFavoriteSpots.length - userFavoriteSpotsCount) >= 0"
+                >
+                    <i class="fa fa-chevron-down"></i>&nbsp;続きを見る
+                </button>
+            </div>
+        </div>
 
-                    <div>
-                        <FollowButton
-                            :user="user"
-                        />
+        <div v-show="tab === 'followingsTab'">
+            <div class="row">
+                <div
+                    class="mx-auto d-block col-xl-3 col-lg-4 col-md-6 mt-4 mb-5 text-center"
+                    v-for="user in userFollowingsList"
+                    :key="user.id"
+                >
+                    <div class="profile_image">
+                        <img :src="`${user.user_image}`" alt="ユーザーの画像">
+                    </div>
+
+                    <div class="profile_content">
+                        <RouterLink :to="`/users/${user.id}`">
+                            <p class="followings_user_name"><strong>{{ user.user_name }}</strong></p>
+                        </RouterLink>
+
+                        <div>
+                            <FollowButton
+                                :user="user"
+                            />
+                        </div>
                     </div>
                 </div>
+
+                <div class="tabItem_none" v-if="(userFollowings.length) <= 0">フォローしていません</div>
             </div>
-            <div class="tabItem_none" v-if="(userFollowers.length) <= 0">フォローされていません</div>
+
+            <div class="text-center">
+                <button
+                    class="btn see_more"
+                    @click="seeMoreFollowings"
+                    v-if="(userFollowings.length - userFollowingsCount) >= 0"
+                >
+                    <i class="fa fa-chevron-down"></i>&nbsp;続きを見る
+                </button>
+            </div>
+        </div>
+
+        <div v-show="tab === 'followersTab'">
+            <div class="row">
+                <div
+                    class="mx-auto d-block col-xl-3 col-lg-4 col-md-6 mt-4 mb-5 text-center"
+                    v-for="user in userFollowersList"
+                    :key="user.id"
+                >
+                    <div class="profile_image">
+                        <img :src="`${user.user_image}`" alt="ユーザーの画像">
+                    </div>
+
+                    <div class="profile_content">
+                        <RouterLink :to="`/users/${user.id}`">
+                            <p class="followings_user_name"><strong>{{ user.user_name }}</strong></p>
+                        </RouterLink>
+
+                        <div>
+                            <FollowButton
+                                :user="user"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tabItem_none" v-if="(userFollowers.length) <= 0">フォローされていません</div>
+            </div>
+
+            <div class="text-center">
+                <button
+                    class="btn see_more"
+                    @click="seeMoreFollowers"
+                    v-if="(userFollowers.length - userFollowersCount) >= 0"
+                >
+                    <i class="fa fa-chevron-down"></i>&nbsp;続きを見る
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -123,14 +172,36 @@
                 userFavoriteSpots: [],
                 userFollowings: [],
                 userFollowers: [],
+                userSpotsCount: 2,
+                userFavoriteSpotsCount: 2,
+                userFollowingsCount: 1,
+                userFollowersCount: 1,
             }
+        },
+        computed: {
+            userSpotsList () {
+                const list = this.userSpots
+                return list.slice(0, this.userSpotsCount)
+            },
+            userFavoriteSpotsList () {
+                const list = this.userFavoriteSpots
+                return list.slice(0, this.userFavoriteSpotsCount)
+            },
+            userFollowingsList () {
+                const list = this.userFollowings
+                return list.slice(0, this.userFollowingsCount)
+            },
+            userFollowersList () {
+                const list = this.userFollowers
+                return list.slice(0, this.userFollowersCount)
+            },
         },
         mounted: function() {
             this.getUserSpots();
         },
         methods: {
             // ユーザーの釣りスポット一覧
-            async getUserSpots() {
+            async getUserSpots () {
                 this.tab = 'spotsTab';
                 const response = await axios.get(`/api/users/${this.user.id}/spots`)
 
@@ -142,7 +213,7 @@
                 this.userSpots = response.data;
             },
             // ユーザーのお気に入り釣りスポット一覧
-            async getUserFavoriteSpots() {
+            async getUserFavoriteSpots () {
                 this.tab = 'favoriteSpotsTab';
                 const response = await axios.get(`/api/users/${this.user.id}/favoriteSpots`)
 
@@ -155,7 +226,7 @@
             },
 
             // ユーザーフォロー一覧
-            async getUserFollowings() {
+            async getUserFollowings () {
                 this.tab = 'followingsTab';
                 const response = await axios.get(`/api/users/${this.user.id}/followings`)
 
@@ -168,7 +239,7 @@
             },
 
             // ユーザーフォロワー一覧
-            async getUserFollowers() {
+            async getUserFollowers () {
                 this.tab = 'followersTab';
                 const response = await axios.get(`/api/users/${this.user.id}/followers`)
 
@@ -178,6 +249,18 @@
                 }
 
                 this.userFollowers = response.data;
+            },
+            seeMoreSpots () {
+                this.userSpotsCount += 2
+            },
+            seeMoreFavoriteSpots () {
+                this.userFavoriteSpotsCount += 2
+            },
+            seeMoreFollowings () {
+                this.userFollowingsCount += 2
+            },
+            seeMoreFollowers () {
+                this.userFollowersCount += 2
             },
         },
     }

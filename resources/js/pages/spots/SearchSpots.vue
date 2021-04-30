@@ -102,12 +102,11 @@
                 this.searchWord = response.data[0][1]
                 this.searchFishingTypes = response.data[0][2]
                 this.tagNames = response.data[0][3]
-                this.spots = response.data[1]
+                this.spots = response.data[1].data
                 this.fishingTypeNames = response.data[2]
-                console.log(response.data)
 
-                    this.currentPage = response.data.current_page
-                    this.lastPage = response.data.last_page
+                this.currentPage = response.data[1].current_page
+                this.lastPage = response.data[1].last_page
             },
         },
 

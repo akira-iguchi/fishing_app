@@ -13,6 +13,26 @@ $breakpoint-tablet: 896px;
   }
 }
 
+.pagination {
+  display: block !important;
+  text-align: center;
+  margin-bottom: 30px;
+  transition: 0.2s ease;
+
+  a {
+    display: inline-flex;
+    margin: auto;
+    border: 1px solid #ddd;
+    padding: 6px 12px;
+
+    &:hover {
+      color: #fff;
+      background-color: #007bff;
+    }
+  }
+
+}
+
 /* index, search */
 
 .search_group {
@@ -257,7 +277,7 @@ $breakpoint-tablet: 896px;
   width: 100px;
 }
 
-.seeMore {
+.see_more {
   position: relative;
   right: 0;
   bottom: 0;

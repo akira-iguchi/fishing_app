@@ -2,7 +2,13 @@
     <div>
         <h1>釣りスポット作成</h1>
 
-        <input class="spot_search" id="address" type="text" v-model="mapAddress" placeholder="所在地を入力"/>
+        <input
+            class="spot_search"
+            id="address"
+            type="text"
+            v-model="mapAddress"
+            placeholder="所在地を入力"
+        >
         <button @click="searchAddress" class="spot_search_button"><i class="fas fa-search"></i></button>
 
         <!-- <GmapMap :center="mapLocation" :zoom="15" map-type-id="terrain" id="map" @click="updateLocation">
@@ -16,7 +22,14 @@
 
             <div class="form-group">
                 <label for="spot_name" class="required">釣りスポット名</label>
-                <input id="spot_name" type="text" class="form-control" placeholder="例） 〇〇釣り公園" v-model="spotName" required>
+                <input
+                    id="spot_name"
+                    type="text"
+                    class="form-control"
+                    placeholder="例） 〇〇釣り公園"
+                    v-model="spotName"
+                    required
+                >
             </div>
             <div v-if="errors">
                 <ul class="spot_errors" v-if="errors.spot_name">
@@ -26,7 +39,13 @@
 
             <div class="form-group">
                 <label for="spot_address">所在地</label>
-                <input id="spot_address" type="text" class="form-control" placeholder="例） 〇〇県〇〇市〇〇区〇〇町1-1-1" v-model="address">
+                <input
+                    id="spot_address"
+                    type="text"
+                    class="form-control"
+                    placeholder="例） 〇〇県〇〇市〇〇区〇〇町1-1-1"
+                    v-model="address"
+                >
             </div>
             <div v-if="errors">
                 <ul class="spot_errors" v-if="errors.address">
@@ -143,7 +162,12 @@
                 </ul>
             </div>
 
-            <button class="spot-create-edit-button"><i class="fas fa-pencil-alt"></i>&thinsp;投稿</button>
+            <button class="spot-create-edit-button" v-if="isEdit">
+                <i class="fas fa-pencil-alt"></i>&thinsp;更新
+            </button>
+            <button class="spot-create-edit-button" v-else>
+                <i class="fas fa-pencil-alt"></i>&thinsp;投稿
+            </button>
 
             <button type="button" class="back_button" onclick="history.back()">戻る</button>
         </form>
@@ -168,7 +192,7 @@
             },
             intialSpotValue: {
                 type: Object,
-                required: true,
+                required: false,
             },
             intialSpotTags: {
                 type: Array,
@@ -209,6 +233,7 @@
                 allTagNames: this.tagNames,
                 spotTags: this.intialSpotTags,
                 tags: [],
+                isEdit: false,
             }
         },
         computed: {
@@ -216,14 +241,20 @@
                 return this.wordLimit - this.explanation.length
             },
         },
-        mounted: function () {
-            if (this.spot === null) {
+        mounted () {
+            function isEmpty(obj){
+                return !Object.keys(obj).length;
+            }
+
+            if (!isEmpty(this.spot)) {
                 this.latitude = this.spot.latitude
                 this.longitude = this.spot.longitude
                 this.spotName = this.spot.spot_name
                 this.address = this.spot.address
-                this.tags = this.spot.tags
+                this.tags = JSON.stringify(this.spotTags)
                 this.explanation = this.spot.explanation
+
+                this.isEdit = true
             }
         },
         methods: {
