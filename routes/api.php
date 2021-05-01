@@ -46,12 +46,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/followers', 'UserTabController@followers');
 
          // カレンダー機能
-        Route::get('/events', 'EventController@index')->name('events');
+        Route::resource('/events', 'EventController');
         Route::get('/setEvents', 'EventController@setEvents')->name('setEvents');
-        Route::get('/event/{event}/editEvent', 'EventController@editEvent')->name('editEvent');
-        Route::post('/ajax/addEvent', 'EventController@addEvent')->name('addEvent');
-        Route::put('/event/{event}/updateEvent', 'EventController@updateEvent')->name('events.update');
-        Route::delete('/event/{event}/ajax/deleteEvent', 'EventController@deleteEvent')->name('deleteEvent');
         Route::put('/ajax/editEventDate', 'EventController@editEventDate')->name('editEventDate');
     });
 

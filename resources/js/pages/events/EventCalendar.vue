@@ -12,7 +12,11 @@
             <div class="mx-auto d-block col-lg-4 event_form_body" v-if="id == AuthUser.id">
                 <h4>釣りを記録しよう</h4>
                 <div class="event_form">
-                    <EventForm />
+                    <EventForm
+                        :errors="errors"
+                        :deleteInput="deleteInput"
+                        @getEvent="createEvent"
+                    />
                 </div>
             </div>
         </div>
@@ -20,7 +24,7 @@
 </template>
 
 <script>
-    import { OK } from '../../util'
+    import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../../util'
     import EventForm from '../../components/events/EventForm.vue'
     import FullCalendar from '@fullcalendar/vue'
     import dayGridPlugin from '@fullcalendar/daygrid'
@@ -29,7 +33,7 @@
     export default {
         components: {
             EventForm,
-            FullCalendar
+            FullCalendar,
         },
         props: {
             id: {
@@ -40,7 +44,10 @@
         data () {
             return {
                 calendarOptions: {
-                    plugins: [ dayGridPlugin, interactionPlugin ],
+                    plugins: [
+                        dayGridPlugin,
+                        interactionPlugin,
+                    ],
                     initialView: 'dayGridMonth',
                     defaultView: 'dayGridMonth',
                     editable: true,
@@ -55,7 +62,9 @@
                     dayCellContent: function (e) {
                         e.dayNumberText = e.dayNumberText.replace('日', '');
                     },
-                }
+                },
+                errors: null,
+                deleteInput: false,
             }
         },
         computed: {
@@ -74,6 +83,34 @@
 
                 this.spot = response.data[0]
             },
+            async createEvent (data) {
+                const formData = new FormData()
+                formData.append('date', data[0])
+                formData.append('fishing_start_time', data[1])
+                formData.append('fishing_end_time', data[2])
+                formData.append('fishing_type', data[3])
+                formData.append('spot', data[4])
+                formData.append('detail', data[5])
+                const response = await axios.post(`/api/users/${ this.id }/events`, formData)
+
+                if (response.status === UNPROCESSABLE_ENTITY) {
+                    this.errors = response.data.errors
+                    return false
+                }
+
+                if (response.status !== CREATED) {
+                    this.$store.commit('error/setCode', response.status)
+                    return false
+                }
+
+                this.errors = null
+                this.deleteInput = true
+
+                this.$store.commit('message/setContent', {
+                    content: 'イベントを投稿しました',
+                    timeout: 4000
+                })
+            }
         },
         watch: {
             $route: {

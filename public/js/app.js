@@ -15761,14 +15761,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: {},
+  props: {
+    errors: {
+      type: Object,
+      required: false
+    },
+    deleteInput: {
+      type: Boolean,
+      "default": false
+    }
+  },
   data: function data() {
     return {
       date: "",
-      fihsingStartTime: "",
-      fihsingEndTime: "",
-      fihsingType: "",
+      fishingStartTime: "",
+      fishingEndTimeime: "",
+      fishingType: "",
       spot: "",
       detail: "",
       wordLimit: 100
@@ -15779,6 +15808,16 @@ __webpack_require__.r(__webpack_exports__);
       return this.wordLimit - this.detail.length;
     }
   },
+  watch: {
+    deleteInput: function deleteInput() {
+      this.date = "";
+      this.fishingStartTime = "";
+      this.fishingEndTimeime = "";
+      this.fishingType = "";
+      this.spot = "";
+      this.detail = "";
+    }
+  },
   methods: {
     changeTrue: function changeTrue() {
       this.isActive = true;
@@ -15787,7 +15826,7 @@ __webpack_require__.r(__webpack_exports__);
       this.isActive = false;
     },
     getEvent: function getEvent() {
-      this.$emit("getEvent", [this.date, this.fihsingStartTime, this.fihsingEndTime, this.fihsingType, this.spot, this.detail]);
+      this.$emit("getEvent", [this.date, this.fishingStartTime, this.fishingEndTimeime, this.fishingType, this.spot, this.detail]);
     }
   }
 });
@@ -16631,7 +16670,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
-    addComment: function addComment() {
+    createComment: function createComment() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -18134,6 +18173,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -18168,7 +18211,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         dayCellContent: function dayCellContent(e) {
           e.dayNumberText = e.dayNumberText.replace('日', '');
         }
-      }
+      },
+      errors: null,
+      deleteInput: false
     };
   },
   computed: {
@@ -18211,27 +18256,84 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    createEvent: function createEvent(data) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var formData, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                formData = new FormData();
+                formData.append('date', data[0]);
+                formData.append('fishing_start_time', data[1]);
+                formData.append('fishing_end_time', data[2]);
+                formData.append('fishing_type', data[3]);
+                formData.append('spot', data[4]);
+                formData.append('detail', data[5]);
+                _context2.next = 9;
+                return axios.post("/api/users/".concat(_this2.id, "/events"), formData);
+
+              case 9:
+                response = _context2.sent;
+
+                if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY)) {
+                  _context2.next = 13;
+                  break;
+                }
+
+                _this2.errors = response.data.errors;
+                return _context2.abrupt("return", false);
+
+              case 13:
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.CREATED)) {
+                  _context2.next = 16;
+                  break;
+                }
+
+                _this2.$store.commit('error/setCode', response.status);
+
+                return _context2.abrupt("return", false);
+
+              case 16:
+                _this2.errors = null;
+                _this2.deleteInput = true;
+
+                _this2.$store.commit('message/setContent', {
+                  content: 'イベントを投稿しました',
+                  timeout: 4000
+                });
+
+              case 19:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   },
   watch: {
     $route: {
       handler: function handler() {
-        var _this2 = this;
+        var _this3 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
             while (1) {
-              switch (_context2.prev = _context2.next) {
+              switch (_context3.prev = _context3.next) {
                 case 0:
-                  _context2.next = 2;
-                  return _this2.fetchUserId();
+                  _context3.next = 2;
+                  return _this3.fetchUserId();
 
                 case 2:
                 case "end":
-                  return _context2.stop();
+                  return _context3.stop();
               }
             }
-          }, _callee2);
+          }, _callee3);
         }))();
       },
       immediate: true
@@ -61248,6 +61350,23 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
+    _vm.errors
+      ? _c("div", [
+          _vm.errors.date
+            ? _c(
+                "ul",
+                { staticClass: "event_errors" },
+                _vm._l(_vm.errors.date, function(msg) {
+                  return _c("li", { key: msg, staticClass: "text-danger" }, [
+                    _vm._v(_vm._s(msg))
+                  ])
+                }),
+                0
+              )
+            : _vm._e()
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _c("div", { staticClass: "date" }, [
       _c("label", [_vm._v("時間")]),
       _vm._v(" "),
@@ -61294,6 +61413,36 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
+    _vm.errors
+      ? _c("div", [
+          _vm.errors.fishing_start_time
+            ? _c(
+                "ul",
+                { staticClass: "event_errors" },
+                _vm._l(_vm.errors.fishing_start_time, function(msg) {
+                  return _c("li", { key: msg, staticClass: "text-danger" }, [
+                    _vm._v(_vm._s(msg))
+                  ])
+                }),
+                0
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.errors.fishing_end_time
+            ? _c(
+                "ul",
+                { staticClass: "event_errors" },
+                _vm._l(_vm.errors.fishing_end_time, function(msg) {
+                  return _c("li", { key: msg, staticClass: "text-danger" }, [
+                    _vm._v(_vm._s(msg))
+                  ])
+                }),
+                0
+              )
+            : _vm._e()
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _c("div", { staticClass: "form-field" }, [
       _c("label", { staticClass: "required" }, [_vm._v("釣り方")]),
       _vm._v(" "),
@@ -61320,6 +61469,23 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
+    _vm.errors
+      ? _c("div", [
+          _vm.errors.fishing_type
+            ? _c(
+                "ul",
+                { staticClass: "event_errors" },
+                _vm._l(_vm.errors.fishing_type, function(msg) {
+                  return _c("li", { key: msg, staticClass: "text-danger" }, [
+                    _vm._v(_vm._s(msg))
+                  ])
+                }),
+                0
+              )
+            : _vm._e()
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _c("div", { staticClass: "form-field" }, [
       _c("label", { staticClass: "required" }, [_vm._v("釣り場")]),
       _vm._v(" "),
@@ -61345,6 +61511,23 @@ var render = function() {
         }
       })
     ]),
+    _vm._v(" "),
+    _vm.errors
+      ? _c("div", [
+          _vm.errors.spot
+            ? _c(
+                "ul",
+                { staticClass: "event_errors" },
+                _vm._l(_vm.errors.spot, function(msg) {
+                  return _c("li", { key: msg, staticClass: "text-danger" }, [
+                    _vm._v(_vm._s(msg))
+                  ])
+                }),
+                0
+              )
+            : _vm._e()
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "form-field" }, [
       0 > _vm.wordCount
@@ -61386,6 +61569,23 @@ var render = function() {
         _vm._v("文字")
       ])
     ]),
+    _vm._v(" "),
+    _vm.errors
+      ? _c("div", [
+          _vm.errors.detail
+            ? _c(
+                "ul",
+                { staticClass: "event_errors" },
+                _vm._l(_vm.errors.detail, function(msg) {
+                  return _c("li", { key: msg, staticClass: "text-danger" }, [
+                    _vm._v(_vm._s(msg))
+                  ])
+                }),
+                0
+              )
+            : _vm._e()
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c("div", [
       _c(
@@ -62306,7 +62506,7 @@ var render = function() {
         on: {
           submit: function($event) {
             $event.preventDefault()
-            return _vm.addComment($event)
+            return _vm.createComment($event)
           }
         }
       },
@@ -64184,7 +64384,20 @@ var render = function() {
               [
                 _c("h4", [_vm._v("釣りを記録しよう")]),
                 _vm._v(" "),
-                _c("div", { staticClass: "event_form" }, [_c("EventForm")], 1)
+                _c(
+                  "div",
+                  { staticClass: "event_form" },
+                  [
+                    _c("EventForm", {
+                      attrs: {
+                        errors: _vm.errors,
+                        deleteInput: _vm.deleteInput
+                      },
+                      on: { getEvent: _vm.createEvent }
+                    })
+                  ],
+                  1
+                )
               ]
             )
           : _vm._e()

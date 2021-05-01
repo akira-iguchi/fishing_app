@@ -81,6 +81,12 @@ td.fc-day-sun {
   display: none;
 }
 
+.event_errors {
+  list-style: none;
+  position: relative;
+  right: 40px;
+}
+
 .popup {
   text-align: center;
   width: 100%;

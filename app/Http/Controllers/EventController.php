@@ -44,13 +44,13 @@ class EventController extends Controller
         return response()->json($newArr);
     }
 
-    public function addEvent(EventRequest $request, Event $event)
+    public function store(EventRequest $request, Event $event)
     {
         $event->fill($request->all());
         $event->user_id = Auth::id();
         $event->save();
 
-        return response()->json($event);
+        return response($event, 201);
     }
 
     public function editEventDate(Request $request)

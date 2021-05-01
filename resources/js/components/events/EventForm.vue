@@ -4,20 +4,25 @@
             <label class="required">日付</label>
             <input type="date" placeholder="例）2021-03-27" v-model="date" required>
         </div>
-        <!-- @if($errors->has('date'))
-            <span class="error_msg">
-                <p id="date_error">{{ $errors->first('date') }}</p>
-            </span>
-        @endif
-        <span class="error_msg">
-            <p id="date_error"></p>
-        </span> -->
+        <div v-if="errors">
+            <ul class="event_errors" v-if="errors.date">
+                <li class="text-danger" v-for="msg in errors.date" :key="msg">{{ msg }}</li>
+            </ul>
+        </div>
 
         <div class="date">
             <label>時間</label>
             <input type="time" placeholder="例）07:10" v-model="fishingStartTime">
             〜
             <input type="time" placeholder="例）17:30" v-model="fishingEndTimeime">
+        </div>
+        <div v-if="errors">
+            <ul class="event_errors" v-if="errors.fishing_start_time">
+                <li class="text-danger" v-for="msg in errors.fishing_start_time" :key="msg">{{ msg }}</li>
+            </ul>
+            <ul class="event_errors" v-if="errors.fishing_end_time">
+                <li class="text-danger" v-for="msg in errors.fishing_end_time" :key="msg">{{ msg }}</li>
+            </ul>
         </div>
 
         <div class="form-field">
@@ -30,6 +35,11 @@
                 required
             >
         </div>
+        <div v-if="errors">
+            <ul class="event_errors" v-if="errors.fishing_type">
+                <li class="text-danger" v-for="msg in errors.fishing_type" :key="msg">{{ msg }}</li>
+            </ul>
+        </div>
 
         <div class="form-field">
             <label class="required">釣り場</label>
@@ -40,6 +50,11 @@
                 v-model="spot"
                 required
             >
+        </div>
+        <div v-if="errors">
+            <ul class="event_errors" v-if="errors.spot">
+                <li class="text-danger" v-for="msg in errors.spot" :key="msg">{{ msg }}</li>
+            </ul>
         </div>
 
         <div class="form-field">
@@ -54,6 +69,11 @@
             ></textarea>
             <p>残り<span v-bind:class="{ 'text-danger':isActive }">{{ wordCount }}</span>文字</p>
         </div>
+        <div v-if="errors">
+            <ul class="event_errors" v-if="errors.detail">
+                <li class="text-danger" v-for="msg in errors.detail" :key="msg">{{ msg }}</li>
+            </ul>
+        </div>
 
         <div>
             <button type='button' class="spot-create-edit-button" @click="getEvent">
@@ -66,13 +86,21 @@
 <script>
     export default {
         props: {
+            errors: {
+                type: Object,
+                required: false,
+            },
+            deleteInput: {
+                type: Boolean,
+                default: false
+            },
         },
         data () {
             return {
                 date: "",
-                fihsingStartTime: "",
-                fihsingEndTime: "",
-                fihsingType: "",
+                fishingStartTime: "",
+                fishingEndTimeime: "",
+                fishingType: "",
                 spot: "",
                 detail: "",
                 wordLimit: 100,
@@ -83,19 +111,29 @@
                 return this.wordLimit - this.detail.length
             },
         },
+        watch: {
+            deleteInput () {
+                this.date = ""
+                this.fishingStartTime = ""
+                this.fishingEndTimeime = ""
+                this.fishingType = ""
+                this.spot = ""
+                this.detail = ""
+            }
+        },
         methods: {
-            changeTrue: function() {
+            changeTrue () {
                 this.isActive = true
             },
-            changeFalse: function() {
+            changeFalse () {
                 this.isActive = false
             },
             getEvent () {
                 this.$emit("getEvent", [
                     this.date,
-                    this.fihsingStartTime,
-                    this.fihsingEndTime,
-                    this.fihsingType,
+                    this.fishingStartTime,
+                    this.fishingEndTimeime,
+                    this.fishingType,
                     this.spot,
                     this.detail,
                 ])

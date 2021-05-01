@@ -16,8 +16,6 @@ class Event extends Model
         'date',
         'fishing_type',
         'spot',
-        'bait',
-        'weather',
         'fishing_start_time',
         'fishing_end_time',
         'detail',

@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <form @submit.prevent="addComment">
+        <form @submit.prevent="createComment">
             <div class="form-group">
                 <div v-if="0 > wordCount" v-on="changeTrue()"></div>
                 <div v-else-if="0 <= wordCount" v-on="changeFalse()"></div>
@@ -133,7 +133,7 @@
             },
         },
         watch: {
-            spotData: function (newSpot) {
+            spotData (newSpot) {
                 this.spot = newSpot
                 this.commentImageMessage = ""
                 this.preview = null
@@ -148,7 +148,7 @@
             }
         },
         methods: {
-            async addComment () {
+            async createComment () {
                 const formData = new FormData()
                 formData.append('spot_id', this.spotData.id)
                 formData.append('comment', this.commentContent)
