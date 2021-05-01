@@ -6,7 +6,7 @@
         <div
             class="comment_index"
             v-if="spotData.spot_comments && spotData.spot_comments.length > 0"
-            >
+        >
             <div v-for="(comment, index) in spotCommentList" :key="comment.id">
                 <div class="comment">
                     <div class="comment_top">
@@ -103,11 +103,12 @@
             spotData: {
                 type: Object,
                 required: true
-            }
+            },
         },
         data () {
             return {
                 spot: this.spotData,
+                spotCommentList: this.spotData.spot_comments.reverse(),
                 commentContent: "",
                 commentImage: "",
                 isActive: false,
@@ -130,9 +131,21 @@
             AuthUser () {
                 return this.$store.getters['auth/AuthUser']
             },
-            spotCommentList () {
-                return this.spot.spot_comments.reverse()
-            },
+        },
+        watch: {
+            spotData: function (newSpot) {
+                this.spot = newSpot
+                this.commentImageMessage = ""
+                this.preview = null
+                this.commentContent = ""
+                this.commentErrors = null
+                this.show = false
+                this.$nextTick(function () {
+                    this.show = true;
+                })
+                this.spotCommentList = newSpot.spot_comments.reverse()
+                return this.spotCommentList
+            }
         },
         methods: {
             async addComment () {
@@ -162,7 +175,7 @@
                     this.show = true;
                 })
 
-                this.spot.spot_comments.push(response.data)
+                this.spot.spot_comments.unshift(response.data)
 
                 this.$store.commit('message/setContent', {
                     content: 'コメントを投稿しました',
@@ -174,12 +187,8 @@
 
                 this.spot.count_spot_comments -= 1
 
+                // this.spot.spot_comments.reverse()
                 this.spot.spot_comments.splice(index, 1)
-
-                this.spot.spot_comments = [
-                    response.data,
-                    ...this.spot.spot_comments
-                ]
 
                 this.$store.commit('message/setContent', {
                     content: 'コメントを削除しました',

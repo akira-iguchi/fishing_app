@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\SpotRequest;
+use Illuminate\Support\Facades\Route;
 
 trait SpotTrait
 {
@@ -58,6 +59,9 @@ trait SpotTrait
                 SpotTrait::imageUpload($spot, $req, $image3);
             }
         } else {
+            if (Route::currentRouteName() === 'spots.update') {
+                return false;
+            }
             $spot_image->save();
         }
     }

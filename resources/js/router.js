@@ -8,6 +8,7 @@ import SpotDetail from './pages/spots/SpotDetail.vue'
 import EditSpot from './pages/spots/EditSpot.vue'
 import UserProfile from './pages/users/UserProfile.vue'
 import EditUserProfile from './pages/users/EditUserProfile.vue'
+import EventCalendar from './pages/events/EventCalendar.vue'
 import TagSpots from './pages/tags/TagSpots.vue'
 import FishingTypes from './pages/fishing_types/FishingTypes.vue'
 import Login from './pages/auth/Login.vue'
@@ -120,6 +121,18 @@ const routes = [
     {
         path: '/users/:id/edit',
         component: EditUserProfile,
+        props: true,
+        beforeEnter (to, from, next) {
+            if (store.getters['auth/check']) {
+                next()
+            } else {
+                next('/')
+            }
+        }
+    },
+    {
+        path: '/users/:id/events',
+        component: EventCalendar,
         props: true,
         beforeEnter (to, from, next) {
             if (store.getters['auth/check']) {

@@ -11,6 +11,7 @@
             <nav class="nav-content" tabindex="0">
                 <ul v-if="isLogin">
                     <li><span @click="logout"><i class="fas fa-sign-in-alt"></i>&thinsp;ログアウト</span></li>
+                    <li><RouterLink :to="`/users/${ AuthUser.id }/events`">カレンダー</RouterLink></li>
                     <li><RouterLink to="/fishing_types">釣り方一覧</RouterLink></li>
                     <li><RouterLink to="/spots/create">投稿</RouterLink></li>
                     <li><RouterLink :to="`/users/${ AuthUser.id }`">{{ AuthUser.user_name }}</RouterLink></li>

@@ -116,6 +116,7 @@
                         v-for="spot in otherSpots"
                         :key="spot.id"
                         :spot="spot"
+                        @click="updateSpotComments"
                     />
                 </div>
 
@@ -195,6 +196,10 @@
 
                     this.$router.push('/')
                 }
+            },
+            updateSpotComments () {
+                console.log(this.spot)
+                this.spot = response.data[0]
             },
         },
         watch: {

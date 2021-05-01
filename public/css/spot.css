@@ -696,7 +696,7 @@
 
 .comment_index {
   overflow-y: auto;
-  max-height: 1000px;
+  max-height: 150em;
 }
 
 .comment {

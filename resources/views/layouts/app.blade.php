@@ -10,6 +10,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/spot.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/spot.css') }}">
         <link rel="stylesheet" href="{{ asset('css/user.css') }}">
         <link rel="stylesheet" href="{{ asset('css/fishing_type.css') }}">
         <link rel="stylesheet" href="{{ asset('css/fullcalendar/core/main.css') }}">

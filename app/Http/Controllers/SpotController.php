@@ -83,7 +83,7 @@ class SpotController extends Controller
         $otherSpots = Spot::where('id', '!=', $spot->id)->get()->shuffle()->take(4)
                     ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
 
-        return [$spot, $otherSpots] ?? abort(404);
+        return [$spot, $otherSpots];
     }
 
     public function create(Spot $spot)

@@ -12,15 +12,12 @@ use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
-    public function index(User $user, Event $event)
+    public function index(String $id, Event $event)
     {
+        $user = User::findOrFail($id);
         $events = Event::where('user_id', $user->id)->get();
 
-        return view('events.index', [
-            'events' => $events,
-            'event' => $event,
-            'user' => $user,
-        ]);
+        return [$user, $events];
     }
 
     public function setEvents(Request $request, User $user)
@@ -38,8 +35,6 @@ class EventController extends Controller
             $newItem["title"] = $item["spot"];
             $newItem["start"] = $item["date"];
             $newItem["fishing_type"] = $item["fishing_type"];
-            $newItem["bait"] = $item["bait"];
-            $newItem["weather"] = $item["weather"];
             $newItem["fishing_start_time"] = $item["fishing_start_time"];
             $newItem["fishing_end_time"] = $item["fishing_end_time"];
             $newItem["detail"] = $item["detail"];

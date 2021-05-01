@@ -1,7 +1,14 @@
 @charset "UTF-8";
 
-#calendar {
+.calendar {
   margin-top: 100px;
+}
+
+td.fc-day-sat {
+  background-color: #eaf4ff;
+}
+td.fc-day-sun {
+  background-color: #ffeaea;
 }
 
 /* 作成フォーム */
