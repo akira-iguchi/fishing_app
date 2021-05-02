@@ -18,8 +18,8 @@ class CreateEventsTable extends Migration
             $table->date('date');
             $table->string('fishing_type');
             $table->string('spot');
-            $table->time('fishing_start_time')->nullable();
-            $table->time('fishing_end_time')->nullable();
+            $table->string('fishing_start_time')->nullable();
+            $table->string('fishing_end_time')->nullable();
             $table->longText('detail')->nullable();
             $table->timestamps();
 

@@ -12,6 +12,7 @@
                 :userData="user"
                 v-if="popup"
                 @closeModal="closeModal"
+                @deleteEvent="reloadCalendar"
             />
 
             <div class="mx-auto d-block col-lg-4 event_form_body" v-if="userId == AuthUser.id">
@@ -94,6 +95,14 @@
                 return this.$store.getters['auth/AuthUser']
             },
         },
+        watch: {
+            $route: {
+                async handler () {
+                    await this.fetchEditEvent()
+                },
+                immediate: true
+            }
+        },
         methods: {
             async fetchEditEvent () {
                 const response = await axios.get(`/api/users/${ this.userId }/events/${ this.eventId }/edit`)
@@ -150,6 +159,8 @@
                     content: 'イベントを投稿しました',
                     timeout: 4000
                 })
+
+                this.$router.push(`/users/${ this.userId }/events/`)
             },
             popupModal (info) {
                 this.popup = true
@@ -181,6 +192,9 @@
                     timeout: 4000
                 })
             },
+            reloadCalendar () {
+                this.fetchEditEvent()
+            },
             formatDate (date) {
                 const year = date.getFullYear();
                 const month = date.getMonth() + 1;
@@ -189,13 +203,5 @@
                 return newDate;
             },
         },
-        watch: {
-            $route: {
-                async handler () {
-                    await this.fetchEditEvent()
-                },
-                immediate: true
-            }
-        }
     }
 </script>

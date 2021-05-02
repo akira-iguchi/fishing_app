@@ -15863,6 +15863,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -15909,6 +15919,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     eventData: {
@@ -15925,11 +15936,39 @@ __webpack_require__.r(__webpack_exports__);
       event: this.eventData
     };
   },
-  computed: {},
-  watch: {},
+  filters: {
+    moment: function moment(date) {
+      return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format('YYYY/MM/DD');
+    }
+  },
   methods: {
     closeModal: function closeModal() {
       this.$emit("closeModal");
+    },
+    deleteEvent: function deleteEvent() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (confirm('本当に削除しますか？')) {
+                  // const response = await axios.delete(`/api/users/${ this.userData.id }/events/${ this.eventData.id }`)
+                  _this.$emit("deleteEvent"); // this.$store.commit('message/setContent', {
+                  //     content: 'イベントを削除しました',
+                  //     timeout: 4000
+                  // })
+
+                }
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   }
 });
@@ -18297,6 +18336,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -18356,68 +18396,92 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.$store.getters['auth/AuthUser'];
     }
   },
+  watch: {
+    $route: {
+      handler: function handler() {
+        var _this = this;
+
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.next = 2;
+                  return _this.fetchEditEvent();
+
+                case 2:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }))();
+      },
+      immediate: true
+    }
+  },
   methods: {
     fetchEditEvent: function fetchEditEvent() {
-      var _this = this;
+      var _this2 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _context.next = 2;
-                return axios.get("/api/users/".concat(_this.userId, "/events/").concat(_this.eventId, "/edit"));
+                _context2.next = 2;
+                return axios.get("/api/users/".concat(_this2.userId, "/events/").concat(_this2.eventId, "/edit"));
 
               case 2:
-                response = _context.sent;
+                response = _context2.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                  _context.next = 6;
+                  _context2.next = 6;
                   break;
                 }
 
-                _this.$store.commit('error/setCode', response.status);
+                _this2.$store.commit('error/setCode', response.status);
 
-                return _context.abrupt("return", false);
+                return _context2.abrupt("return", false);
 
               case 6:
-                if (!(_this.AuthUser.id !== Number(_this.userId))) {
-                  _context.next = 10;
+                if (!(_this2.AuthUser.id !== Number(_this2.userId))) {
+                  _context2.next = 10;
                   break;
                 }
 
-                _this.$router.push('/');
+                _this2.$router.push('/');
 
-                _this.$store.commit('message/setContent', {
+                _this2.$store.commit('message/setContent', {
                   content: '他のユーザーのイベントは編集できません',
                   timeout: 4000
                 });
 
-                return _context.abrupt("return", false);
+                return _context2.abrupt("return", false);
 
               case 10:
-                _this.user = response.data[0];
-                _this.event = response.data[1];
-                _this.calendarOptions.events = response.data[2];
-                _this.eventDataLoaded = true;
+                _this2.user = response.data[0];
+                _this2.event = response.data[1];
+                _this2.calendarOptions.events = response.data[2];
+                _this2.eventDataLoaded = true;
 
               case 14:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     },
     editEvent: function editEvent(data) {
-      var _this2 = this;
+      var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var formData, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 formData = new FormData();
                 formData.append('date', data[0]);
@@ -18426,8 +18490,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append('fishing_type', data[3]);
                 formData.append('spot', data[4]);
                 formData.append('detail', data[5]);
-                _context2.next = 9;
-                return axios.post("/api/users/".concat(_this2.userId, "/events/").concat(_this2.eventId), formData, {
+                _context3.next = 9;
+                return axios.post("/api/users/".concat(_this3.userId, "/events/").concat(_this3.eventId), formData, {
                   // PUTに変換
                   headers: {
                     'X-HTTP-Method-Override': 'PUT'
@@ -18435,41 +18499,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 9:
-                response = _context2.sent;
+                response = _context3.sent;
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY)) {
-                  _context2.next = 13;
+                  _context3.next = 13;
                   break;
                 }
 
-                _this2.errors = response.data.errors;
-                return _context2.abrupt("return", false);
+                _this3.errors = response.data.errors;
+                return _context3.abrupt("return", false);
 
               case 13:
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.CREATED)) {
-                  _context2.next = 16;
+                  _context3.next = 16;
                   break;
                 }
 
-                _this2.$store.commit('error/setCode', response.status);
+                _this3.$store.commit('error/setCode', response.status);
 
-                return _context2.abrupt("return", false);
+                return _context3.abrupt("return", false);
 
               case 16:
-                _this2.errors = null;
-                _this2.deleteInput = true;
+                _this3.errors = null;
+                _this3.deleteInput = true;
 
-                _this2.$store.commit('message/setContent', {
+                _this3.$store.commit('message/setContent', {
                   content: 'イベントを投稿しました',
                   timeout: 4000
                 });
 
-              case 19:
+                _this3.$router.push("/users/".concat(_this3.userId, "/events/"));
+
+              case 20:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
     popupModal: function popupModal(info) {
@@ -18480,17 +18546,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.popup = false;
     },
     editEventDate: function editEventDate(info) {
-      var _this3 = this;
+      var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
         var event_id, newDate, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                event_id = info.event.id, newDate = _this3.formatDate(info.event.start);
-                _context3.next = 3;
-                return axios.post("/api/users/".concat(_this3.userId, "/editEventDate"), {
+                event_id = info.event.id, newDate = _this4.formatDate(info.event.start);
+                _context4.next = 3;
+                return axios.post("/api/users/".concat(_this4.userId, "/editEventDate"), {
                   id: event_id,
                   newDate: newDate
                 }, {
@@ -18501,28 +18567,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
-                response = _context3.sent;
+                response = _context4.sent;
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY)) {
-                  _context3.next = 6;
+                  _context4.next = 6;
                   break;
                 }
 
-                return _context3.abrupt("return", false);
+                return _context4.abrupt("return", false);
 
               case 6:
-                _this3.$store.commit('message/setContent', {
+                _this4.$store.commit('message/setContent', {
                   content: 'イベントの日時を更新しました',
                   timeout: 4000
                 });
 
               case 7:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }))();
+    },
+    reloadCalendar: function reloadCalendar() {
+      this.fetchEditEvent();
     },
     formatDate: function formatDate(date) {
       var year = date.getFullYear();
@@ -18530,30 +18599,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var day = date.getDate();
       var newDate = year + '-' + month + '-' + day;
       return newDate;
-    }
-  },
-  watch: {
-    $route: {
-      handler: function handler() {
-        var _this4 = this;
-
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-            while (1) {
-              switch (_context4.prev = _context4.next) {
-                case 0:
-                  _context4.next = 2;
-                  return _this4.fetchEditEvent();
-
-                case 2:
-                case "end":
-                  return _context4.stop();
-              }
-            }
-          }, _callee4);
-        }))();
-      },
-      immediate: true
     }
   }
 });
@@ -18585,6 +18630,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -18660,6 +18706,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       },
       eventDataLoaded: false,
       user: {},
+      events: [],
       event: {},
       errors: null,
       popup: false,
@@ -18672,52 +18719,76 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.$store.getters['auth/AuthUser'];
     }
   },
+  watch: {
+    $route: {
+      handler: function handler() {
+        var _this = this;
+
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.next = 2;
+                  return _this.fetchEvents();
+
+                case 2:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }))();
+      },
+      immediate: true
+    }
+  },
   methods: {
     fetchEvents: function fetchEvents() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return axios.get("/api/users/".concat(_this.id, "/events"));
-
-              case 2:
-                response = _context.sent;
-
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                  _context.next = 6;
-                  break;
-                }
-
-                _this.$store.commit('error/setCode', response.status);
-
-                return _context.abrupt("return", false);
-
-              case 6:
-                _this.user = response.data[0];
-                _this.calendarOptions.events = response.data[1];
-                _this.eventDataLoaded = true;
-
-              case 9:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    createEvent: function createEvent(data) {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var formData, response;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.get("/api/users/".concat(_this2.id, "/events"));
+
+              case 2:
+                response = _context2.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
+                  _context2.next = 6;
+                  break;
+                }
+
+                _this2.$store.commit('error/setCode', response.status);
+
+                return _context2.abrupt("return", false);
+
+              case 6:
+                _this2.user = response.data[0];
+                _this2.calendarOptions.events = response.data[1];
+                _this2.eventDataLoaded = true;
+
+              case 9:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    createEvent: function createEvent(data) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var formData, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 formData = new FormData();
                 formData.append('date', data[0]);
@@ -18726,45 +18797,47 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append('fishing_type', data[3]);
                 formData.append('spot', data[4]);
                 formData.append('detail', data[5]);
-                _context2.next = 9;
-                return axios.post("/api/users/".concat(_this2.id, "/events"), formData);
+                _context3.next = 9;
+                return axios.post("/api/users/".concat(_this3.id, "/events"), formData);
 
               case 9:
-                response = _context2.sent;
+                response = _context3.sent;
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY)) {
-                  _context2.next = 13;
+                  _context3.next = 13;
                   break;
                 }
 
-                _this2.errors = response.data.errors;
-                return _context2.abrupt("return", false);
+                _this3.errors = response.data.errors;
+                return _context3.abrupt("return", false);
 
               case 13:
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.CREATED)) {
-                  _context2.next = 16;
+                  _context3.next = 16;
                   break;
                 }
 
-                _this2.$store.commit('error/setCode', response.status);
+                _this3.$store.commit('error/setCode', response.status);
 
-                return _context2.abrupt("return", false);
+                return _context3.abrupt("return", false);
 
               case 16:
-                _this2.errors = null;
-                _this2.deleteInput = true;
+                _this3.errors = null;
+                _this3.deleteInput = true;
 
-                _this2.$store.commit('message/setContent', {
+                _this3.$store.commit('message/setContent', {
                   content: 'イベントを投稿しました',
                   timeout: 4000
                 });
 
-              case 19:
+                _this3.fetchEvents();
+
+              case 20:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
     popupModal: function popupModal(info) {
@@ -18775,17 +18848,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.popup = false;
     },
     editEventDate: function editEventDate(info) {
-      var _this3 = this;
+      var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
         var event_id, newDate, response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                event_id = info.event.id, newDate = _this3.formatDate(info.event.start);
-                _context3.next = 3;
-                return axios.post("/api/users/".concat(_this3.id, "/editEventDate"), {
+                event_id = info.event.id, newDate = _this4.formatDate(info.event.start);
+                _context4.next = 3;
+                return axios.post("/api/users/".concat(_this4.id, "/editEventDate"), {
                   id: event_id,
                   newDate: newDate
                 }, {
@@ -18796,28 +18869,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
               case 3:
-                response = _context3.sent;
+                response = _context4.sent;
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY)) {
-                  _context3.next = 6;
+                  _context4.next = 6;
                   break;
                 }
 
-                return _context3.abrupt("return", false);
+                return _context4.abrupt("return", false);
 
               case 6:
-                _this3.$store.commit('message/setContent', {
+                _this4.$store.commit('message/setContent', {
                   content: 'イベントの日時を更新しました',
                   timeout: 4000
                 });
 
               case 7:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }))();
+    },
+    reloadCalendar: function reloadCalendar() {
+      console.log("aaa");
+      this.fetchEvents();
     },
     formatDate: function formatDate(date) {
       var year = date.getFullYear();
@@ -18825,30 +18902,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var day = date.getDate();
       var newDate = year + '-' + month + '-' + day;
       return newDate;
-    }
-  },
-  watch: {
-    $route: {
-      handler: function handler() {
-        var _this4 = this;
-
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-            while (1) {
-              switch (_context4.prev = _context4.next) {
-                case 0:
-                  _context4.next = 2;
-                  return _this4.fetchEvents();
-
-                case 2:
-                case "end":
-                  return _context4.stop();
-              }
-            }
-          }, _callee4);
-        }))();
-      },
-      immediate: true
     }
   }
 });
@@ -62259,16 +62312,10 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "popup-content" }, [
-          _c("h2", { attrs: { id: "modal-date" } }),
+          _c("h2", [_vm._v(_vm._s(_vm._f("moment")(_vm.event.startStr)))]),
           _vm._v(" "),
           _c("table", { staticClass: "form-table" }, [
             _c("tbody", [
-              _c("tr", [
-                _c("th", [_vm._v("釣り場")]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm.event.title))])
-              ]),
-              _vm._v(" "),
               _c("tr", [
                 _c("th", [_vm._v("釣り方")]),
                 _vm._v(" "),
@@ -62276,75 +62323,84 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("tr", [
-                _c("th", [_vm._v("時間")]),
+                _c("th", [_vm._v("釣り場")]),
                 _vm._v(" "),
-                _c("td", [
-                  _c("span", [
-                    _vm._v(
-                      "\n                                " +
-                        _vm._s(
-                          _vm.event.extendedProps.fishing_start_time.slice(
-                            0,
-                            -3
-                          )
-                        ) +
-                        "\n                            "
-                    )
-                  ]),
-                  _vm._v(
-                    "\n                            〜\n                            "
-                  ),
-                  _c("span", [
-                    _vm._v(
-                      "\n                                " +
-                        _vm._s(
-                          _vm.event.extendedProps.fishing_end_time.slice(0, -3)
-                        ) +
-                        "\n                            "
-                    )
-                  ])
-                ])
+                _c("td", [_vm._v(_vm._s(_vm.event.title))])
               ]),
               _vm._v(" "),
-              _c("tr", [
-                _c("th", [_vm._v("詳細")]),
-                _vm._v(" "),
-                _c("td", { staticClass: "modal_detail" }, [
-                  _vm._v(_vm._s(_vm.event.extendedProps.detail))
-                ])
-              ])
+              _vm.event.extendedProps.fishing_start_time ||
+              _vm.event.extendedProps.fishing_end_time
+                ? _c("tr", [
+                    _c("th", [_vm._v("時間")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("span", [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(_vm.event.extendedProps.fishing_start_time) +
+                            "\n                            "
+                        )
+                      ]),
+                      _vm._v(
+                        "\n                            〜\n                            "
+                      ),
+                      _c("span", [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(_vm.event.extendedProps.fishing_end_time) +
+                            "\n                            "
+                        )
+                      ])
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.event.extendedProps.detail
+                ? _c("tr", [
+                    _c("th", [_vm._v("詳細")]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "modal_detail" }, [
+                      _vm._v(_vm._s(_vm.event.extendedProps.detail))
+                    ])
+                  ])
+                : _vm._e()
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "event_private" }, [
-            _c(
-              "button",
-              { staticClass: "edit_link_button" },
-              [
-                _c(
-                  "RouterLink",
-                  {
-                    attrs: {
-                      to:
-                        "/users/" +
-                        _vm.userData.id +
-                        "/events/" +
-                        _vm.event.id +
-                        "/edit"
-                    }
-                  },
-                  [_vm._v("編集")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "delete_button", attrs: { type: "button" } },
-              [_vm._v("削除")]
-            )
-          ])
+          _c(
+            "div",
+            { staticClass: "event_private" },
+            [
+              _c(
+                "RouterLink",
+                {
+                  attrs: {
+                    to:
+                      "/users/" +
+                      _vm.userData.id +
+                      "/events/" +
+                      _vm.event.id +
+                      "/edit"
+                  }
+                },
+                [
+                  _c("button", { staticClass: "edit_link_button" }, [
+                    _vm._v("編集")
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "delete_button",
+                  on: { click: _vm.deleteEvent }
+                },
+                [_vm._v("削除")]
+              )
+            ],
+            1
+          )
         ])
       ])
     ]
@@ -65127,7 +65183,10 @@ var render = function() {
         _vm.popup
           ? _c("EventModal", {
               attrs: { eventData: _vm.eventData, userData: _vm.user },
-              on: { closeModal: _vm.closeModal }
+              on: {
+                closeModal: _vm.closeModal,
+                deleteEvent: _vm.reloadCalendar
+              }
             })
           : _vm._e(),
         _vm._v(" "),
@@ -65199,7 +65258,10 @@ var render = function() {
         _vm.popup
           ? _c("EventModal", {
               attrs: { eventData: _vm.eventData, userData: _vm.user },
-              on: { closeModal: _vm.closeModal }
+              on: {
+                deleteEvent: _vm.reloadCalendar,
+                closeModal: _vm.closeModal
+              }
             })
           : _vm._e(),
         _vm._v(" "),

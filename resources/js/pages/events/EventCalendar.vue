@@ -11,6 +11,7 @@
                 :eventData="eventData"
                 :userData="user"
                 v-if="popup"
+                @deleteEvent="reloadCalendar"
                 @closeModal="closeModal"
             />
 
@@ -78,6 +79,7 @@
                 },
                 eventDataLoaded: false,
                 user: {},
+                events: [],
                 event: {},
                 errors: null,
                 popup: false,
@@ -88,6 +90,14 @@
         computed: {
             AuthUser () {
                 return this.$store.getters['auth/AuthUser']
+            },
+        },
+        watch: {
+            $route: {
+                async handler () {
+                    await this.fetchEvents()
+                },
+                immediate: true
             },
         },
         methods: {
@@ -131,6 +141,8 @@
                     content: 'イベントを投稿しました',
                     timeout: 4000
                 })
+
+                this.fetchEvents()
             },
             popupModal (info) {
                 this.popup = true
@@ -162,6 +174,10 @@
                     timeout: 4000
                 })
             },
+            reloadCalendar () {
+                console.log("aaa")
+                this.fetchEvents()
+            },
             formatDate (date) {
                 const year = date.getFullYear();
                 const month = date.getMonth() + 1;
@@ -170,13 +186,5 @@
                 return newDate;
             },
         },
-        watch: {
-            $route: {
-                async handler () {
-                    await this.fetchEvents()
-                },
-                immediate: true
-            }
-        }
     }
 </script>

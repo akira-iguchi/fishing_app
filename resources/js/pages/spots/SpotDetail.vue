@@ -171,7 +171,7 @@
         },
         methods: {
             async fetchSpot () {
-                const response = await axios.get(`/api/spots/${this.id}`)
+                const response = await axios.get(`/api/spots/${ this.id }`)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
@@ -188,7 +188,7 @@
             // コメント削除
             async deleteSpot() {
                 if (confirm('本当に削除しますか？')) {
-                    const response = await axios.delete(`/api/spots/${this.id}`)
+                    const response = await axios.delete(`/api/spots/${ this.id }`)
                     this.$store.commit('message/setContent', {
                         content: 'コメントを削除しました',
                         timeout: 5000

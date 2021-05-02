@@ -18,13 +18,13 @@ class EventController extends Controller
 
         $newArr = [];
         foreach ($events as $item) {
-            $newItem["id"] = $item["id"];
-            $newItem["title"] = $item["spot"];
-            $newItem["start"] = $item["date"];
-            $newItem["fishing_type"] = $item["fishing_type"];
-            $newItem["fishing_start_time"] = $item["fishing_start_time"];
-            $newItem["fishing_end_time"] = $item["fishing_end_time"];
-            $newItem["detail"] = $item["detail"];
+            $newItem['id'] = $item['id'];
+            $newItem['title'] = $item['spot'];
+            $newItem['start'] = $item['date'];
+            $newItem['fishing_type'] = $item['fishing_type'];
+            $newItem['fishing_start_time'] = $item['fishing_start_time'];
+            $newItem['fishing_end_time'] = $item['fishing_end_time'];
+            $newItem['detail'] = $item['detail'];
             $newArr[] = $newItem;
         }
 
@@ -58,24 +58,26 @@ class EventController extends Controller
 
             $newArr = [];
             foreach ($events as $item) {
-                $newItem["id"] = $item["id"];
-                $newItem["title"] = $item["spot"];
-                $newItem["start"] = $item["date"];
-                $newItem["fishing_type"] = $item["fishing_type"];
-                $newItem["fishing_start_time"] = $item["fishing_start_time"];
-                $newItem["fishing_end_time"] = $item["fishing_end_time"];
-                $newItem["detail"] = $item["detail"];
+                $newItem['id'] = $item['id'];
+                $newItem['title'] = $item['spot'];
+                $newItem['start'] = $item['date'];
+                $newItem['fishing_type'] = $item['fishing_type'];
+                $newItem['fishing_start_time'] = $item['fishing_start_time'];
+                $newItem['fishing_end_time'] = $item['fishing_end_time'];
+                $newItem['detail'] = $item['detail'];
                 $newArr[] = $newItem;
             }
 
-            return [$user, $event, $events];
+            return [$user, $event, $newArr];
         } else {
             response()->json();
         }
     }
 
-    public function update(EventRequest $request, User $user, Event $event)
+    public function update(EventRequest $request, String $userId, String $eventId)
     {
+        $event = Event::findOrFail($eventId);
+
         return DB::transaction(function () use ($event, $request) {
             $event->user_id = Auth::id();
             $event->fill($request->all())->save();
@@ -84,8 +86,9 @@ class EventController extends Controller
         });
     }
 
-    public function delete(User $user, Event $event)
+    public function destroy(String $userId, String $eventId)
     {
+        $event = Event::findOrFail($eventId);
         if (\Auth::id() === $event->user_id) {
             $event->delete();
             return response()->json();

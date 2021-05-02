@@ -4,6 +4,10 @@
   margin-top: 100px;
 }
 
+.fc-daygrid-day-events {
+  text-align: center;
+}
+
 td.fc-day-sat {
   background-color: #eaf4ff;
 }
@@ -102,6 +106,10 @@ td.fc-day-sun {
   top: 5px;
   right: 8px;
   cursor: pointer;
+}
+
+.event_private {
+  margin-top: 20px;
 }
 
 .edit_link_button {
