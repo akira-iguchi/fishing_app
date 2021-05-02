@@ -122,21 +122,17 @@ class SpotController extends Controller
     {
         $spot = Spot::findOrFail($id)->load(['fishingTypes']);
 
-        if (\Auth::id() === $spot->user_id) {
-            $spotFishingTypeNames = $spot->fishingTypes->pluck('id');
+        $spotFishingTypeNames = $spot->fishingTypes->pluck('id');
 
-            $spotTagNames = $spot->tags->map(function ($tag) {
-                return ['text' => $tag->tag_name];
-            });
+        $spotTagNames = $spot->tags->map(function ($tag) {
+            return ['text' => $tag->tag_name];
+        });
 
-            $allTagNames = TagNameTrait::getAllTagNames();
+        $allTagNames = TagNameTrait::getAllTagNames();
 
-            $allFishingTypeNames = FishingType::all();
+        $allFishingTypeNames = FishingType::all();
 
-            return [$spot, $spotFishingTypeNames, $spotTagNames, $allTagNames, $allFishingTypeNames];
-        } else {
-            return response()->json();
-        }
+        return [$spot, $spotFishingTypeNames, $spotTagNames, $allTagNames, $allFishingTypeNames];
     }
 
     public function update(SpotRequest $request, Spot $spot, SpotImage $spot_image)

@@ -47,15 +47,14 @@ Route::group(['middleware' => ['auth']], function () {
 
          // カレンダー機能
         Route::resource('/events', 'EventController');
-        Route::get('/setEvents', 'EventController@setEvents')->name('setEvents');
-        Route::put('/ajax/editEventDate', 'EventController@editEventDate')->name('editEventDate');
+        Route::put('/editEventDate', 'EventController@editEventDate')->name('editEventDate');
     });
 
     Route::group(['prefix' => 'spots/{id}'], function () {
         Route::put('/favorite', 'SpotFavoriteController@favorite')->name('spots.favorite');
         Route::delete('/favorite', 'SpotFavoriteController@unfavorite')->name('spots.unfavorite');
         Route::post('comments', 'SpotCommentController@store')->name('spots.comment');
-        Route::delete('comments/{comment}', 'SpotCommentController@destroy')->name('comment.delete');
+        Route::delete('comments/{id}', 'SpotCommentController@destroy')->name('comment.delete');
     });
 
     Route::get('/tags/{name}', 'TagController')->name('tags');

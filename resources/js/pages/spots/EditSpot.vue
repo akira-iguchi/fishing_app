@@ -42,6 +42,11 @@
                 spotDataLoaded: false,
             }
         },
+        computed: {
+            AuthUser () {
+                return this.$store.getters['auth/AuthUser']
+            },
+        },
         watch: {
             $route: {
                 async handler () {
@@ -60,6 +65,16 @@
                 }
 
                 this.spot = response.data[0]
+
+                if (this.AuthUser.id !== this.spot.user_id) {
+                    this.$router.push('/')
+                    this.$store.commit('message/setContent', {
+                        content: '他のユーザーの釣りスポットは編集できません',
+                        timeout: 4000
+                    })
+                    return false
+                }
+
                 this.fishing_types = response.data[1]
                 this.spotTags = response.data[2]
                 this.allTagNames = response.data[3]
@@ -108,11 +123,3 @@
         },
     }
 </script>
-
-<style>
-    .commentImg {
-        margin-top: 15px;
-        width: 10em;
-        border-radius: 10px;
-    }
-</style>

@@ -14,7 +14,7 @@
                 @closeModal="closeModal"
             />
 
-            <div class="mx-auto d-block col-lg-4 event_form_body" v-if="id == AuthUser.id">
+            <div class="mx-auto d-block col-lg-4 event_form_body" v-if="userId == AuthUser.id">
                 <h4>釣りを記録しよう</h4>
                 <div class="event_form">
                     <EventForm
@@ -22,7 +22,7 @@
                         :intialEventValue="event"
                         :errors="errors"
                         :deleteInput="deleteInput"
-                        @getEvent="createEvent"
+                        @getEvent="editEvent"
                     />
                 </div>
             </div>
@@ -45,7 +45,11 @@
             FullCalendar,
         },
         props: {
-            id: {
+            userId: {
+                type: String,
+                required: true
+            },
+            eventId: {
                 type: String,
                 required: true
             }
@@ -91,20 +95,30 @@
             },
         },
         methods: {
-            async fetchEvents () {
-                const response = await axios.get(`/api/users/${ this.id }/events`)
+            async fetchEditEvent () {
+                const response = await axios.get(`/api/users/${ this.userId }/events/${ this.eventId }/edit`)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
 
+                if (this.AuthUser.id !== Number(this.userId)) {
+                    this.$router.push('/')
+                    this.$store.commit('message/setContent', {
+                        content: '他のユーザーのイベントは編集できません',
+                        timeout: 4000
+                    })
+                    return false
+                }
+
                 this.user = response.data[0]
-                this.calendarOptions.events = response.data[1]
+                this.event = response.data[1]
+                this.calendarOptions.events = response.data[2]
 
                 this.eventDataLoaded = true
             },
-            async createEvent (data) {
+            async editEvent (data) {
                 const formData = new FormData()
                 formData.append('date', data[0])
                 formData.append('fishing_start_time', data[1])
@@ -112,7 +126,12 @@
                 formData.append('fishing_type', data[3])
                 formData.append('spot', data[4])
                 formData.append('detail', data[5])
-                const response = await axios.post(`/api/users/${ this.id }/events`, formData)
+                const response = await axios.post(`/api/users/${ this.userId }/events/${ this.eventId }`, formData, {
+                    // PUTに変換
+                    headers: {
+                        'X-HTTP-Method-Override': 'PUT'
+                    }
+                })
 
                 if (response.status === UNPROCESSABLE_ENTITY) {
                     this.errors = response.data.errors
@@ -143,7 +162,7 @@
                 const event_id = info.event.id,
                     newDate = this.formatDate(info.event.start)
 
-                const response = await axios.post(`/api/users/${ this.id }/editEventDate`, {
+                const response = await axios.post(`/api/users/${ this.userId }/editEventDate`, {
                     id: event_id,
                     newDate: newDate
                 }, {
@@ -173,7 +192,7 @@
         watch: {
             $route: {
                 async handler () {
-                    await this.fetchEvents()
+                    await this.fetchEditEvent()
                 },
                 immediate: true
             }

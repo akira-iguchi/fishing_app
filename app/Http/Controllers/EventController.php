@@ -8,42 +8,27 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EventRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
-    public function index(String $id, Event $event)
+    public function index(String $id)
     {
         $user = User::findOrFail($id);
         $events = Event::where('user_id', $user->id)->get();
 
-        return [$user, $events];
-    }
+        $newArr = [];
+        foreach ($events as $item) {
+            $newItem["id"] = $item["id"];
+            $newItem["title"] = $item["spot"];
+            $newItem["start"] = $item["date"];
+            $newItem["fishing_type"] = $item["fishing_type"];
+            $newItem["fishing_start_time"] = $item["fishing_start_time"];
+            $newItem["fishing_end_time"] = $item["fishing_end_time"];
+            $newItem["detail"] = $item["detail"];
+            $newArr[] = $newItem;
+        }
 
-    public function setEvents(Request $request, User $user)
-    {
-        $start = $this->formatDate($request->all()['start']);
-        $end = $this->formatDate($request->all()['end']);
-        //表示した月のカレンダーの始まりの日を終わりの日をそれぞれ取得。
-
-        $events = Event::where('user_id', $user->id)->where('date', $request->date)->get();
-        //カレンダーの期間内のイベントを取得
-
-        \Log::info($events);
-
-        // $newArr = [];
-        // foreach ($events as $item) {
-        //     $newItem["id"] = $item["id"];
-        //     $newItem["title"] = $item["spot"];
-        //     $newItem["start"] = $item["date"];
-        //     $newItem["fishing_type"] = $item["fishing_type"];
-        //     $newItem["fishing_start_time"] = $item["fishing_start_time"];
-        //     $newItem["fishing_end_time"] = $item["fishing_end_time"];
-        //     $newItem["detail"] = $item["detail"];
-        //     $newArr[] = $newItem;
-        // }
-
-        return $events;
+        return [$user, $newArr];
     }
 
     public function store(EventRequest $request, Event $event)
@@ -61,46 +46,51 @@ class EventController extends Controller
         $event = Event::find($data['id']);
         $event->date = $data['newDate'];
         $event->save();
-        return null;
+        return $event;
     }
 
-    public function formatDate($date)
+    public function edit(String $userId, String $eventId)
     {
-        return str_replace('T00:00:00+09:00', '', $date);
-    }
-
-    public function editEvent(User $user, Event $event)
-    {
+        $event = Event::findOrFail($eventId);
         if (\Auth::id() === $event->user_id) {
-            return view('events.edit', [
-                'user' => $user,
-                'event' => $event,
-            ]);
+            $user = User::findOrFail($userId);
+            $events = Event::where('user_id', $user->id)->get();
+
+            $newArr = [];
+            foreach ($events as $item) {
+                $newItem["id"] = $item["id"];
+                $newItem["title"] = $item["spot"];
+                $newItem["start"] = $item["date"];
+                $newItem["fishing_type"] = $item["fishing_type"];
+                $newItem["fishing_start_time"] = $item["fishing_start_time"];
+                $newItem["fishing_end_time"] = $item["fishing_end_time"];
+                $newItem["detail"] = $item["detail"];
+                $newArr[] = $newItem;
+            }
+
+            return [$user, $event, $events];
         } else {
-            session()->flash('error_message', '自信が投稿したイベントのみ編集できます');
-            return redirect('/');
+            response()->json();
         }
     }
 
-    public function updateEvent(EventRequest $request, User $user, Event $event)
+    public function update(EventRequest $request, User $user, Event $event)
     {
         return DB::transaction(function () use ($event, $request) {
             $event->user_id = Auth::id();
             $event->fill($request->all())->save();
 
-            session()->flash('flash_message', 'イベントをを更新しました');
-            return redirect()->route('events', ['user' => Auth::user()]);
+            return response($event, 201);
         });
     }
 
-    public function deleteEvent(User $user, $id)
+    public function delete(User $user, Event $event)
     {
-        $event = Event::findOrFail($id);
         if (\Auth::id() === $event->user_id) {
             $event->delete();
-            return response()->json($event);
+            return response()->json();
         } else {
-            return redirect('/')->with('flash_message', '自信の投稿のみ削除できます');
+            return response()->json();
         }
     }
 }

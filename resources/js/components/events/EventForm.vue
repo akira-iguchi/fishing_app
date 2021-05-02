@@ -86,6 +86,10 @@
 <script>
     export default {
         props: {
+            intialEventValue: {
+                type: Object,
+                required: false,
+            },
             errors: {
                 type: Object,
                 required: false,
@@ -97,6 +101,7 @@
         },
         data () {
             return {
+                event: this.intialEventValue,
                 date: "",
                 fishingStartTime: "",
                 fishingEndTimeime: "",
@@ -104,6 +109,20 @@
                 spot: "",
                 detail: "",
                 wordLimit: 100,
+            }
+        },
+        mounted () {
+            function isEmpty(obj){
+                return !Object.keys(obj).length;
+            }
+
+            if (!isEmpty(this.event)) {
+                this.date = this.event.date
+                this.fishingStartTime = this.event.fishing_start_time
+                this.fishingEndTimeime = this.event.fishing_end_time
+                this.fishingType = this.event.fishing_type
+                this.spot = this.event.spot
+                this.detail = this.event.detail
             }
         },
         computed: {

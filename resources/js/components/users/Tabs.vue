@@ -172,8 +172,8 @@
                 userFavoriteSpots: [],
                 userFollowings: [],
                 userFollowers: [],
-                userSpotsCount: 2,
-                userFavoriteSpotsCount: 2,
+                userSpotsCount: 1,
+                userFavoriteSpotsCount: 1,
                 userFollowingsCount: 1,
                 userFollowersCount: 1,
             }
@@ -198,6 +198,15 @@
         },
         mounted: function() {
             this.getUserSpots();
+        },
+        watch: {
+            user (newUser) {
+                this.getUserSpots(newUser)
+                this.userSpotsCount = 1
+                this.userFavortieSpotsCount = 1
+                this.userFollowingsCount = 1
+                this.userFollowersCount = 1
+            }
         },
         methods: {
             // ユーザーの釣りスポット一覧
