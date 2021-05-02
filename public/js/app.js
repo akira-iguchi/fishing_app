@@ -18210,8 +18210,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         },
         dayCellContent: function dayCellContent(e) {
           e.dayNumberText = e.dayNumberText.replace('日', '');
+        },
+        events: {
+          url: "api/users/5/setEvents"
         }
       },
+      user: {},
+      events: [],
       errors: null,
       deleteInput: false
     };
@@ -18222,7 +18227,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
-    fetchUserId: function fetchUserId() {
+    fetchEvents: function fetchEvents() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -18232,7 +18237,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get("/api/spots/".concat(_this.id, "/events"));
+                return axios.get("/api/users/".concat(_this.id, "/events"));
 
               case 2:
                 response = _context.sent;
@@ -18247,7 +18252,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", false);
 
               case 6:
-                _this.spot = response.data[0];
+                _this.user = response.data[0]; // this.events = response.data[1]
 
               case 7:
               case "end":
@@ -18326,7 +18331,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               switch (_context3.prev = _context3.next) {
                 case 0:
                   _context3.next = 2;
-                  return _this3.fetchUserId();
+                  return _this3.fetchEvents();
 
                 case 2:
                 case "end":

@@ -26,22 +26,24 @@ class EventController extends Controller
         $end = $this->formatDate($request->all()['end']);
         //表示した月のカレンダーの始まりの日を終わりの日をそれぞれ取得。
 
-        $events = Event::where('user_id', $user->id)->whereBetween('date', [$start, $end])->get();
+        $events = Event::where('user_id', $user->id)->where('date', $request->date)->get();
         //カレンダーの期間内のイベントを取得
 
-        $newArr = [];
-        foreach ($events as $item) {
-            $newItem["id"] = $item["id"];
-            $newItem["title"] = $item["spot"];
-            $newItem["start"] = $item["date"];
-            $newItem["fishing_type"] = $item["fishing_type"];
-            $newItem["fishing_start_time"] = $item["fishing_start_time"];
-            $newItem["fishing_end_time"] = $item["fishing_end_time"];
-            $newItem["detail"] = $item["detail"];
-            $newArr[] = $newItem;
-        }
+        \Log::info($events);
 
-        return response()->json($newArr);
+        // $newArr = [];
+        // foreach ($events as $item) {
+        //     $newItem["id"] = $item["id"];
+        //     $newItem["title"] = $item["spot"];
+        //     $newItem["start"] = $item["date"];
+        //     $newItem["fishing_type"] = $item["fishing_type"];
+        //     $newItem["fishing_start_time"] = $item["fishing_start_time"];
+        //     $newItem["fishing_end_time"] = $item["fishing_end_time"];
+        //     $newItem["detail"] = $item["detail"];
+        //     $newArr[] = $newItem;
+        // }
+
+        return $events;
     }
 
     public function store(EventRequest $request, Event $event)

@@ -59,10 +59,15 @@
                     buttonText: {
                         today: '今日'
                     },
-                    dayCellContent: function (e) {
+                    dayCellContent (e) {
                         e.dayNumberText = e.dayNumberText.replace('日', '');
                     },
+                    events: {
+                        url: `api/users/5/setEvents`
+                    },
                 },
+                user: {},
+                events: [],
                 errors: null,
                 deleteInput: false,
             }
@@ -73,15 +78,16 @@
             },
         },
         methods: {
-            async fetchUserId () {
-                const response = await axios.get(`/api/spots/${ this.id }/events`)
+            async fetchEvents () {
+                const response = await axios.get(`/api/users/${ this.id }/events`)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
 
-                this.spot = response.data[0]
+                this.user = response.data[0]
+                // this.events = response.data[1]
             },
             async createEvent (data) {
                 const formData = new FormData()
@@ -115,7 +121,7 @@
         watch: {
             $route: {
                 async handler () {
-                    await this.fetchUserId()
+                    await this.fetchEvents()
                 },
                 immediate: true
             }
