@@ -11,9 +11,10 @@
 
         <div class="row">
             <SpotCard
-                v-for="spot in tag.spots"
+                v-for="spot in tagSpots"
                 :key="spot.id"
                 :spot="spot"
+                :isRanking="false"
             />
         </div>
     </div>
@@ -37,7 +38,8 @@
         },
         data () {
             return {
-                tag: [],
+                tag: {},
+                tagSpots: [],
                 fishingTypeNames: [],
                 tagNames: [],
             }
@@ -62,6 +64,7 @@
                 this.fishingTypeNames = response.data[0][0]
                 this.tagNames = response.data[0][3]
                 this.tag = response.data[1]
+                this.tagSpots = response.data[2]
             },
         },
     }

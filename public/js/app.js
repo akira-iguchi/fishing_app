@@ -15835,6 +15835,14 @@ __webpack_require__.r(__webpack_exports__);
       this.fishingType = "";
       this.spot = "";
       this.detail = "";
+    },
+    intialEventValue: function intialEventValue(newEvent) {
+      this.date = newEvent.date;
+      this.fishingStartTime = newEvent.fishing_start_time;
+      this.fishingEndTimeime = newEvent.fishing_end_time;
+      this.fishingType = newEvent.fishing_type;
+      this.spot = newEvent.spot;
+      this.detail = newEvent.detail;
     }
   },
   methods: {
@@ -15863,16 +15871,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15922,6 +15928,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
+    editEventData: {
+      type: Object,
+      required: true
+    },
     eventData: {
       type: Object,
       required: true
@@ -15938,7 +15948,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   filters: {
     moment: function moment(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format('YYYY/MM/DD');
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format('YYYY/MM/DD');
     }
   },
   methods: {
@@ -15946,29 +15956,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$emit("closeModal");
     },
     deleteEvent: function deleteEvent() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (confirm('本当に削除しますか？')) {
-                  // const response = await axios.delete(`/api/users/${ this.userData.id }/events/${ this.eventData.id }`)
-                  _this.$emit("deleteEvent"); // this.$store.commit('message/setContent', {
-                  //     content: 'イベントを削除しました',
-                  //     timeout: 4000
-                  // })
-
-                }
-
-              case 1:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
+      if (confirm('本当に削除しますか？')) {
+        this.$emit("deleteEvent", this.eventData.id);
+      }
     }
   }
 });
@@ -16561,6 +16551,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -16570,6 +16564,10 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     spot: {
       type: Object,
+      required: true
+    },
+    isRanking: {
+      type: Boolean,
       required: true
     }
   },
@@ -17473,6 +17471,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -17702,10 +17701,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Prefectures.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Prefectures.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Cities.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Cities.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -17771,8 +17770,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   methods: {
-    changePrefecture: function changePrefecture(val) {
-      this.$emit("selectPrefecture", val.target);
+    changeCity: function changeCity(val) {
+      this.$emit("selectCity", val.target);
     }
   }
 });
@@ -17793,7 +17792,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
-/* harmony import */ var _weathers_Prefectures_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../weathers/Prefectures.vue */ "./resources/js/components/weathers/Prefectures.vue");
+/* harmony import */ var _Cities_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Cities.vue */ "./resources/js/components/weathers/Cities.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -17827,7 +17826,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    Prefectures: _weathers_Prefectures_vue__WEBPACK_IMPORTED_MODULE_2__.default
+    Cities: _Cities_vue__WEBPACK_IMPORTED_MODULE_2__.default
   },
   data: function data() {
     return _defineProperty({
@@ -17835,7 +17834,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       weatherList: [],
       day: "",
       weatherJavaneseConversion: "",
-      city: ""
+      cityTitle: '東京',
+      cityData: 'Tokyo'
     }, "day", "");
   },
   watch: {
@@ -17873,7 +17873,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.get('/api/weathers');
+                return axios.get("/api/weathers/".concat(_this2.cityData));
 
               case 2:
                 response = _context2.sent;
@@ -17933,26 +17933,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee2);
       }))();
     },
-    getCityName: function getCityName(val) {
+    changeCity: function changeCity(data) {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var number, response;
+        var number;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                number = val.selectedIndex;
-                _this3.city = val.options[number].text;
-                _context3.next = 4;
-                return axios.get('/weathers', {
-                  prefectures: val.value
-                });
+                number = data.selectedIndex;
+                _this3.cityTitle = data.options[number].text;
+                _this3.cityData = data.value;
+
+                _this3.fetchWeather();
 
               case 4:
-                response = _context3.sent;
-
-              case 5:
               case "end":
                 return _context3.stop();
             }
@@ -18337,6 +18333,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -18590,8 +18587,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee4);
       }))();
     },
-    reloadCalendar: function reloadCalendar() {
-      this.fetchEditEvent();
+    deleteEvent: function deleteEvent(eventId) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return axios["delete"]("/api/users/".concat(_this5.id, "/events/").concat(eventId));
+
+              case 2:
+                response = _context5.sent;
+
+                _this5.$store.commit('message/setContent', {
+                  content: 'イベントを削除しました',
+                  timeout: 4000
+                });
+
+                _this5.fetchEditEvent();
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
     },
     formatDate: function formatDate(date) {
       var year = date.getFullYear();
@@ -18630,6 +18654,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -18892,9 +18917,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee4);
       }))();
     },
-    reloadCalendar: function reloadCalendar() {
-      console.log("aaa");
-      this.fetchEvents();
+    deleteEvent: function deleteEvent(eventId) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return axios["delete"]("/api/users/".concat(_this5.id, "/events/").concat(eventId));
+
+              case 2:
+                response = _context5.sent;
+
+                _this5.$store.commit('message/setContent', {
+                  content: 'イベントを削除しました',
+                  timeout: 4000
+                });
+
+                _this5.fetchEvents();
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
     },
     formatDate: function formatDate(date) {
       var year = date.getFullYear();
@@ -19534,6 +19585,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -19912,7 +19964,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     updateSpotComments: function updateSpotComments() {
-      console.log(this.spot);
       this.spot = response.data[0];
     }
   },
@@ -20080,6 +20131,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -20095,6 +20153,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       fishingTypeNames: [],
       followUserSpots: [],
       recentSpots: [],
+      rankingSpots: [],
       tagNames: [],
       isActive: false
     };
@@ -20196,6 +20255,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this3.tagNames = response.data[0][3];
                   _this3.recentSpots = response.data[1];
                   _this3.followUserSpots = response.data[2];
+                  _this3.rankingSpots = response.data[3];
                 }
 
               case 7:
@@ -20267,6 +20327,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -20283,7 +20344,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      tag: [],
+      tag: {},
+      tagSpots: [],
       fishingTypeNames: [],
       tagNames: []
     };
@@ -20341,8 +20403,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.fishingTypeNames = response.data[0][0];
                 _this2.tagNames = response.data[0][3];
                 _this2.tag = response.data[1];
+                _this2.tagSpots = response.data[2];
 
-              case 9:
+              case 10:
               case "end":
                 return _context2.stop();
             }
@@ -20945,10 +21008,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./pages/errors/System.vue */ "./resources/js/pages/errors/System.vue");
 /* harmony import */ var _pages_errors_NotFound_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./pages/errors/NotFound.vue */ "./resources/js/pages/errors/NotFound.vue");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-var _ref;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -21007,22 +21066,22 @@ var routes = [{
       next('/');
     }
   }
-}, (_ref = {
-  path: '/spots/search',
+}, {
+  path: '/spots/search/:word/:fishingTypeId',
   component: _pages_spots_SearchSpots_vue__WEBPACK_IMPORTED_MODULE_2__.default,
-  props: true
-}, _defineProperty(_ref, "props", function props(route) {
-  var page = route.query.page;
-  return {
-    page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1
-  };
-}), _defineProperty(_ref, "beforeEnter", function beforeEnter(to, from, next) {
-  if (_store__WEBPACK_IMPORTED_MODULE_15__.default.getters["auth/check"]) {
-    next();
-  } else {
-    next('/');
+  props: true,
+  // props: route => {
+  //     const page = route.query.page
+  //     return { page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1 }
+  // },
+  beforeEnter: function beforeEnter(to, from, next) {
+    if (_store__WEBPACK_IMPORTED_MODULE_15__.default.getters["auth/check"]) {
+      next();
+    } else {
+      next('/');
+    }
   }
-}), _ref), {
+}, {
   path: '/spots/:id',
   component: _pages_spots_SpotDetail_vue__WEBPACK_IMPORTED_MODULE_3__.default,
   props: true,
@@ -59565,10 +59624,10 @@ component.options.__file = "resources/js/components/users/Tabs.vue"
 
 /***/ }),
 
-/***/ "./resources/js/components/weathers/Prefectures.vue":
-/*!**********************************************************!*\
-  !*** ./resources/js/components/weathers/Prefectures.vue ***!
-  \**********************************************************/
+/***/ "./resources/js/components/weathers/Cities.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/weathers/Cities.vue ***!
+  \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -59576,8 +59635,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Prefectures_vue_vue_type_template_id_72dedfb9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Prefectures.vue?vue&type=template&id=72dedfb9& */ "./resources/js/components/weathers/Prefectures.vue?vue&type=template&id=72dedfb9&");
-/* harmony import */ var _Prefectures_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Prefectures.vue?vue&type=script&lang=js& */ "./resources/js/components/weathers/Prefectures.vue?vue&type=script&lang=js&");
+/* harmony import */ var _Cities_vue_vue_type_template_id_2855147e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Cities.vue?vue&type=template&id=2855147e& */ "./resources/js/components/weathers/Cities.vue?vue&type=template&id=2855147e&");
+/* harmony import */ var _Cities_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Cities.vue?vue&type=script&lang=js& */ "./resources/js/components/weathers/Cities.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -59587,9 +59646,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
-  _Prefectures_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _Prefectures_vue_vue_type_template_id_72dedfb9___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Prefectures_vue_vue_type_template_id_72dedfb9___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _Cities_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Cities_vue_vue_type_template_id_2855147e___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Cities_vue_vue_type_template_id_2855147e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -59599,7 +59658,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/weathers/Prefectures.vue"
+component.options.__file = "resources/js/components/weathers/Cities.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -60468,10 +60527,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/weathers/Prefectures.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/weathers/Prefectures.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************/
+/***/ "./resources/js/components/weathers/Cities.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/weathers/Cities.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -60479,8 +60538,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Prefectures_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Prefectures.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Prefectures.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Prefectures_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Cities_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Cities.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Cities.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Cities_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -61194,19 +61253,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/weathers/Prefectures.vue?vue&type=template&id=72dedfb9&":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/components/weathers/Prefectures.vue?vue&type=template&id=72dedfb9& ***!
-  \*****************************************************************************************/
+/***/ "./resources/js/components/weathers/Cities.vue?vue&type=template&id=2855147e&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/weathers/Cities.vue?vue&type=template&id=2855147e& ***!
+  \************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Prefectures_vue_vue_type_template_id_72dedfb9___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Prefectures_vue_vue_type_template_id_72dedfb9___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Cities_vue_vue_type_template_id_2855147e___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Cities_vue_vue_type_template_id_2855147e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Prefectures_vue_vue_type_template_id_72dedfb9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Prefectures.vue?vue&type=template&id=72dedfb9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Prefectures.vue?vue&type=template&id=72dedfb9&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Cities_vue_vue_type_template_id_2855147e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Cities.vue?vue&type=template&id=2855147e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Cities.vue?vue&type=template&id=2855147e&");
 
 
 /***/ }),
@@ -62300,111 +62359,107 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "popup-wrapper", on: { click: _vm.closeModal } },
-    [
-      _c("div", { staticClass: "popup" }, [
+  return _c("div", { staticClass: "popup-wrapper" }, [
+    _c("div", { staticClass: "popup" }, [
+      _c("div", { staticClass: "popup-close", on: { click: _vm.closeModal } }, [
+        _vm._v("✕")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "popup-content" }, [
+        _c("h2", [_vm._v(_vm._s(_vm._f("moment")(_vm.event.startStr)))]),
+        _vm._v(" "),
+        _c("table", { staticClass: "form-table" }, [
+          _c("tbody", [
+            _c("tr", [
+              _c("th", [_vm._v("釣り方")]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(_vm.event.extendedProps.fishing_type))])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("th", [_vm._v("釣り場")]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(_vm.event.title))])
+            ]),
+            _vm._v(" "),
+            _vm.event.extendedProps.fishing_start_time ||
+            _vm.event.extendedProps.fishing_end_time
+              ? _c("tr", [
+                  _c("th", [_vm._v("時間")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("span", [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.event.extendedProps.fishing_start_time) +
+                          "\n                            "
+                      )
+                    ]),
+                    _vm._v(
+                      "\n                            〜\n                            "
+                    ),
+                    _c("span", [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.event.extendedProps.fishing_end_time) +
+                          "\n                            "
+                      )
+                    ])
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.event.extendedProps.detail
+              ? _c("tr", [
+                  _c("th", [_vm._v("詳細")]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "modal_detail" }, [
+                    _vm._v(_vm._s(_vm.event.extendedProps.detail))
+                  ])
+                ])
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
         _c(
           "div",
-          { staticClass: "popup-close", on: { click: _vm.closeModal } },
-          [_vm._v("✕")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "popup-content" }, [
-          _c("h2", [_vm._v(_vm._s(_vm._f("moment")(_vm.event.startStr)))]),
-          _vm._v(" "),
-          _c("table", { staticClass: "form-table" }, [
-            _c("tbody", [
-              _c("tr", [
-                _c("th", [_vm._v("釣り方")]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm.event.extendedProps.fishing_type))])
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("th", [_vm._v("釣り場")]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm.event.title))])
-              ]),
-              _vm._v(" "),
-              _vm.event.extendedProps.fishing_start_time ||
-              _vm.event.extendedProps.fishing_end_time
-                ? _c("tr", [
-                    _c("th", [_vm._v("時間")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", [
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(_vm.event.extendedProps.fishing_start_time) +
-                            "\n                            "
-                        )
-                      ]),
-                      _vm._v(
-                        "\n                            〜\n                            "
-                      ),
-                      _c("span", [
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(_vm.event.extendedProps.fishing_end_time) +
-                            "\n                            "
-                        )
-                      ])
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.event.extendedProps.detail
-                ? _c("tr", [
-                    _c("th", [_vm._v("詳細")]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "modal_detail" }, [
-                      _vm._v(_vm._s(_vm.event.extendedProps.detail))
-                    ])
-                  ])
-                : _vm._e()
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "event_private" },
-            [
-              _c(
-                "RouterLink",
-                {
-                  attrs: {
-                    to:
-                      "/users/" +
-                      _vm.userData.id +
-                      "/events/" +
-                      _vm.event.id +
-                      "/edit"
-                  }
-                },
-                [
-                  _c("button", { staticClass: "edit_link_button" }, [
-                    _vm._v("編集")
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "delete_button",
-                  on: { click: _vm.deleteEvent }
-                },
-                [_vm._v("削除")]
-              )
-            ],
-            1
-          )
-        ])
+          { staticClass: "event_private" },
+          [
+            _c(
+              "RouterLink",
+              {
+                attrs: {
+                  to:
+                    "/users/" +
+                    _vm.userData.id +
+                    "/events/" +
+                    _vm.eventData.id +
+                    "/edit"
+                }
+              },
+              [
+                _c("button", { staticClass: "edit_link_button" }, [
+                  _vm._v("編集")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _vm.editEventData.id !== Number(_vm.eventData.id)
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "delete_button",
+                    on: { click: _vm.deleteEvent }
+                  },
+                  [_vm._v("削除")]
+                )
+              : _vm._e()
+          ],
+          1
+        )
       ])
-    ]
-  )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -63044,7 +63099,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "mx-auto d-block col-xl-3 col-lg-4 col-md-6 col-11" },
+    {
+      staticClass: "mx-auto d-block",
+      class: [
+        _vm.isRanking === true
+          ? "col-md-6 col-11"
+          : "col-xl-3 col-lg-4 col-md-6 col-11"
+      ]
+    },
     [
       _c(
         "div",
@@ -63841,7 +63903,10 @@ var render = function() {
           { staticClass: "row" },
           [
             _vm._l(_vm.userSpotsList, function(spot) {
-              return _c("SpotCard", { key: spot.id, attrs: { spot: spot } })
+              return _c("SpotCard", {
+                key: spot.id,
+                attrs: { spot: spot, isRanking: false }
+              })
             }),
             _vm._v(" "),
             _vm.userSpots.length <= 0
@@ -64095,10 +64160,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Prefectures.vue?vue&type=template&id=72dedfb9&":
-/*!********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Prefectures.vue?vue&type=template&id=72dedfb9& ***!
-  \********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Cities.vue?vue&type=template&id=2855147e&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Cities.vue?vue&type=template&id=2855147e& ***!
+  \***************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -64113,7 +64178,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "select",
-    { staticClass: "prefectures", on: { change: _vm.changePrefecture } },
+    { staticClass: "cities", on: { change: _vm.changeCity } },
     [
       _c("option", { attrs: { disabled: "", value: "", selected: "" } }, [
         _vm._v("都道府県を選択してください")
@@ -64241,14 +64306,14 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("Prefectures", { on: { selectPrefecture: _vm.getCityName } }),
+      _c("Cities", { on: { selectCity: _vm.changeCity } }),
       _vm._v(" "),
       _c(
         "div",
         { staticClass: "entire_weather" },
         [
           _c("div", { staticClass: "city_name" }, [
-            _vm._v(" " + _vm._s(_vm.city) + " の天気 ")
+            _vm._v(" " + _vm._s(_vm.cityTitle) + " の天気 ")
           ]),
           _vm._v(" "),
           _vm._l(_vm.weatherList, function(weather, index) {
@@ -65182,11 +65247,12 @@ var render = function() {
         _vm._v(" "),
         _vm.popup
           ? _c("EventModal", {
-              attrs: { eventData: _vm.eventData, userData: _vm.user },
-              on: {
-                closeModal: _vm.closeModal,
-                deleteEvent: _vm.reloadCalendar
-              }
+              attrs: {
+                editEventData: _vm.event,
+                eventData: _vm.eventData,
+                userData: _vm.user
+              },
+              on: { closeModal: _vm.closeModal, deleteEvent: _vm.deleteEvent }
             })
           : _vm._e(),
         _vm._v(" "),
@@ -65257,11 +65323,12 @@ var render = function() {
         _vm._v(" "),
         _vm.popup
           ? _c("EventModal", {
-              attrs: { eventData: _vm.eventData, userData: _vm.user },
-              on: {
-                deleteEvent: _vm.reloadCalendar,
-                closeModal: _vm.closeModal
-              }
+              attrs: {
+                editEventData: _vm.event,
+                eventData: _vm.eventData,
+                userData: _vm.user
+              },
+              on: { closeModal: _vm.closeModal, deleteEvent: _vm.deleteEvent }
             })
           : _vm._e(),
         _vm._v(" "),
@@ -65567,15 +65634,14 @@ var render = function() {
             "div",
             { staticClass: "row" },
             _vm._l(_vm.spots, function(spot) {
-              return _c("SpotCard", { key: spot.id, attrs: { spot: spot } })
+              return _c("SpotCard", {
+                key: spot.id,
+                attrs: { spot: spot, isRanking: false }
+              })
             }),
             1
           )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("Pagination", {
-        attrs: { "current-page": _vm.currentPage, "last-page": _vm.lastPage }
-      })
+        : _vm._e()
     ],
     1
   )
@@ -65906,7 +65972,21 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "toppage_under" }, [
-                _vm._m(0),
+                _c("div", { staticClass: "w-100" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row" },
+                    _vm._l(_vm.rankingSpots, function(spot) {
+                      return _c("SpotCard", {
+                        key: spot.id,
+                        attrs: { spot: spot, isRanking: true }
+                      })
+                    }),
+                    1
+                  )
+                ]),
                 _vm._v(" "),
                 _c(
                   "aside",
@@ -65930,7 +66010,7 @@ var render = function() {
                       _vm._l(_vm.followUserSpots, function(spot) {
                         return _c("SpotCard", {
                           key: spot.id,
-                          attrs: { spot: spot }
+                          attrs: { spot: spot, isRanking: false }
                         })
                       }),
                       1
@@ -65948,7 +66028,10 @@ var render = function() {
                 "div",
                 { staticClass: "row" },
                 _vm._l(_vm.recentSpots, function(spot) {
-                  return _c("SpotCard", { key: spot.id, attrs: { spot: spot } })
+                  return _c("SpotCard", {
+                    key: spot.id,
+                    attrs: { spot: spot, isRanking: false }
+                  })
                 }),
                 1
               )
@@ -66022,13 +66105,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "w-100" }, [
-      _c("h2", { staticClass: "toppage_heading" }, [
-        _vm._v("人気の釣りスポット"),
-        _c("i", { staticClass: "fas fa-crown" })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" })
+    return _c("h2", { staticClass: "toppage_heading" }, [
+      _vm._v("人気の釣りスポット"),
+      _c("i", { staticClass: "fas fa-crown" })
     ])
   },
   function() {
@@ -66151,8 +66230,11 @@ var render = function() {
       _c(
         "div",
         { staticClass: "row" },
-        _vm._l(_vm.tag.spots, function(spot) {
-          return _c("SpotCard", { key: spot.id, attrs: { spot: spot } })
+        _vm._l(_vm.tagSpots, function(spot) {
+          return _c("SpotCard", {
+            key: spot.id,
+            attrs: { spot: spot, isRanking: false }
+          })
         }),
         1
       )

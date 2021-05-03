@@ -1,10 +1,10 @@
 <template>
     <div>
-        <Prefectures
-            @selectPrefecture="getCityName"
+        <Cities
+            @selectCity="changeCity"
         />
         <div class="entire_weather">
-            <div class="city_name"> {{ city }} の天気 </div>
+            <div class="city_name"> {{ cityTitle }} の天気 </div>
             <div
                 class="weather-report"
                 v-for="(weather, index) in weatherList"
@@ -21,11 +21,11 @@
 
 <script>
     import { OK } from '../../util'
-    import Prefectures from '../weathers/Prefectures.vue'
+    import Cities from './Cities.vue'
 
     export default {
         components: {
-            Prefectures
+            Cities
         },
         data () {
             return {
@@ -33,7 +33,8 @@
                 weatherList: [],
                 day: "",
                 weatherJavaneseConversion: "",
-                city: "",
+                cityTitle: '東京',
+                cityData: 'Tokyo',
                 day: "",
             }
         },
@@ -47,7 +48,7 @@
         },
         methods: {
             async fetchWeather () {
-                const response = await axios.get('/api/weathers')
+                const response = await axios.get(`/api/weathers/${ this.cityData }`)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
@@ -89,13 +90,12 @@
 
                 });
             },
-            async getCityName (val) {
-                const number = val.selectedIndex;
-                this.city = val.options[number].text
+            async changeCity (data) {
+                const number = data.selectedIndex;
+                this.cityTitle = data.options[number].text
+                this.cityData = data.value
 
-                const response = await axios.get('/weathers', {
-                    prefectures: val.value
-                })
+                this.fetchWeather()
             }
         },
     }

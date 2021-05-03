@@ -138,7 +138,15 @@
                 this.fishingType = ""
                 this.spot = ""
                 this.detail = ""
-            }
+            },
+            intialEventValue (newEvent) {
+                this.date = newEvent.date
+                this.fishingStartTime = newEvent.fishing_start_time
+                this.fishingEndTimeime = newEvent.fishing_end_time
+                this.fishingType = newEvent.fishing_type
+                this.spot = newEvent.spot
+                this.detail = newEvent.detail
+            },
         },
         methods: {
             changeTrue () {

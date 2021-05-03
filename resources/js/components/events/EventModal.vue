@@ -1,5 +1,5 @@
 <template>
-    <div class="popup-wrapper" @click="closeModal">
+    <div class="popup-wrapper">
         <div class="popup">
             <div class="popup-close" @click="closeModal">✕</div>
             <div class="popup-content">
@@ -34,10 +34,16 @@
                 </table>
 
                 <div class="event_private">
-                    <RouterLink :to="`/users/${ userData.id }/events/${ event.id }/edit`">
+                    <RouterLink :to="`/users/${ userData.id }/events/${ eventData.id }/edit`">
                         <button class="edit_link_button">編集</button>
                     </RouterLink>
-                    <button class="delete_button" @click="deleteEvent">削除</button>
+
+                    <!-- 編集しているイベントとモーダルのイベントが同じだと非表示 -->
+                    <button
+                        class="delete_button"
+                        v-if="editEventData.id !== Number(eventData.id)"
+                        @click="deleteEvent"
+                    >削除</button>
                 </div>
             </div>
         </div>
@@ -49,6 +55,10 @@
 
     export default {
         props: {
+            editEventData: {
+                type: Object,
+                required: true,
+            },
             eventData: {
                 type: Object,
                 required: true,
@@ -72,14 +82,9 @@
             closeModal () {
                 this.$emit("closeModal")
             },
-            async deleteEvent () {
+            deleteEvent () {
                 if (confirm('本当に削除しますか？')) {
-                    // const response = await axios.delete(`/api/users/${ this.userData.id }/events/${ this.eventData.id }`)
-                    this.$emit("deleteEvent")
-                    // this.$store.commit('message/setContent', {
-                    //     content: 'イベントを削除しました',
-                    //     timeout: 4000
-                    // })
+                    this.$emit("deleteEvent", this.eventData.id)
                 }
             }
         },

@@ -8,11 +8,12 @@
             />
 
             <EventModal
+                :editEventData="event"
                 :eventData="eventData"
                 :userData="user"
                 v-if="popup"
-                @deleteEvent="reloadCalendar"
                 @closeModal="closeModal"
+                @deleteEvent="deleteEvent"
             />
 
             <div class="mx-auto d-block col-lg-4 event_form_body" v-if="id == AuthUser.id">
@@ -174,8 +175,14 @@
                     timeout: 4000
                 })
             },
-            reloadCalendar () {
-                console.log("aaa")
+            async deleteEvent (eventId) {
+                const response = await axios.delete(`/api/users/${ this.id }/events/${ eventId }`)
+
+                this.$store.commit('message/setContent', {
+                    content: 'イベントを削除しました',
+                    timeout: 4000
+                })
+
                 this.fetchEvents()
             },
             formatDate (date) {

@@ -198,7 +198,6 @@
                 }
             },
             updateSpotComments () {
-                console.log(this.spot)
                 this.spot = response.data[0]
             },
         },

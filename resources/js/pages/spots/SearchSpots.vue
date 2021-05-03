@@ -41,10 +41,11 @@
                 v-for="spot in spots"
                 :key="spot.id"
                 :spot="spot"
+                :isRanking="false"
             />
         </div>
 
-        <Pagination :current-page="currentPage" :last-page="lastPage" />
+        <!-- <Pagination :current-page="currentPage" :last-page="lastPage" /> -->
 
         <!-- ページネーション -->
     </div>

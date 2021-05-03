@@ -17,7 +17,12 @@
                     <div class="w-100">
                         <h2 class="toppage_heading">人気の釣りスポット<i class="fas fa-crown"></i></h2>
                         <div class="row">
-                            <!-- カードの大きさが違うため直書き -->
+                            <SpotCard
+                                v-for="spot in rankingSpots"
+                                :key="spot.id"
+                                :spot="spot"
+                                :isRanking="true"
+                            />
                         </div>
                     </div>
 
@@ -36,6 +41,7 @@
                             v-for="spot in followUserSpots"
                             :key="spot.id"
                             :spot="spot"
+                            :isRanking="false"
                         />
                     </div>
                     <hr>
@@ -47,6 +53,7 @@
                         v-for="spot in recentSpots"
                         :key="spot.id"
                         :spot="spot"
+                        :isRanking="false"
                     />
                 </div>
 
@@ -128,6 +135,7 @@
                 fishingTypeNames: [],
                 followUserSpots: [],
                 recentSpots: [],
+                rankingSpots: [],
                 tagNames: [],
                 isActive: false,
             }
@@ -180,6 +188,7 @@
                     this.tagNames = response.data[0][3]
                     this.recentSpots = response.data[1]
                     this.followUserSpots = response.data[2]
+                    this.rankingSpots = response.data[3]
                 }
             },
             handleScroll() {

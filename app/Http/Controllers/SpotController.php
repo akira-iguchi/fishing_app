@@ -19,11 +19,13 @@ use Illuminate\Support\Facades\Storage;
 
 class SpotController extends Controller
 {
-    public function searchItems($request)
+    use TagNameTrait;
+
+    public function searchItems($request, $word, $fishingTypeId)
     {
         $allFishingTypeNames = FishingType::all();
-        $searchWord = $request->input('searchWord');
-        $fishingTypes = $request->input('fishingTypes');
+        $searchWord = $word;
+        $fishingTypes = $fishingTypeId;
         $tags = Tag::all()->take(15);
 
         return [$allFishingTypeNames, $searchWord, $fishingTypes, $tags];
@@ -35,8 +37,8 @@ class SpotController extends Controller
             $searchData = $this->searchItems($request);
 
             // 最近の投稿
-            $recentSpots = Spot::all()->sortByDesc('id')->take(8)
-            ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
+            $recentSpots = Spot::orderBy('id', 'desc')->take(8)
+            ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->get();
 
             // フォローしたユーザーの釣りスポット
             if (Auth::user()->count_followings > 0) {
@@ -48,19 +50,19 @@ class SpotController extends Controller
             }
 
             // いいねランキング
-            $rankSpots = Spot::withCount('spotFavorites')->orderBy('spot_favorites_count', 'desc')
+            $rankingSpots = Spot::withCount('spotFavorites')->orderBy('spot_favorites_count', 'desc')
             ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(4)->get();
 
-            return [$searchData, $recentSpots, $followUserSpots, $rankSpots];
+            return [$searchData, $recentSpots, $followUserSpots, $rankingSpots];
         } else {
             return response()->json();
         }
     }
 
-    public function search(SearchSpotRequest $request)
+    public function search(SearchSpotRequest $request, $word, $fishingTypeId)
     {
         \Log::info($request->all());
-        $searchData = $this->searchItems($request);
+        $searchData = $this->searchItems($request, $word, $fishingTypeId);
 
         list($query, $searchFishingTypeName) = $request->filters($searchData[1], $searchData[2]);
 

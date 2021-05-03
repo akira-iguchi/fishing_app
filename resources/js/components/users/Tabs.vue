@@ -29,6 +29,7 @@
                     v-for="spot in userSpotsList"
                     :key="spot.id"
                     :spot="spot"
+                    :isRanking="false"
                 />
                 <div class="tabItem_none" v-if="userSpots.length <= 0">投稿していません</div>
             </div>
