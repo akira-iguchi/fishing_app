@@ -10,10 +10,14 @@
                 v-for="(weather, index) in weatherList"
                 :key="index"
             >
-                <img class="weather-icon" :src="`http://openweathermap.org/img/w/${weather.weather[0].icon}.png`">
-                <div class="weather-date"> {{ day(weather.dt_txt) }} </div>
-                <div class="weather-main"> {{ weatherJavaneseConversion(weather.weather[0].main) }}   </div>
-                <div class="weather-temp">  {{ Math.round(weather.main.temp) }} ℃ </div>
+                <div class="d-flex">
+                    <img class="weather-icon" :src="`http://openweathermap.org/img/w/${weather.weather[0].icon}.png`">
+                    <div class="weather-date"> {{ day(weather.dt_txt) }} </div>
+                </div>
+                <div class="d-flex">
+                    <div class="weather-main"> {{ weatherJavaneseConversion(weather.weather[0].main) }}   </div>
+                    <div class="weather-temp">  {{ Math.round(weather.main.temp) }} ℃ </div>
+                </div>
             </div>
         </div>
     </div>
@@ -33,8 +37,8 @@
                 weatherList: [],
                 day: "",
                 weatherJavaneseConversion: "",
-                cityTitle: '東京',
-                cityData: 'Tokyo',
+                cityTitle: '大阪',
+                cityData: 'Osaka',
                 day: "",
             }
         },

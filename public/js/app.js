@@ -16955,7 +16955,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../util */ "./resources/js/util.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -17006,7 +17005,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     fishingTypeNames: {
@@ -17016,47 +17014,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     tagNames: {
       type: Array,
       required: true
+    },
+    parentName: {
+      type: String,
+      required: true
     }
   },
   data: function data() {
     return {
-      searchForm: {
-        searchWord: "",
-        fishingTypes: []
-      }
+      parent: this.parentName,
+      searchWord: "",
+      fishingTypes: []
     };
   },
   methods: {
-    searchSpots: function searchSpots() {
+    getsearchData: function getsearchData() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return axios.get('/api/spots/search', _this.searchForm);
-
-              case 2:
-                response = _context.sent;
-
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                  _context.next = 6;
-                  break;
+                if (_this.parent === 'toppage' || _this.parent === 'tag') {
+                  _this.$router.push({
+                    name: 'search',
+                    params: {
+                      searchWord: _this.searchWord,
+                      fishingTypes: _this.fishingTypes
+                    }
+                  });
+                } else {
+                  _this.$emit("getsearchData", [_this.searchWord, _this.fishingTypes]);
                 }
 
-                _this.$store.commit('error/setCode', response.status);
-
-                return _context.abrupt("return", false);
-
-              case 6:
-                console.log(response.data);
-
-                _this.$router.push('/spots/search');
-
-              case 8:
+              case 1:
               case "end":
                 return _context.stop();
             }
@@ -17822,6 +17814,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -17834,8 +17830,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       weatherList: [],
       day: "",
       weatherJavaneseConversion: "",
-      cityTitle: '東京',
-      cityData: 'Tokyo'
+      cityTitle: '大阪',
+      cityData: 'Osaka'
     }, "day", "");
   },
   watch: {
@@ -19586,6 +19582,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -19605,14 +19610,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      allFishingTypeNames: [],
+      parentName: 'search',
       searchWord: "",
-      searchFishingTypes: [],
+      allFishingTypeNames: [],
       tagNames: [],
+      searchFishingTypes: [],
       spots: [],
       fishingTypeNames: [],
       currentPage: 0,
-      lastPage: 0
+      lastPage: 0,
+      params: this.$route.params
     };
   },
   watch: {
@@ -19625,10 +19632,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  _context.next = 2;
+                  console.log(_this.$route);
+                  _context.next = 3;
                   return _this.fetchSearchSpots();
 
-                case 2:
+                case 3:
                 case "end":
                   return _context.stop();
               }
@@ -19636,6 +19644,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }, _callee);
         }))();
       },
+      deep: true,
       immediate: true
     }
   },
@@ -19649,14 +19658,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return axios.get("/api/spots/search/?page=".concat(_this2.$route.query.page));
+                console.log(_this2.$route);
+                _context2.next = 3;
+                return axios.get("/api/spots/search/?page=".concat(_this2.$route.query.page), {
+                  params: {
+                    searchWord: _this2.$route.params.searchWord,
+                    fishingTypes: _this2.$route.params.fishingTypes
+                  }
+                });
 
-              case 2:
+              case 3:
                 response = _context2.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                  _context2.next = 6;
+                  _context2.next = 7;
                   break;
                 }
 
@@ -19664,23 +19679,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context2.abrupt("return", false);
 
-              case 6:
+              case 7:
                 _this2.allFishingTypeNames = response.data[0][0];
-                _this2.searchWord = response.data[0][1];
-                _this2.searchFishingTypes = response.data[0][2];
-                _this2.tagNames = response.data[0][3];
+                _this2.tagNames = response.data[0][1];
+                _this2.searchWord = response.data[0][2];
+                _this2.searchFishingTypes = response.data[0][3];
                 _this2.spots = response.data[1].data;
                 _this2.fishingTypeNames = response.data[2];
                 _this2.currentPage = response.data[1].current_page;
                 _this2.lastPage = response.data[1].last_page;
 
-              case 14:
+              case 15:
               case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
       }))();
+    },
+    getSearchSpots: function getSearchSpots(data) {
+      this.$route.query.page = "1";
+      this.$route.params.searchWord = data[0];
+      this.$route.params.fishingTypes = data[1];
+      this.fetchSearchSpots();
     }
   }
 });
@@ -20138,6 +20159,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -20150,6 +20172,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      parentName: 'toppage',
       fishingTypeNames: [],
       followUserSpots: [],
       recentSpots: [],
@@ -20252,7 +20275,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 6:
                 if (_this3.isLogin === true) {
                   _this3.fishingTypeNames = response.data[0][0];
-                  _this3.tagNames = response.data[0][3];
+                  _this3.tagNames = response.data[0][1];
                   _this3.recentSpots = response.data[1];
                   _this3.followUserSpots = response.data[2];
                   _this3.rankingSpots = response.data[3];
@@ -20328,6 +20351,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -20344,6 +20368,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      parentName: 'tag',
       tag: {},
       tagSpots: [],
       fishingTypeNames: [],
@@ -21008,6 +21033,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./pages/errors/System.vue */ "./resources/js/pages/errors/System.vue");
 /* harmony import */ var _pages_errors_NotFound_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./pages/errors/NotFound.vue */ "./resources/js/pages/errors/NotFound.vue");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+var _ref;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -21066,22 +21095,23 @@ var routes = [{
       next('/');
     }
   }
-}, {
-  path: '/spots/search/:word/:fishingTypeId',
+}, (_ref = {
+  path: '/spots/search',
+  name: 'search',
   component: _pages_spots_SearchSpots_vue__WEBPACK_IMPORTED_MODULE_2__.default,
-  props: true,
-  // props: route => {
-  //     const page = route.query.page
-  //     return { page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1 }
-  // },
-  beforeEnter: function beforeEnter(to, from, next) {
-    if (_store__WEBPACK_IMPORTED_MODULE_15__.default.getters["auth/check"]) {
-      next();
-    } else {
-      next('/');
-    }
+  props: true
+}, _defineProperty(_ref, "props", function props(route) {
+  var page = route.query.page;
+  return {
+    page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1
+  };
+}), _defineProperty(_ref, "beforeEnter", function beforeEnter(to, from, next) {
+  if (_store__WEBPACK_IMPORTED_MODULE_15__.default.getters["auth/check"]) {
+    next();
+  } else {
+    next('/');
   }
-}, {
+}), _ref), {
   path: '/spots/:id',
   component: _pages_spots_SpotDetail_vue__WEBPACK_IMPORTED_MODULE_3__.default,
   props: true,
@@ -21171,6 +21201,12 @@ var routes = [{
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_17__.default({
   mode: 'history',
+  scrollBehavior: function scrollBehavior() {
+    return {
+      x: 0,
+      y: 0
+    };
+  },
   routes: routes
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
@@ -63103,7 +63139,7 @@ var render = function() {
       staticClass: "mx-auto d-block",
       class: [
         _vm.isRanking === true
-          ? "col-md-6 col-11"
+          ? "col-xl-4 col-md-6 col-11"
           : "col-xl-3 col-lg-4 col-md-6 col-11"
       ]
     },
@@ -63533,7 +63569,7 @@ var render = function() {
           on: {
             submit: function($event) {
               $event.preventDefault()
-              return _vm.searchSpots($event)
+              return _vm.getsearchData($event)
             }
           }
         },
@@ -63543,19 +63579,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.searchForm.searchWord,
-                expression: "searchForm.searchWord"
+                value: _vm.searchWord,
+                expression: "searchWord"
               }
             ],
             staticClass: "spotIndex_search_text",
             attrs: { type: "text", placeholder: "キーワードを入力" },
-            domProps: { value: _vm.searchForm.searchWord },
+            domProps: { value: _vm.searchWord },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.searchForm, "searchWord", $event.target.value)
+                _vm.searchWord = $event.target.value
               }
             }
           }),
@@ -63573,44 +63609,36 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.searchForm.fishingTypes,
-                  expression: "searchForm.fishingTypes"
+                  value: _vm.fishingTypes,
+                  expression: "fishingTypes"
                 }
               ],
               staticClass: "search_check",
               attrs: { type: "checkbox", id: "" + fishingType.id },
               domProps: {
                 value: "" + fishingType.id,
-                checked: Array.isArray(_vm.searchForm.fishingTypes)
-                  ? _vm._i(_vm.searchForm.fishingTypes, "" + fishingType.id) >
-                    -1
-                  : _vm.searchForm.fishingTypes
+                checked: Array.isArray(_vm.fishingTypes)
+                  ? _vm._i(_vm.fishingTypes, "" + fishingType.id) > -1
+                  : _vm.fishingTypes
               },
               on: {
                 change: function($event) {
-                  var $$a = _vm.searchForm.fishingTypes,
+                  var $$a = _vm.fishingTypes,
                     $$el = $event.target,
                     $$c = $$el.checked ? true : false
                   if (Array.isArray($$a)) {
                     var $$v = "" + fishingType.id,
                       $$i = _vm._i($$a, $$v)
                     if ($$el.checked) {
-                      $$i < 0 &&
-                        _vm.$set(
-                          _vm.searchForm,
-                          "fishingTypes",
-                          $$a.concat([$$v])
-                        )
+                      $$i < 0 && (_vm.fishingTypes = $$a.concat([$$v]))
                     } else {
                       $$i > -1 &&
-                        _vm.$set(
-                          _vm.searchForm,
-                          "fishingTypes",
-                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                        )
+                        (_vm.fishingTypes = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
                     }
                   } else {
-                    _vm.$set(_vm.searchForm, "fishingTypes", $$c)
+                    _vm.fishingTypes = $$c
                   }
                 }
               }
@@ -64318,32 +64346,36 @@ var render = function() {
           _vm._v(" "),
           _vm._l(_vm.weatherList, function(weather, index) {
             return _c("div", { key: index, staticClass: "weather-report" }, [
-              _c("img", {
-                staticClass: "weather-icon",
-                attrs: {
-                  src:
-                    "http://openweathermap.org/img/w/" +
-                    weather.weather[0].icon +
-                    ".png"
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "weather-date" }, [
-                _vm._v(" " + _vm._s(_vm.day(weather.dt_txt)) + " ")
+              _c("div", { staticClass: "d-flex" }, [
+                _c("img", {
+                  staticClass: "weather-icon",
+                  attrs: {
+                    src:
+                      "http://openweathermap.org/img/w/" +
+                      weather.weather[0].icon +
+                      ".png"
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "weather-date" }, [
+                  _vm._v(" " + _vm._s(_vm.day(weather.dt_txt)) + " ")
+                ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "weather-main" }, [
-                _vm._v(
-                  " " +
-                    _vm._s(
-                      _vm.weatherJavaneseConversion(weather.weather[0].main)
-                    ) +
-                    "   "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "weather-temp" }, [
-                _vm._v("  " + _vm._s(Math.round(weather.main.temp)) + " ℃ ")
+              _c("div", { staticClass: "d-flex" }, [
+                _c("div", { staticClass: "weather-main" }, [
+                  _vm._v(
+                    " " +
+                      _vm._s(
+                        _vm.weatherJavaneseConversion(weather.weather[0].main)
+                      ) +
+                      "   "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "weather-temp" }, [
+                  _vm._v("  " + _vm._s(Math.round(weather.main.temp)) + " ℃ ")
+                ])
               ])
             ])
           })
@@ -65586,13 +65618,15 @@ var render = function() {
       _c("SearchForm", {
         attrs: {
           fishingTypeNames: _vm.allFishingTypeNames,
-          tagNames: _vm.tagNames
-        }
+          tagNames: _vm.tagNames,
+          parentName: _vm.parentName
+        },
+        on: { getsearchData: _vm.getSearchSpots }
       }),
       _vm._v(" "),
       _c("h2", { staticClass: "search-result" }, [
         (_vm.searchWord && _vm.searchWord.length > 0) ||
-        (_vm.searchFishingTypes && _vm.searchFishingTypes.lrngth > 0)
+        (_vm.searchFishingTypes && _vm.searchFishingTypes.length > 0)
           ? _c("span", [
               _vm.searchWord && _vm.searchWord.length > 0
                 ? _c("span", [_vm._v(_vm._s(_vm.searchWord))])
@@ -65601,11 +65635,14 @@ var render = function() {
               _vm.searchFishingTypes && _vm.searchFishingTypes.length > 0
                 ? _c(
                     "span",
-                    _vm._l(_vm.searchFishingTypes, function(fishinType, index) {
+                    _vm._l(_vm.fishingTypeNames, function(
+                      fishinTypeName,
+                      index
+                    ) {
                       return _c("span", { key: index }, [
                         _vm._v(
                           "\n                    " +
-                            _vm._s(_vm.$fishing_type_name) +
+                            _vm._s(fishinTypeName) +
                             "\n                "
                         )
                       ])
@@ -65619,7 +65656,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       (_vm.searchWord && _vm.searchWord.length > 0) ||
-      (_vm.searchFishingTypes && _vm.searchFishingTypes.lrngth > 0)
+      (_vm.searchFishingTypes && _vm.searchFishingTypes.length > 0)
         ? _c("p", { staticClass: "search_count" }, [
             _vm._v("\n        " + _vm._s(_vm.spots.length) + " 件\n    ")
           ])
@@ -65641,7 +65678,11 @@ var render = function() {
             }),
             1
           )
-        : _vm._e()
+        : _vm._e(),
+      _vm._v(" "),
+      _c("Pagination", {
+        attrs: { "current-page": _vm.currentPage, "last-page": _vm.lastPage }
+      })
     ],
     1
   )
@@ -65950,7 +65991,8 @@ var render = function() {
               _c("SearchForm", {
                 attrs: {
                   fishingTypeNames: _vm.fishingTypeNames,
-                  tagNames: _vm.tagNames
+                  tagNames: _vm.tagNames,
+                  parentName: _vm.parentName
                 }
               }),
               _vm._v(" "),
@@ -66214,7 +66256,8 @@ var render = function() {
       _c("SearchForm", {
         attrs: {
           fishingTypeNames: _vm.fishingTypeNames,
-          tagNames: _vm.tagNames
+          tagNames: _vm.tagNames,
+          parentName: _vm.parentName
         }
       }),
       _vm._v(" "),

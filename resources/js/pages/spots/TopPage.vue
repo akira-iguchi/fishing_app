@@ -5,6 +5,7 @@
                 <SearchForm
                     :fishingTypeNames="fishingTypeNames"
                     :tagNames="tagNames"
+                    :parentName="parentName"
                 />
 
                 <div class="text-center">
@@ -132,6 +133,7 @@
         },
         data () {
             return {
+                parentName: 'toppage',
                 fishingTypeNames: [],
                 followUserSpots: [],
                 recentSpots: [],
@@ -185,7 +187,7 @@
 
                 if (this.isLogin === true) {
                     this.fishingTypeNames = response.data[0][0]
-                    this.tagNames = response.data[0][3]
+                    this.tagNames = response.data[0][1]
                     this.recentSpots = response.data[1]
                     this.followUserSpots = response.data[2]
                     this.rankingSpots = response.data[3]

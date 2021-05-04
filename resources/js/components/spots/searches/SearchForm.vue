@@ -2,12 +2,12 @@
     <div class="search_group">
         <div class="spotIndex_search_form">
 
-            <form class="spot_search_top" @submit.prevent="searchSpots">
+            <form class="spot_search_top" @submit.prevent="getsearchData">
                 <input
                     type="text"
                     class="spotIndex_search_text"
                     placeholder="キーワードを入力"
-                    v-model="searchForm.searchWord"
+                    v-model="searchWord"
                 >
                 <button type="submit" class="spotIndex_search_button">
                     <i class="fas fa-search"></i>
@@ -21,7 +21,7 @@
                         type="checkbox"
                         :id="`${ fishingType.id }`"
                         :value="`${ fishingType.id }`"
-                        v-model="searchForm.fishingTypes"
+                        v-model="fishingTypes"
                     >
                     <label :for="`${ fishingType.id }`">
                         {{ fishingType.fishing_type_name }}
@@ -43,8 +43,6 @@
 </template>
 
 <script>
-    import { OK } from '../../../util'
-
     export default {
         props: {
             fishingTypeNames: {
@@ -55,26 +53,34 @@
                 type: Array,
                 required: true
             },
+            parentName: {
+                type: String,
+                required: true
+            },
         },
         data () {
             return {
-                searchForm: {
-                    searchWord: "",
-                    fishingTypes: [],
-                }
+                parent: this.parentName,
+                searchWord: "",
+                fishingTypes: [],
             }
         },
         methods: {
-            async searchSpots () {
-                const response = await axios.get('/api/spots/search', this.searchForm)
-
-                if (response.status !== OK) {
-                    this.$store.commit('error/setCode', response.status)
-                    return false
+            async getsearchData () {
+                if (this.parent === 'toppage' || this.parent === 'tag') {
+                    this.$router.push({
+                        name: 'search',
+                        params: {
+                            searchWord: this.searchWord,
+                            fishingTypes: this.fishingTypes
+                        }
+                    })
+                } else {
+                    this.$emit("getsearchData", [
+                        this.searchWord,
+                        this.fishingTypes
+                    ])
                 }
-                console.log(response.data)
-
-                this.$router.push('/spots/search')
             },
         }
     }

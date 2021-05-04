@@ -15,7 +15,7 @@ class Spot extends Model
 
     protected $table = 'spots';
 
-    protected $perPage = 3;
+    protected $perPage = 1;
 
     protected $fillable = [
         'spot_name',

@@ -65,6 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/weathers/{city}','WeatherController');
 
-    Route::get('/spots/search/{word}/{fishingTypeId}','SpotController@search')->name('spots.search');
+    Route::get('/spots/search','SpotController@search');
+
     Route::resource('/spots', 'SpotController')->except(['index']);
 });

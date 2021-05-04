@@ -41,7 +41,7 @@
             lastPage: {
                 type: Number,
                 required: true
-            }
+            },
         },
         computed: {
             isFirstPage () {
@@ -50,6 +50,6 @@
             isLastPage () {
                 return this.currentPage === this.lastPage
             }
-        }
+        },
     }
 </script>

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 
 class WeatherController extends Controller
 {
-    public function __invoke(Request $request, $city)
+    public function __invoke(String $city)
     {
         $client = new \GuzzleHttp\Client();
         $weatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=';

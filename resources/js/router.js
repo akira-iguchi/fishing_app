@@ -68,13 +68,14 @@ const routes = [
         }
     },
     {
-        path: '/spots/search/:word/:fishingTypeId',
+        path: '/spots/search',
+        name: 'search',
         component: SearchSpots,
         props: true,
-        // props: route => {
-        //     const page = route.query.page
-        //     return { page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1 }
-        // },
+        props: route => {
+            const page = route.query.page
+            return { page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1 }
+        },
         beforeEnter (to, from, next) {
             if (store.getters['auth/check']) {
                 next()
@@ -182,6 +183,9 @@ const routes = [
 
 const router = new VueRouter({
     mode: 'history',
+    scrollBehavior () {
+        return { x: 0, y: 0 }
+    },
     routes
 })
 

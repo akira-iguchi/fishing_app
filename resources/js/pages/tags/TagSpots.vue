@@ -3,6 +3,7 @@
         <SearchForm
             :fishingTypeNames="fishingTypeNames"
             :tagNames="tagNames"
+            :parentName="parentName"
         />
 
         <h2 class="search-result"><span>{{ tag.hashtag }}</span>の検索結果</h2>
@@ -38,6 +39,7 @@
         },
         data () {
             return {
+                parentName: 'tag',
                 tag: {},
                 tagSpots: [],
                 fishingTypeNames: [],
