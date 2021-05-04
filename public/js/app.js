@@ -16567,8 +16567,7 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     },
     isRanking: {
-      type: Boolean,
-      required: true
+      type: Boolean
     }
   },
   filters: {
@@ -17177,25 +17176,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     user: {
       type: Object,
       required: true
+    },
+    initialIsFollowedBy: {
+      type: Boolean,
+      "default": false
     }
+  },
+  data: function data() {
+    return {
+      isFollowedBy: this.initialIsFollowedBy
+    };
   },
   computed: {
     AuthUser: function AuthUser() {
       return this.$store.getters['auth/AuthUser'];
     },
     buttonColor: function buttonColor() {
-      return this.user.followed_by ? 'bg-primary text-white' : 'bg-white';
+      return this.isFollowedBy ? 'bg-primary text-white' : 'bg-white';
     },
     buttonIcon: function buttonIcon() {
-      return this.user.followed_by ? 'fas fa-user-check' : 'fas fa-user-plus';
+      return this.isFollowedBy ? 'fas fa-user-check' : 'fas fa-user-plus';
     },
     buttonText: function buttonText() {
-      return this.user.followed_by ? 'フォロー中' : 'フォロー';
+      return this.isFollowedBy ? 'フォロー中' : 'フォロー';
     }
   },
   methods: {
     onFollowClick: function onFollowClick() {
-      if (this.user.followed_by) {
+      if (this.isFollowedBy) {
         this.unfollow();
       } else {
         this.follow();
@@ -17234,8 +17242,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", false);
 
               case 8:
-                _this.user.count_followers += 1;
-                _this.user.followed_by = true;
+                _this.user.followers.length += 1;
+                _this.isFollowedBy = true;
 
               case 10:
               case "end":
@@ -17278,8 +17286,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return", false);
 
               case 8:
-                _this2.user.count_followers -= 1;
-                _this2.user.followed_by = false;
+                _this2.user.followers.length -= 1;
+                _this2.isFollowedBy = false;
 
               case 10:
               case "end":
@@ -17464,6 +17472,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -17499,20 +17513,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     userSpotsList: function userSpotsList() {
-      var list = this.userSpots;
-      return list.slice(0, this.userSpotsCount);
+      return Object.entries(this.userSpots).slice(0, this.userSpotsCount);
     },
     userFavoriteSpotsList: function userFavoriteSpotsList() {
-      var list = this.userFavoriteSpots;
-      return list.slice(0, this.userFavoriteSpotsCount);
+      return this.userFavoriteSpots.slice(0, this.userFavoriteSpotsCount);
     },
     userFollowingsList: function userFollowingsList() {
-      var list = this.userFollowings;
-      return list.slice(0, this.userFollowingsCount);
+      return this.userFollowings.slice(0, this.userFollowingsCount);
     },
     userFollowersList: function userFollowersList() {
-      var list = this.userFollowers;
-      return list.slice(0, this.userFollowersCount);
+      return this.userFollowers.slice(0, this.userFollowersCount);
     }
   },
   mounted: function mounted() {
@@ -17556,8 +17566,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 7:
                 _this.userSpots = response.data;
+                console.log(Object.entries(_this.userSpots));
 
-              case 8:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -19632,11 +19643,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  console.log(_this.$route);
-                  _context.next = 3;
+                  _context.next = 2;
                   return _this.fetchSearchSpots();
 
-                case 3:
+                case 2:
                 case "end":
                   return _context.stop();
               }
@@ -19658,8 +19668,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                console.log(_this2.$route);
-                _context2.next = 3;
+                _context2.next = 2;
                 return axios.get("/api/spots/search/?page=".concat(_this2.$route.query.page), {
                   params: {
                     searchWord: _this2.$route.params.searchWord,
@@ -19667,11 +19676,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 });
 
-              case 3:
+              case 2:
                 response = _context2.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                  _context2.next = 7;
+                  _context2.next = 6;
                   break;
                 }
 
@@ -19679,7 +19688,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context2.abrupt("return", false);
 
-              case 7:
+              case 6:
                 _this2.allFishingTypeNames = response.data[0][0];
                 _this2.tagNames = response.data[0][1];
                 _this2.searchWord = response.data[0][2];
@@ -19689,7 +19698,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.currentPage = response.data[1].current_page;
                 _this2.lastPage = response.data[1].last_page;
 
-              case 15:
+              case 14:
               case "end":
                 return _context2.stop();
             }
@@ -20814,6 +20823,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -20831,6 +20842,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       user: {},
+      isFollowedBy: false,
       userDataLoaded: false
     };
   },
@@ -20865,10 +20877,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", false);
 
               case 6:
-                _this.user = response.data;
+                _this.user = response.data[0];
+                _this.isFollowedBy = response.data[1];
                 _this.userDataLoaded = true;
 
-              case 8:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -63138,7 +63151,7 @@ var render = function() {
     {
       staticClass: "mx-auto d-block",
       class: [
-        _vm.isRanking === true
+        _vm.isRanking
           ? "col-xl-4 col-md-6 col-11"
           : "col-xl-3 col-lg-4 col-md-6 col-11"
       ]
@@ -63780,9 +63793,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("span", [_vm._v(_vm._s(_vm.user.count_followings) + " フォロー")]),
+    _c("span", [_vm._v(_vm._s(_vm.user.followings.length) + " フォロー")]),
     _vm._v(" "),
-    _c("span", [_vm._v(_vm._s(_vm.user.count_followers) + " フォロワー")]),
+    _c("span", [_vm._v(_vm._s(_vm.user.followers.length) + " フォロワー")]),
     _vm._v(" "),
     _vm.AuthUser.id !== _vm.user.id
       ? _c(
@@ -63845,7 +63858,7 @@ var render = function() {
             [
               _vm._v("\n                釣りスポット "),
               _c("span", { staticClass: "badge badge-secondary" }, [
-                _vm._v(_vm._s(_vm.user.count_spots))
+                _vm._v(_vm._s(_vm.user.spots.length))
               ])
             ]
           )
@@ -63865,7 +63878,7 @@ var render = function() {
             [
               _vm._v("\n                お気に入り "),
               _c("span", { staticClass: "badge badge-secondary" }, [
-                _vm._v(_vm._s(_vm.user.count_favorite_spots))
+                _vm._v(_vm._s(_vm.user.favorite_spots.length))
               ])
             ]
           )
@@ -63885,7 +63898,7 @@ var render = function() {
             [
               _vm._v("\n                フォロー "),
               _c("span", { staticClass: "badge badge-secondary" }, [
-                _vm._v(_vm._s(_vm.user.count_followings))
+                _vm._v(_vm._s(_vm.user.followings.length))
               ])
             ]
           )
@@ -63905,7 +63918,7 @@ var render = function() {
             [
               _vm._v("\n                フォロワー "),
               _c("span", { staticClass: "badge badge-secondary" }, [
-                _vm._v(_vm._s(_vm.user.count_followers))
+                _vm._v(_vm._s(_vm.user.followers.length))
               ])
             ]
           )
@@ -65925,9 +65938,13 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("span", [
-              _c("strong", [_vm._v(_vm._s(_vm.user.count_followings))]),
+              _vm.user.followings
+                ? _c("strong", [_vm._v(_vm._s(_vm.user.followings.length))])
+                : _vm._e(),
               _vm._v("フォロー\n                    "),
-              _c("strong", [_vm._v(_vm._s(_vm.user.count_followers))]),
+              _vm.user.followers
+                ? _c("strong", [_vm._v(_vm._s(_vm.user.followers.length))])
+                : _vm._e(),
               _vm._v("フォロワー\n                ")
             ])
           ],
@@ -66040,7 +66057,7 @@ var render = function() {
               _vm._v(" "),
               _c("hr"),
               _vm._v(" "),
-              _vm.followUserSpots && _vm.followUserSpots.length > 0
+              _vm.followUserSpots
                 ? _c("div", [
                     _c("h2", { staticClass: "toppage_heading" }, [
                       _vm._v("フォローしたユーザーの投稿")
@@ -66665,7 +66682,16 @@ var render = function() {
                 _c(
                   "div",
                   { staticClass: "follow_btn" },
-                  [_c("FollowButton", { attrs: { user: _vm.user } })],
+                  [
+                    _vm.userDataLoaded
+                      ? _c("FollowButton", {
+                          attrs: {
+                            user: _vm.user,
+                            initialIsFollowedBy: _vm.isFollowedBy
+                          }
+                        })
+                      : _vm._e()
+                  ],
                   1
                 )
               ]),

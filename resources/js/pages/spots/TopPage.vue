@@ -35,7 +35,7 @@
 
                 <hr>
 
-                <div v-if="followUserSpots && followUserSpots.length > 0">
+                <div v-if="followUserSpots">
                     <h2 class="toppage_heading">フォローしたユーザーの投稿</h2>
                     <div class="row">
                         <SpotCard

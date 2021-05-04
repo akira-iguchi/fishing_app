@@ -3,22 +3,22 @@
         <ul class="nav nav-tabs nav-justified mt-3">
             <li class="nav-item" @click="tab = 'spotsTab'">
                 <span class="nav-link text-muted" :class="{'active': tab === 'spotsTab' }">
-                    釣りスポット <span class="badge badge-secondary">{{ user.count_spots }}</span>
+                    釣りスポット <span class="badge badge-secondary">{{ user.spots.length }}</span>
                 </span>
             </li>
             <li class="nav-item" @click="getUserFavoriteSpots">
                 <span class="nav-link text-muted" :class="{'active': tab === 'favoriteSpotsTab' }">
-                    お気に入り <span class="badge badge-secondary">{{ user.count_favorite_spots }}</span>
+                    お気に入り <span class="badge badge-secondary">{{ user.favorite_spots.length }}</span>
                 </span>
             </li>
             <li class="nav-item" @click="getUserFollowings">
                 <span class="nav-link text-muted" :class="{'active': tab === 'followingsTab' }">
-                    フォロー <span class="badge badge-secondary">{{ user.count_followings }}</span>
+                    フォロー <span class="badge badge-secondary">{{ user.followings.length }}</span>
                 </span>
             </li>
             <li class="nav-item" @click="getUserFollowers">
                 <span class="nav-link text-muted" :class="{'active': tab === 'followersTab' }">
-                    フォロワー <span class="badge badge-secondary">{{ user.count_followers }}</span>
+                    フォロワー <span class="badge badge-secondary">{{ user.followers.length }}</span>
                 </span>
             </li>
         </ul>
@@ -52,7 +52,10 @@
                     :key="spot.id"
                     :spot="spot"
                 />
-                <div class="tabItem_none" v-if="(userFavoriteSpots.length) <= 0">お気に入りしていません</div>
+                <div
+                    class="tabItem_none"
+                    v-if="(userFavoriteSpots.length) <= 0"
+                >お気に入りしていません</div>
             </div>
 
             <div class="text-center">
@@ -128,7 +131,10 @@
                     </div>
                 </div>
 
-                <div class="tabItem_none" v-if="(userFollowers.length) <= 0">フォローされていません</div>
+                <div
+                    class="tabItem_none"
+                    v-if="(userFollowers.length) <= 0"
+                >フォローされていません</div>
             </div>
 
             <div class="text-center">
@@ -181,20 +187,16 @@
         },
         computed: {
             userSpotsList () {
-                const list = this.userSpots
-                return list.slice(0, this.userSpotsCount)
+                return Object.entries(this.userSpots).slice(0, this.userSpotsCount)
             },
             userFavoriteSpotsList () {
-                const list = this.userFavoriteSpots
-                return list.slice(0, this.userFavoriteSpotsCount)
+                return  this.userFavoriteSpots.slice(0, this.userFavoriteSpotsCount)
             },
             userFollowingsList () {
-                const list = this.userFollowings
-                return list.slice(0, this.userFollowingsCount)
+                return this.userFollowings.slice(0, this.userFollowingsCount)
             },
             userFollowersList () {
-                const list = this.userFollowers
-                return list.slice(0, this.userFollowersCount)
+                return this.userFollowers.slice(0, this.userFollowersCount)
             },
         },
         mounted: function() {
@@ -221,6 +223,7 @@
                 }
 
                 this.userSpots = response.data;
+                console.log(Object.entries(this.userSpots))
             },
             // ユーザーのお気に入り釣りスポット一覧
             async getUserFavoriteSpots () {

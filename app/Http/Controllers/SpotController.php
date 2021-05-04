@@ -75,7 +75,17 @@ class SpotController extends Controller
     {
         $spot = Spot::findOrFail($id)
             ->load(
-                ['user', 'spotImages', 'spotFavorites', 'tags', 'fishingTypes', 'spotComments', 'spotComments.user']
+                [
+                    'user',
+                    'user.followings',
+                    'user.followers',
+                    'spotImages',
+                    'spotFavorites',
+                    'tags',
+                    'fishingTypes',
+                    'spotComments',
+                    'spotComments.user'
+                ]
             );
 
         // その他の釣りスポット

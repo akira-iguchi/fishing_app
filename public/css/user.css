@@ -132,6 +132,10 @@
   text-decoration: none;
 }
 
+.followings_user_name:hover {
+  color: #BF7497;
+}
+
 .tabItem_none {
   width: 100%;
   text-align: center;

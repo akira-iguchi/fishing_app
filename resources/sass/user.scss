@@ -139,6 +139,10 @@ $breakpoint-tablet: 896px;
   font-size: 1.3rem;
   font-weight: 200;
   text-decoration: none;
+
+  &:hover {
+    color: #BF7497;
+  }
 }
 
 .tabItem_none {

@@ -96,7 +96,6 @@
         watch: {
             $route: {
                 async handler () {
-                    console.log(this.$route)
                     await this.fetchSearchSpots()
                 },
                 deep: true,
@@ -105,7 +104,6 @@
         },
         methods: {
             async fetchSearchSpots () {
-                console.log(this.$route)
                 const response = await axios.get(`/api/spots/search/?page=${ this.$route.query.page }`, {
                     params: {
                         searchWord: this.$route.params.searchWord,

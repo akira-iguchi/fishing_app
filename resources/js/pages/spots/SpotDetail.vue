@@ -103,8 +103,8 @@
                     </RouterLink>
 
                     <span>
-                        <strong>{{ user.count_followings }}</strong>フォロー
-                        <strong>{{ user.count_followers }}</strong>フォロワー
+                        <strong v-if="user.followings">{{ user.followings.length }}</strong>フォロー
+                        <strong v-if="user.followers">{{ user.followers.length }}</strong>フォロワー
                     </span>
                 </div>
 

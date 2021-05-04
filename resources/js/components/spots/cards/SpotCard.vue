@@ -1,7 +1,7 @@
 <template>
     <div
         :class="[
-            isRanking === true ? 'col-xl-4 col-md-6 col-11' : 'col-xl-3 col-lg-4 col-md-6 col-11'
+            isRanking ? 'col-xl-4 col-md-6 col-11' : 'col-xl-3 col-lg-4 col-md-6 col-11'
         ]"
         class="mx-auto d-block">
         <div class="spot_card">
@@ -61,7 +61,6 @@
             },
             isRanking: {
                 type: Boolean,
-                required: true
             },
         },
         filters: {

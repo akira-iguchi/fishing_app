@@ -1,7 +1,7 @@
 <template>
     <div>
-        <span>{{ user.count_followings }} フォロー</span>
-        <span>{{ user.count_followers }} フォロワー</span>
+        <span>{{ user.followings.length }} フォロー</span>
+        <span>{{ user.followers.length }} フォロワー</span>
 
         <button
             class="btn-sm shadow-none border border-primary p-2"
@@ -27,24 +27,33 @@
                 type: Object,
                 required: true,
             },
+            initialIsFollowedBy: {
+                type: Boolean,
+                default: false,
+            },
 
+        },
+        data () {
+            return {
+                isFollowedBy: this.initialIsFollowedBy,
+            }
         },
         computed: {
             AuthUser () {
                 return this.$store.getters['auth/AuthUser']
             },
             buttonColor () {
-                return this.user.followed_by
+                return this.isFollowedBy
                 ? 'bg-primary text-white'
                 : 'bg-white'
             },
             buttonIcon () {
-                return this.user.followed_by
+                return this.isFollowedBy
                 ? 'fas fa-user-check'
                 : 'fas fa-user-plus'
             },
             buttonText () {
-                return this.user.followed_by
+                return this.isFollowedBy
                 ? 'フォロー中'
                 : 'フォロー'
             },
@@ -52,7 +61,7 @@
 
         methods: {
             onFollowClick () {
-                if (this.user.followed_by) {
+                if (this.isFollowedBy) {
                     this.unfollow()
                 } else {
                     this.follow()
@@ -70,8 +79,8 @@
                     return false
                 }
 
-                this.user.count_followers += 1
-                this.user.followed_by = true
+                this.user.followers.length += 1
+                this.isFollowedBy = true
             },
             async unfollow () {
                 const response = await axios.delete(`/api/users/${this.user.id}/follow`)
@@ -85,8 +94,8 @@
                     return false
                 }
 
-                this.user.count_followers -= 1
-                this.user.followed_by = false
+                this.user.followers.length -= 1
+                this.isFollowedBy = false
             },
         },
     }
