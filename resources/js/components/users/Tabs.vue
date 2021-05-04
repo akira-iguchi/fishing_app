@@ -18,7 +18,7 @@
             </li>
             <li class="nav-item" @click="getUserFollowers">
                 <span class="nav-link text-muted" :class="{'active': tab === 'followersTab' }">
-                    フォロワー <span class="badge badge-secondary">{{ user.followers.length }}</span>
+                    フォロワー <span class="badge badge-secondary">{{ followerCount }}</span>
                 </span>
             </li>
         </ul>
@@ -30,6 +30,8 @@
                     :key="spot.id"
                     :spot="spot"
                     :isRanking="false"
+                    @favorite="plusFavoriteCount"
+                    @unfavorite="minusFavoriteCount"
                 />
                 <div class="tabItem_none" v-if="userSpots.length <= 0">投稿していません</div>
             </div>
@@ -51,6 +53,9 @@
                     v-for="spot in userFavoriteSpotsList"
                     :key="spot.id"
                     :spot="spot"
+                    :isRanking="false"
+                    @favorite="plusFavoriteCount"
+                    @unfavorite="minusFavoriteCount"
                 />
                 <div
                     class="tabItem_none"
@@ -88,6 +93,7 @@
                         <div>
                             <FollowButton
                                 :user="user"
+
                             />
                         </div>
                     </div>
@@ -126,6 +132,7 @@
                         <div>
                             <FollowButton
                                 :user="user"
+
                             />
                         </div>
                     </div>
@@ -166,6 +173,10 @@
                 type: Object,
                 required: true,
             },
+            initialFollowerCount: {
+                type: Number,
+                required: true,
+            },
         },
         filters: {
             moment: function (date) {
@@ -174,6 +185,7 @@
         },
         data() {
             return {
+                followersCount: this.initialFollowerCount,
                 tab: 'spotsTab',
                 userSpots: [],
                 userFavoriteSpots: [],
@@ -187,7 +199,7 @@
         },
         computed: {
             userSpotsList () {
-                return Object.entries(this.userSpots).slice(0, this.userSpotsCount)
+                return this.userSpots.slice(0, this.userSpotsCount)
             },
             userFavoriteSpotsList () {
                 return  this.userFavoriteSpots.slice(0, this.userFavoriteSpotsCount)
@@ -222,8 +234,7 @@
                     return false
                 }
 
-                this.userSpots = response.data;
-                console.log(Object.entries(this.userSpots))
+                this.userSpots = response.data
             },
             // ユーザーのお気に入り釣りスポット一覧
             async getUserFavoriteSpots () {
@@ -235,7 +246,7 @@
                     return false
                 }
 
-                this.userFavoriteSpots = response.data;
+                this.userFavoriteSpots = response.data
             },
 
             // ユーザーフォロー一覧
@@ -248,7 +259,7 @@
                     return false
                 }
 
-                this.userFollowings = response.data;
+                this.userFollowings = response.data
             },
 
             // ユーザーフォロワー一覧
@@ -261,7 +272,7 @@
                     return false
                 }
 
-                this.userFollowers = response.data;
+                this.userFollowers = response.data
             },
             seeMoreSpots () {
                 this.userSpotsCount += 2
@@ -274,6 +285,12 @@
             },
             seeMoreFollowers () {
                 this.userFollowersCount += 2
+            },
+            plusFavoriteCount () {
+                this.user.favorite_spots.length += 1
+            },
+            minusFavoriteCount () {
+                this.user.favorite_spots.length -= 1
             },
         },
     }

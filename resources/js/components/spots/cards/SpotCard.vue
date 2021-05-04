@@ -21,6 +21,8 @@
                     <div class="card_item mr-2">
                         <FavoriteButton
                             :spot="spot"
+                            @favorite="$emit('favorite')"
+                            @unfavorite="$emit('unfavorite')"
                         />
                     </div>
 
@@ -61,6 +63,7 @@
             },
             isRanking: {
                 type: Boolean,
+                required: true
             },
         },
         filters: {

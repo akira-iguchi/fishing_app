@@ -15952,9 +15952,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    closeModal: function closeModal() {
-      this.$emit("closeModal");
-    },
     deleteEvent: function deleteEvent() {
       if (confirm('本当に削除しますか？')) {
         this.$emit("deleteEvent", this.eventData.id);
@@ -16048,7 +16045,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.spot.count_spot_favorites += 1;
                 _this.spot.liked_by_user = true;
 
-              case 9:
+                _this.$emit("favorite");
+
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -16085,7 +16084,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.spot.count_spot_favorites -= 1;
                 _this2.spot.liked_by_user = false;
 
-              case 9:
+                _this2.$emit("unfavorite");
+
+              case 10:
               case "end":
                 return _context2.stop();
             }
@@ -16486,7 +16487,7 @@ __webpack_require__.r(__webpack_exports__);
       this.tags = value || [];
     },
     spotData: function spotData() {
-      this.$emit("spotData", [this.latitude, this.longitude, this.spotName, this.address, this.tags, this.fishingTypes, this.explanation, this.spotImage1, this.spotImage2, this.spotImage3]);
+      this.$emit('spotData', [this.latitude, this.longitude, this.spotName, this.address, this.tags, this.fishingTypes, this.explanation, this.spotImage1, this.spotImage2, this.spotImage3]);
     }
   }
 });
@@ -16555,6 +16556,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -16567,7 +16570,8 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     },
     isRanking: {
-      type: Boolean
+      type: Boolean,
+      required: true
     }
   },
   filters: {
@@ -17245,7 +17249,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.user.followers.length += 1;
                 _this.isFollowedBy = true;
 
-              case 10:
+                _this.$emit('follow');
+
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -17478,6 +17484,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -17491,6 +17504,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     user: {
       type: Object,
       required: true
+    },
+    initialFollowerCount: {
+      type: Number,
+      required: true
     }
   },
   filters: {
@@ -17500,6 +17517,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      followersCount: this.initialFollowerCount,
       tab: 'spotsTab',
       userSpots: [],
       userFavoriteSpots: [],
@@ -17513,7 +17531,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     userSpotsList: function userSpotsList() {
-      return Object.entries(this.userSpots).slice(0, this.userSpotsCount);
+      return this.userSpots.slice(0, this.userSpotsCount);
     },
     userFavoriteSpotsList: function userFavoriteSpotsList() {
       return this.userFavoriteSpots.slice(0, this.userFavoriteSpotsCount);
@@ -17566,9 +17584,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 7:
                 _this.userSpots = response.data;
-                console.log(Object.entries(_this.userSpots));
 
-              case 9:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -17698,6 +17715,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     seeMoreFollowers: function seeMoreFollowers() {
       this.userFollowersCount += 2;
+    },
+    plusFavoriteCount: function plusFavoriteCount() {
+      this.user.favorite_spots.length += 1;
+    },
+    minusFavoriteCount: function minusFavoriteCount() {
+      this.user.favorite_spots.length -= 1;
     }
   }
 });
@@ -20769,6 +20792,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -62410,9 +62434,18 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "popup-wrapper" }, [
     _c("div", { staticClass: "popup" }, [
-      _c("div", { staticClass: "popup-close", on: { click: _vm.closeModal } }, [
-        _vm._v("✕")
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "popup-close",
+          on: {
+            click: function($event) {
+              return _vm.$emit("closeModal")
+            }
+          }
+        },
+        [_vm._v("✕")]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "popup-content" }, [
         _c("h2", [_vm._v(_vm._s(_vm._f("moment")(_vm.event.startStr)))]),
@@ -63188,7 +63221,19 @@ var render = function() {
                 _c(
                   "div",
                   { staticClass: "card_item mr-2" },
-                  [_c("FavoriteButton", { attrs: { spot: _vm.spot } })],
+                  [
+                    _c("FavoriteButton", {
+                      attrs: { spot: _vm.spot },
+                      on: {
+                        favorite: function($event) {
+                          return _vm.$emit("favorite")
+                        },
+                        unfavorite: function($event) {
+                          return _vm.$emit("unfavorite")
+                        }
+                      }
+                    })
+                  ],
                   1
                 ),
                 _vm._v(" "),
@@ -63918,7 +63963,7 @@ var render = function() {
             [
               _vm._v("\n                フォロワー "),
               _c("span", { staticClass: "badge badge-secondary" }, [
-                _vm._v(_vm._s(_vm.user.followers.length))
+                _vm._v(_vm._s(_vm.followerCount))
               ])
             ]
           )
@@ -63946,7 +63991,11 @@ var render = function() {
             _vm._l(_vm.userSpotsList, function(spot) {
               return _c("SpotCard", {
                 key: spot.id,
-                attrs: { spot: spot, isRanking: false }
+                attrs: { spot: spot, isRanking: false },
+                on: {
+                  favorite: _vm.plusFavoriteCount,
+                  unfavorite: _vm.minusFavoriteCount
+                }
               })
             }),
             _vm._v(" "),
@@ -63995,7 +64044,14 @@ var render = function() {
           { staticClass: "row" },
           [
             _vm._l(_vm.userFavoriteSpotsList, function(spot) {
-              return _c("SpotCard", { key: spot.id, attrs: { spot: spot } })
+              return _c("SpotCard", {
+                key: spot.id,
+                attrs: { spot: spot, isRanking: false },
+                on: {
+                  favorite: _vm.plusFavoriteCount,
+                  unfavorite: _vm.minusFavoriteCount
+                }
+              })
             }),
             _vm._v(" "),
             _vm.userFavoriteSpots.length <= 0
@@ -66731,7 +66787,12 @@ var render = function() {
         ]),
         _vm._v(" "),
         _vm.userDataLoaded
-          ? _c("Tabs", { attrs: { user: _vm.user } })
+          ? _c("Tabs", {
+              attrs: {
+                user: _vm.user,
+                initialFollowerCount: _vm.user.followers.length
+              }
+            })
           : _vm._e()
       ],
       1

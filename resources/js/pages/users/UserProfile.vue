@@ -47,6 +47,7 @@
             <!-- ユーザーのタブ一覧（フォロー、お気に入りボタン含む） -->
             <Tabs
                 :user="user"
+                :initialFollowerCount="user.followers.length"
                 v-if="userDataLoaded"
             >
             </Tabs>

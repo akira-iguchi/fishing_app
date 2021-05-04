@@ -1,7 +1,7 @@
 <template>
     <div class="popup-wrapper">
         <div class="popup">
-            <div class="popup-close" @click="closeModal">✕</div>
+            <div class="popup-close" @click="$emit('closeModal')">✕</div>
             <div class="popup-content">
                 <h2>{{ event.startStr | moment }}</h2>
                 <table class="form-table">
@@ -79,9 +79,6 @@
             }
         },
         methods: {
-            closeModal () {
-                this.$emit("closeModal")
-            },
             deleteEvent () {
                 if (confirm('本当に削除しますか？')) {
                     this.$emit("deleteEvent", this.eventData.id)

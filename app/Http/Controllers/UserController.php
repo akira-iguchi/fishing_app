@@ -40,6 +40,6 @@ class UserController extends Controller
 
         $isFollowedBy = $user->followed_by;
 
-        return [$user, $isFollowedBy] ?? abort(404);
+        return [$user, $isFollowedBy];
     }
 }

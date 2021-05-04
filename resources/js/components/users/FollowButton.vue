@@ -81,6 +81,8 @@
 
                 this.user.followers.length += 1
                 this.isFollowedBy = true
+
+                this.$emit('follow')
             },
             async unfollow () {
                 const response = await axios.delete(`/api/users/${this.user.id}/follow`)

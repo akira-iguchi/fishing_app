@@ -46,7 +46,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // なぜか画面が表示されずタイム・アウトするため断念
+    // なぜか画面が表示されずタイムアウトするため断念
     // protected $appends = [
     //     'followed_by',
     //     'count_spots',
