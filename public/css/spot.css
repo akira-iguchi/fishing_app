@@ -251,11 +251,10 @@
   display: none;
 }
 
-.prefectures {
+.cities {
   position: relative;
   left: 20px;
   margin-top: 40px;
-  width: 100px;
 }
 
 .see_more {
@@ -314,7 +313,7 @@
   margin-bottom: 20px;
   text-align: center;
   padding: 0.7em 1.5em 0 1.5em;
-  width: 353px;
+  width: 331px;
   height: 695px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -332,8 +331,7 @@
 }
 
 .weather-report {
-  display: flex;
-  width: 307px;
+  width: 282px;
   height: 90px;
   margin-bottom: 32px;
   background-color: #BAD3FF;
@@ -356,16 +354,15 @@
 
 .weather-main {
   position: relative;
-  top: 45px;
-  right: 106px;
+  left: 114px;
+  bottom: 53px;
   font-size: 17px;
 }
 
 .weather-temp {
   position: relative;
-  top: 47px;
-  right: 45px;
-  font-size: 15px;
+  bottom: 52px;
+  left: 161px;
   opacity: 0.7;
 }
 

@@ -9,8 +9,9 @@ class UserTabController extends Controller
     public function spots(String $id)
     {
         $user = User::findOrFail($id);
-        return $user->spots
+        return $user->spots->sortByDesc('id')
                     ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
+
     }
 
     public function favoriteSpots(String $id)

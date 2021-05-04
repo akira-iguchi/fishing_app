@@ -63,8 +63,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/fishing_types','FishingTypeController');
 
-    Route::get('/weathers','WeatherController');
+    Route::get('/weathers/{city}','WeatherController');
 
-    Route::get('/spots/search','SpotController@search')->name('spots.search');
+    Route::get('/spots/search','SpotController@search');
+
     Route::resource('/spots', 'SpotController')->except(['index']);
 });

@@ -21,6 +21,8 @@
                         <div class="follow_btn">
                             <FollowButton
                                 :user="user"
+                                :initialIsFollowedBy="isFollowedBy"
+                                v-if="userDataLoaded"
                             />
                         </div>
                     </div>
@@ -71,6 +73,7 @@
         data () {
             return {
                 user: {},
+                isFollowedBy: false,
                 userDataLoaded: false,
             }
         },
@@ -88,7 +91,9 @@
                     return false
                 }
 
-                this.user = response.data
+                this.user = response.data[0]
+                this.isFollowedBy = response.data[1]
+
                 this.userDataLoaded = true
             },
         },

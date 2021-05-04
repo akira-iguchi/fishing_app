@@ -1,7 +1,7 @@
 <template>
     <select
-        class="prefectures"
-        @change="changePrefecture"
+        class="cities"
+        @change="changeCity"
     >
         <option disabled value="" selected>都道府県を選択してください</option>
         <option value="tokyo">東京</option>
@@ -57,8 +57,8 @@
 <script>
     export default {
         methods: {
-            changePrefecture (val) {
-                this.$emit("selectPrefecture", val.target)
+            changeCity (val) {
+                this.$emit("selectCity", val.target)
             },
         }
     }

@@ -38,6 +38,8 @@ class UserController extends Controller
                 ['spots', 'favoriteSpots', 'followings', 'followers']
             );
 
-        return $user ?? abort(404);
+        $isFollowedBy = $user->followed_by;
+
+        return [$user, $isFollowedBy] ?? abort(404);
     }
 }

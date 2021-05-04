@@ -1,19 +1,23 @@
 <template>
     <div>
-        <Prefectures
-            @selectPrefecture="getCityName"
+        <Cities
+            @selectCity="changeCity"
         />
         <div class="entire_weather">
-            <div class="city_name"> {{ city }} の天気 </div>
+            <div class="city_name"> {{ cityTitle }} の天気 </div>
             <div
                 class="weather-report"
                 v-for="(weather, index) in weatherList"
                 :key="index"
             >
-                <img class="weather-icon" :src="`http://openweathermap.org/img/w/${weather.weather[0].icon}.png`">
-                <div class="weather-date"> {{ day(weather.dt_txt) }} </div>
-                <div class="weather-main"> {{ weatherJavaneseConversion(weather.weather[0].main) }}   </div>
-                <div class="weather-temp">  {{ Math.round(weather.main.temp) }} ℃ </div>
+                <div class="d-flex">
+                    <img class="weather-icon" :src="`http://openweathermap.org/img/w/${weather.weather[0].icon}.png`">
+                    <div class="weather-date"> {{ day(weather.dt_txt) }} </div>
+                </div>
+                <div class="d-flex">
+                    <div class="weather-main"> {{ weatherJavaneseConversion(weather.weather[0].main) }}   </div>
+                    <div class="weather-temp">  {{ Math.round(weather.main.temp) }} ℃ </div>
+                </div>
             </div>
         </div>
     </div>
@@ -21,11 +25,11 @@
 
 <script>
     import { OK } from '../../util'
-    import Prefectures from '../weathers/Prefectures.vue'
+    import Cities from './Cities.vue'
 
     export default {
         components: {
-            Prefectures
+            Cities
         },
         data () {
             return {
@@ -33,7 +37,8 @@
                 weatherList: [],
                 day: "",
                 weatherJavaneseConversion: "",
-                city: "",
+                cityTitle: '大阪',
+                cityData: 'Osaka',
                 day: "",
             }
         },
@@ -47,7 +52,7 @@
         },
         methods: {
             async fetchWeather () {
-                const response = await axios.get('/api/weathers')
+                const response = await axios.get(`/api/weathers/${ this.cityData }`)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
@@ -89,13 +94,12 @@
 
                 });
             },
-            async getCityName (val) {
-                const number = val.selectedIndex;
-                this.city = val.options[number].text
+            async changeCity (data) {
+                const number = data.selectedIndex;
+                this.cityTitle = data.options[number].text
+                this.cityData = data.value
 
-                const response = await axios.get('/weathers', {
-                    prefectures: val.value
-                })
+                this.fetchWeather()
             }
         },
     }

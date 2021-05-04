@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\TagNameTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,11 +12,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Spot extends Model
 {
     use HasFactory;
-    use TagNameTrait;
 
     protected $table = 'spots';
 
-    protected $perPage = 3;
+    protected $perPage = 1;
 
     protected $fillable = [
         'spot_name',

@@ -15835,6 +15835,14 @@ __webpack_require__.r(__webpack_exports__);
       this.fishingType = "";
       this.spot = "";
       this.detail = "";
+    },
+    intialEventValue: function intialEventValue(newEvent) {
+      this.date = newEvent.date;
+      this.fishingStartTime = newEvent.fishing_start_time;
+      this.fishingEndTimeime = newEvent.fishing_end_time;
+      this.fishingType = newEvent.fishing_type;
+      this.spot = newEvent.spot;
+      this.detail = newEvent.detail;
     }
   },
   methods: {
@@ -15863,16 +15871,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15922,6 +15928,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
+    editEventData: {
+      type: Object,
+      required: true
+    },
     eventData: {
       type: Object,
       required: true
@@ -15938,7 +15948,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   filters: {
     moment: function moment(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_1___default()(date).format('YYYY/MM/DD');
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format('YYYY/MM/DD');
     }
   },
   methods: {
@@ -15946,29 +15956,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$emit("closeModal");
     },
     deleteEvent: function deleteEvent() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (confirm('本当に削除しますか？')) {
-                  // const response = await axios.delete(`/api/users/${ this.userData.id }/events/${ this.eventData.id }`)
-                  _this.$emit("deleteEvent"); // this.$store.commit('message/setContent', {
-                  //     content: 'イベントを削除しました',
-                  //     timeout: 4000
-                  // })
-
-                }
-
-              case 1:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
+      if (confirm('本当に削除しますか？')) {
+        this.$emit("deleteEvent", this.eventData.id);
+      }
     }
   }
 });
@@ -16561,6 +16551,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -16571,6 +16565,9 @@ __webpack_require__.r(__webpack_exports__);
     spot: {
       type: Object,
       required: true
+    },
+    isRanking: {
+      type: Boolean
     }
   },
   filters: {
@@ -16957,7 +16954,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../util */ "./resources/js/util.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -17008,7 +17004,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     fishingTypeNames: {
@@ -17018,47 +17013,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     tagNames: {
       type: Array,
       required: true
+    },
+    parentName: {
+      type: String,
+      required: true
     }
   },
   data: function data() {
     return {
-      searchForm: {
-        searchWord: "",
-        fishingTypes: []
-      }
+      parent: this.parentName,
+      searchWord: "",
+      fishingTypes: []
     };
   },
   methods: {
-    searchSpots: function searchSpots() {
+    getsearchData: function getsearchData() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return axios.get('/api/spots/search', _this.searchForm);
-
-              case 2:
-                response = _context.sent;
-
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                  _context.next = 6;
-                  break;
+                if (_this.parent === 'toppage' || _this.parent === 'tag') {
+                  _this.$router.push({
+                    name: 'search',
+                    params: {
+                      searchWord: _this.searchWord,
+                      fishingTypes: _this.fishingTypes
+                    }
+                  });
+                } else {
+                  _this.$emit("getsearchData", [_this.searchWord, _this.fishingTypes]);
                 }
 
-                _this.$store.commit('error/setCode', response.status);
-
-                return _context.abrupt("return", false);
-
-              case 6:
-                console.log(response.data);
-
-                _this.$router.push('/spots/search');
-
-              case 8:
+              case 1:
               case "end":
                 return _context.stop();
             }
@@ -17187,25 +17176,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     user: {
       type: Object,
       required: true
+    },
+    initialIsFollowedBy: {
+      type: Boolean,
+      "default": false
     }
+  },
+  data: function data() {
+    return {
+      isFollowedBy: this.initialIsFollowedBy
+    };
   },
   computed: {
     AuthUser: function AuthUser() {
       return this.$store.getters['auth/AuthUser'];
     },
     buttonColor: function buttonColor() {
-      return this.user.followed_by ? 'bg-primary text-white' : 'bg-white';
+      return this.isFollowedBy ? 'bg-primary text-white' : 'bg-white';
     },
     buttonIcon: function buttonIcon() {
-      return this.user.followed_by ? 'fas fa-user-check' : 'fas fa-user-plus';
+      return this.isFollowedBy ? 'fas fa-user-check' : 'fas fa-user-plus';
     },
     buttonText: function buttonText() {
-      return this.user.followed_by ? 'フォロー中' : 'フォロー';
+      return this.isFollowedBy ? 'フォロー中' : 'フォロー';
     }
   },
   methods: {
     onFollowClick: function onFollowClick() {
-      if (this.user.followed_by) {
+      if (this.isFollowedBy) {
         this.unfollow();
       } else {
         this.follow();
@@ -17244,8 +17242,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", false);
 
               case 8:
-                _this.user.count_followers += 1;
-                _this.user.followed_by = true;
+                _this.user.followers.length += 1;
+                _this.isFollowedBy = true;
 
               case 10:
               case "end":
@@ -17288,8 +17286,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return", false);
 
               case 8:
-                _this2.user.count_followers -= 1;
-                _this2.user.followed_by = false;
+                _this2.user.followers.length -= 1;
+                _this2.isFollowedBy = false;
 
               case 10:
               case "end":
@@ -17473,6 +17471,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -17508,20 +17513,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     userSpotsList: function userSpotsList() {
-      var list = this.userSpots;
-      return list.slice(0, this.userSpotsCount);
+      return Object.entries(this.userSpots).slice(0, this.userSpotsCount);
     },
     userFavoriteSpotsList: function userFavoriteSpotsList() {
-      var list = this.userFavoriteSpots;
-      return list.slice(0, this.userFavoriteSpotsCount);
+      return this.userFavoriteSpots.slice(0, this.userFavoriteSpotsCount);
     },
     userFollowingsList: function userFollowingsList() {
-      var list = this.userFollowings;
-      return list.slice(0, this.userFollowingsCount);
+      return this.userFollowings.slice(0, this.userFollowingsCount);
     },
     userFollowersList: function userFollowersList() {
-      var list = this.userFollowers;
-      return list.slice(0, this.userFollowersCount);
+      return this.userFollowers.slice(0, this.userFollowersCount);
     }
   },
   mounted: function mounted() {
@@ -17565,8 +17566,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 7:
                 _this.userSpots = response.data;
+                console.log(Object.entries(_this.userSpots));
 
-              case 8:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -17702,10 +17704,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Prefectures.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Prefectures.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Cities.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Cities.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -17771,8 +17773,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   methods: {
-    changePrefecture: function changePrefecture(val) {
-      this.$emit("selectPrefecture", val.target);
+    changeCity: function changeCity(val) {
+      this.$emit("selectCity", val.target);
     }
   }
 });
@@ -17793,7 +17795,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
-/* harmony import */ var _weathers_Prefectures_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../weathers/Prefectures.vue */ "./resources/js/components/weathers/Prefectures.vue");
+/* harmony import */ var _Cities_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Cities.vue */ "./resources/js/components/weathers/Cities.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -17823,11 +17825,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    Prefectures: _weathers_Prefectures_vue__WEBPACK_IMPORTED_MODULE_2__.default
+    Cities: _Cities_vue__WEBPACK_IMPORTED_MODULE_2__.default
   },
   data: function data() {
     return _defineProperty({
@@ -17835,7 +17841,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       weatherList: [],
       day: "",
       weatherJavaneseConversion: "",
-      city: ""
+      cityTitle: '大阪',
+      cityData: 'Osaka'
     }, "day", "");
   },
   watch: {
@@ -17873,7 +17880,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.get('/api/weathers');
+                return axios.get("/api/weathers/".concat(_this2.cityData));
 
               case 2:
                 response = _context2.sent;
@@ -17933,26 +17940,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee2);
       }))();
     },
-    getCityName: function getCityName(val) {
+    changeCity: function changeCity(data) {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-        var number, response;
+        var number;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                number = val.selectedIndex;
-                _this3.city = val.options[number].text;
-                _context3.next = 4;
-                return axios.get('/weathers', {
-                  prefectures: val.value
-                });
+                number = data.selectedIndex;
+                _this3.cityTitle = data.options[number].text;
+                _this3.cityData = data.value;
+
+                _this3.fetchWeather();
 
               case 4:
-                response = _context3.sent;
-
-              case 5:
               case "end":
                 return _context3.stop();
             }
@@ -18337,6 +18340,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -18590,8 +18594,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee4);
       }))();
     },
-    reloadCalendar: function reloadCalendar() {
-      this.fetchEditEvent();
+    deleteEvent: function deleteEvent(eventId) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return axios["delete"]("/api/users/".concat(_this5.id, "/events/").concat(eventId));
+
+              case 2:
+                response = _context5.sent;
+
+                _this5.$store.commit('message/setContent', {
+                  content: 'イベントを削除しました',
+                  timeout: 4000
+                });
+
+                _this5.fetchEditEvent();
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
     },
     formatDate: function formatDate(date) {
       var year = date.getFullYear();
@@ -18630,6 +18661,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
 //
 //
 //
@@ -18892,9 +18924,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee4);
       }))();
     },
-    reloadCalendar: function reloadCalendar() {
-      console.log("aaa");
-      this.fetchEvents();
+    deleteEvent: function deleteEvent(eventId) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return axios["delete"]("/api/users/".concat(_this5.id, "/events/").concat(eventId));
+
+              case 2:
+                response = _context5.sent;
+
+                _this5.$store.commit('message/setContent', {
+                  content: 'イベントを削除しました',
+                  timeout: 4000
+                });
+
+                _this5.fetchEvents();
+
+              case 5:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
     },
     formatDate: function formatDate(date) {
       var year = date.getFullYear();
@@ -19534,6 +19592,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -19553,14 +19621,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      allFishingTypeNames: [],
+      parentName: 'search',
       searchWord: "",
-      searchFishingTypes: [],
+      allFishingTypeNames: [],
       tagNames: [],
+      searchFishingTypes: [],
       spots: [],
       fishingTypeNames: [],
       currentPage: 0,
-      lastPage: 0
+      lastPage: 0,
+      params: this.$route.params
     };
   },
   watch: {
@@ -19584,6 +19654,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }, _callee);
         }))();
       },
+      deep: true,
       immediate: true
     }
   },
@@ -19598,7 +19669,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.get("/api/spots/search/?page=".concat(_this2.$route.query.page));
+                return axios.get("/api/spots/search/?page=".concat(_this2.$route.query.page), {
+                  params: {
+                    searchWord: _this2.$route.params.searchWord,
+                    fishingTypes: _this2.$route.params.fishingTypes
+                  }
+                });
 
               case 2:
                 response = _context2.sent;
@@ -19614,9 +19690,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 6:
                 _this2.allFishingTypeNames = response.data[0][0];
-                _this2.searchWord = response.data[0][1];
-                _this2.searchFishingTypes = response.data[0][2];
-                _this2.tagNames = response.data[0][3];
+                _this2.tagNames = response.data[0][1];
+                _this2.searchWord = response.data[0][2];
+                _this2.searchFishingTypes = response.data[0][3];
                 _this2.spots = response.data[1].data;
                 _this2.fishingTypeNames = response.data[2];
                 _this2.currentPage = response.data[1].current_page;
@@ -19629,6 +19705,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
+    },
+    getSearchSpots: function getSearchSpots(data) {
+      this.$route.query.page = "1";
+      this.$route.params.searchWord = data[0];
+      this.$route.params.fishingTypes = data[1];
+      this.fetchSearchSpots();
     }
   }
 });
@@ -19912,7 +19994,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     updateSpotComments: function updateSpotComments() {
-      console.log(this.spot);
       this.spot = response.data[0];
     }
   },
@@ -20080,6 +20161,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -20092,9 +20181,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      parentName: 'toppage',
       fishingTypeNames: [],
       followUserSpots: [],
       recentSpots: [],
+      rankingSpots: [],
       tagNames: [],
       isActive: false
     };
@@ -20193,9 +20284,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 6:
                 if (_this3.isLogin === true) {
                   _this3.fishingTypeNames = response.data[0][0];
-                  _this3.tagNames = response.data[0][3];
+                  _this3.tagNames = response.data[0][1];
                   _this3.recentSpots = response.data[1];
                   _this3.followUserSpots = response.data[2];
+                  _this3.rankingSpots = response.data[3];
                 }
 
               case 7:
@@ -20267,6 +20359,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -20283,7 +20377,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      tag: [],
+      parentName: 'tag',
+      tag: {},
+      tagSpots: [],
       fishingTypeNames: [],
       tagNames: []
     };
@@ -20341,8 +20437,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.fishingTypeNames = response.data[0][0];
                 _this2.tagNames = response.data[0][3];
                 _this2.tag = response.data[1];
+                _this2.tagSpots = response.data[2];
 
-              case 9:
+              case 10:
               case "end":
                 return _context2.stop();
             }
@@ -20726,6 +20823,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -20743,6 +20842,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       user: {},
+      isFollowedBy: false,
       userDataLoaded: false
     };
   },
@@ -20777,10 +20877,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", false);
 
               case 6:
-                _this.user = response.data;
+                _this.user = response.data[0];
+                _this.isFollowedBy = response.data[1];
                 _this.userDataLoaded = true;
 
-              case 8:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -21009,6 +21110,7 @@ var routes = [{
   }
 }, (_ref = {
   path: '/spots/search',
+  name: 'search',
   component: _pages_spots_SearchSpots_vue__WEBPACK_IMPORTED_MODULE_2__.default,
   props: true
 }, _defineProperty(_ref, "props", function props(route) {
@@ -21112,6 +21214,12 @@ var routes = [{
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_17__.default({
   mode: 'history',
+  scrollBehavior: function scrollBehavior() {
+    return {
+      x: 0,
+      y: 0
+    };
+  },
   routes: routes
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
@@ -59565,10 +59673,10 @@ component.options.__file = "resources/js/components/users/Tabs.vue"
 
 /***/ }),
 
-/***/ "./resources/js/components/weathers/Prefectures.vue":
-/*!**********************************************************!*\
-  !*** ./resources/js/components/weathers/Prefectures.vue ***!
-  \**********************************************************/
+/***/ "./resources/js/components/weathers/Cities.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/weathers/Cities.vue ***!
+  \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -59576,8 +59684,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Prefectures_vue_vue_type_template_id_72dedfb9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Prefectures.vue?vue&type=template&id=72dedfb9& */ "./resources/js/components/weathers/Prefectures.vue?vue&type=template&id=72dedfb9&");
-/* harmony import */ var _Prefectures_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Prefectures.vue?vue&type=script&lang=js& */ "./resources/js/components/weathers/Prefectures.vue?vue&type=script&lang=js&");
+/* harmony import */ var _Cities_vue_vue_type_template_id_2855147e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Cities.vue?vue&type=template&id=2855147e& */ "./resources/js/components/weathers/Cities.vue?vue&type=template&id=2855147e&");
+/* harmony import */ var _Cities_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Cities.vue?vue&type=script&lang=js& */ "./resources/js/components/weathers/Cities.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -59587,9 +59695,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
-  _Prefectures_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _Prefectures_vue_vue_type_template_id_72dedfb9___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Prefectures_vue_vue_type_template_id_72dedfb9___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _Cities_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Cities_vue_vue_type_template_id_2855147e___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Cities_vue_vue_type_template_id_2855147e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -59599,7 +59707,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/weathers/Prefectures.vue"
+component.options.__file = "resources/js/components/weathers/Cities.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -60468,10 +60576,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/weathers/Prefectures.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/weathers/Prefectures.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************/
+/***/ "./resources/js/components/weathers/Cities.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/weathers/Cities.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -60479,8 +60587,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Prefectures_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Prefectures.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Prefectures.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Prefectures_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Cities_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Cities.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Cities.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Cities_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -61194,19 +61302,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/weathers/Prefectures.vue?vue&type=template&id=72dedfb9&":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/components/weathers/Prefectures.vue?vue&type=template&id=72dedfb9& ***!
-  \*****************************************************************************************/
+/***/ "./resources/js/components/weathers/Cities.vue?vue&type=template&id=2855147e&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/weathers/Cities.vue?vue&type=template&id=2855147e& ***!
+  \************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Prefectures_vue_vue_type_template_id_72dedfb9___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Prefectures_vue_vue_type_template_id_72dedfb9___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Cities_vue_vue_type_template_id_2855147e___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Cities_vue_vue_type_template_id_2855147e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Prefectures_vue_vue_type_template_id_72dedfb9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Prefectures.vue?vue&type=template&id=72dedfb9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Prefectures.vue?vue&type=template&id=72dedfb9&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Cities_vue_vue_type_template_id_2855147e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Cities.vue?vue&type=template&id=2855147e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Cities.vue?vue&type=template&id=2855147e&");
 
 
 /***/ }),
@@ -62300,111 +62408,107 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "popup-wrapper", on: { click: _vm.closeModal } },
-    [
-      _c("div", { staticClass: "popup" }, [
+  return _c("div", { staticClass: "popup-wrapper" }, [
+    _c("div", { staticClass: "popup" }, [
+      _c("div", { staticClass: "popup-close", on: { click: _vm.closeModal } }, [
+        _vm._v("✕")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "popup-content" }, [
+        _c("h2", [_vm._v(_vm._s(_vm._f("moment")(_vm.event.startStr)))]),
+        _vm._v(" "),
+        _c("table", { staticClass: "form-table" }, [
+          _c("tbody", [
+            _c("tr", [
+              _c("th", [_vm._v("釣り方")]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(_vm.event.extendedProps.fishing_type))])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("th", [_vm._v("釣り場")]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(_vm.event.title))])
+            ]),
+            _vm._v(" "),
+            _vm.event.extendedProps.fishing_start_time ||
+            _vm.event.extendedProps.fishing_end_time
+              ? _c("tr", [
+                  _c("th", [_vm._v("時間")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("span", [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.event.extendedProps.fishing_start_time) +
+                          "\n                            "
+                      )
+                    ]),
+                    _vm._v(
+                      "\n                            〜\n                            "
+                    ),
+                    _c("span", [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.event.extendedProps.fishing_end_time) +
+                          "\n                            "
+                      )
+                    ])
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.event.extendedProps.detail
+              ? _c("tr", [
+                  _c("th", [_vm._v("詳細")]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "modal_detail" }, [
+                    _vm._v(_vm._s(_vm.event.extendedProps.detail))
+                  ])
+                ])
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
         _c(
           "div",
-          { staticClass: "popup-close", on: { click: _vm.closeModal } },
-          [_vm._v("✕")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "popup-content" }, [
-          _c("h2", [_vm._v(_vm._s(_vm._f("moment")(_vm.event.startStr)))]),
-          _vm._v(" "),
-          _c("table", { staticClass: "form-table" }, [
-            _c("tbody", [
-              _c("tr", [
-                _c("th", [_vm._v("釣り方")]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm.event.extendedProps.fishing_type))])
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("th", [_vm._v("釣り場")]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm.event.title))])
-              ]),
-              _vm._v(" "),
-              _vm.event.extendedProps.fishing_start_time ||
-              _vm.event.extendedProps.fishing_end_time
-                ? _c("tr", [
-                    _c("th", [_vm._v("時間")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", [
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(_vm.event.extendedProps.fishing_start_time) +
-                            "\n                            "
-                        )
-                      ]),
-                      _vm._v(
-                        "\n                            〜\n                            "
-                      ),
-                      _c("span", [
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(_vm.event.extendedProps.fishing_end_time) +
-                            "\n                            "
-                        )
-                      ])
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.event.extendedProps.detail
-                ? _c("tr", [
-                    _c("th", [_vm._v("詳細")]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "modal_detail" }, [
-                      _vm._v(_vm._s(_vm.event.extendedProps.detail))
-                    ])
-                  ])
-                : _vm._e()
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "event_private" },
-            [
-              _c(
-                "RouterLink",
-                {
-                  attrs: {
-                    to:
-                      "/users/" +
-                      _vm.userData.id +
-                      "/events/" +
-                      _vm.event.id +
-                      "/edit"
-                  }
-                },
-                [
-                  _c("button", { staticClass: "edit_link_button" }, [
-                    _vm._v("編集")
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "delete_button",
-                  on: { click: _vm.deleteEvent }
-                },
-                [_vm._v("削除")]
-              )
-            ],
-            1
-          )
-        ])
+          { staticClass: "event_private" },
+          [
+            _c(
+              "RouterLink",
+              {
+                attrs: {
+                  to:
+                    "/users/" +
+                    _vm.userData.id +
+                    "/events/" +
+                    _vm.eventData.id +
+                    "/edit"
+                }
+              },
+              [
+                _c("button", { staticClass: "edit_link_button" }, [
+                  _vm._v("編集")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _vm.editEventData.id !== Number(_vm.eventData.id)
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "delete_button",
+                    on: { click: _vm.deleteEvent }
+                  },
+                  [_vm._v("削除")]
+                )
+              : _vm._e()
+          ],
+          1
+        )
       ])
-    ]
-  )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -63044,7 +63148,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "mx-auto d-block col-xl-3 col-lg-4 col-md-6 col-11" },
+    {
+      staticClass: "mx-auto d-block",
+      class: [
+        _vm.isRanking
+          ? "col-xl-4 col-md-6 col-11"
+          : "col-xl-3 col-lg-4 col-md-6 col-11"
+      ]
+    },
     [
       _c(
         "div",
@@ -63471,7 +63582,7 @@ var render = function() {
           on: {
             submit: function($event) {
               $event.preventDefault()
-              return _vm.searchSpots($event)
+              return _vm.getsearchData($event)
             }
           }
         },
@@ -63481,19 +63592,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.searchForm.searchWord,
-                expression: "searchForm.searchWord"
+                value: _vm.searchWord,
+                expression: "searchWord"
               }
             ],
             staticClass: "spotIndex_search_text",
             attrs: { type: "text", placeholder: "キーワードを入力" },
-            domProps: { value: _vm.searchForm.searchWord },
+            domProps: { value: _vm.searchWord },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.searchForm, "searchWord", $event.target.value)
+                _vm.searchWord = $event.target.value
               }
             }
           }),
@@ -63511,44 +63622,36 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.searchForm.fishingTypes,
-                  expression: "searchForm.fishingTypes"
+                  value: _vm.fishingTypes,
+                  expression: "fishingTypes"
                 }
               ],
               staticClass: "search_check",
               attrs: { type: "checkbox", id: "" + fishingType.id },
               domProps: {
                 value: "" + fishingType.id,
-                checked: Array.isArray(_vm.searchForm.fishingTypes)
-                  ? _vm._i(_vm.searchForm.fishingTypes, "" + fishingType.id) >
-                    -1
-                  : _vm.searchForm.fishingTypes
+                checked: Array.isArray(_vm.fishingTypes)
+                  ? _vm._i(_vm.fishingTypes, "" + fishingType.id) > -1
+                  : _vm.fishingTypes
               },
               on: {
                 change: function($event) {
-                  var $$a = _vm.searchForm.fishingTypes,
+                  var $$a = _vm.fishingTypes,
                     $$el = $event.target,
                     $$c = $$el.checked ? true : false
                   if (Array.isArray($$a)) {
                     var $$v = "" + fishingType.id,
                       $$i = _vm._i($$a, $$v)
                     if ($$el.checked) {
-                      $$i < 0 &&
-                        _vm.$set(
-                          _vm.searchForm,
-                          "fishingTypes",
-                          $$a.concat([$$v])
-                        )
+                      $$i < 0 && (_vm.fishingTypes = $$a.concat([$$v]))
                     } else {
                       $$i > -1 &&
-                        _vm.$set(
-                          _vm.searchForm,
-                          "fishingTypes",
-                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                        )
+                        (_vm.fishingTypes = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
                     }
                   } else {
-                    _vm.$set(_vm.searchForm, "fishingTypes", $$c)
+                    _vm.fishingTypes = $$c
                   }
                 }
               }
@@ -63690,9 +63793,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("span", [_vm._v(_vm._s(_vm.user.count_followings) + " フォロー")]),
+    _c("span", [_vm._v(_vm._s(_vm.user.followings.length) + " フォロー")]),
     _vm._v(" "),
-    _c("span", [_vm._v(_vm._s(_vm.user.count_followers) + " フォロワー")]),
+    _c("span", [_vm._v(_vm._s(_vm.user.followers.length) + " フォロワー")]),
     _vm._v(" "),
     _vm.AuthUser.id !== _vm.user.id
       ? _c(
@@ -63755,7 +63858,7 @@ var render = function() {
             [
               _vm._v("\n                釣りスポット "),
               _c("span", { staticClass: "badge badge-secondary" }, [
-                _vm._v(_vm._s(_vm.user.count_spots))
+                _vm._v(_vm._s(_vm.user.spots.length))
               ])
             ]
           )
@@ -63775,7 +63878,7 @@ var render = function() {
             [
               _vm._v("\n                お気に入り "),
               _c("span", { staticClass: "badge badge-secondary" }, [
-                _vm._v(_vm._s(_vm.user.count_favorite_spots))
+                _vm._v(_vm._s(_vm.user.favorite_spots.length))
               ])
             ]
           )
@@ -63795,7 +63898,7 @@ var render = function() {
             [
               _vm._v("\n                フォロー "),
               _c("span", { staticClass: "badge badge-secondary" }, [
-                _vm._v(_vm._s(_vm.user.count_followings))
+                _vm._v(_vm._s(_vm.user.followings.length))
               ])
             ]
           )
@@ -63815,7 +63918,7 @@ var render = function() {
             [
               _vm._v("\n                フォロワー "),
               _c("span", { staticClass: "badge badge-secondary" }, [
-                _vm._v(_vm._s(_vm.user.count_followers))
+                _vm._v(_vm._s(_vm.user.followers.length))
               ])
             ]
           )
@@ -63841,7 +63944,10 @@ var render = function() {
           { staticClass: "row" },
           [
             _vm._l(_vm.userSpotsList, function(spot) {
-              return _c("SpotCard", { key: spot.id, attrs: { spot: spot } })
+              return _c("SpotCard", {
+                key: spot.id,
+                attrs: { spot: spot, isRanking: false }
+              })
             }),
             _vm._v(" "),
             _vm.userSpots.length <= 0
@@ -64095,10 +64201,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Prefectures.vue?vue&type=template&id=72dedfb9&":
-/*!********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Prefectures.vue?vue&type=template&id=72dedfb9& ***!
-  \********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Cities.vue?vue&type=template&id=2855147e&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/weathers/Cities.vue?vue&type=template&id=2855147e& ***!
+  \***************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -64113,7 +64219,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "select",
-    { staticClass: "prefectures", on: { change: _vm.changePrefecture } },
+    { staticClass: "cities", on: { change: _vm.changeCity } },
     [
       _c("option", { attrs: { disabled: "", value: "", selected: "" } }, [
         _vm._v("都道府県を選択してください")
@@ -64241,44 +64347,48 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("Prefectures", { on: { selectPrefecture: _vm.getCityName } }),
+      _c("Cities", { on: { selectCity: _vm.changeCity } }),
       _vm._v(" "),
       _c(
         "div",
         { staticClass: "entire_weather" },
         [
           _c("div", { staticClass: "city_name" }, [
-            _vm._v(" " + _vm._s(_vm.city) + " の天気 ")
+            _vm._v(" " + _vm._s(_vm.cityTitle) + " の天気 ")
           ]),
           _vm._v(" "),
           _vm._l(_vm.weatherList, function(weather, index) {
             return _c("div", { key: index, staticClass: "weather-report" }, [
-              _c("img", {
-                staticClass: "weather-icon",
-                attrs: {
-                  src:
-                    "http://openweathermap.org/img/w/" +
-                    weather.weather[0].icon +
-                    ".png"
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "weather-date" }, [
-                _vm._v(" " + _vm._s(_vm.day(weather.dt_txt)) + " ")
+              _c("div", { staticClass: "d-flex" }, [
+                _c("img", {
+                  staticClass: "weather-icon",
+                  attrs: {
+                    src:
+                      "http://openweathermap.org/img/w/" +
+                      weather.weather[0].icon +
+                      ".png"
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "weather-date" }, [
+                  _vm._v(" " + _vm._s(_vm.day(weather.dt_txt)) + " ")
+                ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "weather-main" }, [
-                _vm._v(
-                  " " +
-                    _vm._s(
-                      _vm.weatherJavaneseConversion(weather.weather[0].main)
-                    ) +
-                    "   "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "weather-temp" }, [
-                _vm._v("  " + _vm._s(Math.round(weather.main.temp)) + " ℃ ")
+              _c("div", { staticClass: "d-flex" }, [
+                _c("div", { staticClass: "weather-main" }, [
+                  _vm._v(
+                    " " +
+                      _vm._s(
+                        _vm.weatherJavaneseConversion(weather.weather[0].main)
+                      ) +
+                      "   "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "weather-temp" }, [
+                  _vm._v("  " + _vm._s(Math.round(weather.main.temp)) + " ℃ ")
+                ])
               ])
             ])
           })
@@ -65182,11 +65292,12 @@ var render = function() {
         _vm._v(" "),
         _vm.popup
           ? _c("EventModal", {
-              attrs: { eventData: _vm.eventData, userData: _vm.user },
-              on: {
-                closeModal: _vm.closeModal,
-                deleteEvent: _vm.reloadCalendar
-              }
+              attrs: {
+                editEventData: _vm.event,
+                eventData: _vm.eventData,
+                userData: _vm.user
+              },
+              on: { closeModal: _vm.closeModal, deleteEvent: _vm.deleteEvent }
             })
           : _vm._e(),
         _vm._v(" "),
@@ -65257,11 +65368,12 @@ var render = function() {
         _vm._v(" "),
         _vm.popup
           ? _c("EventModal", {
-              attrs: { eventData: _vm.eventData, userData: _vm.user },
-              on: {
-                deleteEvent: _vm.reloadCalendar,
-                closeModal: _vm.closeModal
-              }
+              attrs: {
+                editEventData: _vm.event,
+                eventData: _vm.eventData,
+                userData: _vm.user
+              },
+              on: { closeModal: _vm.closeModal, deleteEvent: _vm.deleteEvent }
             })
           : _vm._e(),
         _vm._v(" "),
@@ -65519,13 +65631,15 @@ var render = function() {
       _c("SearchForm", {
         attrs: {
           fishingTypeNames: _vm.allFishingTypeNames,
-          tagNames: _vm.tagNames
-        }
+          tagNames: _vm.tagNames,
+          parentName: _vm.parentName
+        },
+        on: { getsearchData: _vm.getSearchSpots }
       }),
       _vm._v(" "),
       _c("h2", { staticClass: "search-result" }, [
         (_vm.searchWord && _vm.searchWord.length > 0) ||
-        (_vm.searchFishingTypes && _vm.searchFishingTypes.lrngth > 0)
+        (_vm.searchFishingTypes && _vm.searchFishingTypes.length > 0)
           ? _c("span", [
               _vm.searchWord && _vm.searchWord.length > 0
                 ? _c("span", [_vm._v(_vm._s(_vm.searchWord))])
@@ -65534,11 +65648,14 @@ var render = function() {
               _vm.searchFishingTypes && _vm.searchFishingTypes.length > 0
                 ? _c(
                     "span",
-                    _vm._l(_vm.searchFishingTypes, function(fishinType, index) {
+                    _vm._l(_vm.fishingTypeNames, function(
+                      fishinTypeName,
+                      index
+                    ) {
                       return _c("span", { key: index }, [
                         _vm._v(
                           "\n                    " +
-                            _vm._s(_vm.$fishing_type_name) +
+                            _vm._s(fishinTypeName) +
                             "\n                "
                         )
                       ])
@@ -65552,7 +65669,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       (_vm.searchWord && _vm.searchWord.length > 0) ||
-      (_vm.searchFishingTypes && _vm.searchFishingTypes.lrngth > 0)
+      (_vm.searchFishingTypes && _vm.searchFishingTypes.length > 0)
         ? _c("p", { staticClass: "search_count" }, [
             _vm._v("\n        " + _vm._s(_vm.spots.length) + " 件\n    ")
           ])
@@ -65567,7 +65684,10 @@ var render = function() {
             "div",
             { staticClass: "row" },
             _vm._l(_vm.spots, function(spot) {
-              return _c("SpotCard", { key: spot.id, attrs: { spot: spot } })
+              return _c("SpotCard", {
+                key: spot.id,
+                attrs: { spot: spot, isRanking: false }
+              })
             }),
             1
           )
@@ -65818,9 +65938,13 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("span", [
-              _c("strong", [_vm._v(_vm._s(_vm.user.count_followings))]),
+              _vm.user.followings
+                ? _c("strong", [_vm._v(_vm._s(_vm.user.followings.length))])
+                : _vm._e(),
               _vm._v("フォロー\n                    "),
-              _c("strong", [_vm._v(_vm._s(_vm.user.count_followers))]),
+              _vm.user.followers
+                ? _c("strong", [_vm._v(_vm._s(_vm.user.followers.length))])
+                : _vm._e(),
               _vm._v("フォロワー\n                ")
             ])
           ],
@@ -65884,7 +66008,8 @@ var render = function() {
               _c("SearchForm", {
                 attrs: {
                   fishingTypeNames: _vm.fishingTypeNames,
-                  tagNames: _vm.tagNames
+                  tagNames: _vm.tagNames,
+                  parentName: _vm.parentName
                 }
               }),
               _vm._v(" "),
@@ -65906,7 +66031,21 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "toppage_under" }, [
-                _vm._m(0),
+                _c("div", { staticClass: "w-100" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "row" },
+                    _vm._l(_vm.rankingSpots, function(spot) {
+                      return _c("SpotCard", {
+                        key: spot.id,
+                        attrs: { spot: spot, isRanking: true }
+                      })
+                    }),
+                    1
+                  )
+                ]),
                 _vm._v(" "),
                 _c(
                   "aside",
@@ -65918,7 +66057,7 @@ var render = function() {
               _vm._v(" "),
               _c("hr"),
               _vm._v(" "),
-              _vm.followUserSpots && _vm.followUserSpots.length > 0
+              _vm.followUserSpots
                 ? _c("div", [
                     _c("h2", { staticClass: "toppage_heading" }, [
                       _vm._v("フォローしたユーザーの投稿")
@@ -65930,7 +66069,7 @@ var render = function() {
                       _vm._l(_vm.followUserSpots, function(spot) {
                         return _c("SpotCard", {
                           key: spot.id,
-                          attrs: { spot: spot }
+                          attrs: { spot: spot, isRanking: false }
                         })
                       }),
                       1
@@ -65948,7 +66087,10 @@ var render = function() {
                 "div",
                 { staticClass: "row" },
                 _vm._l(_vm.recentSpots, function(spot) {
-                  return _c("SpotCard", { key: spot.id, attrs: { spot: spot } })
+                  return _c("SpotCard", {
+                    key: spot.id,
+                    attrs: { spot: spot, isRanking: false }
+                  })
                 }),
                 1
               )
@@ -66022,13 +66164,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "w-100" }, [
-      _c("h2", { staticClass: "toppage_heading" }, [
-        _vm._v("人気の釣りスポット"),
-        _c("i", { staticClass: "fas fa-crown" })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" })
+    return _c("h2", { staticClass: "toppage_heading" }, [
+      _vm._v("人気の釣りスポット"),
+      _c("i", { staticClass: "fas fa-crown" })
     ])
   },
   function() {
@@ -66135,7 +66273,8 @@ var render = function() {
       _c("SearchForm", {
         attrs: {
           fishingTypeNames: _vm.fishingTypeNames,
-          tagNames: _vm.tagNames
+          tagNames: _vm.tagNames,
+          parentName: _vm.parentName
         }
       }),
       _vm._v(" "),
@@ -66151,8 +66290,11 @@ var render = function() {
       _c(
         "div",
         { staticClass: "row" },
-        _vm._l(_vm.tag.spots, function(spot) {
-          return _c("SpotCard", { key: spot.id, attrs: { spot: spot } })
+        _vm._l(_vm.tagSpots, function(spot) {
+          return _c("SpotCard", {
+            key: spot.id,
+            attrs: { spot: spot, isRanking: false }
+          })
         }),
         1
       )
@@ -66540,7 +66682,16 @@ var render = function() {
                 _c(
                   "div",
                   { staticClass: "follow_btn" },
-                  [_c("FollowButton", { attrs: { user: _vm.user } })],
+                  [
+                    _vm.userDataLoaded
+                      ? _c("FollowButton", {
+                          attrs: {
+                            user: _vm.user,
+                            initialIsFollowedBy: _vm.isFollowedBy
+                          }
+                        })
+                      : _vm._e()
+                  ],
                   1
                 )
               ]),

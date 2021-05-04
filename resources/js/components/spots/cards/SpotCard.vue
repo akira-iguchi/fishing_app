@@ -1,5 +1,9 @@
 <template>
-    <div class="mx-auto d-block col-xl-3 col-lg-4 col-md-6 col-11">
+    <div
+        :class="[
+            isRanking ? 'col-xl-4 col-md-6 col-11' : 'col-xl-3 col-lg-4 col-md-6 col-11'
+        ]"
+        class="mx-auto d-block">
         <div class="spot_card">
             <RouterLink :to="`/spots/${spot.id}`">
                 <div class="spot_card_img">
@@ -54,6 +58,9 @@
             spot: {
                 type: Object,
                 required: true
+            },
+            isRanking: {
+                type: Boolean,
             },
         },
         filters: {

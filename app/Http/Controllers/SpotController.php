@@ -19,14 +19,16 @@ use Illuminate\Support\Facades\Storage;
 
 class SpotController extends Controller
 {
+    use TagNameTrait;
+
     public function searchItems($request)
     {
         $allFishingTypeNames = FishingType::all();
-        $searchWord = $request->input('searchWord');
-        $fishingTypes = $request->input('fishingTypes');
-        $tags = Tag::all()->take(15);
+        $tags = Tag::take(15)->with('spots')->get();
+        $searchWord = $request->searchWord;
+        $fishingTypesId = $request->fishingTypes;
 
-        return [$allFishingTypeNames, $searchWord, $fishingTypes, $tags];
+        return [$allFishingTypeNames, $tags, $searchWord, $fishingTypesId];
     }
 
     public function index(SearchSpotRequest $request)
@@ -35,8 +37,8 @@ class SpotController extends Controller
             $searchData = $this->searchItems($request);
 
             // 最近の投稿
-            $recentSpots = Spot::all()->sortByDesc('id')->take(8)
-            ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
+            $recentSpots = Spot::orderBy('id', 'desc')->take(8)
+            ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->get();
 
             // フォローしたユーザーの釣りスポット
             if (Auth::user()->count_followings > 0) {
@@ -48,10 +50,10 @@ class SpotController extends Controller
             }
 
             // いいねランキング
-            $rankSpots = Spot::withCount('spotFavorites')->orderBy('spot_favorites_count', 'desc')
-            ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(4)->get();
+            $rankingSpots = Spot::withCount('spotFavorites')->orderBy('spot_favorites_count', 'desc')
+            ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(6)->get();
 
-            return [$searchData, $recentSpots, $followUserSpots, $rankSpots];
+            return [$searchData, $recentSpots, $followUserSpots, $rankingSpots];
         } else {
             return response()->json();
         }
@@ -59,24 +61,31 @@ class SpotController extends Controller
 
     public function search(SearchSpotRequest $request)
     {
-        \Log::info($request->all());
         $searchData = $this->searchItems($request);
 
-        list($query, $searchFishingTypeName) = $request->filters($searchData[1], $searchData[2]);
+        list($query, $searchFishingTypeName) = $request->filters($searchData[2], $searchData[3]);
 
         $spots = $query->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])
         ->orderBy('id', 'desc')->paginate();
 
-        $searchFishingTypes = $searchFishingTypeName;
-
-        return [$searchData, $spots, $searchFishingTypes];
+        return [$searchData, $spots, $searchFishingTypeName];
     }
 
     public function show(String $id)
     {
         $spot = Spot::findOrFail($id)
             ->load(
-                ['user', 'spotImages', 'spotFavorites', 'tags', 'fishingTypes', 'spotComments', 'spotComments.user']
+                [
+                    'user',
+                    'user.followings',
+                    'user.followers',
+                    'spotImages',
+                    'spotFavorites',
+                    'tags',
+                    'fishingTypes',
+                    'spotComments',
+                    'spotComments.user'
+                ]
             );
 
         // その他の釣りスポット

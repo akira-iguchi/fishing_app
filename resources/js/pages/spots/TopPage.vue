@@ -5,6 +5,7 @@
                 <SearchForm
                     :fishingTypeNames="fishingTypeNames"
                     :tagNames="tagNames"
+                    :parentName="parentName"
                 />
 
                 <div class="text-center">
@@ -17,7 +18,12 @@
                     <div class="w-100">
                         <h2 class="toppage_heading">人気の釣りスポット<i class="fas fa-crown"></i></h2>
                         <div class="row">
-                            <!-- カードの大きさが違うため直書き -->
+                            <SpotCard
+                                v-for="spot in rankingSpots"
+                                :key="spot.id"
+                                :spot="spot"
+                                :isRanking="true"
+                            />
                         </div>
                     </div>
 
@@ -29,13 +35,14 @@
 
                 <hr>
 
-                <div v-if="followUserSpots && followUserSpots.length > 0">
+                <div v-if="followUserSpots">
                     <h2 class="toppage_heading">フォローしたユーザーの投稿</h2>
                     <div class="row">
                         <SpotCard
                             v-for="spot in followUserSpots"
                             :key="spot.id"
                             :spot="spot"
+                            :isRanking="false"
                         />
                     </div>
                     <hr>
@@ -47,6 +54,7 @@
                         v-for="spot in recentSpots"
                         :key="spot.id"
                         :spot="spot"
+                        :isRanking="false"
                     />
                 </div>
 
@@ -125,9 +133,11 @@
         },
         data () {
             return {
+                parentName: 'toppage',
                 fishingTypeNames: [],
                 followUserSpots: [],
                 recentSpots: [],
+                rankingSpots: [],
                 tagNames: [],
                 isActive: false,
             }
@@ -177,9 +187,10 @@
 
                 if (this.isLogin === true) {
                     this.fishingTypeNames = response.data[0][0]
-                    this.tagNames = response.data[0][3]
+                    this.tagNames = response.data[0][1]
                     this.recentSpots = response.data[1]
                     this.followUserSpots = response.data[2]
+                    this.rankingSpots = response.data[3]
                 }
             },
             handleScroll() {

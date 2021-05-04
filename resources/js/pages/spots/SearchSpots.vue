@@ -3,18 +3,23 @@
         <SearchForm
             :fishingTypeNames="allFishingTypeNames"
             :tagNames="tagNames"
+            :parentName="parentName"
+            @getsearchData="getSearchSpots"
         />
 
         <h2 class="search-result">
-            <span v-if="searchWord && searchWord.length > 0 || searchFishingTypes && searchFishingTypes.lrngth > 0">
+            <span
+                v-if="searchWord && searchWord.length > 0
+                || searchFishingTypes && searchFishingTypes.length > 0"
+            >
                 <span v-if="searchWord && searchWord.length > 0">{{ searchWord }}</span>
 
                 <span v-if="searchFishingTypes && searchFishingTypes.length > 0">
                     <span
-                        v-for="(fishinType, index) in searchFishingTypes"
+                        v-for="(fishinTypeName, index) in fishingTypeNames"
                         :key="index"
                     >
-                        {{ $fishing_type_name }}
+                        {{ fishinTypeName }}
                     </span>
                 </span>
                 の検索結果
@@ -26,7 +31,8 @@
 
         <p
             class="search_count"
-            v-if="searchWord && searchWord.length > 0 || searchFishingTypes && searchFishingTypes.lrngth > 0"
+            v-if="searchWord && searchWord.length > 0
+            || searchFishingTypes && searchFishingTypes.length > 0"
         >
             {{ spots.length }} 件
         </p>
@@ -41,12 +47,16 @@
                 v-for="spot in spots"
                 :key="spot.id"
                 :spot="spot"
+                :isRanking="false"
             />
         </div>
 
-        <Pagination :current-page="currentPage" :last-page="lastPage" />
-
         <!-- ページネーション -->
+        <Pagination
+            :current-page="currentPage"
+            :last-page="lastPage"
+        />
+
     </div>
 </template>
 
@@ -67,18 +77,20 @@
                 type: Number,
                 required: false,
                 default: 1
-            }
+            },
         },
         data () {
             return {
-                allFishingTypeNames: [],
+                parentName: 'search',
                 searchWord: "",
-                searchFishingTypes: [],
+                allFishingTypeNames: [],
                 tagNames: [],
+                searchFishingTypes: [],
                 spots: [],
                 fishingTypeNames: [],
                 currentPage: 0,
                 lastPage: 0,
+                params: this.$route.params
             }
         },
         watch: {
@@ -86,12 +98,18 @@
                 async handler () {
                     await this.fetchSearchSpots()
                 },
+                deep: true,
                 immediate: true
             },
         },
         methods: {
             async fetchSearchSpots () {
-                const response = await axios.get(`/api/spots/search/?page=${ this.$route.query.page }`)
+                const response = await axios.get(`/api/spots/search/?page=${ this.$route.query.page }`, {
+                    params: {
+                        searchWord: this.$route.params.searchWord,
+                        fishingTypes: this.$route.params.fishingTypes
+                    }
+                })
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
@@ -99,16 +117,22 @@
                 }
 
                 this.allFishingTypeNames = response.data[0][0]
-                this.searchWord = response.data[0][1]
-                this.searchFishingTypes = response.data[0][2]
-                this.tagNames = response.data[0][3]
+                this.tagNames = response.data[0][1]
+                this.searchWord = response.data[0][2]
+                this.searchFishingTypes = response.data[0][3]
                 this.spots = response.data[1].data
                 this.fishingTypeNames = response.data[2]
 
                 this.currentPage = response.data[1].current_page
                 this.lastPage = response.data[1].last_page
             },
-        },
+            getSearchSpots (data) {
+                this.$route.query.page = "1"
+                this.$route.params.searchWord = data[0]
+                this.$route.params.fishingTypes = data[1]
 
+                this.fetchSearchSpots()
+            }
+        },
     }
 </script>
