@@ -93,6 +93,7 @@
                         <div>
                             <FollowButton
                                 :user="user"
+                                :initialIsFollowedBy="followersId(user).includes(AuthUser.id)"
                                 @follow="plusFollowerCount"
                             />
                         </div>
@@ -132,6 +133,7 @@
                         <div>
                             <FollowButton
                                 :user="user"
+                                :initialIsFollowedBy="followersId(user).includes(AuthUser.id)"
                                 @follow="plusFollowerCount"
                             />
                         </div>
@@ -182,6 +184,7 @@
         data() {
             return {
                 tab: 'spotsTab',
+                followersId: [],
                 userSpots: [],
                 userFavoriteSpots: [],
                 userFollowings: [],
@@ -193,6 +196,9 @@
             }
         },
         computed: {
+            AuthUser () {
+                return this.$store.getters['auth/AuthUser']
+            },
             userSpotsList () {
                 return this.userSpots.slice(0, this.userSpotsCount)
             },
@@ -255,6 +261,11 @@
                 }
 
                 this.userFollowings = response.data
+                this.followersId = function (user) {
+                    return user.followers.map(function (user) {
+                        return user.id
+                    })
+                }
             },
 
             // ユーザーフォロワー一覧

@@ -17490,6 +17490,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -17513,6 +17515,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       tab: 'spotsTab',
+      followersId: [],
       userSpots: [],
       userFavoriteSpots: [],
       userFollowings: [],
@@ -17524,6 +17527,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   computed: {
+    AuthUser: function AuthUser() {
+      return this.$store.getters['auth/AuthUser'];
+    },
     userSpotsList: function userSpotsList() {
       return this.userSpots.slice(0, this.userSpotsCount);
     },
@@ -17653,7 +17659,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 7:
                 _this3.userFollowings = response.data;
 
-              case 8:
+                _this3.followersId = function (user) {
+                  return user.followers.map(function (user) {
+                    return user.id;
+                  });
+                };
+
+              case 9:
               case "end":
                 return _context3.stop();
             }
@@ -64133,7 +64145,12 @@ var render = function() {
                         "div",
                         [
                           _c("FollowButton", {
-                            attrs: { user: user },
+                            attrs: {
+                              user: user,
+                              initialIsFollowedBy: _vm
+                                .followersId(user)
+                                .includes(_vm.AuthUser.id)
+                            },
                             on: { follow: _vm.plusFollowerCount }
                           })
                         ],
@@ -64222,7 +64239,12 @@ var render = function() {
                         "div",
                         [
                           _c("FollowButton", {
-                            attrs: { user: user },
+                            attrs: {
+                              user: user,
+                              initialIsFollowedBy: _vm
+                                .followersId(user)
+                                .includes(_vm.AuthUser.id)
+                            },
                             on: { follow: _vm.plusFollowerCount }
                           })
                         ],
