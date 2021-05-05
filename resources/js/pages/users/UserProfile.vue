@@ -21,7 +21,8 @@
                         <div class="follow_btn">
                             <FollowButton
                                 :user="user"
-                                :initialIsFollowedBy="isFollowedBy"
+                                :initialIsFollowedBy="followersId.includes(AuthUser.id)"
+                                @follow="follow"
                                 v-if="userDataLoaded"
                             />
                         </div>
@@ -46,8 +47,8 @@
 
             <!-- ユーザーのタブ一覧（フォロー、お気に入りボタン含む） -->
             <Tabs
+                ref="child"
                 :user="user"
-                :initialFollowerCount="user.followers.length"
                 v-if="userDataLoaded"
             >
             </Tabs>
@@ -74,7 +75,7 @@
         data () {
             return {
                 user: {},
-                isFollowedBy: false,
+                followersId: [],
                 userDataLoaded: false,
             }
         },
@@ -82,6 +83,14 @@
             AuthUser () {
                 return this.$store.getters['auth/AuthUser']
             },
+        },
+        watch: {
+            $route: {
+                async handler () {
+                    await this.fetchUser()
+                },
+                immediate: true
+            }
         },
         methods: {
             async fetchUser () {
@@ -92,19 +101,16 @@
                     return false
                 }
 
-                this.user = response.data[0]
-                this.isFollowedBy = response.data[1]
+                this.user = response.data
+                this.followersId = this.user.followers.map(function (user) {
+                    return user.id
+                })
 
                 this.userDataLoaded = true
             },
+            follow () {
+                this.$refs.child.plusFollowerCount()
+            },
         },
-        watch: {
-            $route: {
-                async handler () {
-                    await this.fetchUser()
-                },
-                immediate: true
-            }
-        }
     }
 </script>

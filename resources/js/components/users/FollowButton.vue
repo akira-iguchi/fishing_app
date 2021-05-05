@@ -79,7 +79,6 @@
                     return false
                 }
 
-                this.user.followers.length += 1
                 this.isFollowedBy = true
 
                 this.$emit('follow')

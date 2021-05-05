@@ -17246,12 +17246,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", false);
 
               case 8:
-                _this.user.followers.length += 1;
                 _this.isFollowedBy = true;
 
                 _this.$emit('follow');
 
-              case 11:
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -17504,10 +17503,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     user: {
       type: Object,
       required: true
-    },
-    initialFollowerCount: {
-      type: Number,
-      required: true
     }
   },
   filters: {
@@ -17517,7 +17512,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      followersCount: this.initialFollowerCount,
       tab: 'spotsTab',
       userSpots: [],
       userFavoriteSpots: [],
@@ -17721,6 +17715,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     minusFavoriteCount: function minusFavoriteCount() {
       this.user.favorite_spots.length -= 1;
+    },
+    plusFollowerCount: function plusFollowerCount() {
+      this.user.followers.length += 1;
     }
   }
 });
@@ -20849,6 +20846,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -20866,7 +20864,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       user: {},
-      isFollowedBy: false,
+      followersId: [],
       userDataLoaded: false
     };
   },
@@ -20875,67 +20873,72 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.$store.getters['auth/AuthUser'];
     }
   },
-  methods: {
-    fetchUser: function fetchUser() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return axios.get("/api/users/".concat(_this.id));
-
-              case 2:
-                response = _context.sent;
-
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                  _context.next = 6;
-                  break;
-                }
-
-                _this.$store.commit('error/setCode', response.status);
-
-                return _context.abrupt("return", false);
-
-              case 6:
-                _this.user = response.data[0];
-                _this.isFollowedBy = response.data[1];
-                _this.userDataLoaded = true;
-
-              case 9:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    }
-  },
   watch: {
     $route: {
       handler: function handler() {
-        var _this2 = this;
+        var _this = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
             while (1) {
-              switch (_context2.prev = _context2.next) {
+              switch (_context.prev = _context.next) {
                 case 0:
-                  _context2.next = 2;
-                  return _this2.fetchUser();
+                  _context.next = 2;
+                  return _this.fetchUser();
 
                 case 2:
                 case "end":
-                  return _context2.stop();
+                  return _context.stop();
               }
             }
-          }, _callee2);
+          }, _callee);
         }))();
       },
       immediate: true
+    }
+  },
+  methods: {
+    fetchUser: function fetchUser() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.get("/api/users/".concat(_this2.id));
+
+              case 2:
+                response = _context2.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
+                  _context2.next = 6;
+                  break;
+                }
+
+                _this2.$store.commit('error/setCode', response.status);
+
+                return _context2.abrupt("return", false);
+
+              case 6:
+                _this2.user = response.data;
+                _this2.followersId = _this2.user.followers.map(function (user) {
+                  return user.id;
+                });
+                _this2.userDataLoaded = true;
+
+              case 9:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    follow: function follow() {
+      this.$refs.child.plusFollowerCount();
     }
   }
 });
@@ -63963,7 +63966,7 @@ var render = function() {
             [
               _vm._v("\n                フォロワー "),
               _c("span", { staticClass: "badge badge-secondary" }, [
-                _vm._v(_vm._s(_vm.followerCount))
+                _vm._v(_vm._s(_vm.user.followers.length))
               ])
             ]
           )
@@ -64128,7 +64131,12 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "div",
-                        [_c("FollowButton", { attrs: { user: user } })],
+                        [
+                          _c("FollowButton", {
+                            attrs: { user: user },
+                            on: { follow: _vm.plusFollowerCount }
+                          })
+                        ],
                         1
                       )
                     ],
@@ -64212,7 +64220,12 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "div",
-                        [_c("FollowButton", { attrs: { user: user } })],
+                        [
+                          _c("FollowButton", {
+                            attrs: { user: user },
+                            on: { follow: _vm.plusFollowerCount }
+                          })
+                        ],
                         1
                       )
                     ],
@@ -66743,8 +66756,11 @@ var render = function() {
                       ? _c("FollowButton", {
                           attrs: {
                             user: _vm.user,
-                            initialIsFollowedBy: _vm.isFollowedBy
-                          }
+                            initialIsFollowedBy: _vm.followersId.includes(
+                              _vm.AuthUser.id
+                            )
+                          },
+                          on: { follow: _vm.follow }
                         })
                       : _vm._e()
                   ],
@@ -66787,12 +66803,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _vm.userDataLoaded
-          ? _c("Tabs", {
-              attrs: {
-                user: _vm.user,
-                initialFollowerCount: _vm.user.followers.length
-              }
-            })
+          ? _c("Tabs", { ref: "child", attrs: { user: _vm.user } })
           : _vm._e()
       ],
       1

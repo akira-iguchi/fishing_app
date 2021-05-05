@@ -18,7 +18,7 @@
             </li>
             <li class="nav-item" @click="getUserFollowers">
                 <span class="nav-link text-muted" :class="{'active': tab === 'followersTab' }">
-                    フォロワー <span class="badge badge-secondary">{{ followerCount }}</span>
+                    フォロワー <span class="badge badge-secondary">{{ user.followers.length }}</span>
                 </span>
             </li>
         </ul>
@@ -93,7 +93,7 @@
                         <div>
                             <FollowButton
                                 :user="user"
-
+                                @follow="plusFollowerCount"
                             />
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                         <div>
                             <FollowButton
                                 :user="user"
-
+                                @follow="plusFollowerCount"
                             />
                         </div>
                     </div>
@@ -173,10 +173,6 @@
                 type: Object,
                 required: true,
             },
-            initialFollowerCount: {
-                type: Number,
-                required: true,
-            },
         },
         filters: {
             moment: function (date) {
@@ -185,7 +181,6 @@
         },
         data() {
             return {
-                followersCount: this.initialFollowerCount,
                 tab: 'spotsTab',
                 userSpots: [],
                 userFavoriteSpots: [],
@@ -291,6 +286,9 @@
             },
             minusFavoriteCount () {
                 this.user.favorite_spots.length -= 1
+            },
+            plusFollowerCount () {
+                this.user.followers.length += 1
             },
         },
     }
