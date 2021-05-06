@@ -2,6 +2,9 @@
     <div class="container">
         <div class="row">
             <div class="mx-auto d-block col-lg-10 col-md-11 spot_form">
+                <div v-show="loading" class="panel">
+                    <Loader />
+                </div>
 
                 <SpotForm
                     v-if="spotDataLoaded"
@@ -19,15 +22,18 @@
 </template>
 
 <script>
-    import SpotForm from "../../components/spots/SpotForm";
     import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../../util'
+    import SpotForm from "../../components/spots/SpotForm.vue"
+    import Loader from '../../components/commons/Loader.vue'
 
     export default {
         components: {
             SpotForm,
+            Loader,
         },
         data () {
             return {
+                loading: false,
                 allTagNames: [],
                 allFishingTypeNames: [],
                 spot: {},
@@ -46,6 +52,7 @@
         },
         methods: {
             async fetchCreateSpot () {
+                this.loading = true
                 const response = await axios.get('/api/spots/create')
 
                 if (response.status !== OK) {
@@ -53,12 +60,17 @@
                     return false
                 }
 
+                this.loading = false
+
                 this.allTagNames = response.data[0]
                 this.allFishingTypeNames = response.data[1]
 
                 this.spotDataLoaded = true
             },
             async createSpot (data) {
+                window.scrollTo(0, 0)
+                this.loading = true
+
                 const formData = new FormData()
                 formData.append('latitude', data[0])
                 formData.append('longitude', data[1])
@@ -71,6 +83,8 @@
                 formData.append('spot_image2', data[8])
                 formData.append('spot_image3', data[9])
                 const response = await axios.post('/api/spots', formData)
+
+                this.loading = false
 
                 if (response.status === UNPROCESSABLE_ENTITY) {
                     this.errors = response.data.errors

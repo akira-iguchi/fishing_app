@@ -89,16 +89,24 @@
                 </ul>
             </div>
 
+            <div v-show="loading" class="mt-5">
+                <Loader />
+            </div>
+
             <button class="spot-create-edit-button"><i class="fas fa-pencil-alt"></i>&thinsp;コメント</button>
         </form>
     </div>
 </template>
 
 <script>
-    import moment from 'moment';
     import { CREATED, UNPROCESSABLE_ENTITY } from '../../../util'
+    import moment from 'moment';
+    import Loader from '../../commons/Loader.vue'
 
     export default {
+        components: {
+            Loader,
+        },
         props: {
             spotData: {
                 type: Object,
@@ -117,6 +125,7 @@
                 preview: null,
                 commentErrors: null,
                 show: true,
+                loading: false,
             }
         },
         filters: {
@@ -149,11 +158,14 @@
         },
         methods: {
             async createComment () {
+                this.loading = true
                 const formData = new FormData()
                 formData.append('spot_id', this.spotData.id)
                 formData.append('comment', this.commentContent)
                 formData.append('comment_image', this.commentImage)
                 const response = await axios.post(`/api/spots/${ this.spot.id }/comments`, formData)
+
+                this.loading = false
 
                 if (response.status === UNPROCESSABLE_ENTITY) {
                     this.commentErrors = response.data.errors

@@ -10,6 +10,10 @@
 
         <p class="search_count">{{ tag.count_spots }}件</p>
 
+        <div v-show="loading" class="mt-5 mb-5">
+            <Loader />
+        </div>
+
         <div class="row">
             <SpotCard
                 v-for="spot in tagSpots"
@@ -23,11 +27,13 @@
 
 <script>
     import { OK } from '../../util'
+    import Loader from '../../components/commons/Loader.vue'
     import SpotCard from '../../components/spots/cards/SpotCard.vue'
     import SearchForm from '../../components/spots/searches/SearchForm.vue'
 
     export default {
         components: {
+            Loader,
             SpotCard,
             SearchForm,
         },
@@ -39,6 +45,7 @@
         },
         data () {
             return {
+                loading: true,
                 parentName: 'tag',
                 tag: {},
                 tagSpots: [],
@@ -56,12 +63,15 @@
         },
         methods: {
             async fetchTagSpots () {
+                this.loading = true
                 const response = await axios.get(`/api/tags/${this.name}`)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
+
+                this.loading = false
 
                 this.fishingTypeNames = response.data[0][0]
                 this.tagNames = response.data[0][3]

@@ -143,8 +143,8 @@
   font-size: 2rem;
   color: rgba(0, 100, 255, 0.9);
   opacity: 0;
-  -webkit-animation: fadeIn 0.1s linear 1s 1 normal forwards;
-          animation: fadeIn 0.1s linear 1s 1 normal forwards;
+  -webkit-animation: fadeIn 0.1s linear 2s 1 normal forwards;
+          animation: fadeIn 0.1s linear 2s 1 normal forwards;
 }
 
 @-webkit-keyframes fadeIn {

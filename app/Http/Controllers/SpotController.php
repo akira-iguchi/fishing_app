@@ -42,9 +42,10 @@ class SpotController extends Controller
 
             // フォローしたユーザーの釣りスポット
             if (Auth::user()->count_followings > 0) {
-                $followUserSpots = Spot::where('user_id', Auth::user()->followings()->pluck('followee_id'))
+                $followUserSpots = Spot::where('user_id', Auth::user()
+                ->followings()->pluck('followee_id'))
                 ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(8)
-                ->get()->sortByDesc('id');
+                ->get()->sortByDesc('id')->values();
             } else {
                 $followUserSpots = null;
             }

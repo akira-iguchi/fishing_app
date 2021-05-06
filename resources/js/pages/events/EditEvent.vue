@@ -19,6 +19,11 @@
             <div class="mx-auto d-block col-lg-4 event_form_body" v-if="userId == AuthUser.id">
                 <h4>釣りを記録しよう</h4>
                 <div class="event_form">
+
+                    <div v-show="loading" class="mt-2">
+                        <Loader />
+                    </div>
+
                     <EventForm
                         v-if="eventDataLoaded"
                         :intialEventValue="event"
@@ -34,6 +39,7 @@
 
 <script>
     import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../../util'
+    import Loader from '../../components/commons/Loader.vue'
     import EventForm from '../../components/events/EventForm.vue'
     import EventModal from '../../components/events/EventModal.vue'
     import FullCalendar from '@fullcalendar/vue'
@@ -42,6 +48,7 @@
 
     export default {
         components: {
+            Loader,
             EventForm,
             EventModal,
             FullCalendar,
@@ -78,10 +85,12 @@
                     dayCellContent (e) {
                         e.dayNumberText = e.dayNumberText.replace('日', '');
                     },
+                    loading: false,
                     events: {},
                     eventClick: this.popupModal,
                     eventDrop: this.editEventDate,
                 },
+                loading: false,
                 eventDataLoaded: false,
                 user: {},
                 event: {},
@@ -106,12 +115,15 @@
         },
         methods: {
             async fetchEditEvent () {
+                this.loading = true
                 const response = await axios.get(`/api/users/${ this.userId }/events/${ this.eventId }/edit`)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
+
+                this.loading = false
 
                 if (this.AuthUser.id !== Number(this.userId)) {
                     this.$router.push('/')
@@ -129,6 +141,7 @@
                 this.eventDataLoaded = true
             },
             async editEvent (data) {
+                this.loading = true
                 const formData = new FormData()
                 formData.append('date', data[0])
                 formData.append('fishing_start_time', data[1])
@@ -142,6 +155,8 @@
                         'X-HTTP-Method-Override': 'PUT'
                     }
                 })
+
+                this.loading = false
 
                 if (response.status === UNPROCESSABLE_ENTITY) {
                     this.errors = response.data.errors

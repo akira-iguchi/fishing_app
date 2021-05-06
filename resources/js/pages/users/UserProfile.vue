@@ -9,6 +9,11 @@
             </span>
 
             <div class="profile">
+
+                <div v-show="loading" class="mt-2">
+                    <Loader />
+                </div>
+
                 <div class="profile_top">
                     <div class="profile_image">
                         <img :src="`${user.user_image}`" alt="ユーザーの画像">
@@ -22,6 +27,7 @@
                             <FollowButton
                                 :user="user"
                                 :initialIsFollowedBy="isFollowedBy"
+                                @follow="follow"
                                 v-if="userDataLoaded"
                             />
                         </div>
@@ -46,6 +52,7 @@
 
             <!-- ユーザーのタブ一覧（フォロー、お気に入りボタン含む） -->
             <Tabs
+                ref="child"
                 :user="user"
                 v-if="userDataLoaded"
             >
@@ -56,11 +63,13 @@
 
 <script>
     import { OK } from '../../util'
+    import Loader from '../../components/commons/Loader.vue'
     import FollowButton from '../../components/users/FollowButton.vue'
     import Tabs from '../../components/users/Tabs.vue'
 
     export default {
         components: {
+            Loader,
             FollowButton,
             Tabs
         },
@@ -72,8 +81,8 @@
         },
         data () {
             return {
+                loading: true,
                 user: {},
-                isFollowedBy: false,
                 userDataLoaded: false,
             }
         },
@@ -81,20 +90,12 @@
             AuthUser () {
                 return this.$store.getters['auth/AuthUser']
             },
-        },
-        methods: {
-            async fetchUser () {
-                const response = await axios.get(`/api/users/${this.id}`)
+            isFollowedBy () {
+                const followersId = this.user.followers.map(function (user) {
+                    return user.id
+                })
 
-                if (response.status !== OK) {
-                    this.$store.commit('error/setCode', response.status)
-                    return false
-                }
-
-                this.user = response.data[0]
-                this.isFollowedBy = response.data[1]
-
-                this.userDataLoaded = true
+                return followersId.includes(this.AuthUser.id)
             },
         },
         watch: {
@@ -104,6 +105,26 @@
                 },
                 immediate: true
             }
-        }
+        },
+        methods: {
+            async fetchUser () {
+                this.loading = true
+                const response = await axios.get(`/api/users/${this.id}`)
+
+                if (response.status !== OK) {
+                    this.$store.commit('error/setCode', response.status)
+                    return false
+                }
+
+                this.loading = false
+
+                this.user = response.data
+
+                this.userDataLoaded = true
+            },
+            follow () {
+                this.$refs.child.changeFollowerCount()
+            },
+        },
     }
 </script>

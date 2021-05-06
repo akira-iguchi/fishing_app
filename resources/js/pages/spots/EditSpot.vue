@@ -2,6 +2,9 @@
     <div class="container">
         <div class="row">
             <div class="mx-auto d-block col-lg-10 col-md-11 spot_form">
+                <div v-show="loading" class="panel">
+                    <Loader />
+                </div>
 
                 <SpotForm
                     v-if="spotDataLoaded"
@@ -19,12 +22,14 @@
 </template>
 
 <script>
-    import SpotForm from "../../components/spots/SpotForm";
     import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../../util'
+    import SpotForm from "../../components/spots/SpotForm.vue"
+    import Loader from '../../components/commons/Loader.vue'
 
     export default {
         components: {
             SpotForm,
+            Loader,
         },
         props: {
             id: {
@@ -34,6 +39,7 @@
         },
         data(){
             return {
+                loading: false,
                 spot: {},
                 allTagNames: [],
                 allFishingTypeNames: [],
@@ -57,6 +63,7 @@
         },
         methods: {
             async fetchEditSpot () {
+                this.loading = true
                 const response = await axios.get(`/api/spots/${ this.id }/edit`)
 
                 if (response.status !== OK) {
@@ -75,6 +82,8 @@
                     return false
                 }
 
+                this.loading = false
+
                 this.fishing_types = response.data[1]
                 this.spotTags = response.data[2]
                 this.allTagNames = response.data[3]
@@ -83,6 +92,9 @@
                 this.spotDataLoaded = true
             },
             async editSpot (data) {
+                window.scrollTo(0, 0)
+                this.loading = true
+
                 const formData = new FormData()
                 formData.append('latitude', data[0])
                 formData.append('longitude', data[1])
@@ -100,6 +112,8 @@
                         'X-HTTP-Method-Override': 'PUT'
                     }
                 })
+
+                this.loading = false
 
                 if (response.status === UNPROCESSABLE_ENTITY) {
                     this.errors = response.data.errors

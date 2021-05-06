@@ -26,7 +26,7 @@ class TagController extends Controller
 
         $tag = Tag::where('tag_name', $name)->first()->load('spots', 'spots.user');
 
-        $tagSpots = $tag->spots()->orderBy('id', 'desc')->with('user')->get();
+        $tagSpots = $tag->spots()->with('user')->get()->sortByDesc('id')->values();
 
         return [$searchData, $tag, $tagSpots];
     }

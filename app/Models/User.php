@@ -46,15 +46,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // なぜか画面が表示されずタイム・アウトするため断念
-    // protected $appends = [
-    //     'followed_by',
-    //     'count_spots',
-    //     'count_spot_comments',
-    //     'count_favorite_spots',
-    //     'count_followings',
-    //     'count_followers',
-    // ];
+    // なぜか画面が表示されずタイムアウトするため断念
+    protected $appends = [
+        // 'followed_by',
+        // 'count_spots',
+        // 'count_spot_comments',
+        // 'count_favorite_spots',
+        // 'count_followings',
+        // 'count_followers',
+    ];
 
     /**
      * 釣りスポット

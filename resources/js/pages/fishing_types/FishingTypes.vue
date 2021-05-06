@@ -1,6 +1,11 @@
 <template>
     <div class="container fishing_type_body">
         <h1 class="fishing_type_title">釣り方一覧</h1>
+
+        <div v-show="loading" class="mt-5">
+            <Loader />
+        </div>
+
         <div class="row">
             <div
                 class="mx-auto d-block col-lg-5 fishing_type_card"
@@ -48,10 +53,15 @@
 
 <script>
     import { OK } from '../../util'
+    import Loader from '../../components/commons/Loader.vue'
 
     export default {
+        components: {
+            Loader,
+        },
         data () {
             return {
+                loading: true,
                 fishingTypes: [],
                 fullScreen: false,
             }
@@ -72,6 +82,8 @@
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
+
+                this.loading = false
 
                 this.fishingTypes = response.data
             },

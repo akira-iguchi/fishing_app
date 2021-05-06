@@ -112,6 +112,10 @@
                     <hr>
                     <h3 class="text-center mt-1">他の釣りスポット</h3>
 
+                    <div v-show="loading" class="mt-5">
+                        <Loader />
+                    </div>
+
                     <SpotMiniCard
                         v-for="spot in otherSpots"
                         :key="spot.id"
@@ -127,6 +131,7 @@
 
 <script>
     import { OK } from '../../util'
+    import Loader from '../../components/commons/Loader.vue'
     import FavoriteButton from '../../components/spots/FavoriteButton.vue'
     import SpotMiniCard from '../../components/spots/cards/SpotMiniCard.vue'
     import SpotComments from '../../components/spots/comments/SpotComments.vue'
@@ -136,6 +141,7 @@
 
     export default {
         components: {
+            Loader,
             FavoriteButton,
             SpotMiniCard,
             SpotComments,
@@ -152,6 +158,7 @@
         },
         data () {
             return {
+                loading: true,
                 spot: {},
                 user: {},
                 otherSpots: {},
@@ -177,6 +184,8 @@
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
+
+                this.loading = false
 
                 this.spot = response.data[0]
                 this.user = this.spot.user

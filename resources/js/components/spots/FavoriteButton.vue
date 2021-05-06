@@ -45,6 +45,8 @@
                 this.gotToLike = true
                 this.spot.count_spot_favorites += 1
                 this.spot.liked_by_user = true
+
+                this.$emit("favorite")
             },
             async unfavorite () {
                 const response = await axios.delete(`/api/spots/${this.spot.id}/favorite`)
@@ -57,6 +59,8 @@
                 this.gotToLike = false
                 this.spot.count_spot_favorites -= 1
                 this.spot.liked_by_user = false
+
+                this.$emit("unfavorite")
             },
         }
     }

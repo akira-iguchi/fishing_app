@@ -352,7 +352,7 @@
                 this.tags = value || []
             },
             spotData () {
-                this.$emit("spotData", [
+                this.$emit('spotData', [
                     this.latitude,
                     this.longitude,
                     this.spotName,
