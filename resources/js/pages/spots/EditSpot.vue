@@ -63,6 +63,7 @@
         },
         methods: {
             async fetchEditSpot () {
+                this.loading = true
                 const response = await axios.get(`/api/spots/${ this.id }/edit`)
 
                 if (response.status !== OK) {
@@ -80,6 +81,8 @@
                     })
                     return false
                 }
+
+                this.loading = false
 
                 this.fishing_types = response.data[1]
                 this.spotTags = response.data[2]

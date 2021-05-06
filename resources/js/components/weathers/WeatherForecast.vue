@@ -5,6 +5,11 @@
         />
         <div class="entire_weather">
             <div class="city_name"> {{ cityTitle }} の天気 </div>
+
+            <div v-show="loading" class="mt-3 mb-3">
+                <Loader />
+            </div>
+
             <div
                 class="weather-report"
                 v-for="(weather, index) in weatherList"
@@ -25,10 +30,12 @@
 
 <script>
     import { OK } from '../../util'
+    import Loader from '../commons/Loader.vue'
     import Cities from './Cities.vue'
 
     export default {
         components: {
+            Loader,
             Cities
         },
         data () {
@@ -40,6 +47,7 @@
                 cityTitle: '大阪',
                 cityData: 'Osaka',
                 day: "",
+                loading: true,
             }
         },
         watch: {
@@ -52,12 +60,15 @@
         },
         methods: {
             async fetchWeather () {
+                this.loading = true
                 const response = await axios.get(`/api/weathers/${ this.cityData }`)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
+
+                this.loading = false
 
                 this.weatherData = response.data
 

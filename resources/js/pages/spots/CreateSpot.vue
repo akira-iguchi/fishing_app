@@ -52,12 +52,15 @@
         },
         methods: {
             async fetchCreateSpot () {
+                this.loading = true
                 const response = await axios.get('/api/spots/create')
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
+
+                this.loading = false
 
                 this.allTagNames = response.data[0]
                 this.allFishingTypeNames = response.data[1]

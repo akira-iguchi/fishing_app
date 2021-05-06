@@ -4,6 +4,11 @@
             <div class="col-lg-6 col-md-8 user-edit_body mx-auto d-block">
                 <h1>プロフィール編集</h1>
                 <div class="user_edit_form">
+
+                    <div v-show="loading" class="mt-3">
+                        <Loader />
+                    </div>
+
                     <form  @submit.prevent="editUserProfile">
 
                         <label for="user_name" class="required">ユーザー名</label>
@@ -75,8 +80,12 @@
 
 <script>
     import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../../util'
+    import Loader from '../../components/commons/Loader.vue'
 
     export default {
+        components: {
+            Loader,
+        },
         props: {
             id: {
                 type: String,
@@ -85,6 +94,7 @@
         },
         data(){
             return {
+                loading: false,
                 user: {},
                 wordLimit: 100,
                 imageErrorMessage: "",
@@ -111,12 +121,15 @@
         },
         methods: {
             async fetchEditUserProfile () {
+                this.loading = true
                 const response = await axios.get(`/api/users/${ this.id }/edit`)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
+
+                this.loading = false
 
                 this.user = response.data
 
@@ -161,6 +174,7 @@
                 this.imageErrorMessage = ""
             },
             async editUserProfile () {
+                this.loading = true
                 const formData = new FormData()
                 formData.append('user_name', this.userName)
                 formData.append('email', this.email)
@@ -172,6 +186,8 @@
                         'X-HTTP-Method-Override': 'PUT'
                     }
                 })
+
+                this.loading = false
 
                 if (response.status === UNPROCESSABLE_ENTITY) {
                     this.errors = response.data.errors

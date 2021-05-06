@@ -1,7 +1,7 @@
 <template>
     <div class="user-tabs">
         <ul class="nav nav-tabs nav-justified mt-3">
-            <li class="nav-item" @click="tab = 'spotsTab'">
+            <li class="nav-item" @click="getUserSpots">
                 <span class="nav-link text-muted" :class="{'active': tab === 'spotsTab' }">
                     釣りスポット <span class="badge badge-secondary">{{ user.spots.length }}</span>
                 </span>
@@ -24,6 +24,11 @@
         </ul>
 
         <div v-show="tab === 'spotsTab'">
+
+            <div v-show="loading" class="mt-3">
+                <Loader />
+            </div>
+
             <div class="row">
                 <SpotCard
                     v-for="spot in userSpotsList"
@@ -48,6 +53,11 @@
         </div>
 
         <div v-show="tab === 'favoriteSpotsTab'">
+
+            <div v-show="loading" class="mt-3">
+                <Loader />
+            </div>
+
             <div class="row">
                 <SpotCard
                     v-for="spot in userFavoriteSpotsList"
@@ -75,6 +85,11 @@
         </div>
 
         <div v-show="tab === 'followingsTab'">
+
+            <div v-show="loading" class="mt-3">
+                <Loader />
+            </div>
+
             <div class="row">
                 <div
                     class="mx-auto d-block col-xl-3 col-lg-4 col-md-6 mt-4 mb-5 text-center"
@@ -116,6 +131,11 @@
         </div>
 
         <div v-show="tab === 'followersTab'">
+
+            <div v-show="loading" class="mt-3">
+                <Loader />
+            </div>
+
             <div class="row">
                 <div
                     class="mx-auto d-block col-xl-3 col-lg-4 col-md-6 mt-4 mb-5 text-center"
@@ -163,12 +183,14 @@
 
 <script>
     import { OK } from '../../util'
+    import Loader from '../commons/Loader.vue'
     import SpotCard from '../spots/cards/SpotCard.vue'
     import FollowButton from './FollowButton.vue'
     import moment from 'moment';
 
     export default {
         components: {
+            Loader,
             SpotCard,
             FollowButton,
         },
@@ -185,6 +207,7 @@
         },
         data() {
             return {
+                loading: true,
                 tab: 'spotsTab',
                 followersId: [],
                 userSpots: [],
@@ -219,12 +242,16 @@
         },
         watch: {
             user (newUser) {
+                this.loading = true
                 this.getUserSpots(newUser)
                 this.userSpotsCount = 1
                 this.userFavortieSpotsCount = 1
                 this.userFollowingsCount = 1
                 this.userFollowersCount = 1
             },
+            tab () {
+                this.loading = true
+            }
         },
         methods: {
             // ユーザーの釣りスポット一覧
@@ -236,6 +263,9 @@
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
+
+
+                this.loading = false
 
                 this.userSpots = response.data
             },
@@ -249,18 +279,23 @@
                     return false
                 }
 
+                this.loading = false
+
                 this.userFavoriteSpots = response.data
             },
 
             // ユーザーフォロー一覧
             async getUserFollowings () {
                 this.tab = 'followingsTab';
+                this.userFollowings = []
                 const response = await axios.get(`/api/users/${this.user.id}/followings`)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
+
+                this.loading = false
 
                 this.userFollowings = response.data
                 this.followersId = function (user) {
@@ -273,12 +308,15 @@
             // ユーザーフォロワー一覧
             async getUserFollowers () {
                 this.tab = 'followersTab';
+                this.userFollowers = []
                 const response = await axios.get(`/api/users/${this.user.id}/followers`)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
+
+                this.loading = false
 
                 this.userFollowers = response.data
                 this.followersId = function (user) {

@@ -51,10 +51,6 @@
             initialIsFollowedBy (newFollowedBy) {
                 this.isFollowedBy = newFollowedBy
             },
-            isFollowedBy (newFollowedBy) {
-                console.log(newFollowedBy)
-                this.isFollowedBy = newFollowedBy
-            },
         },
         methods: {
             onFollowClick () {

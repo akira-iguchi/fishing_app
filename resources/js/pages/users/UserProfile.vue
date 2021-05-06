@@ -9,6 +9,11 @@
             </span>
 
             <div class="profile">
+
+                <div v-show="loading" class="mt-2">
+                    <Loader />
+                </div>
+
                 <div class="profile_top">
                     <div class="profile_image">
                         <img :src="`${user.user_image}`" alt="ユーザーの画像">
@@ -58,11 +63,13 @@
 
 <script>
     import { OK } from '../../util'
+    import Loader from '../../components/commons/Loader.vue'
     import FollowButton from '../../components/users/FollowButton.vue'
     import Tabs from '../../components/users/Tabs.vue'
 
     export default {
         components: {
+            Loader,
             FollowButton,
             Tabs
         },
@@ -74,6 +81,7 @@
         },
         data () {
             return {
+                loading: true,
                 user: {},
                 userDataLoaded: false,
             }
@@ -100,12 +108,15 @@
         },
         methods: {
             async fetchUser () {
+                this.loading = true
                 const response = await axios.get(`/api/users/${this.id}`)
 
                 if (response.status !== OK) {
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
+
+                this.loading = false
 
                 this.user = response.data
 

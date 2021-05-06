@@ -40,7 +40,9 @@
             すべての投稿
         </p>
 
-        <br>
+        <div v-show="loading" class="mt-5 mb-5">
+            <Loader />
+        </div>
 
         <div class="row" v-if="spots && spots.length > 0">
             <SpotCard
@@ -62,12 +64,14 @@
 
 <script>
     import { OK } from '../../util'
+    import Loader from '../../components/commons/Loader.vue'
     import SpotCard from '../../components/spots/cards/SpotCard.vue'
     import SearchForm from '../../components/spots/searches/SearchForm.vue'
     import Pagination from '../../components/Pagination.vue'
 
     export default {
         components: {
+            Loader,
             SpotCard,
             SearchForm,
             Pagination,
@@ -81,6 +85,7 @@
         },
         data () {
             return {
+                loading: true,
                 parentName: 'search',
                 searchWord: "",
                 allFishingTypeNames: [],
@@ -104,6 +109,7 @@
         },
         methods: {
             async fetchSearchSpots () {
+                this.loading = true
                 const response = await axios.get(`/api/spots/search/?page=${ this.$route.query.page }`, {
                     params: {
                         searchWord: this.$route.params.searchWord,
@@ -115,6 +121,8 @@
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
+
+                this.loading = false
 
                 this.allFishingTypeNames = response.data[0][0]
                 this.tagNames = response.data[0][1]

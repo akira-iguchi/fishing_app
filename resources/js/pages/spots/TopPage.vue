@@ -17,6 +17,11 @@
                 <div class="toppage_under">
                     <div class="w-100">
                         <h2 class="toppage_heading">人気の釣りスポット<i class="fas fa-crown"></i></h2>
+
+                        <div v-show="loading" class="mt-5">
+                            <Loader />
+                        </div>
+
                         <div class="row">
                             <SpotCard
                                 v-for="spot in rankingSpots"
@@ -37,6 +42,11 @@
 
                 <div v-if="followUserSpots && followUserSpots.length > 0">
                     <h2 class="toppage_heading">フォローしたユーザーの投稿</h2>
+
+                    <div v-show="loading" class="mt-3">
+                        <Loader />
+                    </div>
+
                     <div class="row">
                         <SpotCard
                             v-for="spot in followUserSpots"
@@ -49,6 +59,11 @@
                 </div>
 
                 <h2 class="toppage_heading">最近の投稿</h2>
+
+                <div v-show="loading" class="mt-3">
+                    <Loader />
+                </div>
+
                 <div class="row">
                     <SpotCard
                         v-for="spot in recentSpots"
@@ -121,12 +136,14 @@
 
 <script>
     import { OK } from '../../util'
+    import Loader from '../../components/commons/Loader.vue'
     import SpotCard from '../../components/spots/cards/SpotCard.vue'
     import SearchForm from '../../components/spots/searches/SearchForm.vue'
     import WeatherForecast from '../../components/weathers/WeatherForecast.vue'
 
     export default {
         components: {
+            Loader,
             SpotCard,
             SearchForm,
             WeatherForecast,
@@ -140,6 +157,7 @@
                 rankingSpots: [],
                 tagNames: [],
                 isActive: false,
+                loading: true,
             }
         },
         computed: {
@@ -184,6 +202,8 @@
                     this.$store.commit('error/setCode', response.status)
                     return false
                 }
+
+                this.loading = false
 
                 if (this.isLogin === true) {
                     this.fishingTypeNames = response.data[0][0]
