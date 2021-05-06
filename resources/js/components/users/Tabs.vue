@@ -40,7 +40,7 @@
                 <button
                     class="btn see_more"
                     @click="seeMoreSpots"
-                    v-if="(userSpots.length - userSpotsCount) >= 0"
+                    v-if="(userSpots.length - userSpotsCount) > 0"
                 >
                     <i class="fa fa-chevron-down"></i>&nbsp;続きを見る
                 </button>
@@ -67,7 +67,7 @@
                 <button
                     class="btn see_more"
                     @click="seeMoreFavoriteSpots"
-                    v-if="(userFavoriteSpots.length - userFavoriteSpotsCount) >= 0"
+                    v-if="(userFavoriteSpots.length - userFavoriteSpotsCount) > 0"
                 >
                     <i class="fa fa-chevron-down"></i>&nbsp;続きを見る
                 </button>
@@ -94,7 +94,8 @@
                             <FollowButton
                                 :user="user"
                                 :initialIsFollowedBy="followersId(user).includes(AuthUser.id)"
-                                @follow="plusFollowerCount"
+                                @follow="plusFollowCount"
+                                @unfollow="minusFollowCount"
                             />
                         </div>
                     </div>
@@ -107,7 +108,7 @@
                 <button
                     class="btn see_more"
                     @click="seeMoreFollowings"
-                    v-if="(userFollowings.length - userFollowingsCount) >= 0"
+                    v-if="(userFollowings.length - userFollowingsCount) > 0"
                 >
                     <i class="fa fa-chevron-down"></i>&nbsp;続きを見る
                 </button>
@@ -134,7 +135,8 @@
                             <FollowButton
                                 :user="user"
                                 :initialIsFollowedBy="followersId(user).includes(AuthUser.id)"
-                                @follow="plusFollowerCount"
+                                @follow="plusFollowCount"
+                                @unfollow="minusFollowCount"
                             />
                         </div>
                     </div>
@@ -150,7 +152,7 @@
                 <button
                     class="btn see_more"
                     @click="seeMoreFollowers"
-                    v-if="(userFollowers.length - userFollowersCount) >= 0"
+                    v-if="(userFollowers.length - userFollowersCount) > 0"
                 >
                     <i class="fa fa-chevron-down"></i>&nbsp;続きを見る
                 </button>
@@ -222,7 +224,7 @@
                 this.userFavortieSpotsCount = 1
                 this.userFollowingsCount = 1
                 this.userFollowersCount = 1
-            }
+            },
         },
         methods: {
             // ユーザーの釣りスポット一覧
@@ -279,6 +281,11 @@
                 }
 
                 this.userFollowers = response.data
+                this.followersId = function (user) {
+                    return user.followers.map(function (user) {
+                        return user.id
+                    })
+                }
             },
             seeMoreSpots () {
                 this.userSpotsCount += 2
@@ -298,8 +305,20 @@
             minusFavoriteCount () {
                 this.user.favorite_spots.length -= 1
             },
-            plusFollowerCount () {
-                this.user.followers.length += 1
+            // ログインユーザーならフォロー数追加、それ以外ならフォロワー数追加
+            plusFollowCount () {
+                if (this.user.id === this.AuthUser.id) {
+                    this.user.followings.length += 1
+                }
+            },
+            minusFollowCount () {
+                if (this.user.id === this.AuthUser.id) {
+                    this.user.followings.length -= 1
+                }
+            },
+            changeFollowerCount () {
+                this.user.followers.length = this.user.followers.length
+                this.user.followings.length = this.user.followings.length
             },
         },
     }

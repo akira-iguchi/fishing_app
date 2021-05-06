@@ -21,7 +21,7 @@
                         <div class="follow_btn">
                             <FollowButton
                                 :user="user"
-                                :initialIsFollowedBy="followersId.includes(AuthUser.id)"
+                                :initialIsFollowedBy="isFollowedBy"
                                 @follow="follow"
                                 v-if="userDataLoaded"
                             />
@@ -75,13 +75,19 @@
         data () {
             return {
                 user: {},
-                followersId: [],
                 userDataLoaded: false,
             }
         },
         computed: {
             AuthUser () {
                 return this.$store.getters['auth/AuthUser']
+            },
+            isFollowedBy () {
+                const followersId = this.user.followers.map(function (user) {
+                    return user.id
+                })
+
+                return followersId.includes(this.AuthUser.id)
             },
         },
         watch: {
@@ -102,14 +108,11 @@
                 }
 
                 this.user = response.data
-                this.followersId = this.user.followers.map(function (user) {
-                    return user.id
-                })
 
                 this.userDataLoaded = true
             },
             follow () {
-                this.$refs.child.plusFollowerCount()
+                this.$refs.child.changeFollowerCount()
             },
         },
     }

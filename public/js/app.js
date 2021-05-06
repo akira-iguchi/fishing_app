@@ -17174,6 +17174,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -17183,7 +17187,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     initialIsFollowedBy: {
       type: Boolean,
-      "default": false
+      required: true
     }
   },
   data: function data() {
@@ -17194,15 +17198,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: {
     AuthUser: function AuthUser() {
       return this.$store.getters['auth/AuthUser'];
+    }
+  },
+  watch: {
+    initialIsFollowedBy: function initialIsFollowedBy(newFollowedBy) {
+      this.isFollowedBy = newFollowedBy;
     },
-    buttonColor: function buttonColor() {
-      return this.isFollowedBy ? 'bg-primary text-white' : 'bg-white';
-    },
-    buttonIcon: function buttonIcon() {
-      return this.isFollowedBy ? 'fas fa-user-check' : 'fas fa-user-plus';
-    },
-    buttonText: function buttonText() {
-      return this.isFollowedBy ? 'フォロー中' : 'フォロー';
+    isFollowedBy: function isFollowedBy(newFollowedBy) {
+      console.log(newFollowedBy);
+      this.isFollowedBy = newFollowedBy;
     }
   },
   methods: {
@@ -17246,11 +17250,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", false);
 
               case 8:
+                _this.user.followers.length += 1;
                 _this.isFollowedBy = true;
 
                 _this.$emit('follow');
 
-              case 10:
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -17294,7 +17299,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.user.followers.length -= 1;
                 _this2.isFollowedBy = false;
 
-              case 10:
+                _this2.$emit('unfollow');
+
+              case 11:
               case "end":
                 return _context2.stop();
             }
@@ -17331,6 +17338,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -17702,7 +17711,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 7:
                 _this4.userFollowers = response.data;
 
-              case 8:
+                _this4.followersId = function (user) {
+                  return user.followers.map(function (user) {
+                    return user.id;
+                  });
+                };
+
+              case 9:
               case "end":
                 return _context4.stop();
             }
@@ -17728,8 +17743,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     minusFavoriteCount: function minusFavoriteCount() {
       this.user.favorite_spots.length -= 1;
     },
-    plusFollowerCount: function plusFollowerCount() {
-      this.user.followers.length += 1;
+    // ログインユーザーならフォロー数追加、それ以外ならフォロワー数追加
+    plusFollowCount: function plusFollowCount() {
+      if (this.user.id === this.AuthUser.id) {
+        this.user.followings.length += 1;
+      }
+    },
+    minusFollowCount: function minusFollowCount() {
+      if (this.user.id === this.AuthUser.id) {
+        this.user.followings.length -= 1;
+      }
+    },
+    changeFollowerCount: function changeFollowerCount() {
+      this.user.followers.length = this.user.followers.length;
+      this.user.followings.length = this.user.followings.length;
     }
   }
 });
@@ -19155,8 +19182,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_spots_SpotForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/spots/SpotForm */ "./resources/js/components/spots/SpotForm.vue");
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
+/* harmony import */ var _components_spots_SpotForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/spots/SpotForm.vue */ "./resources/js/components/spots/SpotForm.vue");
+/* harmony import */ var _components_commons_Loader_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/commons/Loader.vue */ "./resources/js/components/commons/Loader.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -19183,14 +19211,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    SpotForm: _components_spots_SpotForm__WEBPACK_IMPORTED_MODULE_1__.default
+    SpotForm: _components_spots_SpotForm_vue__WEBPACK_IMPORTED_MODULE_2__.default,
+    Loader: _components_commons_Loader_vue__WEBPACK_IMPORTED_MODULE_3__.default
   },
   data: function data() {
     return {
+      loading: false,
       allTagNames: [],
       allFishingTypeNames: [],
       spot: {},
@@ -19239,7 +19273,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 response = _context2.sent;
 
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__.OK)) {
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
                   _context2.next = 6;
                   break;
                 }
@@ -19270,6 +19304,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                window.scrollTo(0, 0);
+                _this3.loading = true;
                 formData = new FormData();
                 formData.append('latitude', data[0]);
                 formData.append('longitude', data[1]);
@@ -19281,23 +19317,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append('spot_image1', data[7]);
                 formData.append('spot_image2', data[8]);
                 formData.append('spot_image3', data[9]);
-                _context3.next = 13;
+                _context3.next = 15;
                 return axios.post('/api/spots', formData);
 
-              case 13:
+              case 15:
                 response = _context3.sent;
+                _this3.loading = false;
 
-                if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_2__.UNPROCESSABLE_ENTITY)) {
-                  _context3.next = 17;
+                if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY)) {
+                  _context3.next = 20;
                   break;
                 }
 
                 _this3.errors = response.data.errors;
                 return _context3.abrupt("return", false);
 
-              case 17:
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__.CREATED)) {
-                  _context3.next = 20;
+              case 20:
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.CREATED)) {
+                  _context3.next = 23;
                   break;
                 }
 
@@ -19305,7 +19342,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context3.abrupt("return", false);
 
-              case 20:
+              case 23:
                 _this3.$emit('input', false);
 
                 _this3.$store.commit('message/setContent', {
@@ -19315,7 +19352,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this3.$router.push("/spots/".concat(response.data.id));
 
-              case 23:
+              case 26:
               case "end":
                 return _context3.stop();
             }
@@ -19341,8 +19378,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_spots_SpotForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/spots/SpotForm */ "./resources/js/components/spots/SpotForm.vue");
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
+/* harmony import */ var _components_spots_SpotForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/spots/SpotForm.vue */ "./resources/js/components/spots/SpotForm.vue");
+/* harmony import */ var _components_commons_Loader_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/commons/Loader.vue */ "./resources/js/components/commons/Loader.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -19369,11 +19407,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    SpotForm: _components_spots_SpotForm__WEBPACK_IMPORTED_MODULE_1__.default
+    SpotForm: _components_spots_SpotForm_vue__WEBPACK_IMPORTED_MODULE_2__.default,
+    Loader: _components_commons_Loader_vue__WEBPACK_IMPORTED_MODULE_3__.default
   },
   props: {
     id: {
@@ -19383,6 +19426,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
+      loading: false,
       spot: {},
       allTagNames: [],
       allFishingTypeNames: [],
@@ -19436,7 +19480,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 response = _context2.sent;
 
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__.OK)) {
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
                   _context2.next = 6;
                   break;
                 }
@@ -19486,6 +19530,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                window.scrollTo(0, 0);
+                _this3.loading = true;
                 formData = new FormData();
                 formData.append('latitude', data[0]);
                 formData.append('longitude', data[1]);
@@ -19497,7 +19543,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append('spot_image1', data[7]);
                 formData.append('spot_image2', data[8]);
                 formData.append('spot_image3', data[9]);
-                _context3.next = 13;
+                _context3.next = 15;
                 return axios.post("/api/spots/".concat(_this3.id), formData, {
                   // PUTに変換
                   headers: {
@@ -19505,20 +19551,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 });
 
-              case 13:
+              case 15:
                 response = _context3.sent;
+                _this3.loading = false;
 
-                if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_2__.UNPROCESSABLE_ENTITY)) {
-                  _context3.next = 17;
+                if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY)) {
+                  _context3.next = 20;
                   break;
                 }
 
                 _this3.errors = response.data.errors;
                 return _context3.abrupt("return", false);
 
-              case 17:
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__.CREATED)) {
-                  _context3.next = 20;
+              case 20:
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.CREATED)) {
+                  _context3.next = 23;
                   break;
                 }
 
@@ -19526,7 +19573,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context3.abrupt("return", false);
 
-              case 20:
+              case 23:
                 _this3.$emit('input', false);
 
                 _this3.$store.commit('message/setContent', {
@@ -19536,7 +19583,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this3.$router.push("/spots/".concat(response.data.id));
 
-              case 23:
+              case 26:
               case "end":
                 return _context3.stop();
             }
@@ -20876,13 +20923,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       user: {},
-      followersId: [],
       userDataLoaded: false
     };
   },
   computed: {
     AuthUser: function AuthUser() {
       return this.$store.getters['auth/AuthUser'];
+    },
+    isFollowedBy: function isFollowedBy() {
+      var followersId = this.user.followers.map(function (user) {
+        return user.id;
+      });
+      return followersId.includes(this.AuthUser.id);
     }
   },
   watch: {
@@ -20936,12 +20988,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 6:
                 _this2.user = response.data;
-                _this2.followersId = _this2.user.followers.map(function (user) {
-                  return user.id;
-                });
                 _this2.userDataLoaded = true;
 
-              case 9:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -20950,7 +20999,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     follow: function follow() {
-      this.$refs.child.plusFollowerCount();
+      this.$refs.child.changeFollowerCount();
     }
   }
 });
@@ -59203,6 +59252,43 @@ component.options.__file = "resources/js/components/commons/Footer.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/commons/Loader.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/commons/Loader.vue ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Loader_vue_vue_type_template_id_798b9376___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Loader.vue?vue&type=template&id=798b9376& */ "./resources/js/components/commons/Loader.vue?vue&type=template&id=798b9376&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__.default)(
+  script,
+  _Loader_vue_vue_type_template_id_798b9376___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Loader_vue_vue_type_template_id_798b9376___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/commons/Loader.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/commons/Message.vue":
 /*!*****************************************************!*\
   !*** ./resources/js/components/commons/Message.vue ***!
@@ -61120,6 +61206,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/commons/Loader.vue?vue&type=template&id=798b9376&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/commons/Loader.vue?vue&type=template&id=798b9376& ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Loader_vue_vue_type_template_id_798b9376___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Loader_vue_vue_type_template_id_798b9376___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Loader_vue_vue_type_template_id_798b9376___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Loader.vue?vue&type=template&id=798b9376& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/commons/Loader.vue?vue&type=template&id=798b9376&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/commons/Message.vue?vue&type=template&id=4d9c6545&":
 /*!************************************************************************************!*\
   !*** ./resources/js/components/commons/Message.vue?vue&type=template&id=4d9c6545& ***!
@@ -61943,6 +62046,33 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/commons/Loader.vue?vue&type=template&id=798b9376&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/commons/Loader.vue?vue&type=template&id=798b9376& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "mb-2" }, [
+    _vm._v("\n    Sending your spot...\n")
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -63862,12 +63992,21 @@ var render = function() {
           "button",
           {
             staticClass: "btn-sm shadow-none border border-primary p-2",
-            class: _vm.buttonColor,
+            class: [_vm.isFollowedBy ? "bg-primary text-white" : "bg-white"],
             on: { click: _vm.onFollowClick }
           },
           [
-            _c("i", { staticClass: "mr-1", class: _vm.buttonIcon }),
-            _vm._v("\n    " + _vm._s(_vm.buttonText) + "\n    ")
+            _c("i", {
+              staticClass: "mr-1",
+              class: [
+                _vm.isFollowedBy ? "fas fa-user-check" : "fas fa-user-plus"
+              ]
+            }),
+            _vm._v(
+              "\n    " +
+                _vm._s(_vm.isFollowedBy ? "フォロー中" : "フォロー") +
+                "\n    "
+            )
           ]
         )
       : _vm._e()
@@ -64024,7 +64163,7 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "text-center" }, [
-          _vm.userSpots.length - _vm.userSpotsCount >= 0
+          _vm.userSpots.length - _vm.userSpotsCount > 0
             ? _c(
                 "button",
                 {
@@ -64079,7 +64218,7 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "text-center" }, [
-          _vm.userFavoriteSpots.length - _vm.userFavoriteSpotsCount >= 0
+          _vm.userFavoriteSpots.length - _vm.userFavoriteSpotsCount > 0
             ? _c(
                 "button",
                 {
@@ -64151,7 +64290,10 @@ var render = function() {
                                 .followersId(user)
                                 .includes(_vm.AuthUser.id)
                             },
-                            on: { follow: _vm.plusFollowerCount }
+                            on: {
+                              follow: _vm.plusFollowCount,
+                              unfollow: _vm.minusFollowCount
+                            }
                           })
                         ],
                         1
@@ -64173,7 +64315,7 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "text-center" }, [
-          _vm.userFollowings.length - _vm.userFollowingsCount >= 0
+          _vm.userFollowings.length - _vm.userFollowingsCount > 0
             ? _c(
                 "button",
                 {
@@ -64245,7 +64387,10 @@ var render = function() {
                                 .followersId(user)
                                 .includes(_vm.AuthUser.id)
                             },
-                            on: { follow: _vm.plusFollowerCount }
+                            on: {
+                              follow: _vm.plusFollowCount,
+                              unfollow: _vm.minusFollowCount
+                            }
                           })
                         ],
                         1
@@ -64267,7 +64412,7 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "text-center" }, [
-          _vm.userFollowers.length - _vm.userFollowersCount >= 0
+          _vm.userFollowers.length - _vm.userFollowersCount > 0
             ? _c(
                 "button",
                 {
@@ -65627,6 +65772,23 @@ var render = function() {
         "div",
         { staticClass: "mx-auto d-block col-lg-10 col-md-11 spot_form" },
         [
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.loading,
+                  expression: "loading"
+                }
+              ],
+              staticClass: "panel"
+            },
+            [_c("Loader")],
+            1
+          ),
+          _vm._v(" "),
           _vm.spotDataLoaded
             ? _c("SpotForm", {
                 attrs: {
@@ -65674,6 +65836,23 @@ var render = function() {
         "div",
         { staticClass: "mx-auto d-block col-lg-10 col-md-11 spot_form" },
         [
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.loading,
+                  expression: "loading"
+                }
+              ],
+              staticClass: "panel"
+            },
+            [_c("Loader")],
+            1
+          ),
+          _vm._v(" "),
           _vm.spotDataLoaded
             ? _c("SpotForm", {
                 attrs: {
@@ -66148,7 +66327,7 @@ var render = function() {
               _vm._v(" "),
               _c("hr"),
               _vm._v(" "),
-              _vm.followUserSpots
+              _vm.followUserSpots && _vm.followUserSpots.length > 0
                 ? _c("div", [
                     _c("h2", { staticClass: "toppage_heading" }, [
                       _vm._v("フォローしたユーザーの投稿")
@@ -66778,9 +66957,7 @@ var render = function() {
                       ? _c("FollowButton", {
                           attrs: {
                             user: _vm.user,
-                            initialIsFollowedBy: _vm.followersId.includes(
-                              _vm.AuthUser.id
-                            )
+                            initialIsFollowedBy: _vm.isFollowedBy
                           },
                           on: { follow: _vm.follow }
                         })

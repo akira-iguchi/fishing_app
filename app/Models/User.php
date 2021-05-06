@@ -47,14 +47,14 @@ class User extends Authenticatable
     ];
 
     // なぜか画面が表示されずタイムアウトするため断念
-    // protected $appends = [
-    //     'followed_by',
-    //     'count_spots',
-    //     'count_spot_comments',
-    //     'count_favorite_spots',
-    //     'count_followings',
-    //     'count_followers',
-    // ];
+    protected $appends = [
+        // 'followed_by',
+        // 'count_spots',
+        // 'count_spot_comments',
+        // 'count_favorite_spots',
+        // 'count_followings',
+        // 'count_followers',
+    ];
 
     /**
      * 釣りスポット

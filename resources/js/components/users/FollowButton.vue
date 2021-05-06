@@ -6,14 +6,18 @@
         <button
             class="btn-sm shadow-none border border-primary p-2"
             v-if="AuthUser.id !== user.id"
-            :class="buttonColor"
+            :class="[
+                isFollowedBy ? 'bg-primary text-white' : 'bg-white'
+            ]"
             @click="onFollowClick"
         >
         <i
             class="mr-1"
-            :class="buttonIcon"
+            :class="[
+                isFollowedBy ? 'fas fa-user-check' : 'fas fa-user-plus'
+            ]"
         ></i>
-        {{ buttonText }}
+        {{ isFollowedBy ? 'フォロー中' : 'フォロー' }}
         </button>
     </div>
     </template>
@@ -29,7 +33,7 @@
             },
             initialIsFollowedBy: {
                 type: Boolean,
-                default: false,
+                required: true,
             },
 
         },
@@ -42,23 +46,16 @@
             AuthUser () {
                 return this.$store.getters['auth/AuthUser']
             },
-            buttonColor () {
-                return this.isFollowedBy
-                ? 'bg-primary text-white'
-                : 'bg-white'
+        },
+        watch: {
+            initialIsFollowedBy (newFollowedBy) {
+                this.isFollowedBy = newFollowedBy
             },
-            buttonIcon () {
-                return this.isFollowedBy
-                ? 'fas fa-user-check'
-                : 'fas fa-user-plus'
-            },
-            buttonText () {
-                return this.isFollowedBy
-                ? 'フォロー中'
-                : 'フォロー'
+            isFollowedBy (newFollowedBy) {
+                console.log(newFollowedBy)
+                this.isFollowedBy = newFollowedBy
             },
         },
-
         methods: {
             onFollowClick () {
                 if (this.isFollowedBy) {
@@ -79,6 +76,7 @@
                     return false
                 }
 
+                this.user.followers.length += 1
                 this.isFollowedBy = true
 
                 this.$emit('follow')
@@ -97,6 +95,8 @@
 
                 this.user.followers.length -= 1
                 this.isFollowedBy = false
+
+                this.$emit('unfollow')
             },
         },
     }
