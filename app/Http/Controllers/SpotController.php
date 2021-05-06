@@ -37,15 +37,15 @@ class SpotController extends Controller
             $searchData = $this->searchItems($request);
 
             // 最近の投稿
-            $recentSpots = Spot::orderBy('id', 'desc')->take(8)
-            ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->get();
+            $recentSpots = Spot::take(8)->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])
+            ->latest()->get();
 
             // フォローしたユーザーの釣りスポット
             if (Auth::user()->count_followings > 0) {
-                $followUserSpots = Spot::where('user_id', Auth::user()
-                ->followings()->pluck('followee_id'))
-                ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(8)
-                ->get()->sortByDesc('id')->values();
+                $followUserSpots = Spot::query()
+                ->whereIn('user_id', Auth::user()->followings()->pluck('followee_id'))
+                ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])
+                ->take(8)->latest()->get();
             } else {
                 $followUserSpots = null;
             }
@@ -67,7 +67,7 @@ class SpotController extends Controller
         list($query, $searchFishingTypeName) = $request->filters($searchData[2], $searchData[3]);
 
         $spots = $query->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])
-        ->orderBy('id', 'desc')->paginate();
+        ->latest()->paginate();
 
         return [$searchData, $spots, $searchFishingTypeName];
     }

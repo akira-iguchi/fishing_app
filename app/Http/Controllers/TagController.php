@@ -13,11 +13,11 @@ class TagController extends Controller
     public function searchItems($request)
     {
         $allFishingTypeNames = FishingType::all();
-        $searchWord = $request->input('searchWord');
-        $fishingTypes = $request->input('fishing_types');
-        $tags = Tag::all()->take(15);
+        $tags = Tag::take(15)->with('spots')->get();
+        $searchWord = $request->searchWord;
+        $fishingTypesId = $request->fishingTypes;
 
-        return [$allFishingTypeNames, $searchWord, $fishingTypes, $tags];
+        return [$allFishingTypeNames, $tags, $searchWord, $fishingTypesId];
     }
 
     public function __invoke(String $name, SearchSpotRequest $request)
@@ -26,7 +26,9 @@ class TagController extends Controller
 
         $tag = Tag::where('tag_name', $name)->first()->load('spots', 'spots.user');
 
-        $tagSpots = $tag->spots()->with('user')->get()->sortByDesc('id')->values();
+        $tagSpots = $tag->spots()
+            ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])
+            ->latest()->get();
 
         return [$searchData, $tag, $tagSpots];
     }

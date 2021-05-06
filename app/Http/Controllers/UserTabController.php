@@ -10,31 +10,33 @@ class UserTabController extends Controller
     {
         $user = User::findOrFail($id);
 
-        return $user->spots->sortByDesc('id')->values()
-            ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
+        return $user->spots()
+            ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])
+            ->latest()->get();
     }
 
     public function favoriteSpots(String $id)
     {
         $user = User::findOrFail($id);
 
-        return $user->favoriteSpots->sortByDesc('id')->values()
-            ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
+        return $user->favoriteSpots()
+            ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])
+            ->latest()->get();
     }
 
     public function followings(String $id)
     {
         $user = User::findOrFail($id);
 
-        return $user->followings->sortByDesc('id')->values()
-            ->load('followings', 'followers');
+        return $user->followings()->with('followings', 'followers')
+            ->latest()->get();
     }
 
     public function followers(String $id)
     {
         $user = User::findOrFail($id);
 
-        return $user->followers->sortByDesc('id')->values()
-            ->load('followings', 'followers');
+        return $user->followers()->with('followings', 'followers')
+            ->latest()->get();
     }
 }
