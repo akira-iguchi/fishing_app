@@ -50,18 +50,18 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/editEventDate', 'EventController@editEventDate')->name('editEventDate');
     });
 
-    Route::group(['prefix' => 'spots/{id}'], function () {
+    Route::group(['prefix' => 'spots/{spot}'], function () {
         Route::put('/favorite', 'SpotFavoriteController@favorite')->name('spots.favorite');
         Route::delete('/favorite', 'SpotFavoriteController@unfavorite')->name('spots.unfavorite');
         Route::post('comments', 'SpotCommentController@store')->name('spots.comment');
-        Route::delete('comments/{id}', 'SpotCommentController@destroy')->name('comment.delete');
+        Route::delete('comments/{comment}', 'SpotCommentController@destroy')->name('comment.delete');
     });
 
     Route::get('/tags/{name}', 'TagController')->name('tags');
 
     Route::resource('users', 'UserController')->except(['index']);;
 
-    Route::get('/fishing_types','FishingTypeController');
+    Route::get('/fishing_types','FishingTypeController')->name('fishing_types');
 
     Route::get('/weathers/{city}','WeatherController');
 

@@ -74,7 +74,7 @@
                 this.loading = false
 
                 this.fishingTypeNames = response.data[0][0]
-                this.tagNames = response.data[0][3]
+                this.tagNames = response.data[0][1]
                 this.tag = response.data[1]
                 this.tagSpots = response.data[2]
             },

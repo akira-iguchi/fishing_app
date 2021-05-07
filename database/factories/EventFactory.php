@@ -25,8 +25,6 @@ class EventFactory extends Factory
             'date' => '2021-03-30',
             'fishing_type' => 'サビキ釣り',
             'spot' => 'かもめ大橋',
-            'bait' => 'アミエビ',
-            'weather' => '晴れ',
             'fishing_start_time' => '07:10',
             'fishing_end_time' => '17:50',
             'detail' => 'アジが釣れた。',

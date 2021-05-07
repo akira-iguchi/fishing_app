@@ -20687,7 +20687,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 7:
                 _this2.loading = false;
                 _this2.fishingTypeNames = response.data[0][0];
-                _this2.tagNames = response.data[0][3];
+                _this2.tagNames = response.data[0][1];
                 _this2.tag = response.data[1];
                 _this2.tagSpots = response.data[2];
 

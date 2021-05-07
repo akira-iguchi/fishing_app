@@ -21,53 +21,22 @@ class EventControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
     }
 
     public function testIndex()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $event = Event::factory()->for($user)->create(['fishing_type' => 'サビキ釣り']);
+        $event = Event::factory()->for($this->user)->create();
 
-        $response = $this->get(route('events', $user));
+        $response = $this->json('GET', route('events.index', $this->user));
 
-        $response->assertStatus(Response::HTTP_OK)
-                    ->assertSee($event->fishing_type)
-                    ->assertSee('サビキ釣り')
-                    ->assertSee('釣りを記録しよう');
-    }
-
-    public function testSetEvents()
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $event = Event::factory()->for($user)->create(['fishing_type' => 'サビキ釣り']);
-
-        $response = $this->get(route('setEvents', [
-            $user,
-            'start' => '2021-04-01',
-            'end' => '2021-04-30'
-        ]));
-
-        $response->assertStatus(Response::HTTP_OK);
-    }
-
-    function testEditEventDate()
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $event = Event::factory()->for($user)->create(['date' => '2021-03-31']);
-
-        $response = $this->from(route('events', $user))->put(route('editEventDate', [$event, $user]), [
-            'id' => $event->id,
-            'newDate' => '2021-04-01'
-        ]);
-
-        $response->assertStatus(Response::HTTP_OK);
-
-        $this->assertDatabaseHas('events', [
-            'date'        => '2021-04-01',
-        ]);
+        $response->assertStatus(200)
+            ->assertJson([
+                ['user_name' => $this->user->user_name],
+                [['start' => $event->date, 'title' => $event->spot]]  // イベントの開始日
+            ]);
     }
 
     /**
@@ -76,20 +45,19 @@ class EventControllerTest extends TestCase
      * @dataProvider EventData
      * @return void
      */
-    public function testAddEvent_success($params)
+    public function testStore_success($params)
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
 
-        $response = $this->from(route('events', $user))->post(route('addEvent', $user), $params['requestData']);
+        $response = $this->from(route('events.index', $this->user))
+            ->json('POST', route('events.store', $this->user), $params['requestData']);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertStatus(201);
 
         $this->assertCount(1, Event::all());
 
         $this->assertDatabaseHas('events', [
             'fishing_type'      => $params['requestData']['fishing_type'],
-            'user_id'        => $user->id,
+            'user_id'        => $this->user->id,
         ]);
     }
 
@@ -99,38 +67,53 @@ class EventControllerTest extends TestCase
      * @dataProvider validationEventErrorData
      * @return void
      */
-    public function testAddEvent_validationError($params)
+    public function testStore_validationError($params)
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
 
-        $response = $this->from(route('events', $user))->post(route('addEvent', $user), $params['requestData']);
+        $response = $this->from(route('events.index', $this->user))
+            ->json('POST', route('events.store', $this->user), $params['requestData']);
 
-        $response->assertStatus(Response::HTTP_FOUND)
-                ->assertSessionHasErrors();
+        $response->assertStatus(422);
 
-        $error = session('errors')->first();
-        $this->assertStringContainsString('月日を入力してください', $error);
+        $error = $response['errors']['date'][0];
+        $this->assertEquals('月日を入力してください', $error);
 
         $this->assertCount(0, Event::all());
 
         $this->assertDatabaseMissing('events', [
             'fishing_type'      => $params['requestData']['fishing_type'],
-            'user_id'        => $user->id,
+            'user_id'        => $this->user->id,
+        ]);
+    }
+
+    function testEditEventDate()
+    {
+        $event = Event::factory()->for($this->user)->create(['date' => '2021-03-31']);
+
+        $response = $this->from(route('events.index', $this->user))->json('PUT', route('editEventDate', [$event, $this->user]), [
+            'id' => $event->id,
+            'newDate' => '2021-04-01'
+        ]);
+
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('events', [
+            'date'        => '2021-04-01',
         ]);
     }
 
     function testEdit()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $event = Event::factory()->for($user)->create(['fishing_type' => 'サビキ釣り']);
+        $event = Event::factory()->for($this->user)->create(['fishing_type' => 'サビキ釣り']);
 
-        $response = $this->get(route('editEvent', [$user, $event]));
+        $response = $this->get(route('events.edit', [$this->user, $event]));
 
-        $response->assertStatus(Response::HTTP_OK)
-                ->assertSee($event->fishing_type)
-                ->assertSee('サビキ釣り');
+        $response->assertStatus(200)
+            ->assertJson([
+                ['user_name' => $this->user->user_name],
+                ['spot' => $event->spot],
+                [['start' => $event->date, 'title' => $event->spot]]  // イベントの開始日
+            ]);
     }
 
     /**
@@ -141,19 +124,20 @@ class EventControllerTest extends TestCase
      */
     function testUpdate_success($params)
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $event = Event::factory()->for($user)->create(['fishing_type' => 'ルアー釣り']);
+        $event = Event::factory()->for($this->user)->create(['fishing_type' => 'ルアー釣り']);
 
-        $response = $this->from(route('editEvent', [$event, $user]))->put(route('events.update', [$user, $event]), $params['requestData']);
+        $response = $this->from(route('events.edit', [$event, $this->user]))
+            ->json('PUT', route('events.update', [$this->user, $event]), $params['requestData']);
 
         $this->assertDatabaseHas('events', [
             'fishing_type'      => 'サビキ釣り',  // 「ルアー釣り」が「サビキ釣り」に変更
-            'user_id'        => $user->id,
+            'user_id'        => $this->user->id,
         ]);
 
-        $response->assertStatus(Response::HTTP_FOUND)
-                ->assertRedirect(route('events', $user));
+        $response->assertStatus(201)
+            ->assertJson([
+                'spot' => $params['requestData']['spot']
+            ]);
     }
 
     /**
@@ -164,33 +148,29 @@ class EventControllerTest extends TestCase
      */
     function testUpdate_validationError($params)
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $event = Event::factory()->for($user)->create(['fishing_type' => 'ルアー釣り']);
+        $event = Event::factory()->for($this->user)->create(['fishing_type' => 'ルアー釣り']);
 
-        $response = $this->from(route('editEvent', [$user, $event]))->put(route('events.update', [$user, $event]), $params['requestData']);
+        $response = $this->from(route('events.edit', [$this->user, $event]))
+            ->json('PUT', route('events.update', [$this->user, $event]), $params['requestData']);
 
-        $response->assertStatus(Response::HTTP_FOUND)
-            ->assertSessionHasErrors();
+        $response->assertStatus(422);
 
-        $error = session('errors')->first();
-        $this->assertStringContainsString('月日を入力してください', $error);
+        $error = $response['errors']['date'][0];
+        $this->assertEquals('月日を入力してください', $error);
 
         $this->assertDatabaseMissing('events', [
             'fishing_type'      => 'サビキ釣り',
-            'user_id'        => $user->id,
+            'user_id'        => $this->user->id,
         ]);
     }
 
-    public function testDeleteEvent()
+    public function testDestroy()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $event = Event::factory()->for($user)->create(['fishing_type' => 'ルアー釣り']);
+        $event = Event::factory()->for($this->user)->create();
 
-        $response = $this->delete(route('deleteEvent', [$user, $event]));
+        $response = $this->json('DELETE', route('events.destroy', [$this->user, $event]));
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertStatus(200);
 
         $this->assertCount(0, Event::all());
     }
@@ -204,8 +184,6 @@ class EventControllerTest extends TestCase
                         'date' => '2021-03-30',
                         'fishing_type' => 'サビキ釣り',
                         'spot' => 'かもめ大橋',
-                        'bait' => 'アミエビ',
-                        'weather' => '晴れ',
                         'fishing_start_time' => '07:10',
                         'fishing_end_time' => '17:50',
                         'detail' => 'アジが釣れた。',
@@ -225,8 +203,6 @@ class EventControllerTest extends TestCase
                         'date' => null,
                         'fishing_type' => 'サビキ釣り',
                         'spot' => 'かもめ大橋',
-                        'bait' => 'アミエビ',
-                        'weather' => '晴れ',
                         'fishing_start_time' => '07:10',
                         'fishing_end_time' => '17:50',
                         'detail' => 'アジが釣れた。',
