@@ -50,7 +50,7 @@ class SpotController extends Controller
                 ])
                 ->latest()->get();
 
-            // フォローしたユーザーの釣りスポット
+            // フォローしたユーザーの投稿
             if (Auth::user()->count_followings > 0) {
                 $followUserSpots = Spot::query()
                 ->whereIn('user_id', Auth::user()->followings()->pluck('followee_id'))

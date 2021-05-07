@@ -28,7 +28,7 @@ class EventControllerTest extends TestCase
 
     public function testIndex()
     {
-        $event = Event::factory()->for($this->user)->create(['spot' => 'かもめ大橋']);
+        $event = Event::factory()->for($this->user)->create();
 
         $response = $this->json('GET', route('events.index', $this->user));
 
