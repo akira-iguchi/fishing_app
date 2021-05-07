@@ -12,7 +12,11 @@ class FishingTypeController extends Controller
 {
     public function __invoke()
     {
-        $fishing_types = FishingType::all()->sortByDesc('created_at')->load('spots');
+        $fishing_types = FishingType::with([
+            'spots.spotImages',
+            'spots.spotComments',
+            'spots.spotFavorites',
+        ])->latest()->get();
 
         return $fishing_types;
     }

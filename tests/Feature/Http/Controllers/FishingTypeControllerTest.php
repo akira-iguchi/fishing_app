@@ -23,6 +23,9 @@ class FishingTypeControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
     }
 
     public function testIndex()
@@ -31,12 +34,11 @@ class FishingTypeControllerTest extends TestCase
         $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
         $spot->fishingTypes()->attach($fishing_type);
 
-        $response = $this->get('/fishing_types');
+        $response = $this->json('GET', route('fishing_types'));
 
-        $response->assertStatus(Response::HTTP_OK)
-                    ->assertSee($fishing_type->fishing_type_name)
-                    ->assertSee('サビキ釣り')
-                    ->assertSee($spot->spot_name)
-                    ->assertSee('かもめ大橋');
+        $response->assertStatus(200)->assertJson([[
+            'fishing_type_name' => $fishing_type->fishing_type_name,
+            'spots' => [['spot_name' => $spot->spot_name]]
+        ]]);
     }
 }

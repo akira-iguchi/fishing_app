@@ -33,10 +33,16 @@ class UserController extends Controller
 
     public function show(String $id)
     {
-        $user = User::findOrFail($id)
-            ->load(
-                ['spots', 'favoriteSpots', 'followings', 'followers']
-            );
+        $user = User::findOrFail($id)->load([
+                'spots.spotImages',
+                'spots.spotComments',
+                'spots.spotFavorites',
+                'favoriteSpots.spotImages',
+                'favoriteSpots.spotComments',
+                'favoriteSpots.spotFavorites',
+                'followings',
+                'followers'
+            ]);
 
         return $user;
     }

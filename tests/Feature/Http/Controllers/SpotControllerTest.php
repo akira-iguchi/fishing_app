@@ -24,6 +24,9 @@ class SpotControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
     }
 
     public function testIndex_logged_in()
@@ -59,11 +62,9 @@ class SpotControllerTest extends TestCase
      */
     public function testSearch_available()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
+        $spot = Spot::factory()->for($this->user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => 'かもめ大橋']);
-        $other_spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
+        $other_spot = Spot::factory()->for($this->user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => '貝塚人工島']);
         $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
@@ -99,11 +100,9 @@ class SpotControllerTest extends TestCase
      */
     public function testSearch_notAvailable()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
+        $spot = Spot::factory()->for($this->user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => 'かもめ大橋']);
-        $other_spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
+        $other_spot = Spot::factory()->for($this->user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => '貝塚人工島']);
         $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
@@ -126,11 +125,9 @@ class SpotControllerTest extends TestCase
      */
     public function testSearchAll()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
+        $spot = Spot::factory()->for($this->user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => 'かもめ大橋']);
-        $other_spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
+        $other_spot = Spot::factory()->for($this->user)->has(SpotImage::factory(), 'spotImages')
                 ->create(['spot_name' => '貝塚人工島']);
         $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
@@ -157,8 +154,6 @@ class SpotControllerTest extends TestCase
 
     public function testCreate()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
         $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
         $response = $this->get('/spots/create');
@@ -177,8 +172,6 @@ class SpotControllerTest extends TestCase
      */
     public function testStore_success($params)
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
         $fishing_type = FishingType::factory()->create(['id' => 1]);
         Storage::fake('s3');
 
@@ -190,7 +183,7 @@ class SpotControllerTest extends TestCase
 
         $this->assertDatabaseHas('spots', [
             'spot_name'      => $params['requestData']['spot_name'],
-            'user_id'        => $user->id,
+            'user_id'        => $this->user->id,
         ]);
 
         // 画像（子テーブル保存）
@@ -225,8 +218,6 @@ class SpotControllerTest extends TestCase
      */
     public function testStore_validationError($params)
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
 
         $response = $this->from('/spots/create')->post(route('spots.store'), $params['requestData']);
 
@@ -240,7 +231,7 @@ class SpotControllerTest extends TestCase
 
         $this->assertDatabaseMissing('spots', [
             'spot_name'      => $params['requestData']['spot_name'],
-            'user_id'        => $user->id,
+            'user_id'        => $this->user->id,
         ]);
     }
 
@@ -273,11 +264,9 @@ class SpotControllerTest extends TestCase
      */
     function testUpdate_success($params)
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
         $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り', 'id' => 2]);
         $other_fishing_type = FishingType::factory()->create(['fishing_type_name' => 'ルアー釣り', 'id' => 1]);
-        $spot = Spot::factory()->for($user)->create(['spot_name' => '貝塚人工島']);
+        $spot = Spot::factory()->for($this->user)->create(['spot_name' => '貝塚人工島']);
         $spot_image = SpotImage::factory()->for($spot)->create(['spot_image' => 'fishing.jpg']);
         Storage::fake('s3');
 
@@ -289,7 +278,7 @@ class SpotControllerTest extends TestCase
 
         $this->assertDatabaseHas('spots', [
             'spot_name'      => 'かもめ大橋',  // 「貝塚人工島」が「かもめ大橋」に変更（$spot（変数）に変更はない）
-            'user_id'        => $user->id,
+            'user_id'        => $this->user->id,
         ]);
 
         // fishing_typeとリレーション
@@ -320,9 +309,7 @@ class SpotControllerTest extends TestCase
      */
     function testUpdate_validationError($params)
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->create(['spot_name' => '貝塚人工島']);
+        $spot = Spot::factory()->for($this->user)->create(['spot_name' => '貝塚人工島']);
 
         $response = $this->from("/spots/{$spot->id}/edit")->put(route('spots.update', $spot->id), $params['requestData']);
 
@@ -334,7 +321,7 @@ class SpotControllerTest extends TestCase
 
         $this->assertDatabaseMissing('spots', [
             'spot_name'      => $params['requestData']['spot_name'], // !=「サビキ釣り」
-            'user_id'        => $user->id,
+            'user_id'        => $this->user->id,
         ]);
     }
 

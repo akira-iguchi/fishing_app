@@ -21,18 +21,9 @@ class SpotCommentControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-    }
 
-    public function testIndex()
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->create();
-        $comment = SpotComment::factory()->for($user)->for($spot)->create();
-
-        $response = $this->get(route('spots.comments', $spot));
-
-        $response->assertStatus(Response::HTTP_OK);
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
     }
 
     /**
@@ -43,20 +34,19 @@ class SpotCommentControllerTest extends TestCase
      */
     public function testStore_success($params)
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->create();
+        $spot = Spot::factory()->for($this->user)->create();
 
         Storage::fake('s3');
-        $response = $this->from("/spots/{$spot->id}")->post(route('spots.comment', $spot), $params['requestData']);
+        $response = $this->from(route('spots.show', $spot))
+            ->json('POST', route('spots.comment', $spot), $params['requestData']);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertStatus(201);
 
         $this->assertCount(1, SpotComment::all());
 
         $this->assertDatabaseHas('spot_comments', [
             'spot_id'      => $spot->id,
-            'user_id'        => $user->id,
+            'user_id'        => $this->user->id,
             'comment'      => $params['requestData']['comment'],
         ]);
 
@@ -74,37 +64,35 @@ class SpotCommentControllerTest extends TestCase
     */
     public function testStore_validationError($params)
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->create();
+        $spot = Spot::factory()->for($this->user)->create();
 
-        $response = $this->from("/spots/{$spot->id}")->post(route('spots.comment', $spot), $params['requestData']);
+        $response = $this->from(route('spots.show', $spot))
+            ->json('POST', route('spots.comment', $spot), $params['requestData']);
 
-        $response->assertStatus(Response::HTTP_FOUND)
-                ->assertSessionHasErrors();
+        $response->assertStatus(422);
 
-        $error = session('errors')->first();
-        $this->assertStringContainsString('コメントを入力してください', $error);
+        $error = $response['errors']['comment'][0];
+        $this->assertEquals('コメントを入力してください', $error);
 
         $this->assertCount(0, SpotComment::all());
 
         $this->assertDatabaseMissing('spot_comments', [
             'spot_id'      => $spot->id,
-            'user_id'        => $user->id,
+            'user_id'        => $this->user->id,
             'comment'      => $params['requestData']['comment'],
         ]);
     }
 
     public function testDestroy()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->create();
-        $comment = SpotComment::factory()->for($user)->for($spot)->create();
+        $spot = Spot::factory()->for($this->user)->create();
 
-        $response = $this->delete(route('comment.delete', [$spot, $comment]));
+        $comment = SpotComment::factory()
+            ->for($this->user)->for($spot)->create();
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response = $this->json('DELETE', route('comment.delete', [$spot, $comment]));
+
+        $response->assertStatus(200);
 
         $this->assertCount(0, SpotComment::all());
     }
@@ -115,6 +103,7 @@ class SpotCommentControllerTest extends TestCase
             'valid data' => [
                 [
                     'requestData' => [
+                        'spot_id' => 1,
                         'comment' => 'たくさん釣れた！',
                         'comment_image' => UploadedFile::fake()->image('default.jpg'),
                     ],
