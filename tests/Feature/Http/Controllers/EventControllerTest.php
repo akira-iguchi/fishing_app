@@ -181,12 +181,12 @@ class EventControllerTest extends TestCase
             'valid data' => [
                 [
                     'requestData' => [
-                        'date' => '2021-03-30',
-                        'fishing_type' => 'サビキ釣り',
-                        'spot' => 'かもめ大橋',
+                        'date'               => '2021-03-30',
+                        'fishing_type'       => 'サビキ釣り',
+                        'spot'               => 'かもめ大橋',
                         'fishing_start_time' => '07:10',
-                        'fishing_end_time' => '17:50',
-                        'detail' => 'アジが釣れた。',
+                        'fishing_end_time'   => '17:50',
+                        'detail'             => 'アジが釣れた。',
                     ],
                 ]
             ]
@@ -200,12 +200,12 @@ class EventControllerTest extends TestCase
             'validation: 月日を入力してください' => [
                 [
                     'requestData' => [
-                        'date' => null,
-                        'fishing_type' => 'サビキ釣り',
-                        'spot' => 'かもめ大橋',
+                        'date'               => null,
+                        'fishing_type'       => 'サビキ釣り',
+                        'spot'               => 'かもめ大橋',
                         'fishing_start_time' => '07:10',
-                        'fishing_end_time' => '17:50',
-                        'detail' => 'アジが釣れた。',
+                        'fishing_end_time'   => '17:50',
+                        'detail'             => 'アジが釣れた。',
                     ],
                 ]
             ],

@@ -102,9 +102,9 @@ class SpotCommentControllerTest extends TestCase
         return [
             'valid data' => [
                 [
-                    'requestData' => [
-                        'spot_id' => 1,
-                        'comment' => 'たくさん釣れた！',
+                    'requestData'       => [
+                        'spot_id'       => 1,
+                        'comment'       => 'たくさん釣れた！',
                         'comment_image' => UploadedFile::fake()->image('default.jpg'),
                     ],
                 ]
