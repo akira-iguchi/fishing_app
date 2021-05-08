@@ -26,367 +26,386 @@ class SpotControllerTest extends TestCase
         parent::setUp();
 
         $this->user = User::factory()->create();
-        $this->user2 = User::factory()->create();
+        $this->otherUser = User::factory()->create();
     }
 
-    // public function testIndex_logged_in()
-    // {
-    //     $spot = Spot::factory()->for($this->user2)
-    //         ->has(SpotImage::factory(), 'spotImages')->create(['spot_name' => '貝塚人工島']);
-    //     $spot->spotFavorites()->attach($this->user);
-    //     $otherSpot = $this->createSpot();
+    public function testIndex_logged_in()
+    {
+        $spot = Spot::factory()->for($this->otherUser)
+            ->has(SpotImage::factory(), 'spotImages')->create(['spot_name' => '貝塚人工島']);
+        $spot->spotFavorites()->attach($this->user);
+        $otherSpot = $this->createSpot();
 
-    //     $tag = Tag::factory()->create();
-    //     $fishing_type = FishingType::factory()->create();
+        $tag = Tag::factory()->create();
+        $fishing_type = FishingType::factory()->create();
 
-    //     $this->user->followings()->attach($this->user2);
-    //     $this->actingAs($this->user);
+        $this->user->followings()->attach($this->otherUser);
+        $this->actingAs($this->user);
 
-    //     $response = $this->json('GET', route('spots.index'));
+        $response = $this->json('GET', route('spots.index'));
 
-    //     $response->assertStatus(200)
-    //         ->assertJson([
-    //             // 検索フォーム
-    //             [
-    //                 [['fishing_type_name' => $fishing_type->fishing_type_name]],
-    //                 [['tag_name' => $tag->tag_name]],
-    //             ],
-    //             // 最近の投稿
-    //             [
-    //                 ['spot_name' => $spot->spot_name]
-    //             ],
-    //             // フォローしたユーザーの投稿
-    //             [
-    //                 ['spot_name' => $spot->spot_name]
-    //             ],
-    //             // いいねランキング
-    //             [
-    //                 ['spot_name' => $spot->spot_name], // １位
-    //                 ['spot_name' => $otherSpot->spot_name]
-    //             ]
-    //         ]);
-    // }
+        $response->assertStatus(200)
+            ->assertJson([
+                // 検索フォーム
+                [
+                    [['fishing_type_name' => $fishing_type->fishing_type_name]],
+                    [['tag_name' => $tag->tag_name]],
+                ],
+                // 最近の投稿
+                [
+                    ['spot_name' => $spot->spot_name]
+                ],
+                // フォローしたユーザーの投稿
+                [
+                    ['spot_name' => $spot->spot_name]
+                ],
+                // いいねランキング
+                [
+                    ['spot_name' => $spot->spot_name], // １位
+                    ['spot_name' => $otherSpot->spot_name]
+                ]
+            ]);
+    }
 
-    // public function testIndex_guest()
-    // {
-    //     $response = $this->json('GET', route('spots.index'));
+    public function testIndex_guest()
+    {
+        $response = $this->json('GET', route('spots.index'));
 
-    //     $response->assertStatus(200)
-    //         ->assertJsonMissingExact([
-    //             [['spot_name' => 'かもめ大橋']],
-    //         ]);
-    // }
+        $response->assertStatus(200)
+            ->assertJsonMissingExact([
+                [['spot_name' => 'かもめ大橋']],
+            ]);
+    }
 
-    // /**
-    //  * 検索結果（該当あり）
-    //  *
-    //  * @return void
-    //  */
-    // public function testSearch_available()
-    // {
-    //     $this->actingAs($this->user);
-    //     $spot = $this->createSpot();
-    //     $otherSpot = Spot::factory()->for($this->user)->has(SpotImage::factory(), 'spotImages')
-    //             ->create(['spot_name' => '貝塚人工島']);
-    //     $fishing_type = FishingType::factory()->create();
+    /**
+     * 検索結果（該当あり）
+     *
+     * @return void
+     */
+    public function testSearch_available()
+    {
+        $this->actingAs($this->user);
+        $spot = $this->createSpot();
+        $otherSpot = Spot::factory()->for($this->user)->has(SpotImage::factory(), 'spotImages')
+                ->create(['spot_name' => '貝塚人工島']);
+        $fishing_type = FishingType::factory()->create();
 
-    //     $spot->fishingTypes()->attach($fishing_type);
+        $spot->fishingTypes()->attach($fishing_type);
 
-    //     $response = $this->from(route('spots.index'))->json('GET', route('spots.search', [
-    //             'searchWord' => $spot->spot_name,
-    //             'fishingTypes' => [$fishing_type->id],
-    //     ]));
+        $response = $this->from(route('spots.index'))->json('GET', route('spots.search', [
+                'searchWord' => $spot->spot_name,
+                'fishingTypes' => [$fishing_type->id],
+        ]));
 
-    //     $response->assertStatus(200)
-    //         ->assertJson([
-    //             // 検索フォーム
-    //             [
-    //                 [['fishing_type_name' => $fishing_type->fishing_type_name]],
-    //             ],
-    //             // 検索結果
-    //             [
-    //                 'current_page' => 1,
-    //                 'data' =>[['spot_name' => $spot->spot_name]]
-    //             ],
-    //         ]);
-    // }
+        $response->assertStatus(200)
+            ->assertJson([
+                // 検索フォーム
+                [
+                    [['fishing_type_name' => $fishing_type->fishing_type_name]],
+                ],
+                // 検索結果
+                [
+                    'current_page' => 1,
+                    'data' =>[['spot_name' => $spot->spot_name]]
+                ],
+            ]);
+    }
 
-    // /**
-    //  * 検索結果（該当なし）
-    //  *
-    //  * @return void
-    //  */
-    // public function testSearch_notAvailable()
-    // {
-    //     $this->actingAs($this->user);
-    //     $spot = $this->createSpot();
-    //     $otherSpot = Spot::factory()->for($this->user)->has(SpotImage::factory(), 'spotImages')
-    //             ->create(['spot_name' => '貝塚人工島']);
-    //     $fishing_type = FishingType::factory()->create();
+    /**
+     * 検索結果（該当なし）
+     *
+     * @return void
+     */
+    public function testSearch_notAvailable()
+    {
+        $this->actingAs($this->user);
+        $spot = $this->createSpot();
+        $otherSpot = Spot::factory()->for($this->user)->has(SpotImage::factory(), 'spotImages')
+                ->create(['spot_name' => '貝塚人工島']);
+        $fishing_type = FishingType::factory()->create();
 
-    //     $response = $this->from(route('spots.index'))->json('GET', route('spots.search', [
-    //         'searchWord' => 'とっとパーク小島',
-    //         'fishingTypes' => [2],
-    //     ]));
+        $response = $this->from(route('spots.index'))->json('GET', route('spots.search', [
+            'searchWord' => 'とっとパーク小島',
+            'fishingTypes' => [2],
+        ]));
 
-    //     $response->assertStatus(200)
-    //         ->assertJsonMissingExact([
-    //             // 検索結果
-    //             [
-    //                 'current_page' => 1,
-    //                 'data' =>[['spot_name' => $spot->spot_name]]
-    //             ],
-    //         ]);
-    // }
+        $response->assertStatus(200)
+            ->assertJsonMissingExact([
+                // 検索結果
+                [
+                    'current_page' => 1,
+                    'data' =>[['spot_name' => $spot->spot_name]]
+                ],
+            ]);
+    }
 
-    // /**
-    //  * すべての投稿（検索フォームに記入なし）
-    //  *
-    //  * @return void
-    //  */
-    // public function testSearchAll()
-    // {
-    //     $this->actingAs($this->user);
-    //     $spot = $this->createSpot();
-    //     $otherSpot = Spot::factory()->for($this->user)->has(SpotImage::factory(), 'spotImages')
-    //             ->create(['spot_name' => '貝塚人工島']);
-    //     $fishing_type = FishingType::factory()->create();
+    /**
+     * すべての投稿（検索フォームに記入なし）
+     *
+     * @return void
+     */
+    public function testSearchAll()
+    {
+        $this->actingAs($this->user);
+        $spot = $this->createSpot();
+        $otherSpot = Spot::factory()->for($this->user)->has(SpotImage::factory(), 'spotImages')
+                ->create(['spot_name' => '貝塚人工島']);
+        $fishing_type = FishingType::factory()->create();
 
-    //     $response = $this->from(route('spots.index'))->json('GET', route('spots.search', [
-    //         'searchWord' => '',
-    //         'fishingTypes' => [],
-    //     ]));
+        $response = $this->from(route('spots.index'))->json('GET', route('spots.search', [
+            'searchWord' => '',
+            'fishingTypes' => [],
+        ]));
 
-    //     $response->assertStatus(200)
-    //         ->assertJson([
-    //             // 検索フォーム
-    //             [
-    //                 [['fishing_type_name' => $fishing_type->fishing_type_name]],
-    //             ],
-    //             // 検索結果
-    //             [
-    //                 'current_page' => 1,
-    //                 'data' =>[
-    //                     ['spot_name' => $spot->spot_name],
-    //                     ['spot_name' => $otherSpot->spot_name]
-    //                 ]
-    //             ],
-    //         ]);
-    // }
+        $response->assertStatus(200)
+            ->assertJson([
+                // 検索フォーム
+                [
+                    [['fishing_type_name' => $fishing_type->fishing_type_name]],
+                ],
+                // 検索結果
+                [
+                    'current_page' => 1,
+                    'data' =>[
+                        ['spot_name' => $spot->spot_name],
+                        ['spot_name' => $otherSpot->spot_name]
+                    ]
+                ],
+            ]);
+    }
 
-    // public function testShow()
-    // {
-    //     $this->actingAs($this->user);
-    //     $spot = $this->createSpot();
-    //     $otherSpot = Spot::factory()->for($this->user)->has(SpotImage::factory(), 'spotImages')
-    //         ->create(['spot_name' => '貝塚人工島']);
+    public function testShow()
+    {
+        $this->actingAs($this->user);
+        $spot = $this->createSpot();
+        $otherSpot = Spot::factory()->for($this->user)->has(SpotImage::factory(), 'spotImages')
+            ->create(['spot_name' => '貝塚人工島']);
 
-    //     $response = $this->json('GET', route('spots.show', $spot));
+        $response = $this->json('GET', route('spots.show', $spot));
 
-    //     $response->assertStatus(200)
-    //         ->assertJson([
-    //             ['spot_name' => $spot->spot_name],
-    //             [['spot_name' => $otherSpot->spot_name]],
-    //         ]);
-    // }
+        $response->assertStatus(200)
+            ->assertJson([
+                ['spot_name' => $spot->spot_name],
+                [['spot_name' => $otherSpot->spot_name]],
+            ]);
+    }
 
-    // public function testCreate()
-    // {
-    //     $this->actingAs($this->user);
-    //     $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
+    public function testCreate()
+    {
+        $this->actingAs($this->user);
+        $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
 
-    //     $response = $this->json('GET', route('spots.create'));
+        $response = $this->json('GET', route('spots.create'));
 
-    //     $response->assertStatus(200)
-    //         ->assertJson([
-    //             [],
-    //             [
-    //                 ['fishing_type_name' => $fishing_type->fishing_type_name]
-    //             ],
-    //         ]);
-    // }
+        $response->assertStatus(200)
+            ->assertJson([ [],
+                [
+                    ['fishing_type_name' => $fishing_type->fishing_type_name]
+                ],
+            ]);
+    }
 
-    // /**
-    //  * 正常系
-    //  *
-    //  * @dataProvider SpotData
-    //  * @return void
-    //  */
-    // public function testStore_success($params)
-    // {
-    //     $this->actingAs($this->user);
-    //     $fishing_type = FishingType::factory()->create(['id' => 1]);
-    //     Storage::fake('s3');
+    /**
+     * 正常系
+     *
+     * @dataProvider SpotData
+     * @return void
+     */
+    public function testStore_success($params)
+    {
+        $this->actingAs($this->user);
+        $fishing_type = FishingType::factory()->create(['id' => 1]);
+        Storage::fake('s3');
 
-    //     $response = $this->from(route('spots.create', $this->user))
-    //         ->json('POST', route('spots.store'), $params['requestData']);
+        $response = $this->from(route('spots.create', $this->user))
+            ->json('POST', route('spots.store'), $params['requestData']);
 
-    //     $response->assertStatus(201);
+        $response->assertStatus(201);
 
-    //     $this->assertCount(1, Spot::all());
+        $this->assertCount(1, Spot::all());
 
-    //     $this->assertDatabaseHas('spots', [
-    //         'spot_name'      => $params['requestData']['spot_name'],
-    //         'user_id'        => $this->user->id,
-    //     ]);
+        $this->assertDatabaseHas('spots', [
+            'spot_name'      => $params['requestData']['spot_name'],
+            'user_id'        => $this->user->id,
+        ]);
 
-    //     // 画像（子テーブル保存）
-    //     $this->assertCount(1, SpotImage::all());
-    //     $this->assertDatabaseHas('spot_images', [
-    //         'spot_id'        => Spot::where('spot_name', $params['requestData']['spot_name'])
-    //                             ->pluck('id')
-    //     ]);
+        // 画像（子テーブル保存）
+        $this->assertCount(1, SpotImage::all());
+        $this->assertDatabaseHas('spot_images', [
+            'spot_id'        => Spot::where('spot_name', $params['requestData']['spot_name'])
+                                ->pluck('id')
+        ]);
 
-    //     // tagとリレーション（passedValidationが通らないので保留）
-    //     $this->assertDatabaseHas('spot_tag', [
-    //         'tag_id'      => 1,
-    //         'spot_id'     => Spot::where('spot_name', $params['requestData']['spot_name'])
-    //                          ->pluck('id'), // spotのidと同じ
-    //     ]);
+        // tagとリレーション
+        $this->assertDatabaseHas('spot_tag', [
+            'spot_id'     => Spot::where('spot_name', $params['requestData']['spot_name'])
+                             ->pluck('id'), // spotのidと同じ
+        ]);
 
-    //     // fishing_typeとリレーション
-    //     $this->assertDatabaseHas('spot_fishing_type', [
-    //         'fishing_type_id'      => $params['requestData']['fishing_types'],  // $fishing_typeのidと同じ(=1)
-    //         'spot_id'              => Spot::where('spot_name', $params['requestData']['spot_name'])
-    //                                 ->pluck('id'), // spotのidと同じ
-    //     ]);
+        // fishing_typeとリレーション
+        $this->assertDatabaseHas('spot_fishing_type', [
+            'fishing_type_id'      => $params['requestData']['fishing_types'],  // $fishing_typeのidと同じ(=1)
+            'spot_id'              => Spot::where('spot_name', $params['requestData']['spot_name'])
+                                    ->pluck('id'), // 作成したspotのidと同じ
+        ]);
 
-    //     // S3に画像を保存(fake使用)
-    //     $uploadedFile = $params['requestData']['spot_image1'];
-    //     $uploadedFile->storeAs('', $uploadedFile, ['disk' => 's3']);
-    //     Storage::disk('s3')->assertExists($uploadedFile);
-    // }
+        // S3に画像を保存(fake使用)
+        $uploadedFile = $params['requestData']['spot_image1'];
+        $uploadedFile->storeAs('', $uploadedFile, ['disk' => 's3']);
+        Storage::disk('s3')->assertExists($uploadedFile);
+    }
 
-    // /**
-    //  * 異常系: バリデーションに引っかかる
-    //  *
-    //  * @dataProvider validationSpotErrorData
-    //  * @return void
-    //  */
-    // public function testStore_validationError($params)
-    // {
-    //     $this->actingAs($this->user);
-    //     $response = $this->from(route('spots.create', $this->user))
-    //         ->json('POST', route('spots.store'), $params['requestData']);
+    /**
+     * 異常系: バリデーションに引っかかる
+     *
+     * @dataProvider validationSpotErrorData
+     * @return void
+     */
+    public function testStore_validationError($params)
+    {
+        $this->actingAs($this->user);
+        $response = $this->from(route('spots.create', $this->user))
+            ->json('POST', route('spots.store'), $params['requestData']);
 
-    //     $response->assertStatus(422);
+        $response->assertStatus(422);
 
-    //     $error = $response['errors']['spot_name'][0];
-    //     $this->assertEquals('釣りスポット名を入力してください', $error);
+        $error = $response['errors']['spot_name'][0];
+        $this->assertEquals('釣りスポット名を入力してください', $error);
 
-    //     $this->assertCount(0, Spot::all());
+        $this->assertCount(0, Spot::all());
 
-    //     $this->assertDatabaseMissing('spots', [
-    //         'spot_name'      => $params['requestData']['spot_name'],
-    //         'user_id'        => $this->user->id,
-    //     ]);
-    // }
+        $this->assertDatabaseMissing('spots', [
+            'spot_name'      => $params['requestData']['spot_name'],
+            'user_id'        => $this->user->id,
+        ]);
+    }
 
-    // function testEdit()
-    // {
-    //     $this->actingAs($this->user);
-    //     $spot = $this->createSpot();
-    //     $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
-    //     $tag = Tag::factory()->create(['tag_name' => 'よく釣れる']);
+    function testEdit()
+    {
+        $this->actingAs($this->user);
+        $spot = $this->createSpot();
+        $fishing_type = FishingType::factory()->create();
+        $tag = Tag::factory()->create(['tag_name' => 'よく釣れる']);
 
-    //     $spot->tags()->attach($tag);
+        $spot->tags()->attach($tag);
 
-    //     $response = $this->get("/spots/{$spot->id}/edit");
+        $response = $this->json('GET', route('spots.edit', $spot));
 
-    //     $tagName = json_encode($tag->tag_name);
+        $response->assertStatus(200)
+            ->assertJson([
+                ['spot_name' => $spot->spot_name], [],
+                [
+                    // リレーションしたタグ
+                    ['text' => $tag->tag_name],
+                ], [],
+                [
+                    ['fishing_type_name' => $fishing_type->fishing_type_name]
+                ]
+            ]);
+    }
 
-    //     $response->assertStatus(Response::HTTP_OK)
-    //             ->assertSee($spot->spot_name)
-    //             ->assertSee('かもめ大橋')
-    //             ->assertSee($fishing_type->fishing_type_name)
-    //             ->assertSee('サビキ釣り')
-    //             ->assertSee(trim(json_encode($tag->tag_name), '"'))
-    //             ->assertSee(trim(json_encode('よく釣れる'), '"'));
-    // }
+    /**
+     * 正常系
+     *
+     * @dataProvider SpotData
+     * @return void
+     */
+    function testUpdate_success($params)
+    {
+        $this->actingAs($this->user);
+        $spot = Spot::factory()->for($this->user)->create(['spot_name' => '貝塚人工島']);
+        $spot_image = SpotImage::factory()->for($spot)
+            ->create(['spot_image' => 'fishing.jpg']);
 
-    // /**
-    //  * 正常系
-    //  *
-    //  * @dataProvider SpotData
-    //  * @return void
-    //  */
-    // function testUpdate_success($params)
-    // {
-    //     $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り', 'id' => 2]);
-    //     $other_fishing_type = FishingType::factory()->create(['fishing_type_name' => 'ルアー釣り', 'id' => 1]);
-    //     $spot = Spot::factory()->for($this->user)->create(['spot_name' => '貝塚人工島']);
-    //     $spot_image = SpotImage::factory()->for($spot)->create(['spot_image' => 'fishing.jpg']);
-    //     Storage::fake('s3');
+        $tag = Tag::factory()->create(['tag_name' => '人が多い']);
+        $spot->tags()->attach($tag);
 
+        $fishing_type = FishingType::factory()
+            ->create(['fishing_type_name' => 'サビキ釣り', 'id' => 2]);
+        $other_fishing_type = FishingType::factory()
+            ->create(['fishing_type_name' => 'ルアー釣り', 'id' => 1]);
 
-    //     // 事前にリレーション
-    //     $spot->fishingTypes()->attach($fishing_type);
+        Storage::fake('s3');
 
-    //     $response = $this->from("/spots/{$spot->id}/edit")->put(route('spots.update', $spot->id), $params['requestData']);
+        // 事前にリレーション
+        $spot->fishingTypes()->attach($fishing_type);
 
-    //     $this->assertDatabaseHas('spots', [
-    //         'spot_name'      => 'かもめ大橋',  // 「貝塚人工島」が「かもめ大橋」に変更（$spot（変数）に変更はない）
-    //         'user_id'        => $this->user->id,
-    //     ]);
+        $response = $this->from(route('spots.edit', $spot))
+            ->json('PUT', route('spots.update', $spot), $params['requestData']);
 
-    //     // fishing_typeとリレーション
-    //     $this->assertDatabaseHas('spot_fishing_type', [
-    //         'fishing_type_id'      => $other_fishing_type->id,  // id = 1
-    //         'spot_id'              => $spot->id
-    //     ]);
+        $this->assertDatabaseHas('spots', [
+            'spot_name'      => 'かもめ大橋',  // 「貝塚人工島」が「かもめ大橋」に変更（$spotに変更はない）
+        ]);
 
-    //     // 画像（子テーブル変更）
-    //     $this->assertDatabaseHas('spot_images', [
-    //         'spot_id'        => $spot->id
-    //     ]);
+        $this->assertDatabaseHas('tags', [
+            'tag_name'      => '人が多い',
+            'tag_name'      => 'よく釣れる',  // タグが追加される
+        ]);
 
-    //     // S3に画像を保存(fake使用)
-    //     $uploadedFile = $params['requestData']['spot_image1'];
-    //     $uploadedFile->storeAs('', $uploadedFile, ['disk' => 's3']);
-    //     Storage::disk('s3')->assertExists($uploadedFile);
+        // tagとのリレーション変更
+        $this->assertDatabaseHas('spot_tag', [
+            'tag_id'      => Tag::where('tag_name', 'よく釣れる')
+                            ->pluck('id'),  // 新しくつくられたタグがリレーションされる
+        ]);
 
-    //     $response->assertStatus(Response::HTTP_FOUND)
-    //             ->assertRedirect(route('spots.show', $spot->id));
-    // }
+        // fishing_typeとのリレーション変更
+        $this->assertDatabaseHas('spot_fishing_type', [
+            'fishing_type_id'      => $other_fishing_type->id,  // id = 1
+        ]);
 
-    // /**
-    //  * 異常系: バリデーションに引っかかる
-    //  *
-    //  * @dataProvider validationSpotErrorData
-    //  * @return void
-    //  */
-    // function testUpdate_validationError($params)
-    // {
-    //     $spot = Spot::factory()->for($this->user)->create(['spot_name' => '貝塚人工島']);
+        // S3に画像を保存(fake使用)
+        $uploadedFile = $params['requestData']['spot_image1'];
+        $uploadedFile->storeAs('', $uploadedFile, ['disk' => 's3']);
+        Storage::disk('s3')->assertExists($uploadedFile);
 
-    //     $response = $this->from("/spots/{$spot->id}/edit")->put(route('spots.update', $spot->id), $params['requestData']);
+        // 画像（子テーブル変更）
+        $this->assertDatabaseHas('spot_images', [
+            'spot_id'        => $spot->id,
+            'spot_image'        => json_encode($uploadedFile)
+        ]);
 
-    //     $response->assertStatus(Response::HTTP_FOUND)
-    //             ->assertSessionHasErrors();
+        $response->assertStatus(201)
+            ->assertJson(
+                ['spot_name' => 'かもめ大橋'],  // 「貝塚人工島」が「かもめ大橋」に変更
+            );
+    }
 
-    //     $error = session('errors')->first();
-    //     $this->assertStringContainsString('釣りスポット名を入力してください', $error);
+    /**
+     * 異常系: バリデーションに引っかかる
+     *
+     * @dataProvider validationSpotErrorData
+     * @return void
+     */
+    function testUpdate_validationError($params)
+    {
+        $this->actingAs($this->user);
+        $spot = Spot::factory()->for($this->user)->create(['spot_name' => '貝塚人工島']);
 
-    //     $this->assertDatabaseMissing('spots', [
-    //         'spot_name'      => $params['requestData']['spot_name'], // !=「サビキ釣り」
-    //         'user_id'        => $this->user->id,
-    //     ]);
-    // }
+        $response = $this->from(route('spots.edit', $spot))
+            ->json('PUT', route('spots.update', $spot), $params['requestData']);
 
-    // public function testDestroy()
-    // {
-    //     $this->actingAs($this->user);
-    //     $spot = $this->createSpot();
+        $response->assertStatus(422);
 
-    //     // DELETE リクエスト
-    //     $response = $this->delete(route('spots.destroy', $spot->id));
+        $error = $response['errors']['spot_name'][0];
+        $this->assertEquals('釣りスポット名を入力してください', $error);
 
-    //     $response->assertStatus(Response::HTTP_FOUND);
+        $this->assertDatabaseMissing('spots', [
+            'spot_name'      => $params['requestData']['spot_name'], // !=「サビキ釣り」
+            'user_id'        => $this->user->id,
+        ]);
+    }
 
-    //     $response->assertRedirect('/');
+    public function testDestroy()
+    {
+        $this->actingAs($this->user);
+        $spot = $this->createSpot();
 
-    //     $this->assertCount(0, Spot::all());
-    // }
+        $response = $this->json('DELETE', route('spots.destroy', $spot));
+
+        $response->assertStatus(200);
+
+        $this->assertCount(0, Spot::all());
+    }
 
     public function SpotData()
     {

@@ -106,7 +106,7 @@ class EventControllerTest extends TestCase
     {
         $event = Event::factory()->for($this->user)->create(['fishing_type' => 'サビキ釣り']);
 
-        $response = $this->get(route('events.edit', [$this->user, $event]));
+        $response = $this->json('GET', route('events.edit', [$this->user, $event]));
 
         $response->assertStatus(200)
             ->assertJson([

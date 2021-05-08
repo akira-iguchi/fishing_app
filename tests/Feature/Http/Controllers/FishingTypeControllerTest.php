@@ -28,7 +28,7 @@ class FishingTypeControllerTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function testIndex()
+    public function testInvoke()
     {
         $spot = $this->createSpot();
         $fishing_type = FishingType::factory()->create();
