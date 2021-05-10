@@ -11,6 +11,22 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    public function show(String $id)
+    {
+        $user = User::findOrFail($id)->load([
+                'spots.spotImages',
+                'spots.spotComments',
+                'spots.spotFavorites',
+                'favoriteSpots.spotImages',
+                'favoriteSpots.spotComments',
+                'favoriteSpots.spotFavorites',
+                'followings',
+                'followers'
+            ]);
+
+        return $user;
+    }
+
     public function edit(User $user)
     {
         return $user;
@@ -29,21 +45,5 @@ class UserController extends Controller
 
             return response($user, 201);
         });
-    }
-
-    public function show(String $id)
-    {
-        $user = User::findOrFail($id)->load([
-                'spots.spotImages',
-                'spots.spotComments',
-                'spots.spotFavorites',
-                'favoriteSpots.spotImages',
-                'favoriteSpots.spotComments',
-                'favoriteSpots.spotFavorites',
-                'followings',
-                'followers'
-            ]);
-
-        return $user;
     }
 }

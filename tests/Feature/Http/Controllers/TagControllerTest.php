@@ -42,18 +42,18 @@ class TagControllerTest extends TestCase
             ->json('GET', route('tags', ['name' => $this->tag->tag_name]));
 
         $response->assertStatus(200)
-        ->assertJson([
-            // 検索フォーム
-            [
-                [['fishing_type_name' => $this->fishing_type->fishing_type_name]],
-                [['tag_name' => $this->tag->tag_name]],
-            ],
-            ['tag_name' => $this->tag->tag_name],
-            // タグとリレーションしている釣りスポット
-            [
-                ['spot_name' => $this->spot->spot_name]
-            ],
-        ]);
+            ->assertJson([
+                // 検索フォーム
+                [
+                    [['fishing_type_name' => $this->fishing_type->fishing_type_name]],
+                    [['tag_name' => $this->tag->tag_name]],
+                ],
+                ['tag_name' => $this->tag->tag_name],
+                // タグとリレーションしている釣りスポット
+                [
+                    ['spot_name' => $this->spot->spot_name]
+                ],
+            ]);
     }
 
     /**
@@ -67,14 +67,14 @@ class TagControllerTest extends TestCase
             ->json('GET', route('tags', ['name' => $this->tag->tag_name]));
 
         $response->assertStatus(200)
-        ->assertJsonMissingExact([
-            // 検索フォーム
-            [
-                [['fishing_type_name' => $this->fishing_type->fishing_type_name]],
-                [['tag_name' => $this->tag->tag_name]],
-            ],
-            // 該当なし
-            [],
-        ]);
+            ->assertJsonMissingExact([
+                // 検索フォーム
+                [
+                    [['fishing_type_name' => $this->fishing_type->fishing_type_name]],
+                    [['tag_name' => $this->tag->tag_name]],
+                ],
+                // 該当なし
+                [],
+            ]);
     }
 }

@@ -54,8 +54,10 @@ class LoginController extends Controller
     // ゲストログイン処理
     public function guestLogin(Request $request)
     {
-        Auth::attempt($request->all());
+        $credentials = $request->only('email', 'password');
 
-        return $this->authenticated($request, $this->guard()->user());
+        if (Auth::attempt($credentials)) {
+            return $this->authenticated($request, $this->guard()->user());
+        }
     }
 }

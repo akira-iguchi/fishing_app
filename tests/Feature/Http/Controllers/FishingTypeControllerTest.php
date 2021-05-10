@@ -3,16 +3,10 @@
 namespace Tests\Feature\Http\Controllers;
 
 use Tests\TestCase;
-use App\Models\Spot;
 use App\Models\User;
-use App\Models\SpotImage;
 use App\Models\FishingType;
-use Illuminate\Http\Response;
-use Illuminate\Http\UploadedFile;
 use Tests\Factories\Traits\CreateSpot;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Storage;
 
 
 class FishingTypeControllerTest extends TestCase

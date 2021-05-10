@@ -24,7 +24,7 @@ class UserFactory extends Factory
     {
         return [
             'user_name' =>'ゲスト' ,
-            'email' => $this->faker->unique()->safeEmail,
+            'email' => 'guest@example.com',
             'email_verified_at' => now(),
             'user_image' => 'defaultUser.jpg',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',

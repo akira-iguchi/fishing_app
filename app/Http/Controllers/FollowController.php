@@ -11,7 +11,8 @@ class FollowController extends Controller
     {
         $user = User::where('id', $id)->first();
 
-        if (! $user) {
+        dd(Auth::user()->email === $user->email);
+        if (! $user || Auth::user() === $user) {
             abort(404);
         }
 
@@ -25,7 +26,7 @@ class FollowController extends Controller
     {
         $user = User::where('id', $id)->first();
 
-        if (! $user) {
+        if (! $user || Auth::user() === $user) {
             abort(404);
         }
 

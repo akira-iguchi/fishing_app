@@ -25,11 +25,9 @@ class SpotFavoriteControllerTest extends TestCase
 
     public function testFavorite()
     {
-        $this->user = User::factory()->create();
-        $this->actingAs($this->user);
-
-        $response = $this
-            ->json('PUT', route('spots.favorite', [$this->spot->id, $this->user->id]));
+        $response = $this->json(
+            'PUT', route('spots.favorite', [$this->spot->id, $this->user->id])
+        );
 
         $response->assertStatus(200);
 
@@ -41,9 +39,6 @@ class SpotFavoriteControllerTest extends TestCase
 
     public function testUnFavorite()
     {
-        $this->user = User::factory()->create();
-        $this->actingAs($this->user);
-
         // 事前にリレーション
         $this->spot->spotFavorites()->attach($this->user);
 
