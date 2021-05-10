@@ -1,5 +1,5 @@
 <template>
-    <header><RouterLink class="nav-title" to="/"><i class="fas fa-fish"></i>&thinsp;Fishing Spot</RouterLink>
+    <header><RouterLink class="nav-title" to="/"><i class="fas fa-fish mr-1"></i>Fishing Spot</RouterLink>
         <nav class="nav-container">
             <nav class="nav-bg"></nav>
             <nav class="nav-button" tabindex="0">
@@ -10,16 +10,16 @@
 
             <nav class="nav-content" tabindex="0">
                 <ul v-if="isLogin">
-                    <li><span @click="logout"><i class="fas fa-sign-in-alt"></i>&thinsp;ログアウト</span></li>
+                    <li><span @click="logout"><i class="fas fa-sign-in-alt mr-1"></i>ログアウト</span></li>
                     <li><RouterLink :to="`/users/${ AuthUser.id }/events`">カレンダー</RouterLink></li>
                     <li><RouterLink to="/fishing_types">釣り方一覧</RouterLink></li>
                     <li><RouterLink to="/spots/create">投稿</RouterLink></li>
                     <li><RouterLink :to="`/users/${ AuthUser.id }`">{{ AuthUser.user_name }}</RouterLink></li>
                 </ul>
                 <ul v-else>
-                    <li><RouterLink to="/signup"><i class="fas fa-user-plus"></i>&thinsp;新規登録</RouterLink></li>
-                    <li><RouterLink to="/login"><i class="fas fa-sign-in-alt"></i>&thinsp;ログイン</RouterLink></li>
-                    <li><span @click="guestLogin"><i class="fas fa-sign-in-alt"></i>&thinsp;ゲストログイン</span></li>
+                    <li><RouterLink to="/signup"><i class="fas fa-user-plus mr-1"></i>新規登録</RouterLink></li>
+                    <li><span @click="guestLogin">ゲストログイン</span></li>
+                    <li><RouterLink to="/login">ログイン</RouterLink></li>
                 </ul>
             </nav>
         </nav>

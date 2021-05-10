@@ -20426,7 +20426,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       recentSpots: [],
       rankingSpots: [],
       tagNames: [],
-      isActive: false,
+      isLoaded: false,
       loading: true
     };
   },
@@ -20440,7 +20440,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     window.addEventListener("scroll", this.handleScroll);
-    this.isActive = true;
+    this.isLoaded = true;
   },
   watch: {
     $route: {
@@ -20464,6 +20464,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }))();
       },
       immediate: true
+    },
+    isLogin: function isLogin() {
+      this.loading = true;
+      this.fetchSpots();
     }
   },
   methods: {
@@ -20506,14 +20510,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.next = 2;
+                _this3.fishingTypeNames = [];
+                _this3.tagNames = [];
+                _this3.recentSpots = [];
+                _this3.followUserSpots = [];
+                _this3.rankingSpots = [];
+                _context3.next = 7;
                 return axios.get('/api');
 
-              case 2:
+              case 7:
                 response = _context3.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                  _context3.next = 6;
+                  _context3.next = 11;
                   break;
                 }
 
@@ -20521,7 +20530,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context3.abrupt("return", false);
 
-              case 6:
+              case 11:
                 _this3.loading = false;
 
                 if (_this3.isLogin === true) {
@@ -20532,7 +20541,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this3.rankingSpots = response.data[3];
                 }
 
-              case 8:
+              case 13:
               case "end":
                 return _context3.stop();
             }
@@ -62366,8 +62375,8 @@ var render = function() {
     "header",
     [
       _c("RouterLink", { staticClass: "nav-title", attrs: { to: "/" } }, [
-        _c("i", { staticClass: "fas fa-fish" }),
-        _vm._v(" Fishing Spot")
+        _c("i", { staticClass: "fas fa-fish mr-1" }),
+        _vm._v("Fishing Spot")
       ]),
       _vm._v(" "),
       _c("nav", { staticClass: "nav-container" }, [
@@ -62380,8 +62389,8 @@ var render = function() {
             ? _c("ul", [
                 _c("li", [
                   _c("span", { on: { click: _vm.logout } }, [
-                    _c("i", { staticClass: "fas fa-sign-in-alt" }),
-                    _vm._v(" ログアウト")
+                    _c("i", { staticClass: "fas fa-sign-in-alt mr-1" }),
+                    _vm._v("ログアウト")
                   ])
                 ]),
                 _vm._v(" "),
@@ -62436,19 +62445,8 @@ var render = function() {
                   "li",
                   [
                     _c("RouterLink", { attrs: { to: "/signup" } }, [
-                      _c("i", { staticClass: "fas fa-user-plus" }),
-                      _vm._v(" 新規登録")
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  [
-                    _c("RouterLink", { attrs: { to: "/login" } }, [
-                      _c("i", { staticClass: "fas fa-sign-in-alt" }),
-                      _vm._v(" ログイン")
+                      _c("i", { staticClass: "fas fa-user-plus mr-1" }),
+                      _vm._v("新規登録")
                     ])
                   ],
                   1
@@ -62456,10 +62454,19 @@ var render = function() {
                 _vm._v(" "),
                 _c("li", [
                   _c("span", { on: { click: _vm.guestLogin } }, [
-                    _c("i", { staticClass: "fas fa-sign-in-alt" }),
-                    _vm._v(" ゲストログイン")
+                    _vm._v("ゲストログイン")
                   ])
-                ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  [
+                    _c("RouterLink", { attrs: { to: "/login" } }, [
+                      _vm._v("ログイン")
+                    ])
+                  ],
+                  1
+                )
               ])
         ])
       ])
@@ -66823,10 +66830,10 @@ var render = function() {
           _c(
             "div",
             {
-              class: { "js-loaded": _vm.isActive },
-              attrs: { id: "js-loading" }
+              staticClass: "toppage_loading",
+              class: { toppage_loaded: _vm.isLoaded }
             },
-            [_c("div", { staticClass: "js-spinner" })]
+            [_c("div", { staticClass: "spinner" })]
           ),
           _vm._v(" "),
           _c("div", { staticClass: "top text-center" }, [

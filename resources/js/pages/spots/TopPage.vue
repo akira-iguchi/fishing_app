@@ -77,8 +77,8 @@
         </div>
 
         <div v-else>
-            <div v-bind:class="{ 'js-loaded': isActive }" id="js-loading">
-                <div class="js-spinner"></div>
+            <div :class="{ 'toppage_loaded': isLoaded }" class="toppage_loading">
+                <div class="spinner"></div>
             </div>
 
             <div class="top text-center">
@@ -156,8 +156,8 @@
                 recentSpots: [],
                 rankingSpots: [],
                 tagNames: [],
-                isActive: false,
-                loading: true,
+                isLoaded: false,
+                loading: true
             }
         },
         computed: {
@@ -170,7 +170,7 @@
         },
         created() {
             window.addEventListener("scroll", this.handleScroll);
-            this.isActive = true
+            this.isLoaded = true
         },
         watch: {
             $route: {
@@ -178,6 +178,10 @@
                     await this.fetchSpots()
                 },
                 immediate: true
+            },
+            isLogin () {
+                this.loading = true
+                this.fetchSpots()
             }
         },
         methods: {
@@ -196,6 +200,12 @@
 
             },
             async fetchSpots () {
+                this.fishingTypeNames = []
+                this.tagNames = []
+                this.recentSpots = []
+                this.followUserSpots = []
+                this.rankingSpots = []
+
                 const response = await axios.get('/api')
 
                 if (response.status !== OK) {

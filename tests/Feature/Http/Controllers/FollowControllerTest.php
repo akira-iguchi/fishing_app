@@ -21,19 +21,19 @@ class FollowControllerTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    // public function testFollow()
-    // {
-    //     $response = $this->json(
-    //         'PUT', route('users.follow', [$this->otherUser])
-    //     );
+    public function testFollow()
+    {
+        $response = $this->json(
+            'PUT', route('users.follow', [$this->otherUser])
+        );
 
-    //     $response->assertStatus(200);
+        $response->assertStatus(200);
 
-    //     $this->assertDatabaseHas('follows', [
-    //         'follower_id' => $this->user->id,
-    //         'followee_id' => $this->otherUser->id,
-    //     ]);
-    // }
+        $this->assertDatabaseHas('follows', [
+            'follower_id' => $this->user->id,
+            'followee_id' => $this->otherUser->id,
+        ]);
+    }
 
     /**
      * 自信をフォローはできない
