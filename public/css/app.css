@@ -268,7 +268,7 @@ header:focus-within {
 
 /* ロード画面 */
 
-#js-loading {
+.toppage_loading {
   position: fixed;
   top: 0;
   left: 0;
@@ -279,7 +279,7 @@ header:focus-within {
   background-color: #0bd;
 }
 
-.js-spinner {
+.spinner {
   width: 100px;
   height: 100px;
   margin: 200px auto;
@@ -311,7 +311,7 @@ header:focus-within {
   }
 }
 
-.js-loaded {
+.toppage_loaded {
   opacity: 0;
   visibility: hidden;
 }

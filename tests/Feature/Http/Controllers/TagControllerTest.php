@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use Tests\TestCase;
 use App\Models\Tag;
+use App\Models\User;
 use App\Models\Spot;
 use App\Models\FishingType;
 use Illuminate\Http\Response;
@@ -19,6 +20,13 @@ class TagControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
+
+        $this->spot = $this->createSpot();
+        $this->tag = Tag::factory()->create();
+        $this->fishing_type = FishingType::factory()->create();
     }
 
     /**
@@ -26,22 +34,26 @@ class TagControllerTest extends TestCase
      *
      * @return void
      */
-    public function testShow_available()
+    public function testInvoke_available()
     {
-        $spot = $this->createSpot();
-        $tag = Tag::factory()->create(['tag_name' => 'よく釣れる']);
-        $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
+        $this->spot->tags()->attach($this->tag);
 
-        $spot->tags()->attach($tag);
+        $response = $this->from(route('spots.index'))
+            ->json('GET', route('tags', ['name' => $this->tag->tag_name]));
 
-        $response = $this->from('/')->get(route('tags', ['name' => $tag->tag_name]));
-
-        $response->assertStatus(Response::HTTP_OK)
-                ->assertSee('1件')
-                ->assertSee($spot->spot_name)
-                ->assertSee('かもめ大橋')
-                ->assertSee($fishing_type->fishing_type_name)
-                ->assertSee('サビキ釣り');
+        $response->assertStatus(200)
+            ->assertJson([
+                // 検索フォーム
+                [
+                    [['fishing_type_name' => $this->fishing_type->fishing_type_name]],
+                    [['tag_name' => $this->tag->tag_name]],
+                ],
+                ['tag_name' => $this->tag->tag_name],
+                // タグとリレーションしている釣りスポット
+                [
+                    ['spot_name' => $this->spot->spot_name]
+                ],
+            ]);
     }
 
     /**
@@ -49,19 +61,20 @@ class TagControllerTest extends TestCase
      *
      * @return void
      */
-    public function testShow_notAvailable()
+    public function testInvoke_notAvailable()
     {
-        $spot = $this->createSpot();
-        $tag = Tag::factory()->create(['tag_name' => 'よく釣れる']);
-        $fishing_type = FishingType::factory()->create(['fishing_type_name' => 'サビキ釣り']);
+        $response = $this->from(route('spots.index'))
+            ->json('GET', route('tags', ['name' => $this->tag->tag_name]));
 
-        $response = $this->from('/')->get(route('tags', ['name' => $tag->tag_name]));
-
-        $response->assertStatus(Response::HTTP_OK)
-                ->assertSee('0件')
-                ->assertDontSee($spot->spot_name)
-                ->assertDontSee('かもめ大橋')
-                ->assertSee($fishing_type->fishing_type_name)
-                ->assertSee('サビキ釣り');
+        $response->assertStatus(200)
+            ->assertJsonMissingExact([
+                // 検索フォーム
+                [
+                    [['fishing_type_name' => $this->fishing_type->fishing_type_name]],
+                    [['tag_name' => $this->tag->tag_name]],
+                ],
+                // 該当なし
+                [],
+            ]);
     }
 }

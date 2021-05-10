@@ -8,6 +8,7 @@ use App\Models\Spot;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Tests\Factories\Traits\CreateEvent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -24,18 +25,19 @@ class EventControllerTest extends TestCase
 
         $this->user = User::factory()->create();
         $this->actingAs($this->user);
+
+        $this->event = Event::factory()->for($this->user)
+            ->create(['date' => '2021-03-31', 'fishing_type' => 'ルアー釣り']);
     }
 
     public function testIndex()
     {
-        $event = Event::factory()->for($this->user)->create();
-
         $response = $this->json('GET', route('events.index', $this->user));
 
         $response->assertStatus(200)
             ->assertJson([
                 ['user_name' => $this->user->user_name],
-                [['start' => $event->date, 'title' => $event->spot]]  // イベントの開始日
+                [['start' => $this->event->date, 'title' => $this->event->spot]]  // イベントの開始日
             ]);
     }
 
@@ -47,6 +49,8 @@ class EventControllerTest extends TestCase
      */
     public function testStore_success($params)
     {
+        // イベント数を０に
+        \DB::table('events')->delete();
 
         $response = $this->from(route('events.index', $this->user))
             ->json('POST', route('events.store', $this->user), $params['requestData']);
@@ -69,6 +73,7 @@ class EventControllerTest extends TestCase
      */
     public function testStore_validationError($params)
     {
+        \DB::table('events')->delete();
 
         $response = $this->from(route('events.index', $this->user))
             ->json('POST', route('events.store', $this->user), $params['requestData']);
@@ -88,31 +93,33 @@ class EventControllerTest extends TestCase
 
     function testEditEventDate()
     {
-        $event = Event::factory()->for($this->user)->create(['date' => '2021-03-31']);
-
-        $response = $this->from(route('events.index', $this->user))->json('PUT', route('editEventDate', [$event, $this->user]), [
-            'id' => $event->id,
-            'newDate' => '2021-04-01'
-        ]);
+        $response = $this->from(route('events.index', $this->user))
+            ->json('PUT', route('editEventDate', [$this->event, $this->user]), [
+                'id' => $this->event->id,
+                'newDate' => '2021-04-01'
+            ]);
 
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('events', [
-            'date'        => '2021-04-01',
+            'date'        => '2021-04-01', // 日付変更
         ]);
     }
 
     function testEdit()
     {
-        $event = Event::factory()->for($this->user)->create(['fishing_type' => 'サビキ釣り']);
-
-        $response = $this->get(route('events.edit', [$this->user, $event]));
+        $response = $this->json(
+            'GET', route('events.edit', [$this->user, $this->event])
+        );
 
         $response->assertStatus(200)
             ->assertJson([
                 ['user_name' => $this->user->user_name],
-                ['spot' => $event->spot],
-                [['start' => $event->date, 'title' => $event->spot]]  // イベントの開始日
+                ['spot' => $this->event->spot],
+                [[
+                    'start' => $this->event->date,
+                    'title' => $this->event->spot
+                ]]  // イベントの開始日
             ]);
     }
 
@@ -124,10 +131,8 @@ class EventControllerTest extends TestCase
      */
     function testUpdate_success($params)
     {
-        $event = Event::factory()->for($this->user)->create(['fishing_type' => 'ルアー釣り']);
-
-        $response = $this->from(route('events.edit', [$event, $this->user]))
-            ->json('PUT', route('events.update', [$this->user, $event]), $params['requestData']);
+        $response = $this->from(route('events.edit', [$this->event, $this->user]))
+            ->json('PUT', route('events.update', [$this->user, $this->event]), $params['requestData']);
 
         $this->assertDatabaseHas('events', [
             'fishing_type'      => 'サビキ釣り',  // 「ルアー釣り」が「サビキ釣り」に変更
@@ -148,10 +153,8 @@ class EventControllerTest extends TestCase
      */
     function testUpdate_validationError($params)
     {
-        $event = Event::factory()->for($this->user)->create(['fishing_type' => 'ルアー釣り']);
-
-        $response = $this->from(route('events.edit', [$this->user, $event]))
-            ->json('PUT', route('events.update', [$this->user, $event]), $params['requestData']);
+        $response = $this->from(route('events.edit', [$this->user, $this->event]))
+            ->json('PUT', route('events.update', [$this->user, $this->event]), $params['requestData']);
 
         $response->assertStatus(422);
 
@@ -166,9 +169,7 @@ class EventControllerTest extends TestCase
 
     public function testDestroy()
     {
-        $event = Event::factory()->for($this->user)->create();
-
-        $response = $this->json('DELETE', route('events.destroy', [$this->user, $event]));
+        $response = $this->json('DELETE', route('events.destroy', [$this->user, $this->event]));
 
         $response->assertStatus(200);
 
@@ -181,12 +182,12 @@ class EventControllerTest extends TestCase
             'valid data' => [
                 [
                     'requestData' => [
-                        'date' => '2021-03-30',
-                        'fishing_type' => 'サビキ釣り',
-                        'spot' => 'かもめ大橋',
+                        'date'               => '2021-03-30',
+                        'fishing_type'       => 'サビキ釣り',
+                        'spot'               => 'かもめ大橋',
                         'fishing_start_time' => '07:10',
-                        'fishing_end_time' => '17:50',
-                        'detail' => 'アジが釣れた。',
+                        'fishing_end_time'   => '17:50',
+                        'detail'             => 'アジが釣れた。',
                     ],
                 ]
             ]
@@ -200,12 +201,12 @@ class EventControllerTest extends TestCase
             'validation: 月日を入力してください' => [
                 [
                     'requestData' => [
-                        'date' => null,
-                        'fishing_type' => 'サビキ釣り',
-                        'spot' => 'かもめ大橋',
+                        'date'               => null,
+                        'fishing_type'       => 'サビキ釣り',
+                        'spot'               => 'かもめ大橋',
                         'fishing_start_time' => '07:10',
-                        'fishing_end_time' => '17:50',
-                        'detail' => 'アジが釣れた。',
+                        'fishing_end_time'   => '17:50',
+                        'detail'             => 'アジが釣れた。',
                     ],
                 ]
             ],

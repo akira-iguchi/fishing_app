@@ -23,7 +23,7 @@ class RegisterControllerTest extends TestCase
     {
         $response = $this->json('GET', url('/signup'));
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertStatus(200);
     }
 
     /**
@@ -34,9 +34,10 @@ class RegisterControllerTest extends TestCase
      */
     public function testRegister_success($params)
     {
-        $response = $this->from('/signup')->json('POST', route('signup'), $params['requestData']);
+        $response = $this->from('/signup')
+            ->json('POST', route('signup'), $params['requestData']);
 
-        $response->assertStatus(Response::HTTP_CREATED);
+        $response->assertStatus(201);
 
         $this->assertCount(1, User::all());
 
@@ -45,30 +46,28 @@ class RegisterControllerTest extends TestCase
         ]);
     }
 
-    // /**
-    //  * 異常系: バリデーションに引っかかる
-    //  *
-    //  * @dataProvider validationUserErrorData
-    //  * @return void
-    //  */
-    // public function testRegister_validationError($params)
-    // {
-    //     $response = $this->from('/signup')->post(route('signup.post'), $params['requestData']);
+    /**
+     * 異常系: バリデーションに引っかかる
+     *
+     * @dataProvider validationUserErrorData
+     * @return void
+     */
+    public function testRegister_validationError($params)
+    {
+        $response = $this->from('/signup')
+            ->json('POST', route('signup'), $params['requestData']);
 
-    //     $response->assertStatus(Response::HTTP_FOUND)
-    //             ->assertRedirect('/signup')
-    //             ->assertSessionHasErrors();
+        $response->assertStatus(422);
 
-    //     $error = session('errors')->first();
-    //     $this->assertStringContainsString('ユーザー名を入力してください', $error);
+        $error = $response['errors']['user_name'][0];
+        $this->assertEquals('ユーザー名を入力してください。', $error);
 
-    //     $this->assertCount(0, User::all());
+        $this->assertCount(0, User::all());
 
-    //     $this->assertDatabaseMissing('users', [
-    //         'id'             => 1,
-    //         'user_name'      => $params['requestData']['user_name'],
-    //     ]);
-    // }
+        $this->assertDatabaseMissing('users', [
+            'user_name'      => $params['requestData']['user_name'],
+        ]);
+    }
 
     public function UserData()
     {

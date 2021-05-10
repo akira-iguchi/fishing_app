@@ -22,41 +22,35 @@ class UserControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->user = User::factory()
+            ->create(['id' => 2, 'user_name' => 'テストユーザー']);
+        $this->actingAs($this->user);
+    }
+
+    public function testShow()
+    {
+        $response = $this->json('GET', route('users.show', $this->user));
+
+        $response->assertStatus(200)
+            ->assertJson(
+                ['user_name' => $this->user->user_name],
+            );
     }
 
     /**
-     * ゲストユーザー以外（id > 1）はアクセスできる
+     * ゲストユーザー以外（id > 1）はアクセスできる（ゲストユーザーのアクセス不可はVue.jsで処理）
      *
      * @return void
      */
     function testEditCanAccess()
     {
-        $user = User::factory()->create(['id' => 2]);
-        $this->actingAs($user);
+        $response = $this->json('GET', route('users.edit', $this->user));
 
-        $response = $this->get("/users/{$user->id}/edit");
-
-        $response->assertStatus(Response::HTTP_OK)
-                ->assertSee($user->user_name)
-                ->assertSee('ゲスト');
-    }
-
-    /**
-     * ゲストユーザー（id = 1）はアクセスできない
-     *
-     * @return void
-     */
-    function testEditCannotAccess()
-    {
-        $user = User::factory()->create(['id' => 1]);
-        $this->actingAs($user);
-
-        $response = $this->get("/users/{$user->id}/edit");
-
-        $response->assertStatus(Response::HTTP_FOUND)
-                ->assertRedirect('/')
-                ->assertDontSee($user->user_name)
-                ->assertDontSee('ゲスト');
+        $response->assertStatus(200)
+            ->assertJson(
+                ['user_name' => $this->user->user_name],
+            );
     }
 
     /**
@@ -67,18 +61,19 @@ class UserControllerTest extends TestCase
      */
     function testUpdate_success($params)
     {
-        $user = User::factory()->create(['user_name' => 'テスト']);
-        $this->actingAs($user);
-
         Storage::fake('s3');
-        $response = $this->from("/users/{$user->id}/edit")->put(route('users.update', $user->id), $params['requestData']);
+
+        $response = $this->from(route('users.edit', $this->user))
+            ->json('PUT', route('users.update', $this->user), $params['requestData']);
 
         $this->assertDatabaseHas('users', [
-            'user_name'      => 'ゲスト',  // 「テスト」が「ゲスト」に変更（$user（変数）に変更はない）
+            'user_name'      => 'ゲストユーザー',  // 「テストユーザー」が「ゲストユーザー」に変更
         ]);
 
-        $response->assertStatus(Response::HTTP_FOUND)
-                ->assertRedirect("/users/{$user->id}");
+        $response->assertStatus(201)
+            ->assertJson(
+                ['user_name' => 'ゲストユーザー'],  // 「貝塚人工島」が「かもめ大橋」に変更
+            );
 
         // S3に画像を保存(fake使用)
         $uploadedFile = $params['requestData']['user_image'];
@@ -94,90 +89,17 @@ class UserControllerTest extends TestCase
      */
     function testUpdate_validationError($params)
     {
-        $user = User::factory()->create(['user_name' => 'テスト']);
-        $this->actingAs($user);
+        $response = $this->from(route('users.edit', $this->user))
+            ->json('PUT', route('users.update', $this->user), $params['requestData']);
 
-        $response = $this->from("/users/{$user->id}/edit")->put(route('users.update', $user->id), $params['requestData']);
+        $response->assertStatus(422);
 
-        $response->assertStatus(Response::HTTP_FOUND)
-                ->assertRedirect("/users/{$user->id}/edit")
-                ->assertSessionHasErrors();
-
-        $error = session('errors')->first();
-        $this->assertStringContainsString('ユーザー名を入力してください', $error);
+        $error = $response['errors']['user_name'][0];
+        $this->assertEquals('ユーザー名を入力してください。', $error);
 
         $this->assertDatabaseMissing('users', [
-            'user_name'      => 'ゲスト',
+            'user_name'      => 'ゲストユーザー',
         ]);
-    }
-
-    public function testFollow()
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $other_user = User::factory()->create();
-        $this->actingAs($other_user);
-
-        $response = $this->put(route('users.follow', [$user->id, $other_user->id]));
-
-        $response->assertStatus(Response::HTTP_OK);
-
-        $this->assertDatabaseHas('follows', [
-            'followee_id' => $user->id,
-            'follower_id' => $other_user->id,
-        ]);
-    }
-
-    /**
-     * 自信をフォローはできない
-     *
-     * @return void
-     */
-    public function testFollow_myself()
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
-        $response = $this->put(route('users.follow', [$user->id, $user->id]));
-
-        $response->assertStatus(404);
-
-        $this->assertDatabaseMissing('follows', [
-            'followee_id' => $user->id,
-            'follower_id' => $user->id,
-        ]);
-    }
-
-    public function testUnFollow()
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $other_user = User::factory()->create();
-        $this->actingAs($other_user);
-
-        // 事前にリレーション
-        $user->followings()->attach($other_user);
-
-        $response = $this->delete(route('users.unfollow', [$user->id, $other_user->id]));
-
-        $response->assertStatus(Response::HTTP_OK);
-
-        $this->assertDatabaseMissing('follows', [
-            'followee_id' => $user->id,
-            'follower_id' => $other_user->id,
-        ]);
-    }
-
-    public function testShow()
-    {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
-        $response = $this->get("/users/{$user->id}");
-
-        $response->assertStatus(Response::HTTP_OK)
-                ->assertSee($user->user_name)
-                ->assertSee('ゲスト');
     }
 
     public function UserData()
@@ -186,7 +108,7 @@ class UserControllerTest extends TestCase
             'valid data' => [
                 [
                     'requestData' => [
-                        'user_name' => 'ゲスト',
+                        'user_name' => 'ゲストユーザー',
                         'email' => 'guest@example.com',
                         'user_image' => UploadedFile::fake()->image('defaultAvatar.jpg'),
                         'introduction' => 'よろしくお願いいたします!!!',
@@ -200,7 +122,7 @@ class UserControllerTest extends TestCase
     {
         return [
             // user_nameのバリデーションのみ
-            'validation: ユーザー名を入力してください' => [
+            'validation: ユーザー名を入力してください。' => [
                 [
                     'requestData' => [
                         'user_name' => null,

@@ -13,38 +13,43 @@ class SpotFavoriteControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
+
+        $this->spot = Spot::factory()->for($this->user)->create();
+    }
+
     public function testFavorite()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->create();
+        $response = $this->json(
+            'PUT', route('spots.favorite', [$this->spot->id, $this->user->id])
+        );
 
-        $response = $this->put(route('spots.favorite', [$spot->id, $user->id]));
-
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertStatus(200);
 
         $this->assertDatabaseHas('spot_favorite', [
-            'spot_id' => $spot->id,
-            'user_id' => $user->id,
+            'spot_id' => $this->spot->id,
+            'user_id' => $this->user->id,
         ]);
     }
 
     public function testUnFavorite()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->create();
-
         // 事前にリレーション
-        $spot->spotFavorites()->attach($user);
+        $this->spot->spotFavorites()->attach($this->user);
 
-        $response = $this->delete(route('spots.unfavorite', [$spot->id, $user->id]));
+        $response = $this
+            ->json('DELETE', route('spots.unfavorite', [$this->spot->id, $this->user->id]));
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertStatus(200);
 
         $this->assertDatabaseMissing('spot_favorite', [
-            'spot_id' => $spot->id,
-            'user_id' => $user->id,
+            'spot_id' => $this->spot->id,
+            'user_id' => $this->user->id,
         ]);
     }
 }

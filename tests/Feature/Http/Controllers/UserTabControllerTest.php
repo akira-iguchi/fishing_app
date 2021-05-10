@@ -7,65 +7,69 @@ use App\Models\Spot;
 use App\Models\User;
 use App\Models\SpotImage;
 use Illuminate\Http\Response;
+use Tests\Factories\Traits\CreateSpot;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTabControllerTest extends TestCase
 {
     use RefreshDatabase;
+    use CreateSpot;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
+        $this->otherUser = User::factory()->create();
+
+        $this->spot = Spot::factory()->for($this->user)
+                ->has(SpotImage::factory(), 'spotImages')->create();
+    }
 
     public function testSpots()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
-                ->create(['spot_name' => 'かもめ大橋']);
+        $response = $this->json('GET', route('users.spots', $this->user));
 
-        $response = $this->get("/users/{$user->id}/spots");
-
-        $response->assertStatus(Response::HTTP_OK)
-                ->assertJson([['spot_name' => $spot->spot_name]]);
+        $response->assertStatus(200)
+            ->assertJson([
+                ['spot_name' => $this->spot->spot_name],
+            ]);
     }
 
     public function testFavoriteSpots()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')
-                ->create(['spot_name' => 'かもめ大橋']);
+        $this->user->favoriteSpots()->attach($this->spot);
 
-        $user->favoriteSpots()->attach($spot);
+        $response = $this->json('GET', route('users.favoriteSpots', $this->user));
 
-        $response = $this->get("/users/{$user->id}/favoriteSpots");
-
-        $response->assertStatus(Response::HTTP_OK)
-                ->assertJson([['spot_name' => $spot->spot_name]]);
+        $response->assertStatus(200)
+            ->assertJson([
+                ['spot_name' => $this->spot->spot_name],
+            ]);
     }
 
     public function testFollowings()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $other_user = User::factory()->create();
+        $this->user->followings()->attach($this->otherUser);
 
-        $user->followings()->attach($other_user);
+        $response = $this->json('GET', route('users.followings', $this->user));
 
-        $response = $this->get("/users/{$user->id}/followings");
-
-        $response->assertStatus(Response::HTTP_OK)
-                ->assertJson([['user_name' => $other_user->user_name]]);
+        $response->assertStatus(200)
+            ->assertJson([
+                ['user_name' => $this->otherUser->user_name],
+            ]);
     }
 
     public function testFollowers()
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-        $other_user = User::factory()->create();
+        $this->user->followers()->attach($this->otherUser);
 
-        $user->followers()->attach($other_user);
+        $response = $this->json('GET', route('users.followers', $this->user));
 
-        $response = $this->get("/users/{$user->id}/followers");
-
-        $response->assertStatus(Response::HTTP_OK)
-                ->assertJson([['user_name' => $other_user->user_name]]);
+        $response->assertStatus(200)
+            ->assertJson([
+                ['user_name' => $this->otherUser->user_name],
+            ]);
     }
 }

@@ -4,63 +4,115 @@ namespace Tests\Feature\Http\Controllers\Auth;
 
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Http\Response;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use DatabaseMigrations;
 
 class LoginControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testLoginView()
+    public function setUp(): void
     {
-        $response = $this->get('/login');
-        $response->assertStatus(Response::HTTP_OK);
-        // 認証されていないことを確認
-        $this->assertGuest();
-    }
+        parent::setUp();
 
-    public function testLogin()
-    {
-        $this->assertGuest();
-        // ダミーログイン
-        $response = $this->dummyLogin();
-        $response->assertStatus(Response::HTTP_OK);
-
-        $this->assertAuthenticated();
-    }
-
-    public function testLogout()
-    {
-        $response = $this->dummyLogin();
-
-        $this->assertAuthenticated();
-        $response = $this->json('POST', route('logout'));
-
-        $response->assertStatus(Response::HTTP_OK);
-
-        $this->assertGuest();
-    }
-
-    public function testGuestLogin()
-    {
-        $this->assertGuest();
-        $this->user = User::factory()->create(['id' => 1]);
-        // ダミーログイン
-        $response = $this->json('POST', route('guestLogin'));
-        $response->assertStatus(Response::HTTP_OK);
-
-        $this->assertAuthenticated();
+        $this->user = User::factory()->create([
+            'email' => 'guest@example.com',
+            'password' => 'password'
+        ]);
     }
 
     /**
-     * ダミーユーザーログイン
+     * @test
      */
-    private function dummyLogin()
+    public function should_登録済みのユーザーを認証して返却する()
     {
-        $user = User::factory()->create();
-        return $this->actingAs($user)
-                    ->withSession(['user_id' => $user->id])
-                    ->get('/');
+        $response = $this->json('POST', route('login'), [
+            'email' => $this->user->email,
+            'password' => 'password',
+        ]);
+
+        dd(User::all());
+
+        dd($response['errors']['email']);
+
+        $response->assertStatus(200)
+            ->assertJson(['name' => $this->user->name]);
+
+        $this->assertAuthenticatedAs($this->user);
     }
+
+    // public function testLoginView()
+    // {
+    //     $response = $this->get('/login');
+    //     $response->assertStatus(200);
+    //     // 認証されていないことを確認
+    //     $this->assertGuest();
+    // }
+
+    // public function testLogin()
+    // {
+    //     $this->assertGuest();
+    //     // ダミーログイン
+    //     $response = $this->dummyLogin();
+    //     $response->assertStatus(200);
+
+    //     $this->assertAuthenticated();
+    // }
+
+    // public function testLogout()
+    // {
+    //     $response = $this->dummyLogin();
+
+    //     $this->assertAuthenticated();
+    //     $response = $this->json('POST', route('logout'));
+
+    //     $response->assertStatus(200);
+
+    //     $this->assertGuest();
+    // }
+
+    // /**
+    //  * ゲストログイン
+    //  *
+    //  * @dataProvider guestLoginData
+    //  * @return void
+    //  */
+    // public function testGuestLogin($params)
+    // {
+    //     $this->assertGuest();
+    //     $user = User::factory()->create([
+    //         'email' => 'guest@example.com',
+    //         'password' => 'password'
+    //     ]);
+
+    //     $response = $this->json('POST', route('guestLogin'), $params['requestData']);
+
+    //     $response->assertStatus(200);
+
+    //     $this->assertAuthenticatedAs($user);
+    // }
+
+    // /**
+    //  * ダミーユーザーログイン
+    //  */
+    // private function dummyLogin()
+    // {
+    //     $user = User::factory()->create();
+    //     return $this->actingAs($user)
+    //                 ->withSession(['user_id' => $user->id])
+    //                 ->get('/');
+    // }
+
+    // public function guestLoginData()
+    // {
+    //     return [
+    //         'valid data' => [
+    //             [
+    //                 'requestData' => [
+    //                     'email'      => 'guest@example.com',
+    //                     'password'   => 'password'
+    //                 ],
+    //             ]
+    //         ]
+    //     ];
+    // }
 }
