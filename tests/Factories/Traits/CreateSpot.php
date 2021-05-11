@@ -10,7 +10,7 @@ trait CreateSpot
 {
     private function createSpot(): Spot
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['email' => 'test@test.com']);
         $this->actingAs($user);
 
         $spot = Spot::factory()->for($user)->has(SpotImage::factory(), 'spotImages')

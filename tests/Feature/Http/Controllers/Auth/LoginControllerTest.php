@@ -16,103 +16,74 @@ class LoginControllerTest extends TestCase
 
         $this->user = User::factory()->create([
             'email' => 'guest@example.com',
-            'password' => 'password'
+            'password' => bcrypt('password')
         ]);
     }
 
-    /**
-     * @test
-     */
-    public function should_登録済みのユーザーを認証して返却する()
+    public function testLoginView()
     {
+        $response = $this->get('/login');
+        $response->assertStatus(200);
+        // 認証されていないことを確認
+        $this->assertGuest();
+    }
+
+    public function testLogin_success()
+    {
+        $this->assertGuest();
+
         $response = $this->json('POST', route('login'), [
             'email' => $this->user->email,
             'password' => 'password',
         ]);
 
-        dd(User::all());
-
-        dd($response['errors']['email']);
-
         $response->assertStatus(200)
-            ->assertJson(['name' => $this->user->name]);
+            ->assertJson(['user_name' => $this->user->user_name]);
 
         $this->assertAuthenticatedAs($this->user);
     }
 
-    // public function testLoginView()
-    // {
-    //     $response = $this->get('/login');
-    //     $response->assertStatus(200);
-    //     // 認証されていないことを確認
-    //     $this->assertGuest();
-    // }
+    public function testLogin_validationError()
+    {
+        $this->assertGuest();
 
-    // public function testLogin()
-    // {
-    //     $this->assertGuest();
-    //     // ダミーログイン
-    //     $response = $this->dummyLogin();
-    //     $response->assertStatus(200);
+        $response = $this->json('POST', route('login'), [
+            'email' => $this->user->email,
+            'password' => 'password222',
+        ]);
 
-    //     $this->assertAuthenticated();
-    // }
+        $response->assertStatus(422);
 
-    // public function testLogout()
-    // {
-    //     $response = $this->dummyLogin();
+        $error = $response['errors']['email'][0];
+        $this->assertEquals('ログイン情報が登録されていません。', $error);
 
-    //     $this->assertAuthenticated();
-    //     $response = $this->json('POST', route('logout'));
+        $this->assertGuest();
+    }
 
-    //     $response->assertStatus(200);
+    public function testLogout()
+    {
+        $this->actingAs($this->user);
 
-    //     $this->assertGuest();
-    // }
+        $this->assertAuthenticatedAs($this->user);
+        $response = $this->json('POST', route('logout'));
 
-    // /**
-    //  * ゲストログイン
-    //  *
-    //  * @dataProvider guestLoginData
-    //  * @return void
-    //  */
-    // public function testGuestLogin($params)
-    // {
-    //     $this->assertGuest();
-    //     $user = User::factory()->create([
-    //         'email' => 'guest@example.com',
-    //         'password' => 'password'
-    //     ]);
+        $response->assertStatus(200);
 
-    //     $response = $this->json('POST', route('guestLogin'), $params['requestData']);
+        $this->assertGuest();
+    }
 
-    //     $response->assertStatus(200);
+    public function testGuestLogin()
+    {
+        $this->assertGuest();
 
-    //     $this->assertAuthenticatedAs($user);
-    // }
+        $response = $this->json('POST', route('guestLogin'), [
+            'email' => $this->user->email,
+            'password' => 'password',
+        ]);
 
-    // /**
-    //  * ダミーユーザーログイン
-    //  */
-    // private function dummyLogin()
-    // {
-    //     $user = User::factory()->create();
-    //     return $this->actingAs($user)
-    //                 ->withSession(['user_id' => $user->id])
-    //                 ->get('/');
-    // }
+        $response->assertStatus(200)
+            ->assertJson(['user_name' => $this->user->user_name]);
 
-    // public function guestLoginData()
-    // {
-    //     return [
-    //         'valid data' => [
-    //             [
-    //                 'requestData' => [
-    //                     'email'      => 'guest@example.com',
-    //                     'password'   => 'password'
-    //                 ],
-    //             ]
-    //         ]
-    //     ];
-    // }
+        $this->assertAuthenticatedAs($this->user);
+    }
 }

@@ -13,7 +13,6 @@ class SpotCommentController extends Controller
 {
     public function store(SpotCommentRequest $request, SpotComment $spot_comment)
     {
-        \Log::info($request->all());
         $spot_comment->fill($request->except('comment_image'));
         $spot_comment->spot_id = $request->spot_id;
         $spot_comment->user_id = Auth::id();

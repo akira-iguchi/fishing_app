@@ -21,7 +21,7 @@ class UserTabControllerTest extends TestCase
 
         $this->user = User::factory()->create();
         $this->actingAs($this->user);
-        $this->otherUser = User::factory()->create();
+        $this->otherUser = User::factory()->create(['email' => 'test@test.com']);
 
         $this->spot = Spot::factory()->for($this->user)
                 ->has(SpotImage::factory(), 'spotImages')->create();
