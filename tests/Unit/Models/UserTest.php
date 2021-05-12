@@ -1,10 +1,11 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Spot;
+use App\Models\SpotImage;
 use App\Models\Event;
 use App\Models\SpotComment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -13,67 +14,66 @@ class UserTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create(['email' => 'test@test.com']);
+        $this->actingAs($this->user);
+
+        $this->otherUser = User::factory()->create();
+
+        $this->spot = Spot::factory()->for($this->user)
+            ->has(SpotImage::factory(), 'spotImages')
+            ->count(5)->create(['spot_name' => 'かもめ大橋']);
+    }
+
     public function testFactoryable()
     {
         $eloquent = app(User::class);
-        $this->assertEmpty($eloquent->get());
-        $user = User::factory()->create();
         $this->assertNotEmpty($eloquent->get());
     }
 
     public function testUserHasManySpots()
     {
-        $user = User::factory()->create();
-        $spot = Spot::factory()->for($user)->count(5)->create();
         // refresh() で再度同じレコードを取得しなおし、リレーション先の件数が作成した件数と一致することを確認し、リレーションが問題ないことを保証
-        $this->assertEquals(5, count($user->refresh()->spots));
+        $this->assertEquals(5, count($this->user->refresh()->spots));
     }
 
     public function testUserHasManyEvents()
     {
-        $user = User::factory()->create();
-        $event = Event::factory()->for($user)->count(5)->create();
-        $this->assertEquals(5, count($user->refresh()->events));
+        $event = Event::factory()->for($this->user)->count(5)->create();
+        $this->assertEquals(5, count($this->user->refresh()->events));
     }
 
     public function testUserBelongsToManyFavoriteSpots()
     {
-        $user = User::factory()->create();
-        $spot = Spot::factory()->for($user)->create();
-        $user->favoriteSpots()->attach($spot);
-        $this->assertEquals(1, count($user->refresh()->favoriteSpots));
+        $this->user->favoriteSpots()->attach($this->spot);
+        $this->assertEquals(5, count($this->user->refresh()->favoriteSpots));
     }
 
     public function testUserHasManySpotComments()
     {
-        $user = User::factory()->create();
-        $spot = Spot::factory()->for($user)->create();
-        $comment = SpotComment::factory()->for($user)->for($spot)->count(5)->create();
-        $this->assertEquals(5, count($user->refresh()->spotComments));
+        $comment = SpotComment::factory()->for($this->user)->for($this->spot)->count(5)->create();
+        $this->assertEquals(5, count($this->user->refresh()->spotComments));
     }
 
     public function testUserBelongsToManyFollowings()
     {
-        $user = User::factory()->create();
-        $other_user = User::factory()->create();
-        $user->followings()->attach($other_user);
-        $this->assertEquals(1, count($user->refresh()->followings));
+        $this->user->followings()->attach($this->otherUser);
+        $this->assertEquals(1, count($this->user->refresh()->followings));
     }
 
     public function testUserBelongsToManyFollowers()
     {
-        $user = User::factory()->create();
-        $other_user = User::factory()->create();
-        $user->followers()->attach($other_user);
-        $this->assertEquals(1, count($user->refresh()->followers));
+        $this->user->followers()->attach($this->otherUser);
+        $this->assertEquals(1, count($this->user->refresh()->followers));
     }
 
-    public function testUserIsFollowedBy()
+    public function testUserFollowedBy()
     {
-        $user = User::factory()->create();
-        $other_user = User::factory()->create();
-        $user->followers()->attach($other_user);
-        $this->assertEquals(true, $user->refresh()->isFollowedBy($other_user));
-        $this->assertEquals(false, $other_user->refresh()->isFollowedBy($user));
+        $this->user->followings()->attach($this->otherUser);
+        $this->assertEquals(true, $this->otherUser->refresh()->followed_by);
+        $this->assertEquals(false, $this->user->refresh()->followed_by);
     }
 }

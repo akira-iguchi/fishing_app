@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\Tag;
@@ -15,71 +15,66 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class SpotTest extends TestCase
 {
     use RefreshDatabase;
-    use CreateSpot;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
+
+        $this->spot = Spot::factory()->for($this->user)
+            ->has(SpotImage::factory(), 'spotImages')->create();
+
+        $this->spot->spotFavorites()->attach($this->user);
+    }
 
     public function testFactoryable()
     {
         $eloquent = app(Spot::class);
-        $this->assertEmpty($eloquent->get());
-        $user = User::factory()->create();
-        $spot = Spot::factory()->for($user)->create();
         $this->assertNotEmpty($eloquent->get());
     }
 
     public function testSpotBelongsToUser()
     {
-        $user = User::factory()->create();
-        $spot = Spot::factory()->for($user)->create();
-        $this->assertNotEmpty($spot->user);
+        $this->assertNotEmpty($this->spot->user);
     }
 
     public function testSpotHasManySpotImages()
     {
-        $user = User::factory()->create();
-        $spot = Spot::factory()->for($user)->create();
-        $spot_image = SpotImage::factory()->for($spot)->count(5)->create();
-        $this->assertEquals(5, count($spot->refresh()->spotImages));
+        // refresh() で再度同じレコードを取得しなおし、リレーション先の件数が作成した件数と一致することを確認し、リレーションが問題ないことを保証
+        $this->assertEquals(1, count($this->spot->refresh()->spotImages));
     }
 
     public function testSpotHasManySpotComments()
     {
-        $user = User::factory()->create();
-        $spot = Spot::factory()->for($user)->create();
-        $comment = SpotComment::factory()->for($user)->for($spot)->count(5)->create();
-        $this->assertEquals(5, count($spot->refresh()->spotComments));
+        $comment = SpotComment::factory()->for($this->user)->for($this->spot)->count(5)->create();
+        $this->assertEquals(5, count($this->spot->refresh()->spotComments));
     }
 
     public function testSpotBelongsToManyFavoriteSpots()
     {
-        $user = User::factory()->create();
-        $spot = Spot::factory()->for($user)->create();
-        $spot->spotFavorites()->attach($user);
-        $this->assertEquals(1, count($spot->refresh()->spotFavorites));
+        $this->assertEquals(1, count($this->spot->refresh()->spotFavorites));
     }
 
-    public function testSpotIsLikedBy()
+    public function testSpotIsLikedByUser()
     {
-        $user = User::factory()->create();
-        $spot = Spot::factory()->for($user)->create();
-        $other_spot = Spot::factory()->for($user)->create();
-        $spot->spotFavorites()->attach($user);
-        $this->assertEquals(true, $spot->refresh()->isLikedBy($user));
-        $this->assertEquals(false, $other_spot->refresh()->isLikedBy($user));
+        $other_spot = Spot::factory()->for($this->user)->create();
+        $this->assertEquals(true, $this->spot->refresh()->liked_by_user);
+        $this->assertEquals(false, $other_spot->refresh()->liked_by_user);
     }
 
     public function testSpotBelongsToManyTags()
     {
-        $spot = $this->createSpot();
         $tag = Tag::factory()->create();
-        $spot->tags()->attach($tag);
-        $this->assertEquals(1, count($spot->refresh()->tags));
+        $this->spot->tags()->attach($tag);
+        $this->assertEquals(1, count($this->spot->refresh()->tags));
     }
 
     public function testSpotBelongsToManyFishingTypes()
     {
-        $spot = $this->createSpot();
         $fishing_type = FishingType::factory()->create();
-        $spot->fishingTypes()->attach($fishing_type);
-        $this->assertEquals(1, count($spot->refresh()->fishingTypes));
+        $this->spot->fishingTypes()->attach($fishing_type);
+        $this->assertEquals(1, count($this->spot->refresh()->fishingTypes));
     }
 }

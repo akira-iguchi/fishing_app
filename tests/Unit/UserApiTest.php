@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
-use App\Models\User;
 use Tests\TestCase;
+use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -22,8 +22,7 @@ class UserApiTest extends TestCase
     {
         $response = $this->actingAs($this->user)->json('GET', route('user'));
 
-        $response
-            ->assertStatus(200)
+        $response->assertStatus(200)
             ->assertJson([
                 'user_name' => $this->user->user_name,
             ]);
@@ -34,6 +33,7 @@ class UserApiTest extends TestCase
         $response = $this->json('GET', route('user'));
 
         $response->assertStatus(200);
+
         $this->assertEquals("", $response->content());
     }
 }

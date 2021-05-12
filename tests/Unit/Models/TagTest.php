@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\Tag;
@@ -12,19 +12,25 @@ class TagTest extends TestCase
     use RefreshDatabase;
     use CreateSpot;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->spot = $this->createSpot();
+
+        $this->tag = Tag::factory()->create();
+    }
+
     public function testFactoryable()
     {
         $eloquent = app(Tag::class);
-        $this->assertEmpty($eloquent->get());
-        $tag = Tag::factory()->create();
         $this->assertNotEmpty($eloquent->get());
     }
 
     public function testTagBelongsToManySpots()
     {
-        $spot = $this->createSpot();
-        $tag = Tag::factory()->create();
-        $tag->spots()->attach($spot);
-        $this->assertEquals(1, count($tag->refresh()->spots));
+        $this->tag->spots()->attach($this->spot);
+        // refresh() で再度同じレコードを取得しなおし、リレーション先の件数が作成した件数と一致することを確認し、リレーションが問題ないことを保証
+        $this->assertEquals(1, count($this->tag->refresh()->spots));
     }
 }

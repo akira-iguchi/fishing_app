@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\Spot;
@@ -13,19 +13,25 @@ class FishingTypeTest extends TestCase
     use RefreshDatabase;
     use CreateSpot;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->spot = $this->createSpot();
+
+        $this->fishingType = FishingType::factory()->create();
+    }
+
     public function testFactoryable()
     {
         $eloquent = app(FishingType::class);
-        $this->assertEmpty($eloquent->get());
-        $user = FishingType::factory()->create();
         $this->assertNotEmpty($eloquent->get());
     }
 
     public function testFishingTypeBelongsToManySpots()
     {
-        $spot = $this->createSpot();
-        $fishing_type = FishingType::factory()->create();
-        $fishing_type->spots()->attach($spot);
-        $this->assertEquals(1, count($fishing_type->refresh()->spots));
+        $this->fishingType->spots()->attach($this->spot);
+        // refresh() で再度同じレコードを取得しなおし、リレーション先の件数が作成した件数と一致することを確認し、リレーションが問題ないことを保証
+        $this->assertEquals(1, count($this->fishingType->refresh()->spots));
     }
 }
