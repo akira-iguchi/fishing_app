@@ -2,18 +2,20 @@
     <div>
         <h1>釣りスポット作成</h1>
 
-        <input
-            class="spot_search"
-            id="address"
-            type="text"
-            v-model="mapAddress"
-            placeholder="所在地を入力"
-        >
-        <button @click="searchAddress" class="spot_search_button"><i class="fas fa-search"></i></button>
+        <div class="d-flex">
+            <input
+                class="spot_search"
+                id="address"
+                type="text"
+                v-model="mapAddress"
+                placeholder="所在地を入力"
+            >
+            <button @click="searchAddress" class="spot_search_button"><i class="fas fa-search"></i></button>
+        </div>
 
-        <!-- <GmapMap :center="mapLocation" :zoom="15" map-type-id="terrain" id="map" @click="updateLocation">
+        <GmapMap :center="mapLocation" :zoom="15" map-type-id="terrain" id="map" @click="updateLocation">
             <GmapMarker :animation="2" :position="mapLocation" :clickable="true" :draggable="true" @dragend="updateLocation" />
-        </GmapMap> -->
+        </GmapMap>
         <p>マーカーの移動も可能だよ！</p>
 
         <form @submit.prevent="spotData">
@@ -165,6 +167,7 @@
             <button class="spot-create-edit-button" v-if="isEdit">
                 <i class="fas fa-pencil-alt"></i>&thinsp;更新
             </button>
+
             <button class="spot-create-edit-button" v-else>
                 <i class="fas fa-pencil-alt"></i>&thinsp;投稿
             </button>
@@ -184,19 +187,26 @@
         props: {
             tagNames: {
                 type: Array,
+                required: true,
                 default: () => [],
             },
             fishingTypeNames: {
                 type: Array,
+                required: true,
                 default: () => [],
             },
             intialSpotValue: {
                 type: Object,
+                required: true,
+                default: () => {},
+            },
+            intialspotFishingTypes: {
+                type: Array,
                 required: false,
             },
             intialSpotTags: {
                 type: Array,
-                default: () => [],
+                required: false,
             },
             errors: {
                 type: Object,
@@ -251,6 +261,7 @@
                 this.longitude = this.spot.longitude
                 this.spotName = this.spot.spot_name
                 this.address = this.spot.address
+                this.fishingTypes = this.intialspotFishingTypes
                 this.tags = JSON.stringify(this.spotTags)
                 this.explanation = this.spot.explanation
 

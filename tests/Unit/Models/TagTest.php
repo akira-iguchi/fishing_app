@@ -27,6 +27,12 @@ class TagTest extends TestCase
         $this->assertNotEmpty($eloquent->get());
     }
 
+    public function testTagHashtag()
+    {
+        $this->assertEquals('#' . $this->tag->tag_name, $this->tag->hash_tag);
+        $this->assertEquals('#よく釣れる', $this->tag->hash_tag);
+    }
+
     public function testTagBelongsToManySpots()
     {
         $this->tag->spots()->attach($this->spot);

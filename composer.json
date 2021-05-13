@@ -24,6 +24,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
+        "barryvdh/laravel-ide-helper": "^2.10",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
@@ -76,7 +77,9 @@
         "test": [
             "./vendor/phpunit/phpunit/phpunit test"
         ],
-        "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
+        "phpstan": [
+            "./vendor/bin/phpstan analyse -c phpstan.neon"
+        ],
         "phpunit": "./vendor/bin/phpunit"
     }
 }

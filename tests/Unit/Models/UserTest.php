@@ -25,6 +25,7 @@ class UserTest extends TestCase
 
         $this->spot = Spot::factory()->for($this->user)
             ->has(SpotImage::factory(), 'spotImages')
+            ->has(SpotComment::factory()->for($this->user), 'spotComments')
             ->count(5)->create(['spot_name' => 'かもめ大橋']);
     }
 
@@ -54,7 +55,6 @@ class UserTest extends TestCase
 
     public function testUserHasManySpotComments()
     {
-        $comment = SpotComment::factory()->for($this->user)->for($this->spot)->count(5)->create();
         $this->assertEquals(5, count($this->user->refresh()->spotComments));
     }
 

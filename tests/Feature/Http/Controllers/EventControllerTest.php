@@ -34,7 +34,8 @@ class EventControllerTest extends TestCase
     {
         $response = $this->json('GET', route('events.index', $this->user));
 
-        $response->assertStatus(200)
+        $response
+            ->assertStatus(200)
             ->assertJson([
                 ['user_name' => $this->user->user_name],
                 [['start' => $this->event->date, 'title' => $this->event->spot]]  // イベントの開始日
@@ -112,7 +113,8 @@ class EventControllerTest extends TestCase
             'GET', route('events.edit', [$this->user, $this->event])
         );
 
-        $response->assertStatus(200)
+        $response
+            ->assertStatus(200)
             ->assertJson([
                 ['user_name' => $this->user->user_name],
                 ['spot' => $this->event->spot],
@@ -139,7 +141,8 @@ class EventControllerTest extends TestCase
             'user_id'        => $this->user->id,
         ]);
 
-        $response->assertStatus(201)
+        $response
+            ->assertStatus(201)
             ->assertJson([
                 'spot' => $params['requestData']['spot']
             ]);

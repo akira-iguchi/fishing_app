@@ -73,8 +73,8 @@ class SpotTest extends TestCase
 
     public function testSpotBelongsToManyFishingTypes()
     {
-        $fishing_type = FishingType::factory()->create();
-        $this->spot->fishingTypes()->attach($fishing_type);
+        $fishingType = FishingType::factory()->create();
+        $this->spot->fishingTypes()->attach($fishingType);
         $this->assertEquals(1, count($this->spot->refresh()->fishingTypes));
     }
 }

@@ -26,6 +26,7 @@
 
                     <EventForm
                         v-if="eventDataLoaded"
+                        :isEdit="true"
                         :intialEventValue="event"
                         :errors="errors"
                         :deleteInput="deleteInput"

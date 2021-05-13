@@ -20,19 +20,23 @@ class FishingTypeControllerTest extends TestCase
 
         $this->user = User::factory()->create();
         $this->actingAs($this->user);
+
+        $this->spot = $this->createSpot();
+
+        $this->fishingType = FishingType::factory()->create();
     }
 
     public function testInvoke()
     {
-        $spot = $this->createSpot();
-        $fishing_type = FishingType::factory()->create();
-        $spot->fishingTypes()->attach($fishing_type);
+        $this->spot->fishingTypes()->attach($this->fishingType);
 
         $response = $this->json('GET', route('fishing_types'));
 
-        $response->assertStatus(200)->assertJson([[
-            'fishing_type_name' => $fishing_type->fishing_type_name,
-            'spots' => [['spot_name' => $spot->spot_name]]
-        ]]);
+        $response
+            ->assertStatus(200)
+            ->assertJson([[
+                'fishing_type_name' => $this->fishingType->fishing_type_name,
+                'spots' => [['spot_name' => $this->spot->spot_name]]
+            ]]);
     }
 }

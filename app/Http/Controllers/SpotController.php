@@ -113,12 +113,12 @@ class SpotController extends Controller
         return [$allTagNames, $allFishingTypeNames];
     }
 
-    public function store(SpotRequest $request, Spot $spot, SpotImage $spot_image)
+    public function store(SpotRequest $request, Spot $spot, SpotImage $spotImage)
     {
         $spot->user_id = auth()->id();
         $spot->fill($request->all())->save();
 
-        SpotTrait::imageUploadByCase($spot, $request, $spot_image);
+        SpotTrait::imageUploadByCase($spot, $request, $spotImage);
 
         // タグとリレーション
         $request->tags->each(function ($tagName) use ($spot) {
@@ -153,13 +153,13 @@ class SpotController extends Controller
         return [$spot, $spotFishingTypeNames, $spotTagNames, $allTagNames, $allFishingTypeNames];
     }
 
-    public function update(SpotRequest $request, Spot $spot, SpotImage $spot_image)
+    public function update(SpotRequest $request, Spot $spot, SpotImage $spotImage)
     {
-        return DB::transaction(function () use ($spot, $spot_image, $request) {
+        return DB::transaction(function () use ($spot, $spotImage, $request) {
             $spot->user_id = auth()->id();
             $spot->fill($request->all())->save();
 
-            SpotTrait::imageUploadByCase($spot, $request, $spot_image);
+            SpotTrait::imageUploadByCase($spot, $request, $spotImage);
 
             $spot->tags()->detach();
             $request->tags->each(function ($tagName) use ($spot) {
