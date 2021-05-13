@@ -1,31 +1,31 @@
 name: Laravel
 
 on:
-    push:
-        branches:
-        - main
-        - feature/**
-    pull_request:
-        branches:
-        - develop
-        - main
+  push:
+    branches:
+    - main
+    - feature/**
+  pull_request:
+    branches:
+    - develop
+    - main
 
 jobs:
-    laravel-tests:
+  laravel-tests:
 
-    runs-on: ubuntu-latest
+  runs-on: ubuntu-latest
 
-    services:
-        mysql:
-            image: mysql:8.0
-            ports:
-                - 3306:3306
-            env:
-                MYSQL_ROOT_PASSWORD:
-                MYSQL_DATABASE: fishing
-                MYSQL_USER: root
-                MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-            options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
+  services:
+    mysql:
+      image: mysql:8.0
+      ports:
+        - 3306:3306
+      env:
+        MYSQL_ROOT_PASSWORD:
+        MYSQL_DATABASE: fishing
+        MYSQL_USER: root
+        MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+      options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
 
     steps:
     - uses: actions/checkout@v2
