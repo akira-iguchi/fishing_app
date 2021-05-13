@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -11,19 +11,25 @@ class EventTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user);
+
+        $this->event = Event::factory()->for($this->user)->create();
+
+    }
+
     public function testFactoryable()
     {
         $eloquent = app(Event::class);
-        $this->assertEmpty($eloquent->get());
-        $user = User::factory()->create();
-        $event = Event::factory()->for($user)->create();
         $this->assertNotEmpty($eloquent->get());
     }
 
     public function testEventBelongsToUser()
     {
-        $user = User::factory()->create();
-        $event = Event::factory()->for($user)->create();
-        $this->assertNotEmpty($event->user);
+        $this->assertNotEmpty($this->event->user);
     }
 }

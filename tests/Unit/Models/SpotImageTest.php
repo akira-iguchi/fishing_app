@@ -1,32 +1,34 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Models;
 
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Spot;
 use App\Models\SpotImage;
-use Tests\Factories\Traits\CreateSpot;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SpotImageTest extends TestCase
 {
     use RefreshDatabase;
-    use CreateSpot;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->spot = Spot::factory()->for($this->user)->create();
+        $this->spotImage = SpotImage::factory()->for($this->spot)->create();
+    }
 
     public function testFactoryable()
     {
         $eloquent = app(SpotImage::class);
-        $this->assertEmpty($eloquent->get());
-        $spot = $this->createSpot();
         $this->assertNotEmpty($eloquent->get());
     }
 
     public function testSpotImageBelongsToSpot()
     {
-        $user = User::factory()->create();
-        $spot = Spot::factory()->for($user)->create();
-        $spot_image = SpotImage::factory()->for($spot)->create();
-        $this->assertNotEmpty($spot_image->spot);
+        $this->assertNotEmpty($this->spotImage->spot);
     }
 }

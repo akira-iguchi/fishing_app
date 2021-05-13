@@ -21,7 +21,7 @@ class UserTabControllerTest extends TestCase
 
         $this->user = User::factory()->create();
         $this->actingAs($this->user);
-        $this->otherUser = User::factory()->create();
+        $this->otherUser = User::factory()->create(['email' => 'test@test.com']);
 
         $this->spot = Spot::factory()->for($this->user)
                 ->has(SpotImage::factory(), 'spotImages')->create();
@@ -31,7 +31,8 @@ class UserTabControllerTest extends TestCase
     {
         $response = $this->json('GET', route('users.spots', $this->user));
 
-        $response->assertStatus(200)
+        $response
+            ->assertStatus(200)
             ->assertJson([
                 ['spot_name' => $this->spot->spot_name],
             ]);
@@ -43,7 +44,8 @@ class UserTabControllerTest extends TestCase
 
         $response = $this->json('GET', route('users.favoriteSpots', $this->user));
 
-        $response->assertStatus(200)
+        $response
+            ->assertStatus(200)
             ->assertJson([
                 ['spot_name' => $this->spot->spot_name],
             ]);
@@ -55,7 +57,8 @@ class UserTabControllerTest extends TestCase
 
         $response = $this->json('GET', route('users.followings', $this->user));
 
-        $response->assertStatus(200)
+        $response
+            ->assertStatus(200)
             ->assertJson([
                 ['user_name' => $this->otherUser->user_name],
             ]);
@@ -67,7 +70,8 @@ class UserTabControllerTest extends TestCase
 
         $response = $this->json('GET', route('users.followers', $this->user));
 
-        $response->assertStatus(200)
+        $response
+            ->assertStatus(200)
             ->assertJson([
                 ['user_name' => $this->otherUser->user_name],
             ]);

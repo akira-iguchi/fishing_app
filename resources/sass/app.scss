@@ -50,7 +50,7 @@ header {
   }
 }
 
-.nav-title {
+.nav_title {
   position: fixed;
   top: 14px;
   padding-left: 20px;
@@ -63,7 +63,7 @@ header {
   }
 }
 
-.nav-content {
+.nav_content {
   ul {
     list-style: none;
   }
@@ -94,7 +94,7 @@ header {
   }
 }
 
-.nav-container {
+.nav_container {
   @include max-screen($breakpoint-tablet) {
     position: fixed;
     z-index: 10;
@@ -104,7 +104,7 @@ header {
     opacity: 0.9;
     visibility: visible;
 
-    .nav-bg {
+    .nav_background {
       position: absolute;
       top: 70px;
       right: 0;
@@ -116,12 +116,12 @@ header {
       background: #000;
     }
 
-    &:focus-within .nav-bg {
+    .visible_nav_background {
       visibility: visible;
       opacity: .6;
     }
 
-    .nav-button {
+    .nav_button {
       position: relative;
       display: flex;
       margin: 0 30px 0 auto;
@@ -135,7 +135,7 @@ header {
       border: none;
     }
 
-    .nav-icon-bar {
+    .nav_icon_bar {
       display: block;
       width: 100%;
       height: 3px;
@@ -144,24 +144,24 @@ header {
       margin-top: 5px;
     }
 
-    &:focus-within .nav-button {
+    &:focus-within .nav_button {
       pointer-events: none;
       outline: none;
     }
 
-    &:focus-within .nav-icon-bar:nth-of-type(1) {
+    .change_nav_icon_bar:nth-of-type(1) {
       transform: translate3d(0,8px,0) rotate(45deg);
     }
 
-    &:focus-within .nav-icon-bar:nth-of-type(2) {
+    .change_nav_icon_bar:nth-of-type(2) {
       opacity: 0;
     }
 
-    &:focus-within .nav-icon-bar:nth-of-type(3) {
+    .change_nav_icon_bar:nth-of-type(3) {
       transform: translate3d(0,-8px,0) rotate(-45deg);
     }
 
-    .nav-content {
+    .nav_content {
       margin-top: 70px;
       padding: 20px;
       width: 100%;
@@ -202,7 +202,7 @@ header {
       }
     }
 
-    &:focus-within  .nav-content {
+    .open_nav_content {
       transform: none;
     }
   }
@@ -215,8 +215,8 @@ header {
   top: 90px;
   text-align: center;
   padding: 15px 0;
-  width: 300px;
-  z-index: 20;
+  width: 250px;
+  z-index: 2;
   animation: fadeout 1.5s ease 2.3s 1 forwards;
   font-weight: bold;
   color: #fff;

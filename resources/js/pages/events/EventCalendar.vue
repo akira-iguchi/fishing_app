@@ -25,6 +25,7 @@
                     </div>
 
                     <EventForm
+                        :isEdit="false"
                         :intialEventValue="event"
                         :errors="errors"
                         :deleteInput="deleteInput"

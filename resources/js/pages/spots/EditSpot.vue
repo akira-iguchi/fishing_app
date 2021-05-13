@@ -11,6 +11,7 @@
                     :tagNames="allTagNames"
                     :fishingTypeNames="allFishingTypeNames"
                     :intialSpotValue="spot"
+                    :intialspotFishingTypes="spotFishingTypes"
                     :intialSpotTags="spotTags"
                     :errors="errors"
                     @spotData="editSpot"
@@ -43,6 +44,7 @@
                 spot: {},
                 allTagNames: [],
                 allFishingTypeNames: [],
+                spotFishingTypes: [],
                 spotTags: [],
                 errors: null,
                 spotDataLoaded: false,
@@ -84,7 +86,7 @@
 
                 this.loading = false
 
-                this.fishing_types = response.data[1]
+                this.spotFishingTypes = response.data[1]
                 this.spotTags = response.data[2]
                 this.allTagNames = response.data[3]
                 this.allFishingTypeNames = response.data[4]
@@ -103,9 +105,9 @@
                 formData.append('tags', data[4])
                 formData.append('fishing_types', data[5])
                 formData.append('explanation', data[6])
-                formData.append('spot_image1', data[7])
-                formData.append('spot_image2', data[8])
-                formData.append('spot_image3', data[9])
+                formData.append('spot_image_first', data[7])
+                formData.append('spot_image_second', data[8])
+                formData.append('spot_image_third', data[9])
                 const response = await axios.post(`/api/spots/${ this.id }`, formData, {
                     // PUTに変換
                     headers: {

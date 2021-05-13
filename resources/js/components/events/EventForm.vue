@@ -1,5 +1,5 @@
 <template>
-    <form>
+    <form @submit.prevent="getEvent">
         <div class="date">
             <label class="required">日付</label>
             <input type="date" placeholder="例）2021-03-27" v-model="date" required>
@@ -76,7 +76,11 @@
         </div>
 
         <div>
-            <button type='button' class="spot-create-edit-button" @click="getEvent">
+            <button class="spot-create-edit-button"  v-if="isEdit">
+                <i class="fas fa-pencil-alt"></i>&thinsp;更新
+            </button>
+
+            <button class="spot-create-edit-button"  v-else>
                 <i class="fas fa-pencil-alt"></i>&thinsp;投稿
             </button>
         </div>
@@ -86,6 +90,10 @@
 <script>
     export default {
         props: {
+            isEdit: {
+                type: Boolean,
+                default: false,
+            },
             intialEventValue: {
                 type: Object,
                 required: false,

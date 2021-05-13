@@ -16,9 +16,10 @@ class FollowControllerTest extends TestCase
         parent::setUp();
 
         $this->user = User::factory()->create();
+        $this->actingAs($this->user);
+
         $this->otherUser = User::factory()
             ->create(['email' => 'test@test.com']);
-        $this->actingAs($this->user);
     }
 
     public function testFollow()

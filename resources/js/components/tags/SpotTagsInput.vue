@@ -26,7 +26,7 @@
         props: {
             initialTags: {
                 type: Array,
-                default: [],
+                required: false,
             },
             autocompleteItems: {
                 type: Array,

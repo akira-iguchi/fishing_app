@@ -37,7 +37,7 @@ header:focus-within {
   outline: none;
 }
 
-.nav-title {
+.nav_title {
   position: fixed;
   top: 14px;
   padding-left: 20px;
@@ -45,16 +45,16 @@ header:focus-within {
   font-size: 25px;
 }
 
-.nav-title:hover {
+.nav_title:hover {
   text-decoration: none;
   color: white;
 }
 
-.nav-content ul {
+.nav_content ul {
   list-style: none;
 }
 
-.nav-content li {
+.nav_content li {
   position: relative;
   right: 2%;
   float: right;
@@ -62,8 +62,8 @@ header:focus-within {
   z-index: 11;
 }
 
-.nav-content li a,
-.nav-content li span {
+.nav_content li a,
+.nav_content li span {
   text-decoration: none;
   cursor: pointer;
   font-size: 20px;
@@ -71,17 +71,17 @@ header:focus-within {
   color: #fff;
 }
 
-.nav-content li a:hover,
-.nav-content li span:hover {
+.nav_content li a:hover,
+.nav_content li span:hover {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.nav-content:focus-within {
+.nav_content:focus-within {
   outline: none;
 }
 
 @media screen and (max-width: 896px) {
-  .nav-container {
+  .nav_container {
     position: fixed;
     z-index: 10;
     height: 100vh;
@@ -91,7 +91,7 @@ header:focus-within {
     visibility: visible;
   }
 
-  .nav-container .nav-bg {
+  .nav_container .nav_background {
     position: absolute;
     top: 70px;
     right: 0;
@@ -103,12 +103,12 @@ header:focus-within {
     background: #000;
   }
 
-  .nav-container:focus-within .nav-bg {
+  .nav_container .visible_nav_background {
     visibility: visible;
     opacity: 0.6;
   }
 
-  .nav-container .nav-button {
+  .nav_container .nav_button {
     position: relative;
     display: flex;
     margin: 0 30px 0 auto;
@@ -122,7 +122,7 @@ header:focus-within {
     border: none;
   }
 
-  .nav-container .nav-icon-bar {
+  .nav_container .nav_icon_bar {
     display: block;
     width: 100%;
     height: 3px;
@@ -131,24 +131,24 @@ header:focus-within {
     margin-top: 5px;
   }
 
-  .nav-container:focus-within .nav-button {
+  .nav_container:focus-within .nav_button {
     pointer-events: none;
     outline: none;
   }
 
-  .nav-container:focus-within .nav-icon-bar:nth-of-type(1) {
+  .nav_container .change_nav_icon_bar:nth-of-type(1) {
     transform: translate3d(0, 8px, 0) rotate(45deg);
   }
 
-  .nav-container:focus-within .nav-icon-bar:nth-of-type(2) {
+  .nav_container .change_nav_icon_bar:nth-of-type(2) {
     opacity: 0;
   }
 
-  .nav-container:focus-within .nav-icon-bar:nth-of-type(3) {
+  .nav_container .change_nav_icon_bar:nth-of-type(3) {
     transform: translate3d(0, -8px, 0) rotate(-45deg);
   }
 
-  .nav-container .nav-content {
+  .nav_container .nav_content {
     margin-top: 70px;
     padding: 20px;
     width: 100%;
@@ -167,15 +167,15 @@ header:focus-within {
     transition-delay: 0.4s;
   }
 
-  .nav-container .nav-content ul {
+  .nav_container .nav_content ul {
     height: 100%;
     display: flex;
     flex-direction: column;
     list-style: none;
   }
 
-  .nav-container .nav-content li a,
-  .nav-container .nav-content li span {
+  .nav_container .nav_content li a,
+  .nav_container .nav_content li span {
     color: #555555;
     padding: 10px 5px;
     display: block;
@@ -183,12 +183,12 @@ header:focus-within {
     transition: color 0.1s;
   }
 
-  .nav-container .nav-content li a:hover,
-  .nav-container .nav-content li span:hover {
+  .nav_container .nav_content li a:hover,
+  .nav_container .nav_content li span:hover {
     color: #BF7497;
   }
 
-  .nav-container:focus-within .nav-content {
+  .nav_container .open_nav_content {
     transform: none;
   }
 }
@@ -200,8 +200,8 @@ header:focus-within {
   top: 90px;
   text-align: center;
   padding: 15px 0;
-  width: 300px;
-  z-index: 20;
+  width: 250px;
+  z-index: 2;
   -webkit-animation: fadeout 1.5s ease 2.3s 1 forwards;
           animation: fadeout 1.5s ease 2.3s 1 forwards;
   font-weight: bold;

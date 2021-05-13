@@ -26,7 +26,7 @@ class TagControllerTest extends TestCase
 
         $this->spot = $this->createSpot();
         $this->tag = Tag::factory()->create();
-        $this->fishing_type = FishingType::factory()->create();
+        $this->fishingType = FishingType::factory()->create();
     }
 
     /**
@@ -45,7 +45,7 @@ class TagControllerTest extends TestCase
             ->assertJson([
                 // 検索フォーム
                 [
-                    [['fishing_type_name' => $this->fishing_type->fishing_type_name]],
+                    [['fishing_type_name' => $this->fishingType->fishing_type_name]],
                     [['tag_name' => $this->tag->tag_name]],
                 ],
                 ['tag_name' => $this->tag->tag_name],
@@ -66,11 +66,12 @@ class TagControllerTest extends TestCase
         $response = $this->from(route('spots.index'))
             ->json('GET', route('tags', ['name' => $this->tag->tag_name]));
 
-        $response->assertStatus(200)
+        $response
+            ->assertStatus(200)
             ->assertJsonMissingExact([
                 // 検索フォーム
                 [
-                    [['fishing_type_name' => $this->fishing_type->fishing_type_name]],
+                    [['fishing_type_name' => $this->fishingType->fishing_type_name]],
                     [['tag_name' => $this->tag->tag_name]],
                 ],
                 // 該当なし

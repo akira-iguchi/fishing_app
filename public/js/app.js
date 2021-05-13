@@ -15645,6 +15645,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: {
     isLogin: function isLogin() {
@@ -15654,7 +15664,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.$store.getters['auth/AuthUser'];
     }
   },
+  data: function data() {
+    return {
+      isNavContentOpen: false
+    };
+  },
   methods: {
+    openNavContent: function openNavContent() {
+      this.isNavContentOpen = !this.isNavContentOpen;
+    },
+    closeNavContent: function closeNavContent() {
+      this.isNavContentOpen = false;
+    },
     logout: function logout() {
       var _this = this;
 
@@ -15671,10 +15692,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.$store.commit('message/setContent', {
                   content: 'ログアウトしました',
-                  timeout: 5000
+                  timeout: 4000
                 });
 
-              case 4:
+                _this.isNavContentOpen = false;
+
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -15701,10 +15724,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this2.$store.commit('message/setContent', {
                   content: 'ゲストユーザーでログインしました',
-                  timeout: 5000
+                  timeout: 4000
                 });
 
-              case 4:
+                _this2.isNavContentOpen = false;
+
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -15813,8 +15838,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
+    isEdit: {
+      type: Boolean,
+      "default": false
+    },
     intialEventValue: {
       type: Object,
       required: false
@@ -15984,9 +16017,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    closeModal: function closeModal() {
+      this.$emit('closeModal');
+    },
     deleteEvent: function deleteEvent() {
       if (confirm('本当に削除しますか？')) {
         this.$emit("deleteEvent", this.eventData.id);
+        this.$emit('closeModal');
       }
     }
   }
@@ -16319,6 +16356,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -16327,25 +16367,30 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     tagNames: {
       type: Array,
+      required: true,
       "default": function _default() {
         return [];
       }
     },
     fishingTypeNames: {
       type: Array,
+      required: true,
       "default": function _default() {
         return [];
       }
     },
     intialSpotValue: {
       type: Object,
+      required: true,
+      "default": function _default() {}
+    },
+    intialspotFishingTypes: {
+      type: Array,
       required: false
     },
     intialSpotTags: {
       type: Array,
-      "default": function _default() {
-        return [];
-      }
+      required: false
     },
     errors: {
       type: Object,
@@ -16400,6 +16445,7 @@ __webpack_require__.r(__webpack_exports__);
       this.longitude = this.spot.longitude;
       this.spotName = this.spot.spot_name;
       this.address = this.spot.address;
+      this.fishingTypes = this.intialspotFishingTypes;
       this.tags = JSON.stringify(this.spotTags);
       this.explanation = this.spot.explanation;
       this.isEdit = true;
@@ -17147,7 +17193,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     initialTags: {
       type: Array,
-      "default": []
+      required: false
     },
     autocompleteItems: {
       type: Array,
@@ -18492,6 +18538,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -18860,6 +18907,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -19134,10 +19182,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/fishing_types/FishingTypes.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/fishing_types/FishingTypes.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/fishingTypes/FishingTypes.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/fishingTypes/FishingTypes.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -19334,7 +19382,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 
@@ -19349,7 +19396,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       allTagNames: [],
       allFishingTypeNames: [],
       spot: {},
-      spotTags: [],
       errors: null,
       spotDataLoaded: false
     };
@@ -19437,9 +19483,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append('tags', data[4]);
                 formData.append('fishing_types', data[5]);
                 formData.append('explanation', data[6]);
-                formData.append('spot_image1', data[7]);
-                formData.append('spot_image2', data[8]);
-                formData.append('spot_image3', data[9]);
+                formData.append('spot_image_first', data[7]);
+                formData.append('spot_image_second', data[8]);
+                formData.append('spot_image_third', data[9]);
                 _context3.next = 15;
                 return axios.post('/api/spots', formData);
 
@@ -19533,6 +19579,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -19553,6 +19600,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       spot: {},
       allTagNames: [],
       allFishingTypeNames: [],
+      spotFishingTypes: [],
       spotTags: [],
       errors: null,
       spotDataLoaded: false
@@ -19632,7 +19680,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 12:
                 _this2.loading = false;
-                _this2.fishing_types = response.data[1];
+                _this2.spotFishingTypes = response.data[1];
                 _this2.spotTags = response.data[2];
                 _this2.allTagNames = response.data[3];
                 _this2.allFishingTypeNames = response.data[4];
@@ -19665,9 +19713,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append('tags', data[4]);
                 formData.append('fishing_types', data[5]);
                 formData.append('explanation', data[6]);
-                formData.append('spot_image1', data[7]);
-                formData.append('spot_image2', data[8]);
-                formData.append('spot_image3', data[9]);
+                formData.append('spot_image_first', data[7]);
+                formData.append('spot_image_second', data[8]);
+                formData.append('spot_image_third', data[9]);
                 _context3.next = 15;
                 return axios.post("/api/spots/".concat(_this3.id), formData, {
                   // PUTに変換
@@ -21336,7 +21384,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_events_EventCalendar_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/events/EventCalendar.vue */ "./resources/js/pages/events/EventCalendar.vue");
 /* harmony import */ var _pages_events_EditEvent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/events/EditEvent.vue */ "./resources/js/pages/events/EditEvent.vue");
 /* harmony import */ var _pages_tags_TagSpots_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/tags/TagSpots.vue */ "./resources/js/pages/tags/TagSpots.vue");
-/* harmony import */ var _pages_fishing_types_FishingTypes_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/fishing_types/FishingTypes.vue */ "./resources/js/pages/fishing_types/FishingTypes.vue");
+/* harmony import */ var _pages_fishingTypes_FishingTypes_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/fishingTypes/FishingTypes.vue */ "./resources/js/pages/fishingTypes/FishingTypes.vue");
 /* harmony import */ var _pages_auth_Login_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/auth/Login.vue */ "./resources/js/pages/auth/Login.vue");
 /* harmony import */ var _pages_auth_Register_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pages/auth/Register.vue */ "./resources/js/pages/auth/Register.vue");
 /* harmony import */ var _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./pages/errors/System.vue */ "./resources/js/pages/errors/System.vue");
@@ -21499,7 +21547,7 @@ var routes = [{
   }
 }, {
   path: '/fishing_types',
-  component: _pages_fishing_types_FishingTypes_vue__WEBPACK_IMPORTED_MODULE_10__.default,
+  component: _pages_fishingTypes_FishingTypes_vue__WEBPACK_IMPORTED_MODULE_10__.default,
   beforeEnter: function beforeEnter(to, from, next) {
     if (_store__WEBPACK_IMPORTED_MODULE_15__.default.getters["auth/check"]) {
       next();
@@ -60316,10 +60364,10 @@ component.options.__file = "resources/js/pages/events/EventCalendar.vue"
 
 /***/ }),
 
-/***/ "./resources/js/pages/fishing_types/FishingTypes.vue":
-/*!***********************************************************!*\
-  !*** ./resources/js/pages/fishing_types/FishingTypes.vue ***!
-  \***********************************************************/
+/***/ "./resources/js/pages/fishingTypes/FishingTypes.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/pages/fishingTypes/FishingTypes.vue ***!
+  \**********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -60327,8 +60375,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _FishingTypes_vue_vue_type_template_id_2e47fdfa___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FishingTypes.vue?vue&type=template&id=2e47fdfa& */ "./resources/js/pages/fishing_types/FishingTypes.vue?vue&type=template&id=2e47fdfa&");
-/* harmony import */ var _FishingTypes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FishingTypes.vue?vue&type=script&lang=js& */ "./resources/js/pages/fishing_types/FishingTypes.vue?vue&type=script&lang=js&");
+/* harmony import */ var _FishingTypes_vue_vue_type_template_id_0b13d196___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FishingTypes.vue?vue&type=template&id=0b13d196& */ "./resources/js/pages/fishingTypes/FishingTypes.vue?vue&type=template&id=0b13d196&");
+/* harmony import */ var _FishingTypes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FishingTypes.vue?vue&type=script&lang=js& */ "./resources/js/pages/fishingTypes/FishingTypes.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -60339,8 +60387,8 @@ __webpack_require__.r(__webpack_exports__);
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
   _FishingTypes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _FishingTypes_vue_vue_type_template_id_2e47fdfa___WEBPACK_IMPORTED_MODULE_0__.render,
-  _FishingTypes_vue_vue_type_template_id_2e47fdfa___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _FishingTypes_vue_vue_type_template_id_0b13d196___WEBPACK_IMPORTED_MODULE_0__.render,
+  _FishingTypes_vue_vue_type_template_id_0b13d196___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -60350,7 +60398,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/pages/fishing_types/FishingTypes.vue"
+component.options.__file = "resources/js/pages/fishingTypes/FishingTypes.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -61023,10 +61071,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pages/fishing_types/FishingTypes.vue?vue&type=script&lang=js&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/pages/fishing_types/FishingTypes.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************/
+/***/ "./resources/js/pages/fishingTypes/FishingTypes.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/pages/fishingTypes/FishingTypes.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -61034,7 +61082,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FishingTypes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FishingTypes.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/fishing_types/FishingTypes.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FishingTypes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FishingTypes.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/fishingTypes/FishingTypes.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FishingTypes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
@@ -61806,19 +61854,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pages/fishing_types/FishingTypes.vue?vue&type=template&id=2e47fdfa&":
-/*!******************************************************************************************!*\
-  !*** ./resources/js/pages/fishing_types/FishingTypes.vue?vue&type=template&id=2e47fdfa& ***!
-  \******************************************************************************************/
+/***/ "./resources/js/pages/fishingTypes/FishingTypes.vue?vue&type=template&id=0b13d196&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/pages/fishingTypes/FishingTypes.vue?vue&type=template&id=0b13d196& ***!
+  \*****************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FishingTypes_vue_vue_type_template_id_2e47fdfa___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FishingTypes_vue_vue_type_template_id_2e47fdfa___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FishingTypes_vue_vue_type_template_id_0b13d196___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FishingTypes_vue_vue_type_template_id_0b13d196___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FishingTypes_vue_vue_type_template_id_2e47fdfa___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FishingTypes.vue?vue&type=template&id=2e47fdfa& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/fishing_types/FishingTypes.vue?vue&type=template&id=2e47fdfa&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FishingTypes_vue_vue_type_template_id_0b13d196___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./FishingTypes.vue?vue&type=template&id=0b13d196& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/fishingTypes/FishingTypes.vue?vue&type=template&id=0b13d196&");
 
 
 /***/ }),
@@ -62371,20 +62419,53 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "header",
-    [
-      _c("RouterLink", { staticClass: "nav-title", attrs: { to: "/" } }, [
-        _c("i", { staticClass: "fas fa-fish mr-1" }),
-        _vm._v("Fishing Spot")
-      ]),
+  return _c("header", [
+    _c(
+      "span",
+      { on: { click: _vm.closeNavContent } },
+      [
+        _c("RouterLink", { staticClass: "nav_title", attrs: { to: "/" } }, [
+          _c("i", { staticClass: "fas fa-fish mr-1" }),
+          _vm._v("Fishing Spot\n        ")
+        ])
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("nav", { staticClass: "nav_container" }, [
+      _c(
+        "nav",
+        { staticClass: "nav_button", on: { click: _vm.openNavContent } },
+        [
+          _c("span", {
+            staticClass: "nav_icon_bar",
+            class: { change_nav_icon_bar: _vm.isNavContentOpen }
+          }),
+          _vm._v(" "),
+          _c("span", {
+            staticClass: "nav_icon_bar",
+            class: { change_nav_icon_bar: _vm.isNavContentOpen }
+          }),
+          _vm._v(" "),
+          _c("span", {
+            staticClass: "nav_icon_bar",
+            class: { change_nav_icon_bar: _vm.isNavContentOpen }
+          })
+        ]
+      ),
       _vm._v(" "),
-      _c("nav", { staticClass: "nav-container" }, [
-        _c("nav", { staticClass: "nav-bg" }),
-        _vm._v(" "),
-        _vm._m(0),
-        _vm._v(" "),
-        _c("nav", { staticClass: "nav-content", attrs: { tabindex: "0" } }, [
+      _c("nav", {
+        staticClass: "nav_background",
+        class: { visible_nav_background: _vm.isNavContentOpen }
+      }),
+      _vm._v(" "),
+      _c(
+        "nav",
+        {
+          staticClass: "nav_content",
+          class: { open_nav_content: _vm.isNavContentOpen }
+        },
+        [
           _vm.isLogin
             ? _c("ul", [
                 _c("li", [
@@ -62396,6 +62477,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "li",
+                  { on: { click: _vm.closeNavContent } },
                   [
                     _c(
                       "RouterLink",
@@ -62410,6 +62492,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "li",
+                  { on: { click: _vm.closeNavContent } },
                   [
                     _c("RouterLink", { attrs: { to: "/fishing_types" } }, [
                       _vm._v("釣り方一覧")
@@ -62420,6 +62503,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "li",
+                  { on: { click: _vm.closeNavContent } },
                   [
                     _c("RouterLink", { attrs: { to: "/spots/create" } }, [
                       _vm._v("投稿")
@@ -62430,6 +62514,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "li",
+                  { on: { click: _vm.closeNavContent } },
                   [
                     _c(
                       "RouterLink",
@@ -62443,6 +62528,7 @@ var render = function() {
             : _c("ul", [
                 _c(
                   "li",
+                  { on: { click: _vm.closeNavContent } },
                   [
                     _c("RouterLink", { attrs: { to: "/signup" } }, [
                       _c("i", { staticClass: "fas fa-user-plus mr-1" }),
@@ -62460,6 +62546,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "li",
+                  { on: { click: _vm.closeNavContent } },
                   [
                     _c("RouterLink", { attrs: { to: "/login" } }, [
                       _vm._v("ログイン")
@@ -62468,26 +62555,12 @@ var render = function() {
                   1
                 )
               ])
-        ])
-      ])
-    ],
-    1
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("nav", { staticClass: "nav-button", attrs: { tabindex: "0" } }, [
-      _c("span", { staticClass: "nav-icon-bar" }),
-      _vm._v(" "),
-      _c("span", { staticClass: "nav-icon-bar" }),
-      _vm._v(" "),
-      _c("span", { staticClass: "nav-icon-bar" })
+        ]
+      )
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -62510,284 +62583,292 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("form", [
-    _c("div", { staticClass: "date" }, [
-      _c("label", { staticClass: "required" }, [_vm._v("日付")]),
+  return _c(
+    "form",
+    {
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.getEvent($event)
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "date" }, [
+        _c("label", { staticClass: "required" }, [_vm._v("日付")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.date,
+              expression: "date"
+            }
+          ],
+          attrs: { type: "date", placeholder: "例）2021-03-27", required: "" },
+          domProps: { value: _vm.date },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.date = $event.target.value
+            }
+          }
+        })
+      ]),
       _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.date,
-            expression: "date"
-          }
-        ],
-        attrs: { type: "date", placeholder: "例）2021-03-27", required: "" },
-        domProps: { value: _vm.date },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.date = $event.target.value
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _vm.errors
-      ? _c("div", [
-          _vm.errors.date
-            ? _c(
-                "ul",
-                { staticClass: "event_errors" },
-                _vm._l(_vm.errors.date, function(msg) {
-                  return _c("li", { key: msg, staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(msg))
-                  ])
-                }),
-                0
-              )
-            : _vm._e()
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", { staticClass: "date" }, [
-      _c("label", [_vm._v("時間")]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.fishingStartTime,
-            expression: "fishingStartTime"
-          }
-        ],
-        attrs: { type: "time", placeholder: "例）07:10" },
-        domProps: { value: _vm.fishingStartTime },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.fishingStartTime = $event.target.value
-          }
-        }
-      }),
-      _vm._v("\n        〜\n        "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.fishingEndTimeime,
-            expression: "fishingEndTimeime"
-          }
-        ],
-        attrs: { type: "time", placeholder: "例）17:30" },
-        domProps: { value: _vm.fishingEndTimeime },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.fishingEndTimeime = $event.target.value
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _vm.errors
-      ? _c("div", [
-          _vm.errors.fishing_start_time
-            ? _c(
-                "ul",
-                { staticClass: "event_errors" },
-                _vm._l(_vm.errors.fishing_start_time, function(msg) {
-                  return _c("li", { key: msg, staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(msg))
-                  ])
-                }),
-                0
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors.fishing_end_time
-            ? _c(
-                "ul",
-                { staticClass: "event_errors" },
-                _vm._l(_vm.errors.fishing_end_time, function(msg) {
-                  return _c("li", { key: msg, staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(msg))
-                  ])
-                }),
-                0
-              )
-            : _vm._e()
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-field" }, [
-      _c("label", { staticClass: "required" }, [_vm._v("釣り方")]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.fishingType,
-            expression: "fishingType"
-          }
-        ],
-        staticClass: "input-text",
-        attrs: { type: "text", placeholder: "例）サビキ釣り", required: "" },
-        domProps: { value: _vm.fishingType },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.fishingType = $event.target.value
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _vm.errors
-      ? _c("div", [
-          _vm.errors.fishing_type
-            ? _c(
-                "ul",
-                { staticClass: "event_errors" },
-                _vm._l(_vm.errors.fishing_type, function(msg) {
-                  return _c("li", { key: msg, staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(msg))
-                  ])
-                }),
-                0
-              )
-            : _vm._e()
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-field" }, [
-      _c("label", { staticClass: "required" }, [_vm._v("釣り場")]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.spot,
-            expression: "spot"
-          }
-        ],
-        staticClass: "input-text",
-        attrs: { type: "text", placeholder: "例）かもめ大橋", required: "" },
-        domProps: { value: _vm.spot },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.spot = $event.target.value
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _vm.errors
-      ? _c("div", [
-          _vm.errors.spot
-            ? _c(
-                "ul",
-                { staticClass: "event_errors" },
-                _vm._l(_vm.errors.spot, function(msg) {
-                  return _c("li", { key: msg, staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(msg))
-                  ])
-                }),
-                0
-              )
-            : _vm._e()
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-field" }, [
-      0 > _vm.wordCount
-        ? _c("div", _vm._g({}, _vm.changeTrue()))
-        : 0 <= _vm.wordCount
-        ? _c("div", _vm._g({}, _vm.changeFalse()))
+      _vm.errors
+        ? _c("div", [
+            _vm.errors.date
+              ? _c(
+                  "ul",
+                  { staticClass: "event_errors" },
+                  _vm._l(_vm.errors.date, function(msg) {
+                    return _c("li", { key: msg, staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(msg))
+                    ])
+                  }),
+                  0
+                )
+              : _vm._e()
+          ])
         : _vm._e(),
       _vm._v(" "),
-      _c("label", { staticClass: "event_label" }, [_vm._v("詳細")]),
-      _c("br"),
-      _vm._v(" "),
-      _c("textarea", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.detail,
-            expression: "detail"
-          }
-        ],
-        staticClass: "form-input-text_area",
-        attrs: { rows: "5", placeholder: "例） アジがたくさん釣れた。" },
-        domProps: { value: _vm.detail },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+      _c("div", { staticClass: "date" }, [
+        _c("label", [_vm._v("時間")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.fishingStartTime,
+              expression: "fishingStartTime"
             }
-            _vm.detail = $event.target.value
+          ],
+          attrs: { type: "time", placeholder: "例）07:10" },
+          domProps: { value: _vm.fishingStartTime },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.fishingStartTime = $event.target.value
+            }
           }
-        }
-      }),
+        }),
+        _vm._v("\n        〜\n        "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.fishingEndTimeime,
+              expression: "fishingEndTimeime"
+            }
+          ],
+          attrs: { type: "time", placeholder: "例）17:30" },
+          domProps: { value: _vm.fishingEndTimeime },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.fishingEndTimeime = $event.target.value
+            }
+          }
+        })
+      ]),
       _vm._v(" "),
-      _c("p", [
-        _vm._v("残り"),
-        _c("span", { class: { "text-danger": _vm.isActive } }, [
-          _vm._v(_vm._s(_vm.wordCount))
-        ]),
-        _vm._v("文字")
-      ])
-    ]),
-    _vm._v(" "),
-    _vm.errors
-      ? _c("div", [
-          _vm.errors.detail
-            ? _c(
-                "ul",
-                { staticClass: "event_errors" },
-                _vm._l(_vm.errors.detail, function(msg) {
-                  return _c("li", { key: msg, staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(msg))
-                  ])
-                }),
-                0
-              )
-            : _vm._e()
+      _vm.errors
+        ? _c("div", [
+            _vm.errors.fishing_start_time
+              ? _c(
+                  "ul",
+                  { staticClass: "event_errors" },
+                  _vm._l(_vm.errors.fishing_start_time, function(msg) {
+                    return _c("li", { key: msg, staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(msg))
+                    ])
+                  }),
+                  0
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.errors.fishing_end_time
+              ? _c(
+                  "ul",
+                  { staticClass: "event_errors" },
+                  _vm._l(_vm.errors.fishing_end_time, function(msg) {
+                    return _c("li", { key: msg, staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(msg))
+                    ])
+                  }),
+                  0
+                )
+              : _vm._e()
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-field" }, [
+        _c("label", { staticClass: "required" }, [_vm._v("釣り方")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.fishingType,
+              expression: "fishingType"
+            }
+          ],
+          staticClass: "input-text",
+          attrs: { type: "text", placeholder: "例）サビキ釣り", required: "" },
+          domProps: { value: _vm.fishingType },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.fishingType = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _vm.errors
+        ? _c("div", [
+            _vm.errors.fishing_type
+              ? _c(
+                  "ul",
+                  { staticClass: "event_errors" },
+                  _vm._l(_vm.errors.fishing_type, function(msg) {
+                    return _c("li", { key: msg, staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(msg))
+                    ])
+                  }),
+                  0
+                )
+              : _vm._e()
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-field" }, [
+        _c("label", { staticClass: "required" }, [_vm._v("釣り場")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.spot,
+              expression: "spot"
+            }
+          ],
+          staticClass: "input-text",
+          attrs: { type: "text", placeholder: "例）かもめ大橋", required: "" },
+          domProps: { value: _vm.spot },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.spot = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _vm.errors
+        ? _c("div", [
+            _vm.errors.spot
+              ? _c(
+                  "ul",
+                  { staticClass: "event_errors" },
+                  _vm._l(_vm.errors.spot, function(msg) {
+                    return _c("li", { key: msg, staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(msg))
+                    ])
+                  }),
+                  0
+                )
+              : _vm._e()
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-field" }, [
+        0 > _vm.wordCount
+          ? _c("div", _vm._g({}, _vm.changeTrue()))
+          : 0 <= _vm.wordCount
+          ? _c("div", _vm._g({}, _vm.changeFalse()))
+          : _vm._e(),
+        _vm._v(" "),
+        _c("label", { staticClass: "event_label" }, [_vm._v("詳細")]),
+        _c("br"),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.detail,
+              expression: "detail"
+            }
+          ],
+          staticClass: "form-input-text_area",
+          attrs: { rows: "5", placeholder: "例） アジがたくさん釣れた。" },
+          domProps: { value: _vm.detail },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.detail = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v("残り"),
+          _c("span", { class: { "text-danger": _vm.isActive } }, [
+            _vm._v(_vm._s(_vm.wordCount))
+          ]),
+          _vm._v("文字")
         ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", [
-      _c(
-        "button",
-        {
-          staticClass: "spot-create-edit-button",
-          attrs: { type: "button" },
-          on: { click: _vm.getEvent }
-        },
-        [
-          _c("i", { staticClass: "fas fa-pencil-alt" }),
-          _vm._v(" 投稿\n        ")
-        ]
-      )
-    ])
-  ])
+      ]),
+      _vm._v(" "),
+      _vm.errors
+        ? _c("div", [
+            _vm.errors.detail
+              ? _c(
+                  "ul",
+                  { staticClass: "event_errors" },
+                  _vm._l(_vm.errors.detail, function(msg) {
+                    return _c("li", { key: msg, staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(msg))
+                    ])
+                  }),
+                  0
+                )
+              : _vm._e()
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", [
+        _vm.isEdit
+          ? _c("button", { staticClass: "spot-create-edit-button" }, [
+              _c("i", { staticClass: "fas fa-pencil-alt" }),
+              _vm._v(" 更新\n        ")
+            ])
+          : _c("button", { staticClass: "spot-create-edit-button" }, [
+              _c("i", { staticClass: "fas fa-pencil-alt" }),
+              _vm._v(" 投稿\n        ")
+            ])
+      ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -62814,18 +62895,9 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "popup-wrapper" }, [
     _c("div", { staticClass: "popup" }, [
-      _c(
-        "div",
-        {
-          staticClass: "popup-close",
-          on: {
-            click: function($event) {
-              return _vm.$emit("closeModal")
-            }
-          }
-        },
-        [_vm._v("✕")]
-      ),
+      _c("div", { staticClass: "popup-close", on: { click: _vm.closeModal } }, [
+        _vm._v("✕")
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "popup-content" }, [
         _c("h2", [_vm._v(_vm._s(_vm._f("moment")(_vm.event.startStr)))]),
@@ -62985,299 +63057,166 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v("釣りスポット作成")]),
-    _vm._v(" "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.mapAddress,
-          expression: "mapAddress"
-        }
-      ],
-      staticClass: "spot_search",
-      attrs: { id: "address", type: "text", placeholder: "所在地を入力" },
-      domProps: { value: _vm.mapAddress },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.mapAddress = $event.target.value
-        }
-      }
-    }),
-    _vm._v(" "),
-    _c(
-      "button",
-      { staticClass: "spot_search_button", on: { click: _vm.searchAddress } },
-      [_c("i", { staticClass: "fas fa-search" })]
-    ),
-    _vm._v(" "),
-    _c("p", [_vm._v("マーカーの移動も可能だよ！")]),
-    _vm._v(" "),
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.spotData($event)
-          }
-        }
-      },
-      [
+  return _c(
+    "div",
+    [
+      _c("h1", [_vm._v("釣りスポット作成")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "d-flex" }, [
         _c("input", {
           directives: [
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.latitude,
-              expression: "latitude"
+              value: _vm.mapAddress,
+              expression: "mapAddress"
             }
           ],
-          attrs: { id: "spot_latitude", type: "hidden" },
-          domProps: { value: _vm.latitude },
+          staticClass: "spot_search",
+          attrs: { id: "address", type: "text", placeholder: "所在地を入力" },
+          domProps: { value: _vm.mapAddress },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.latitude = $event.target.value
+              _vm.mapAddress = $event.target.value
             }
           }
         }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.longitude,
-              expression: "longitude"
-            }
-          ],
-          attrs: { id: "spot_longitude", type: "hidden" },
-          domProps: { value: _vm.longitude },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.longitude = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c(
-            "label",
-            { staticClass: "required", attrs: { for: "spot_name" } },
-            [_vm._v("釣りスポット名")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.spotName,
-                expression: "spotName"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              id: "spot_name",
-              type: "text",
-              placeholder: "例） 〇〇釣り公園",
-              required: ""
-            },
-            domProps: { value: _vm.spotName },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.spotName = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _vm.errors
-          ? _c("div", [
-              _vm.errors.spot_name
-                ? _c(
-                    "ul",
-                    { staticClass: "spot_errors" },
-                    _vm._l(_vm.errors.spot_name, function(msg) {
-                      return _c(
-                        "li",
-                        { key: msg, staticClass: "text-danger" },
-                        [_vm._v(_vm._s(msg))]
-                      )
-                    }),
-                    0
-                  )
-                : _vm._e()
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "spot_address" } }, [_vm._v("所在地")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.address,
-                expression: "address"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              id: "spot_address",
-              type: "text",
-              placeholder: "例） 〇〇県〇〇市〇〇区〇〇町1-1-1"
-            },
-            domProps: { value: _vm.address },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.address = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _vm.errors
-          ? _c("div", [
-              _vm.errors.address
-                ? _c(
-                    "ul",
-                    { staticClass: "spot_errors" },
-                    _vm._l(_vm.errors.address, function(msg) {
-                      return _c(
-                        "li",
-                        { key: msg, staticClass: "text-danger" },
-                        [_vm._v(_vm._s(msg))]
-                      )
-                    }),
-                    0
-                  )
-                : _vm._e()
-            ])
-          : _vm._e(),
         _vm._v(" "),
         _c(
-          "div",
-          { staticClass: "form-group" },
-          [
-            _c("label", { attrs: { for: "tags" } }, [
-              _vm._v("タグ（５つまで）")
-            ]),
-            _vm._v(" "),
-            _c("SpotTagsInput", {
-              attrs: {
-                initialTags: _vm.intialSpotTags,
-                "autocomplete-items": _vm.tagNames
-              },
-              on: { tagsInput: _vm.getTag }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _vm.errors
-          ? _c("div", [
-              _vm.errors.tags
-                ? _c(
-                    "ul",
-                    { staticClass: "spot_errors mt-3" },
-                    _vm._l(_vm.errors.tags, function(msg) {
-                      return _c(
-                        "li",
-                        { key: msg, staticClass: "text-danger" },
-                        [_vm._v(_vm._s(msg))]
-                      )
-                    }),
-                    0
-                  )
-                : _vm._e()
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", [_vm._v("おすすめの釣り方")]),
-          _c("br"),
+          "button",
+          {
+            staticClass: "spot_search_button",
+            on: { click: _vm.searchAddress }
+          },
+          [_c("i", { staticClass: "fas fa-search" })]
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "GmapMap",
+        {
+          attrs: {
+            center: _vm.mapLocation,
+            zoom: 15,
+            "map-type-id": "terrain",
+            id: "map"
+          },
+          on: { click: _vm.updateLocation }
+        },
+        [
+          _c("GmapMarker", {
+            attrs: {
+              animation: 2,
+              position: _vm.mapLocation,
+              clickable: true,
+              draggable: true
+            },
+            on: { dragend: _vm.updateLocation }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("p", [_vm._v("マーカーの移動も可能だよ！")]),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.spotData($event)
+            }
+          }
+        },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.latitude,
+                expression: "latitude"
+              }
+            ],
+            attrs: { id: "spot_latitude", type: "hidden" },
+            domProps: { value: _vm.latitude },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.latitude = $event.target.value
+              }
+            }
+          }),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "fishing_type_form" },
-            _vm._l(_vm.fishingTypeNames, function(fishingType) {
-              return _c("span", { key: fishingType.id, staticClass: "mr-2" }, [
-                _c("label", { attrs: { for: "" + fishingType.id } }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.fishingTypes,
-                        expression: "fishingTypes"
-                      }
-                    ],
-                    attrs: { type: "checkbox", id: "" + fishingType.id },
-                    domProps: {
-                      value: "" + fishingType.id,
-                      checked: Array.isArray(_vm.fishingTypes)
-                        ? _vm._i(_vm.fishingTypes, "" + fishingType.id) > -1
-                        : _vm.fishingTypes
-                    },
-                    on: {
-                      change: function($event) {
-                        var $$a = _vm.fishingTypes,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = "" + fishingType.id,
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.fishingTypes = $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              (_vm.fishingTypes = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
-                          }
-                        } else {
-                          _vm.fishingTypes = $$c
-                        }
-                      }
-                    }
-                  }),
-                  _vm._v(
-                    " " +
-                      _vm._s(fishingType.fishing_type_name) +
-                      "\n                    "
-                  )
-                ])
-              ])
-            }),
-            0
-          ),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.longitude,
+                expression: "longitude"
+              }
+            ],
+            attrs: { id: "spot_longitude", type: "hidden" },
+            domProps: { value: _vm.longitude },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.longitude = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "label",
+              { staticClass: "required", attrs: { for: "spot_name" } },
+              [_vm._v("釣りスポット名")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.spotName,
+                  expression: "spotName"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                id: "spot_name",
+                type: "text",
+                placeholder: "例） 〇〇釣り公園",
+                required: ""
+              },
+              domProps: { value: _vm.spotName },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.spotName = $event.target.value
+                }
+              }
+            })
+          ]),
           _vm._v(" "),
           _vm.errors
             ? _c("div", [
-                _vm.errors.fishing_types
+                _vm.errors.spot_name
                   ? _c(
                       "ul",
                       { staticClass: "spot_errors" },
-                      _vm._l(_vm.errors.fishing_types, function(msg) {
+                      _vm._l(_vm.errors.spot_name, function(msg) {
                         return _c(
                           "li",
                           { key: msg, staticClass: "text-danger" },
@@ -63288,253 +63227,428 @@ var render = function() {
                     )
                   : _vm._e()
               ])
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", [_vm._v("画像（３つまで）")]),
-          _c("br"),
+            : _vm._e(),
           _vm._v(" "),
-          _c("input", {
-            attrs: { id: "image1", type: "file" },
-            on: { change: _vm.onFile1Change }
-          }),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "spot_address" } }, [_vm._v("所在地")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.address,
+                  expression: "address"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                id: "spot_address",
+                type: "text",
+                placeholder: "例） 〇〇県〇〇市〇〇区〇〇町1-1-1"
+              },
+              domProps: { value: _vm.address },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.address = $event.target.value
+                }
+              }
+            })
+          ]),
           _vm._v(" "),
-          _vm.preview1
-            ? _c("p", [
-                _c("img", {
-                  staticClass: "file_preview",
-                  attrs: { src: _vm.preview1, alt: "" }
-                })
+          _vm.errors
+            ? _c("div", [
+                _vm.errors.address
+                  ? _c(
+                      "ul",
+                      { staticClass: "spot_errors" },
+                      _vm._l(_vm.errors.address, function(msg) {
+                        return _c(
+                          "li",
+                          { key: msg, staticClass: "text-danger" },
+                          [_vm._v(_vm._s(msg))]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e()
               ])
             : _vm._e(),
           _vm._v(" "),
-          _c("span", { staticClass: "error_msg" }, [
-            _c("p", [_vm._v(_vm._s(_vm.spotImage1Message))])
-          ])
-        ]),
-        _vm._v(" "),
-        _vm.errors
-          ? _c("div", [
-              _vm.errors.spotImage1
-                ? _c(
-                    "ul",
-                    { staticClass: "spot_errors" },
-                    _vm._l(_vm.errors.spotImage1, function(msg) {
-                      return _c(
-                        "li",
-                        { key: msg, staticClass: "text-danger" },
-                        [_vm._v(_vm._s(msg))]
-                      )
-                    }),
-                    0
-                  )
-                : _vm._e()
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.errors
-          ? _c("div", [
-              _vm.errors.spotImage2
-                ? _c(
-                    "ul",
-                    { staticClass: "spot_errors" },
-                    _vm._l(_vm.errors.spotImage2, function(msg) {
-                      return _c(
-                        "li",
-                        { key: msg, staticClass: "text-danger" },
-                        [_vm._v(_vm._s(msg))]
-                      )
-                    }),
-                    0
-                  )
-                : _vm._e()
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.errors
-          ? _c("div", [
-              _vm.errors.spotImage3
-                ? _c(
-                    "ul",
-                    { staticClass: "spot_errors" },
-                    _vm._l(_vm.errors.spotImage3, function(msg) {
-                      return _c(
-                        "li",
-                        { key: msg, staticClass: "text-danger" },
-                        [_vm._v(_vm._s(msg))]
-                      )
-                    }),
-                    0
-                  )
-                : _vm._e()
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.image2,
-                expression: "image2"
-              }
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("label", { attrs: { for: "tags" } }, [
+                _vm._v("タグ（５つまで）")
+              ]),
+              _vm._v(" "),
+              _c("SpotTagsInput", {
+                attrs: {
+                  initialTags: _vm.intialSpotTags,
+                  "autocomplete-items": _vm.tagNames
+                },
+                on: { tagsInput: _vm.getTag }
+              })
             ],
-            staticClass: "form-group"
-          },
-          [
+            1
+          ),
+          _vm._v(" "),
+          _vm.errors
+            ? _c("div", [
+                _vm.errors.tags
+                  ? _c(
+                      "ul",
+                      { staticClass: "spot_errors mt-3" },
+                      _vm._l(_vm.errors.tags, function(msg) {
+                        return _c(
+                          "li",
+                          { key: msg, staticClass: "text-danger" },
+                          [_vm._v(_vm._s(msg))]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", [_vm._v("おすすめの釣り方")]),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "fishing_type_form" },
+              _vm._l(_vm.fishingTypeNames, function(fishingType) {
+                return _c(
+                  "span",
+                  { key: fishingType.id, staticClass: "mr-2" },
+                  [
+                    _c("label", { attrs: { for: "" + fishingType.id } }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.fishingTypes,
+                            expression: "fishingTypes"
+                          }
+                        ],
+                        attrs: { type: "checkbox", id: "" + fishingType.id },
+                        domProps: {
+                          value: "" + fishingType.id,
+                          checked: Array.isArray(_vm.fishingTypes)
+                            ? _vm._i(_vm.fishingTypes, "" + fishingType.id) > -1
+                            : _vm.fishingTypes
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.fishingTypes,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = "" + fishingType.id,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  (_vm.fishingTypes = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.fishingTypes = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.fishingTypes = $$c
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(
+                        " " +
+                          _vm._s(fishingType.fishing_type_name) +
+                          "\n                    "
+                      )
+                    ])
+                  ]
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _vm.errors
+              ? _c("div", [
+                  _vm.errors.fishing_types
+                    ? _c(
+                        "ul",
+                        { staticClass: "spot_errors" },
+                        _vm._l(_vm.errors.fishing_types, function(msg) {
+                          return _c(
+                            "li",
+                            { key: msg, staticClass: "text-danger" },
+                            [_vm._v(_vm._s(msg))]
+                          )
+                        }),
+                        0
+                      )
+                    : _vm._e()
+                ])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", [_vm._v("画像（３つまで）")]),
+            _c("br"),
+            _vm._v(" "),
             _c("input", {
-              attrs: { id: "image2", type: "file" },
-              on: { change: _vm.onFile2Change }
+              attrs: { id: "image1", type: "file" },
+              on: { change: _vm.onFile1Change }
             }),
             _vm._v(" "),
-            _vm.preview2
+            _vm.preview1
               ? _c("p", [
                   _c("img", {
                     staticClass: "file_preview",
-                    attrs: { src: _vm.preview2, alt: "" }
+                    attrs: { src: _vm.preview1, alt: "" }
                   })
                 ])
               : _vm._e(),
             _vm._v(" "),
             _c("span", { staticClass: "error_msg" }, [
-              _c("p", [_vm._v(_vm._s(_vm.spotImage2Message))])
+              _c("p", [_vm._v(_vm._s(_vm.spotImage1Message))])
             ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.image3,
-                expression: "image3"
-              }
-            ],
-            staticClass: "form-group",
-            on: { change: _vm.onFile3Change }
-          },
-          [
-            _c("input", { attrs: { id: "image3", type: "file" } }),
-            _vm._v(" "),
-            _vm.preview3
-              ? _c("p", [
-                  _c("img", {
-                    staticClass: "file_preview",
-                    attrs: { src: _vm.preview3, alt: "" }
-                  })
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("span", { staticClass: "error_msg" }, [
-              _c("p", [_vm._v(_vm._s(_vm.spotImage3Message))])
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          0 > _vm.wordCount
-            ? _c("div", _vm._g({}, _vm.changeTrue()))
-            : 0 <= _vm.wordCount
-            ? _c("div", _vm._g({}, _vm.changeFalse()))
+          ]),
+          _vm._v(" "),
+          _vm.errors
+            ? _c("div", [
+                _vm.errors.spotImage1
+                  ? _c(
+                      "ul",
+                      { staticClass: "spot_errors" },
+                      _vm._l(_vm.errors.spotImage1, function(msg) {
+                        return _c(
+                          "li",
+                          { key: msg, staticClass: "text-danger" },
+                          [_vm._v(_vm._s(msg))]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.errors
+            ? _c("div", [
+                _vm.errors.spotImage2
+                  ? _c(
+                      "ul",
+                      { staticClass: "spot_errors" },
+                      _vm._l(_vm.errors.spotImage2, function(msg) {
+                        return _c(
+                          "li",
+                          { key: msg, staticClass: "text-danger" },
+                          [_vm._v(_vm._s(msg))]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.errors
+            ? _c("div", [
+                _vm.errors.spotImage3
+                  ? _c(
+                      "ul",
+                      { staticClass: "spot_errors" },
+                      _vm._l(_vm.errors.spotImage3, function(msg) {
+                        return _c(
+                          "li",
+                          { key: msg, staticClass: "text-danger" },
+                          [_vm._v(_vm._s(msg))]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
             : _vm._e(),
           _vm._v(" "),
           _c(
-            "label",
-            { staticClass: "required", attrs: { for: "textAreaExplanation" } },
-            [_vm._v("説明")]
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.image2,
+                  expression: "image2"
+                }
+              ],
+              staticClass: "form-group"
+            },
+            [
+              _c("input", {
+                attrs: { id: "image2", type: "file" },
+                on: { change: _vm.onFile2Change }
+              }),
+              _vm._v(" "),
+              _vm.preview2
+                ? _c("p", [
+                    _c("img", {
+                      staticClass: "file_preview",
+                      attrs: { src: _vm.preview2, alt: "" }
+                    })
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("span", { staticClass: "error_msg" }, [
+                _c("p", [_vm._v(_vm._s(_vm.spotImage2Message))])
+              ])
+            ]
           ),
           _vm._v(" "),
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.explanation,
-                expression: "explanation"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              rows: "6",
-              id: "textAreaExplanation",
-              placeholder: "例） 風が弱くて釣りやすい釣り場です。",
-              required: ""
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.image3,
+                  expression: "image3"
+                }
+              ],
+              staticClass: "form-group",
+              on: { change: _vm.onFile3Change }
             },
-            domProps: { value: _vm.explanation },
-            on: {
-              keydown: function($event) {
-                if (
-                  !$event.type.indexOf("key") &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                ) {
-                  return null
-                }
-                return $event.stopPropagation()
-              },
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.explanation = $event.target.value
-              }
-            }
-          }),
+            [
+              _c("input", { attrs: { id: "image3", type: "file" } }),
+              _vm._v(" "),
+              _vm.preview3
+                ? _c("p", [
+                    _c("img", {
+                      staticClass: "file_preview",
+                      attrs: { src: _vm.preview3, alt: "" }
+                    })
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("span", { staticClass: "error_msg" }, [
+                _c("p", [_vm._v(_vm._s(_vm.spotImage3Message))])
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _c("p", [
-            _vm._v("残り"),
-            _c("span", { class: { "text-danger": _vm.isActive } }, [
-              _vm._v(_vm._s(_vm.wordCount))
-            ]),
-            _vm._v("文字")
-          ])
-        ]),
-        _vm._v(" "),
-        _vm.errors
-          ? _c("div", [
-              _vm.errors.explanation
-                ? _c(
-                    "ul",
-                    { staticClass: "spot_errors" },
-                    _vm._l(_vm.errors.explanation, function(msg) {
-                      return _c(
-                        "li",
-                        { key: msg, staticClass: "text-danger" },
-                        [_vm._v(_vm._s(msg))]
-                      )
-                    }),
-                    0
-                  )
-                : _vm._e()
+          _c("div", { staticClass: "form-group" }, [
+            0 > _vm.wordCount
+              ? _c("div", _vm._g({}, _vm.changeTrue()))
+              : 0 <= _vm.wordCount
+              ? _c("div", _vm._g({}, _vm.changeFalse()))
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "required",
+                attrs: { for: "textAreaExplanation" }
+              },
+              [_vm._v("説明")]
+            ),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.explanation,
+                  expression: "explanation"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                rows: "6",
+                id: "textAreaExplanation",
+                placeholder: "例） 風が弱くて釣りやすい釣り場です。",
+                required: ""
+              },
+              domProps: { value: _vm.explanation },
+              on: {
+                keydown: function($event) {
+                  if (
+                    !$event.type.indexOf("key") &&
+                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                  ) {
+                    return null
+                  }
+                  return $event.stopPropagation()
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.explanation = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v("残り"),
+              _c("span", { class: { "text-danger": _vm.isActive } }, [
+                _vm._v(_vm._s(_vm.wordCount))
+              ]),
+              _vm._v("文字")
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.isEdit
-          ? _c("button", { staticClass: "spot-create-edit-button" }, [
-              _c("i", { staticClass: "fas fa-pencil-alt" }),
-              _vm._v(" 更新\n        ")
-            ])
-          : _c("button", { staticClass: "spot-create-edit-button" }, [
-              _c("i", { staticClass: "fas fa-pencil-alt" }),
-              _vm._v(" 投稿\n        ")
-            ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "back_button",
-            attrs: { type: "button", onclick: "history.back()" }
-          },
-          [_vm._v("戻る")]
-        )
-      ]
-    )
-  ])
+          ]),
+          _vm._v(" "),
+          _vm.errors
+            ? _c("div", [
+                _vm.errors.explanation
+                  ? _c(
+                      "ul",
+                      { staticClass: "spot_errors" },
+                      _vm._l(_vm.errors.explanation, function(msg) {
+                        return _c(
+                          "li",
+                          { key: msg, staticClass: "text-danger" },
+                          [_vm._v(_vm._s(msg))]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isEdit
+            ? _c("button", { staticClass: "spot-create-edit-button" }, [
+                _c("i", { staticClass: "fas fa-pencil-alt" }),
+                _vm._v(" 更新\n        ")
+              ])
+            : _c("button", { staticClass: "spot-create-edit-button" }, [
+                _c("i", { staticClass: "fas fa-pencil-alt" }),
+                _vm._v(" 投稿\n        ")
+              ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "back_button",
+              attrs: { type: "button", onclick: "history.back()" }
+            },
+            [_vm._v("戻る")]
+          )
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -65894,6 +66008,7 @@ var render = function() {
                     _vm.eventDataLoaded
                       ? _c("EventForm", {
                           attrs: {
+                            isEdit: true,
                             intialEventValue: _vm.event,
                             errors: _vm.errors,
                             deleteInput: _vm.deleteInput
@@ -65986,6 +66101,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("EventForm", {
                       attrs: {
+                        isEdit: false,
                         intialEventValue: _vm.event,
                         errors: _vm.errors,
                         deleteInput: _vm.deleteInput
@@ -66010,10 +66126,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/fishing_types/FishingTypes.vue?vue&type=template&id=2e47fdfa&":
-/*!*********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/fishing_types/FishingTypes.vue?vue&type=template&id=2e47fdfa& ***!
-  \*********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/fishingTypes/FishingTypes.vue?vue&type=template&id=0b13d196&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/fishingTypes/FishingTypes.vue?vue&type=template&id=0b13d196& ***!
+  \********************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -66170,7 +66286,6 @@ var render = function() {
                   tagNames: _vm.allTagNames,
                   fishingTypeNames: _vm.allFishingTypeNames,
                   intialSpotValue: _vm.spot,
-                  intialSpotTags: _vm.spotTags,
                   errors: _vm.errors
                 },
                 on: { spotData: _vm.createSpot }
@@ -66234,6 +66349,7 @@ var render = function() {
                   tagNames: _vm.allTagNames,
                   fishingTypeNames: _vm.allFishingTypeNames,
                   intialSpotValue: _vm.spot,
+                  intialspotFishingTypes: _vm.spotFishingTypes,
                   intialSpotTags: _vm.spotTags,
                   errors: _vm.errors
                 },
@@ -66514,11 +66630,11 @@ var render = function() {
                       _c(
                         "ul",
                         { staticClass: "spot-fishing_type" },
-                        _vm._l(_vm.spot.fishing_types, function(fishing_type) {
-                          return _c("li", { key: fishing_type.id }, [
+                        _vm._l(_vm.spot.fishing_types, function(fishingType) {
+                          return _c("li", { key: fishingType.id }, [
                             _vm._v(
                               "\n                                    " +
-                                _vm._s(fishing_type.fishing_type_name) +
+                                _vm._s(fishingType.fishing_type_name) +
                                 "\n                                "
                             )
                           ])
@@ -66955,7 +67071,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("p", [
           _vm._v(
-            "\n                     井口 晶。19歳。プログラミングに励む、田舎好きな大阪生まれ育ちの都会男子です。\n                    関西大学第一高等学校入学。そのまま関西大学法学部へ進学(現在1年生)。\n                    "
+            "\n                     井口 晶。20歳。プログラミングに励む、田舎好きな大阪生まれ育ちの都会男子です。\n                    関西大学第一高等学校入学。そのまま関西大学法学部へ進学(現在2年生)。\n                    "
           ),
           _c("br"),
           _vm._v(

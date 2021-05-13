@@ -12,12 +12,12 @@ class FishingTypeController extends Controller
 {
     public function __invoke()
     {
-        $fishing_types = FishingType::with([
+        $fishingTypes = FishingType::with([
             'spots.spotImages',
             'spots.spotComments',
             'spots.spotFavorites',
         ])->latest()->get();
 
-        return $fishing_types;
+        return $fishingTypes;
     }
 }

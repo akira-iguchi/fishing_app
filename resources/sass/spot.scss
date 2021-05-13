@@ -399,6 +399,12 @@ $breakpoint-tablet: 896px;
   border-radius: 5px;
   padding: 3em 8em;
   width: 120%;
+
+  @include max-screen($breakpoint-tablet) {
+    padding: 1.5em 1em;
+    width: 95%;
+    overflow-x: hidden;
+  }
 }
 
 .spot_errors {
@@ -406,12 +412,6 @@ $breakpoint-tablet: 896px;
   position: relative;
   bottom: 10px;
   right: 40px;
-}
-
-@media screen and (max-width:1000px) {
-  .spot_form {
-    padding: 2em 3em;
-  }
 }
 
 .spot_form h1 {
@@ -436,7 +436,7 @@ $breakpoint-tablet: 896px;
 .spot_search_button {
   height: 50px;
   position: relative;
-  top: 2px;
+  bottom: 6px;
   right: 37px;
   background: none;
   color: #666;

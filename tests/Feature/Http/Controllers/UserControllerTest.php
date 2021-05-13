@@ -32,7 +32,8 @@ class UserControllerTest extends TestCase
     {
         $response = $this->json('GET', route('users.show', $this->user));
 
-        $response->assertStatus(200)
+        $response
+            ->assertStatus(200)
             ->assertJson(
                 ['user_name' => $this->user->user_name],
             );
@@ -47,7 +48,8 @@ class UserControllerTest extends TestCase
     {
         $response = $this->json('GET', route('users.edit', $this->user));
 
-        $response->assertStatus(200)
+        $response
+            ->assertStatus(200)
             ->assertJson(
                 ['user_name' => $this->user->user_name],
             );
@@ -70,7 +72,8 @@ class UserControllerTest extends TestCase
             'user_name'      => 'ゲストユーザー',  // 「テストユーザー」が「ゲストユーザー」に変更
         ]);
 
-        $response->assertStatus(201)
+        $response
+            ->assertStatus(201)
             ->assertJson(
                 ['user_name' => 'ゲストユーザー'],  // 「貝塚人工島」が「かもめ大橋」に変更
             );

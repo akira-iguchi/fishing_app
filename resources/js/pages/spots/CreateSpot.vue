@@ -11,7 +11,6 @@
                     :tagNames="allTagNames"
                     :fishingTypeNames="allFishingTypeNames"
                     :intialSpotValue="spot"
-                    :intialSpotTags="spotTags"
                     :errors="errors"
                     @spotData="createSpot"
                 />
@@ -37,7 +36,6 @@
                 allTagNames: [],
                 allFishingTypeNames: [],
                 spot: {},
-                spotTags: [],
                 errors: null,
                 spotDataLoaded: false,
             }
@@ -79,9 +77,9 @@
                 formData.append('tags', data[4])
                 formData.append('fishing_types', data[5])
                 formData.append('explanation', data[6])
-                formData.append('spot_image1', data[7])
-                formData.append('spot_image2', data[8])
-                formData.append('spot_image3', data[9])
+                formData.append('spot_image_first', data[7])
+                formData.append('spot_image_second', data[8])
+                formData.append('spot_image_third', data[9])
                 const response = await axios.post('/api/spots', formData)
 
                 this.loading = false

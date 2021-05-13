@@ -70,24 +70,11 @@ class User extends Authenticatable
     }
 
     /**
-     *  イベント
+     * イベント
      */
     public function events(): HasMany
     {
         return $this->hasMany(Event::class);
-    }
-
-    /**
-     * お気に入りスポット
-     */
-    public function favoriteSpots(): BelongsToMany
-    {
-        return $this->belongsToMany(Spot::class, 'spot_favorite')->withTimestamps();
-    }
-
-    public function getCountFavoriteSpotsAttribute(): int
-    {
-        return $this->favoriteSpots->count();
     }
 
     /**
@@ -101,6 +88,19 @@ class User extends Authenticatable
     public function getCountSpotCommentsAttribute(): int
     {
         return $this->spotComments->count();
+    }
+
+    /**
+     * お気に入りスポット
+     */
+    public function favoriteSpots(): BelongsToMany
+    {
+        return $this->belongsToMany(Spot::class, 'spot_favorite')->withTimestamps();
+    }
+
+    public function getCountFavoriteSpotsAttribute(): int
+    {
+        return $this->favoriteSpots->count();
     }
 
     /**

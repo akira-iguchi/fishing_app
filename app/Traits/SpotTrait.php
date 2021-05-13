@@ -16,44 +16,47 @@ trait SpotTrait
     // 釣りスポットの画像保存
     public static function imageUpload($spot, $req, $image)
     {
-        $spot_image = new SpotImage;
-        $spot_image->spot_id = $spot->id;
+        $spotImage = new SpotImage;
+        $spotImage->spot_id = $spot->id;
         $upload_info = Storage::disk('s3')->putFile('/spot', $req->file($image), 'public');
         $path = Storage::disk('s3')->url($upload_info);
-        $spot_image->spot_image = $path;
-        $spot_image->save();
+        $spotImage->spot_image = $path;
+        $spotImage->save();
     }
 
 
-    public static function imageUploadByCase($spot, $req, $spot_image)
+    public static function imageUploadByCase($spot, $req, $spotImage)
     {
-        $image1 = 'spot_image1';
-        $image2 = 'spot_image2';
-        $image3 = 'spot_image3';
+        $image1 = 'spot_image_first';
+        $image2 = 'spot_image_second';
+        $image3 = 'spot_image_third';
 
-        $spot_image->spot_id = $spot->id;
+        $spotImage->spot_id = $spot->id;
 
-        if ($req->hasFile('spot_image1') || $req->hasFile('spot_image2') || $req->hasFile('spot_image3')) {
+        if ($req->hasFile('spot_image_first')
+            || $req->hasFile('spot_image_second')
+            || $req->hasFile('spot_image_third')
+        ) {
             $spot->spotImages()->delete();
-            if ($req->hasFile('spot_image1')
-                && $req->hasFile('spot_image2')
-                && $req->hasFile('spot_image3')
+            if ($req->hasFile('spot_image_first')
+                && $req->hasFile('spot_image_second')
+                && $req->hasFile('spot_image_third')
             ) {
                 SpotTrait::imageUpload($spot, $req, $image1);
                 SpotTrait::imageUpload($spot, $req, $image2);
                 SpotTrait::imageUpload($spot, $req, $image3);
-            } elseif ($req->hasFile('spot_image1') && $req->hasFile('spot_image2')) {
+            } elseif ($req->hasFile('spot_image_first') && $req->hasFile('spot_image_second')) {
                 SpotTrait::imageUpload($spot, $req, $image1);
                 SpotTrait::imageUpload($spot, $req, $image2);
-            } elseif ($req->hasFile('spot_image2') && $req->hasFile('spot_image3')) {
+            } elseif ($req->hasFile('spot_image_second') && $req->hasFile('spot_image_third')) {
                 SpotTrait::imageUpload($spot, $req, $image2);
                 SpotTrait::imageUpload($spot, $req, $image3);
-            } elseif ($req->hasFile('spot_image1') && $req->hasFile('spot_image3')) {
+            } elseif ($req->hasFile('spot_image_first') && $req->hasFile('spot_image_third')) {
                 SpotTrait::imageUpload($spot, $req, $image1);
                 SpotTrait::imageUpload($spot, $req, $image3);
-            } elseif ($req->hasFile('spot_image1')) {
+            } elseif ($req->hasFile('spot_image_first')) {
                 SpotTrait::imageUpload($spot, $req, $image1);
-            } elseif ($req->hasFile('spot_image2')) {
+            } elseif ($req->hasFile('spot_image_second')) {
                 SpotTrait::imageUpload($spot, $req, $image2);
             } else {
                 SpotTrait::imageUpload($spot, $req, $image3);
@@ -62,7 +65,7 @@ trait SpotTrait
             if (Route::currentRouteName() === 'spots.update') {
                 return false;
             }
-            $spot_image->save();
+            $spotImage->save();
         }
     }
 }

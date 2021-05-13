@@ -61,10 +61,10 @@
                             </th>
                             <td>
                                 <ul class="spot-fishing_type">
-                                    <li v-for="fishing_type in spot.fishing_types"
-                                        :key="fishing_type.id"
+                                    <li v-for="fishingType in spot.fishing_types"
+                                        :key="fishingType.id"
                                     >
-                                        {{ fishing_type.fishing_type_name }}
+                                        {{ fishingType.fishing_type_name }}
                                     </li>
                                 </ul>
                             </td>
