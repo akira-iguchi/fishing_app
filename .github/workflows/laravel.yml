@@ -30,25 +30,25 @@ jobs:
     steps:
         - uses: actions/checkout@v2
         - name: cache vendor
-            id: cache
-            uses: actions/cache@v1
-            with:
-                path: ./vendor
-                key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                restore-keys: |
-                ${{ runner.os }}-composer-
-            - name: composer install
-                if: steps.cache.outputs.cache-hit != 'true'
-                run: composer install -n --prefer-dist
-            - name: copy .env
-                run: cp .env.example .env
-            - name: generate key
-                run: php artisan key:generate
-            - name: migrate
-                run: php artisan migrate
+        id: cache
+        uses: actions/cache@v1
+        with:
+            path: ./vendor
+            key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+            restore-keys: |
+            ${{ runner.os }}-composer-
+        - name: composer install
+            if: steps.cache.outputs.cache-hit != 'true'
+            run: composer install -n --prefer-dist
+        - name: copy .env
+            run: cp .env.example .env
+        - name: generate key
+            run: php artisan key:generate
+        - name: migrate
+            run: php artisan migrate
+        env:
+            DB_HOST: 127.0.0.1
+        - name: Execute tests (Unit and Feature tests) via PHPUnit
             env:
                 DB_HOST: 127.0.0.1
-            - name: Execute tests (Unit and Feature tests) via PHPUnit
-                env:
-                    DB_HOST: 127.0.0.1
-                run: vendor/bin/phpunit
+            run: vendor/bin/phpunit
