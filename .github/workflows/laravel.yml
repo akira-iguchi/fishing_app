@@ -21,10 +21,10 @@ jobs:
             ports:
                 - 3306:3306
             env:
-            MYSQL_ROOT_PASSWORD:
-            MYSQL_DATABASE: hoge_app
-            MYSQL_USER: root
-            MYSQL_PASSWORD:
+                MYSQL_ROOT_PASSWORD:
+                MYSQL_DATABASE: fishing
+                MYSQL_USER: root
+                MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
             options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
 
     steps:
@@ -38,17 +38,17 @@ jobs:
             restore-keys: |
             ${{ runner.os }}-composer-
         - name: composer install
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: composer install -n --prefer-dist
+            if: steps.cache.outputs.cache-hit != 'true'
+            run: composer install -n --prefer-dist
         - name: copy .env
-        run: cp .env.example .env
+            run: cp .env.example .env
         - name: generate key
-        run: php artisan key:generate
+            run: php artisan key:generate
         - name: migrate
-        run: php artisan migrate
+            run: php artisan migrate
         env:
             DB_HOST: 127.0.0.1
         - name: Execute tests (Unit and Feature tests) via PHPUnit
-        env:
-            DB_HOST: 127.0.0.1
-        run: vendor/bin/phpunit
+            env:
+                DB_HOST: 127.0.0.1
+            run: vendor/bin/phpunit
