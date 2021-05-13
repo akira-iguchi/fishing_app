@@ -99,7 +99,7 @@ header:focus-within {
     height: calc(100% - 70px);
     visibility: hidden;
     opacity: 0;
-    transition: 0.5s;
+    transition: 0.4s;
     background: #000;
   }
 
@@ -164,7 +164,7 @@ header:focus-within {
     transition: transform 0.2s;
     will-change: transform;
     contain: paint;
-    transition-delay: 0.4s;
+    transition-delay: 0.2s;
   }
 
   .nav_container .nav_content ul {

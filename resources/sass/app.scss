@@ -112,7 +112,7 @@ header {
       height: calc(100% - 70px);
       visibility: hidden;
       opacity: 0;
-      transition: .5s;
+      transition: .4s;
       background: #000;
     }
 
@@ -177,7 +177,7 @@ header {
       transition: transform .2s;
       will-change: transform;
       contain: paint;
-      transition-delay: 0.4s;
+      transition-delay: 0.2s;
 
       ul {
         height: 100%;
