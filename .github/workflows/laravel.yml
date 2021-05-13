@@ -13,8 +13,9 @@ jobs:
         ports:
           - 3306:3306
         env:
+          MYSQL_DATABASE: fishing
+          DB_USERNAME: root
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          MYSQL_DATABASE: fishing_test
         options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
 
     env:
