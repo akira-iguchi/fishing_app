@@ -40,8 +40,8 @@ jobs:
       - name: composer install
         if: steps.cache.outputs.cache-hit != 'true'
         run: composer install -n --prefer-dist
-      - name: copy .env.testing
-        run: cp .env.example .env.testing
+      - name: copy .env
+        run: cp .env.example .env
       - name: generate key
         run: php artisan key:generate
       - name: migrate
