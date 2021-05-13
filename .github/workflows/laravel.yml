@@ -12,10 +12,10 @@ jobs:
         image: mysql:8.0
         ports:
           - 3306:3306
-        options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
         env:
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          MYSQL_DATABASE: test
+          MYSQL_DATABASE: fishing_test
+        options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
 
     env:
       DB_CONNECTION: mysql
@@ -44,5 +44,5 @@ jobs:
         run: php artisan key:generate
       - name: migrate
         run: php artisan migrate
-      - name: unit test
+      - name: test
         run: ./vendor/bin/phpunit
