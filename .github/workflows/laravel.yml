@@ -16,7 +16,7 @@ jobs:
           MYSQL_ROOT_PASSWORD:
           MYSQL_DATABASE: fishing
           MYSQL_USER: root
-          MYSQL_PASSWORD: turiaki9314
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
 
 
     steps:
@@ -36,6 +36,8 @@ jobs:
       run: cp .env.example .env
     - name: generate key
       run: php artisan key:generate
+    - name: config:clear
+      run: php artisan config:clear
     - name: migrate
       run: php artisan migrate
       env:
