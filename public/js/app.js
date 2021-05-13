@@ -20225,7 +20225,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    // コメント削除
+    // 釣りスポット削除
     deleteSpot: function deleteSpot() {
       var _this2 = this;
 
@@ -20248,8 +20248,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _response = _context2.sent;
 
                 _this2.$store.commit('message/setContent', {
-                  content: 'コメントを削除しました',
-                  timeout: 5000
+                  content: '釣りスポットを削除しました',
+                  timeout: 4000
                 });
 
                 _this2.$router.push('/');

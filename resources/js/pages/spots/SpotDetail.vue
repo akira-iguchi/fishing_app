@@ -194,13 +194,13 @@
 
                 this.spotDataLoaded = true
             },
-            // コメント削除
+            // 釣りスポット削除
             async deleteSpot() {
                 if (confirm('本当に削除しますか？')) {
                     const response = await axios.delete(`/api/spots/${ this.id }`)
                     this.$store.commit('message/setContent', {
-                        content: 'コメントを削除しました',
-                        timeout: 5000
+                        content: '釣りスポットを削除しました',
+                        timeout: 4000
                     })
 
                     this.$router.push('/')
