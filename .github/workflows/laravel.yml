@@ -16,7 +16,7 @@ jobs:
           MYSQL_ROOT_PASSWORD:
           MYSQL_DATABASE: fishing
           MYSQL_USER: root
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_PASSWORD: turiaki9314
         options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
 
     steps:
