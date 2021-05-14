@@ -43,11 +43,7 @@ class SpotTraitTest extends TestCase
                 'spot_image_second'   => UploadedFile::fake()->image('defaultSpot.jpg'),
             ]);
 
-        // 画像（子テーブル変更）
-        $this->assertDatabaseHas('spot_images', [
-            'id' => 1,
-            'id' => 2,
-        ]);
+        $this->assertCount(2, SpotImage::all());
 
         \DB::table('spots')->delete();
 
@@ -61,11 +57,7 @@ class SpotTraitTest extends TestCase
                 'spot_image_third'   => UploadedFile::fake()->image('defaultSpot.jpg'),
             ]);
 
-        // 画像（子テーブル変更）
-        $this->assertDatabaseHas('spot_images', [
-            'id' => 3,
-            'id' => 4,
-        ]);
+        $this->assertCount(2, SpotImage::all());
 
         \DB::table('spots')->delete();
 
@@ -78,9 +70,6 @@ class SpotTraitTest extends TestCase
                 'spot_image_third'   => UploadedFile::fake()->image('defaultSpot.jpg'),
             ]);
 
-        // 画像（子テーブル変更）
-        $this->assertDatabaseHas('spot_images', [
-            'id' => 5,
-        ]);
+        $this->assertCount(1, SpotImage::all());
     }
 }

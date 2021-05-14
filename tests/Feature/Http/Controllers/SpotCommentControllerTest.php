@@ -36,6 +36,7 @@ class SpotCommentControllerTest extends TestCase
      */
     public function testStore_success($params)
     {
+        dd($this->spot->id);
         Storage::fake('s3');
         $response = $this->from(route('spots.show', $this->spot))
             ->json('POST', route('spots.comment', $this->spot), $params['requestData']);
