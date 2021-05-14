@@ -1,54 +1,50 @@
 name: Laravel
 
-on:
-    push:
-        branches:
-        - main
-        - feature/**
-    pull_request:
-        branches:
-        - develop
-        - main
+on: [push, pull_request]
 
 jobs:
-    laravel-tests:
-
+  test:
+    name: phpunit test
     runs-on: ubuntu-latest
 
     services:
-        mysql:
-            image: mysql:8.0
-            ports:
-                - 3306:3306
-            env:
-            MYSQL_ROOT_PASSWORD:
-            MYSQL_DATABASE: hoge_app
-            MYSQL_USER: root
-            MYSQL_PASSWORD:
-            options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_DATABASE: fishing_test
+          DB_USERNAME: root
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
+
+    env:
+      DB_CONNECTION: mysql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_DATABASE: fishing_test
+      DB_USERNAME: root
+      DB_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
 
     steps:
-        - uses: actions/checkout@v2
-        - name: cache vendor
+      - uses: actions/checkout@v2
+      - name: cache vendor
         id: cache
         uses: actions/cache@v1
         with:
-            path: ./vendor
-            key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-            restore-keys: |
+          path: ./vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
             ${{ runner.os }}-composer-
-        - name: composer install
+      - name: composer install
         if: steps.cache.outputs.cache-hit != 'true'
         run: composer install -n --prefer-dist
-        - name: copy .env
+      - name: copy .env
         run: cp .env.example .env
-        - name: generate key
+      - name: generate key
         run: php artisan key:generate
-        - name: migrate
+      - name: migrate
         run: php artisan migrate
-        env:
-            DB_HOST: 127.0.0.1
-        - name: Execute tests (Unit and Feature tests) via PHPUnit
-        env:
-            DB_HOST: 127.0.0.1
-        run: vendor/bin/phpunit
+      - name: test
+        run: ./vendor/bin/phpunit
