@@ -418,7 +418,7 @@ class SpotControllerTest extends TestCase
                         'latitude'      => 34.23,
                         'longitude'     => 135.63,
                         'spot_image_first'   => UploadedFile::fake()->image('defaultSpot.jpg'),
-                        'fishing_types' => 9,  // = $this->fishingType->id(変動する)
+                        'fishing_types' => 1,  // = $this->fishingType->id(変動する)
                         'tags'          => json_encode($this->tagData),
                     ],
                 ]

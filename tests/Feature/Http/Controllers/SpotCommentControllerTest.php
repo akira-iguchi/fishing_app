@@ -36,7 +36,6 @@ class SpotCommentControllerTest extends TestCase
      */
     public function testStore_success($params)
     {
-        // dd($this->spot->id);
         Storage::fake('s3');
         $response = $this->from(route('spots.show', $this->spot))
             ->json('POST', route('spots.comment', $this->spot), $params['requestData']);
@@ -100,7 +99,7 @@ class SpotCommentControllerTest extends TestCase
             'valid data' => [
                 [
                     'requestData'       => [
-                        'spot_id'       => 2,   // $this->spot->id
+                        'spot_id'       => 1,   // $this->spot->id
                         'comment'       => 'たくさん釣れた！',
                         'comment_image' => UploadedFile::fake()->image('default.jpg'),
                     ],
