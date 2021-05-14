@@ -45,7 +45,7 @@ class SpotTraitTest extends TestCase
 
         $this->assertCount(2, SpotImage::all());
 
-        \DB::table('spots')->delete();
+        Spot::query()->delete();
 
         $response = $this->from(route('spots.create', $this->user))
             ->json('POST', route('spots.store'), [
@@ -59,7 +59,7 @@ class SpotTraitTest extends TestCase
 
         $this->assertCount(2, SpotImage::all());
 
-        \DB::table('spots')->delete();
+        Spot::query()->delete();
 
         $response = $this->from(route('spots.create', $this->user))
             ->json('POST', route('spots.store'), [

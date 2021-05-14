@@ -41,12 +41,13 @@ class SpotControllerTest extends TestCase
 
         $this->tag = Tag::factory()->create(['tag_name' => '人が多い']);
         $this->spot->tags()->attach($this->tag);
-
-        $this->fishingType = FishingType::factory()->create();
     }
 
     public function testIndex_logged_in()
     {
+        // $spotのidが変動しないよう1個ずつ書く
+        $fishingType = FishingType::factory()->create();
+
         $this->actingAs($this->otherUser);
         $response = $this->json('GET', route('spots.index'));
 
@@ -55,7 +56,7 @@ class SpotControllerTest extends TestCase
             ->assertJson([
                 // 検索フォーム
                 [
-                    [['fishing_type_name' => $this->fishingType->fishing_type_name]],
+                    [['fishing_type_name' => $fishingType->fishing_type_name]],
                     [['tag_name' => $this->tag->tag_name]],
                 ],
                 // 最近の投稿
@@ -83,7 +84,6 @@ class SpotControllerTest extends TestCase
             ->assertJsonMissingExact([
                 // 検索フォーム
                 [
-                    [['fishing_type_name' => $this->fishingType->fishing_type_name]],
                     [['tag_name' => $this->tag->tag_name]],
                 ],
                 [['spot_name' => 'かもめ大橋']],
@@ -97,11 +97,13 @@ class SpotControllerTest extends TestCase
      */
     public function testSearch_available()
     {
-        $this->spot->fishingTypes()->attach($this->fishingType);
+        $fishingType = FishingType::factory()->create();
+
+        $this->spot->fishingTypes()->attach($fishingType);
 
         $response = $this->from(route('spots.index'))->json('GET', route('spots.search', [
                 'searchWord' => $this->spot->spot_name,
-                'fishingTypes' => [$this->fishingType->id],
+                'fishingTypes' => [$fishingType->id],
         ]));
 
         $response
@@ -109,7 +111,7 @@ class SpotControllerTest extends TestCase
             ->assertJson([
                 // 検索フォーム
                 [
-                    [['fishing_type_name' => $this->fishingType->fishing_type_name]],
+                    [['fishing_type_name' => $fishingType->fishing_type_name]],
                 ],
                 // 検索結果
                 [
@@ -136,7 +138,7 @@ class SpotControllerTest extends TestCase
             ->assertJsonMissingExact([
                 // 検索フォーム
                 [
-                    [['fishing_type_name' => $this->fishingType->fishing_type_name]],
+                    [['tag_name' => $this->tag->tag_name]],
                 ],
                 // 検索結果
                 [
@@ -153,6 +155,8 @@ class SpotControllerTest extends TestCase
      */
     public function testSearchAll()
     {
+        $fishingType = FishingType::factory()->create();
+
         $response = $this->from(route('spots.index'))->json('GET', route('spots.search', [
             'searchWord' => '',
             'fishingTypes' => [],
@@ -163,7 +167,7 @@ class SpotControllerTest extends TestCase
             ->assertJson([
                 // 検索フォーム
                 [
-                    [['fishing_type_name' => $this->fishingType->fishing_type_name]],
+                    [['fishing_type_name' => $fishingType->fishing_type_name]],
                 ],
                 // 検索結果
                 [
@@ -190,13 +194,15 @@ class SpotControllerTest extends TestCase
 
     public function testCreate()
     {
+        $fishingType = FishingType::factory()->create();
+
         $response = $this->json('GET', route('spots.create'));
 
         $response
             ->assertStatus(200)
             ->assertJson([ [],
                 [
-                    ['fishing_type_name' => $this->fishingType->fishing_type_name]
+                    ['fishing_type_name' => $fishingType->fishing_type_name]
                 ],
             ]);
     }
@@ -210,7 +216,9 @@ class SpotControllerTest extends TestCase
     public function testStore_success($params)
     {
         // 釣りスポット数を０に
-        \DB::table('spots')->delete();
+        Spot::query()->delete();
+
+        $fishingType = FishingType::factory()->create(['id' => 1]);
 
         Storage::fake('s3');
 
@@ -262,7 +270,7 @@ class SpotControllerTest extends TestCase
     public function testStore_validationError($params)
     {
         // 釣りスポット数を０に
-        \DB::table('spots')->delete();
+        Spot::query()->delete();
 
         $response = $this->from(route('spots.create', $this->user))
             ->json('POST', route('spots.store'), $params['requestData']);
@@ -282,6 +290,8 @@ class SpotControllerTest extends TestCase
 
     function testEdit()
     {
+        $fishingType = FishingType::factory()->create();
+
         $response = $this->json('GET', route('spots.edit', $this->spot));
 
         $response
@@ -293,7 +303,7 @@ class SpotControllerTest extends TestCase
                     ['text' => $this->tag->tag_name],
                 ], [],
                 [
-                    ['fishing_type_name' => $this->fishingType->fishing_type_name]
+                    ['fishing_type_name' => $fishingType->fishing_type_name]
                 ]
             ]);
     }
@@ -306,6 +316,8 @@ class SpotControllerTest extends TestCase
      */
     function testUpdate_success($params)
     {
+        $fishingType = FishingType::factory()->create(['id' => 1]);
+
         $other_fishing_type = FishingType::factory()
             ->create(['fishing_type_name' => 'ルアー釣り', 'id' => 2]);
 
@@ -319,17 +331,7 @@ class SpotControllerTest extends TestCase
         ];
 
         $response = $this->from(route('spots.edit', $this->spot))
-            ->json('PUT', route('spots.update', $this->spot), [
-                // $this->fishingType->idが変動するため直書き
-                'spot_name'     => 'かもめ大橋',
-                'explanation'   => 'テスト',
-                'address'       => '住之江区',
-                'latitude'      => 34.23,
-                'longitude'     => 135.63,
-                'spot_image_first'   => UploadedFile::fake()->image('defaultSpot.jpg'),
-                'fishing_types' => $this->fishingType->id,
-                'tags'          => json_encode($this->tagData),
-            ]);
+            ->json('PUT', route('spots.update', $this->spot), $params['requestData']);
 
         $response->assertStatus(201);
 
@@ -350,7 +352,7 @@ class SpotControllerTest extends TestCase
 
         // fishing_typeとのリレーション変更
         $this->assertDatabaseHas('spot_fishing_type', [
-            'fishing_type_id'      => $this->fishingType->id,  // id = 1
+            'fishing_type_id'      => $fishingType->id,  // id = 1
         ]);
 
         // S3に画像を保存(fake使用)
@@ -418,7 +420,7 @@ class SpotControllerTest extends TestCase
                         'latitude'      => 34.23,
                         'longitude'     => 135.63,
                         'spot_image_first'   => UploadedFile::fake()->image('defaultSpot.jpg'),
-                        'fishing_types' => 10,  // = $this->fishingType->id(変動する)
+                        'fishing_types' => 1,  // = $fishingType->id
                         'tags'          => json_encode($this->tagData),
                     ],
                 ]
