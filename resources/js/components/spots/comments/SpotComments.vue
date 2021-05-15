@@ -42,6 +42,10 @@
             </div>
         </div>
 
+        <div v-show="loading" class="mt-3">
+            <Loader />
+        </div>
+
         <form @submit.prevent="createComment">
             <div class="form-group">
                 <div v-if="0 > wordCount" v-on="changeTrue()"></div>
@@ -69,7 +73,7 @@
             <div class="form-group">
                 <label for="comment_image">画像</label><br>
 
-                <input id="comment_image" type="file" v-if="show" @change="onFileChange">
+                <input id="comment_image" type="file" v-if="showInputImage" @change="onFileChange">
                 <p v-if="preview">
                     <img class="commentImg" :src="preview" alt="">
                 </p>
@@ -87,10 +91,6 @@
                         {{ msg }}
                     </li>
                 </ul>
-            </div>
-
-            <div v-show="loading" class="mt-5">
-                <Loader />
             </div>
 
             <button class="spot-create-edit-button"><i class="fas fa-pencil-alt"></i>&thinsp;コメント</button>
@@ -124,7 +124,7 @@
                 commentImageMessage: "",
                 preview: null,
                 commentErrors: null,
-                show: true,
+                showInputImage: true,
                 loading: false,
             }
         },
@@ -148,9 +148,9 @@
                 this.preview = null
                 this.commentContent = ""
                 this.commentErrors = null
-                this.show = false
+                this.showInputImage = false
                 this.$nextTick(function () {
-                    this.show = true;
+                    this.showInputImage = true;
                 })
                 this.spotCommentList = newSpot.spot_comments.reverse()
                 return this.spotCommentList
@@ -182,9 +182,9 @@
                 this.preview = null
                 this.commentContent = ""
                 this.commentErrors = null
-                this.show = false
+                this.showInputImage = false
                 this.$nextTick(function () {
-                    this.show = true;
+                    this.showInputImage = true;
                 })
 
                 this.spot.spot_comments.unshift(response.data)
@@ -199,7 +199,6 @@
 
                 this.spot.count_spot_comments -= 1
 
-                // this.spot.spot_comments.reverse()
                 this.spot.spot_comments.splice(index, 1)
 
                 this.$store.commit('message/setContent', {

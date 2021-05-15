@@ -18,7 +18,7 @@
 
                 <div class="card_detail">
 
-                    <div class="card_item mr-2">
+                    <div class="card_item">
                         <FavoriteButton
                             :spot="spot"
                             @favorite="$emit('favorite')"
@@ -26,7 +26,7 @@
                         />
                     </div>
 
-                    <div class="card_item mr-2">
+                    <div class="card_item">
                         <i class="fa fa-comment mr-1"></i>{{ spot.count_spot_comments }}
                     </div>
 
@@ -39,7 +39,7 @@
                     </RouterLink>
                 </div>
 
-                <p v-if="spot.address && spot.address.length > 0">
+                <p class="text-center" v-if="spot.address && spot.address.length > 0">
                     {{ spot.address }}
                 </p>
                 <!-- <p>{{ spot.explanation }}</p> -->

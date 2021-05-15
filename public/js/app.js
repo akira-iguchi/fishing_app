@@ -15655,6 +15655,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: {
     isLogin: function isLogin() {
@@ -15666,8 +15678,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      isNavContentOpen: false
+      isNavContentOpen: false,
+      showNavContent: true
     };
+  },
+  watch: {
+    isLogin: function isLogin() {
+      // ログインするとヘッダーがおかしくなるためDOMを更新
+      this.showNavContent = false;
+      this.$nextTick(function () {
+        this.showNavContent = true;
+      });
+    }
   },
   methods: {
     openNavContent: function openNavContent() {
@@ -16868,7 +16890,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       commentImageMessage: "",
       preview: null,
       commentErrors: null,
-      show: true,
+      showInputImage: true,
       loading: false
     };
   },
@@ -16892,9 +16914,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.preview = null;
       this.commentContent = "";
       this.commentErrors = null;
-      this.show = false;
+      this.showInputImage = false;
       this.$nextTick(function () {
-        this.show = true;
+        this.showInputImage = true;
       });
       this.spotCommentList = newSpot.spot_comments.reverse();
       return this.spotCommentList;
@@ -16946,10 +16968,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.preview = null;
                 _this.commentContent = "";
                 _this.commentErrors = null;
-                _this.show = false;
+                _this.showInputImage = false;
 
                 _this.$nextTick(function () {
-                  this.show = true;
+                  this.showInputImage = true;
                 });
 
                 _this.spot.spot_comments.unshift(response.data);
@@ -16981,7 +17003,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context2.sent;
-                _this2.spot.count_spot_comments -= 1; // this.spot.spot_comments.reverse()
+                _this2.spot.count_spot_comments -= 1;
 
                 _this2.spot.spot_comments.splice(index, 1);
 
@@ -62466,104 +62488,110 @@ var render = function() {
         class: { visible_nav_background: _vm.isNavContentOpen }
       }),
       _vm._v(" "),
-      _c(
-        "nav",
-        {
-          staticClass: "nav_content",
-          class: { open_nav_content: _vm.isNavContentOpen }
-        },
-        [
-          _vm.isLogin
-            ? _c("ul", [
-                _c("li", [
-                  _c("span", { on: { click: _vm.logout } }, [
-                    _c("i", { staticClass: "fas fa-sign-in-alt mr-1" }),
-                    _vm._v("ログアウト")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  { on: { click: _vm.closeNavContent } },
-                  [
+      _vm.showNavContent
+        ? _c(
+            "nav",
+            {
+              staticClass: "nav_content",
+              class: { open_nav_content: _vm.isNavContentOpen }
+            },
+            [
+              _vm.isLogin
+                ? _c("ul", [
+                    _c("li", [
+                      _c("span", { on: { click: _vm.logout } }, [
+                        _c("i", { staticClass: "fas fa-sign-in-alt mr-1" }),
+                        _vm._v("ログアウト")
+                      ])
+                    ]),
+                    _vm._v(" "),
                     _c(
-                      "RouterLink",
-                      {
-                        attrs: { to: "/users/" + _vm.AuthUser.id + "/events" }
-                      },
-                      [_vm._v("カレンダー")]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  { on: { click: _vm.closeNavContent } },
-                  [
-                    _c("RouterLink", { attrs: { to: "/fishing_types" } }, [
-                      _vm._v("釣り方一覧")
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  { on: { click: _vm.closeNavContent } },
-                  [
-                    _c("RouterLink", { attrs: { to: "/spots/create" } }, [
-                      _vm._v("投稿")
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  { on: { click: _vm.closeNavContent } },
-                  [
+                      "li",
+                      { on: { click: _vm.closeNavContent } },
+                      [
+                        _c(
+                          "RouterLink",
+                          {
+                            attrs: {
+                              to: "/users/" + _vm.AuthUser.id + "/events"
+                            }
+                          },
+                          [_vm._v("カレンダー")]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
                     _c(
-                      "RouterLink",
-                      { attrs: { to: "/users/" + _vm.AuthUser.id } },
-                      [_vm._v(_vm._s(_vm.AuthUser.user_name))]
+                      "li",
+                      { on: { click: _vm.closeNavContent } },
+                      [
+                        _c("RouterLink", { attrs: { to: "/fishing_types" } }, [
+                          _vm._v("釣り方一覧")
+                        ])
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      { on: { click: _vm.closeNavContent } },
+                      [
+                        _c("RouterLink", { attrs: { to: "/spots/create" } }, [
+                          _vm._v("投稿")
+                        ])
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      { on: { click: _vm.closeNavContent } },
+                      [
+                        _c(
+                          "RouterLink",
+                          { attrs: { to: "/users/" + _vm.AuthUser.id } },
+                          [_vm._v(_vm._s(_vm.AuthUser.user_name))]
+                        )
+                      ],
+                      1
                     )
-                  ],
-                  1
-                )
-              ])
-            : _c("ul", [
-                _c(
-                  "li",
-                  { on: { click: _vm.closeNavContent } },
-                  [
-                    _c("RouterLink", { attrs: { to: "/signup" } }, [
-                      _c("i", { staticClass: "fas fa-user-plus mr-1" }),
-                      _vm._v("新規登録")
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("li", [
-                  _c("span", { on: { click: _vm.guestLogin } }, [
-                    _vm._v("ゲストログイン")
                   ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  { on: { click: _vm.closeNavContent } },
-                  [
-                    _c("RouterLink", { attrs: { to: "/login" } }, [
-                      _vm._v("ログイン")
-                    ])
-                  ],
-                  1
-                )
-              ])
-        ]
-      )
+                : _c("ul", [
+                    _c(
+                      "li",
+                      { on: { click: _vm.closeNavContent } },
+                      [
+                        _c("RouterLink", { attrs: { to: "/signup" } }, [
+                          _c("i", { staticClass: "fas fa-user-plus mr-1" }),
+                          _vm._v("新規登録")
+                        ])
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c("span", { on: { click: _vm.guestLogin } }, [
+                        _c("i", { staticClass: "fas fa-sign-in-alt mr-1" }),
+                        _vm._v("ゲストログイン")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      { on: { click: _vm.closeNavContent } },
+                      [
+                        _c("RouterLink", { attrs: { to: "/login" } }, [
+                          _c("i", { staticClass: "fas fa-sign-in-alt mr-1" }),
+                          _vm._v("ログイン")
+                        ])
+                      ],
+                      1
+                    )
+                  ])
+            ]
+          )
+        : _vm._e()
     ])
   ])
 }
@@ -63721,7 +63749,7 @@ var render = function() {
               [
                 _c(
                   "div",
-                  { staticClass: "card_item mr-2" },
+                  { staticClass: "card_item" },
                   [
                     _c("FavoriteButton", {
                       attrs: { spot: _vm.spot },
@@ -63738,7 +63766,7 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "card_item mr-2" }, [
+                _c("div", { staticClass: "card_item" }, [
                   _c("i", { staticClass: "fa fa-comment mr-1" }),
                   _vm._v(
                     _vm._s(_vm.spot.count_spot_comments) + "\n                "
@@ -63770,7 +63798,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _vm.spot.address && _vm.spot.address.length > 0
-              ? _c("p", [
+              ? _c("p", { staticClass: "text-center" }, [
                   _vm._v(
                     "\n                " +
                       _vm._s(_vm.spot.address) +
@@ -63961,6 +63989,23 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.loading,
+            expression: "loading"
+          }
+        ],
+        staticClass: "mt-3"
+      },
+      [_c("Loader")],
+      1
+    ),
+    _vm._v(" "),
+    _c(
       "form",
       {
         on: {
@@ -64035,7 +64080,7 @@ var render = function() {
           _c("label", { attrs: { for: "comment_image" } }, [_vm._v("画像")]),
           _c("br"),
           _vm._v(" "),
-          _vm.show
+          _vm.showInputImage
             ? _c("input", {
                 attrs: { id: "comment_image", type: "file" },
                 on: { change: _vm.onFileChange }
@@ -64080,23 +64125,6 @@ var render = function() {
                 : _vm._e()
             ])
           : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.loading,
-                expression: "loading"
-              }
-            ],
-            staticClass: "mt-5"
-          },
-          [_c("Loader")],
-          1
-        ),
         _vm._v(" "),
         _vm._m(0)
       ]
@@ -66971,7 +66999,7 @@ var render = function() {
               [
                 _c("RouterLink", { attrs: { to: "/login" } }, [
                   _c("span", [
-                    _c("i", { staticClass: "fas fa-user-plus mr-1" }),
+                    _c("i", { staticClass: "fas fa-sign-in-alt mr-1" }),
                     _vm._v("ログイン")
                   ])
                 ])
@@ -66985,7 +67013,7 @@ var render = function() {
               [
                 _c("RouterLink", { attrs: { to: "/signup" } }, [
                   _c("span", [
-                    _c("i", { staticClass: "fas fa-sign-in-alt mr-1" }),
+                    _c("i", { staticClass: "fas fa-user-plus mr-1" }),
                     _vm._v("新規登録")
                   ])
                 ])

@@ -16,20 +16,32 @@
                 :class="{ 'visible_nav_background' : isNavContentOpen }"
             ></nav>
 
-            <nav class="nav_content" :class="{ 'open_nav_content' : isNavContentOpen }">
+            <nav
+                class="nav_content"
+                :class="{ 'open_nav_content' : isNavContentOpen }"
+                v-if="showNavContent"
+            >
                 <ul v-if="isLogin">
                     <li>
                         <span @click="logout"><i class="fas fa-sign-in-alt mr-1"></i>ログアウト</span>
                     </li>
-                    <li @click="closeNavContent"><RouterLink :to="`/users/${ AuthUser.id }/events`">カレンダー</RouterLink></li>
+                    <li @click="closeNavContent">
+                        <RouterLink :to="`/users/${ AuthUser.id }/events`">カレンダー</RouterLink>
+                    </li>
                     <li @click="closeNavContent"><RouterLink to="/fishing_types">釣り方一覧</RouterLink></li>
                     <li @click="closeNavContent"><RouterLink to="/spots/create">投稿</RouterLink></li>
-                    <li @click="closeNavContent"><RouterLink :to="`/users/${ AuthUser.id }`">{{ AuthUser.user_name }}</RouterLink></li>
+                    <li @click="closeNavContent">
+                        <RouterLink :to="`/users/${ AuthUser.id }`">{{ AuthUser.user_name }}</RouterLink>
+                    </li>
                 </ul>
                 <ul v-else>
-                    <li @click="closeNavContent"><RouterLink to="/signup"><i class="fas fa-user-plus mr-1"></i>新規登録</RouterLink></li>
-                    <li><span @click="guestLogin">ゲストログイン</span></li>
-                    <li @click="closeNavContent"><RouterLink to="/login">ログイン</RouterLink></li>
+                    <li @click="closeNavContent">
+                        <RouterLink to="/signup"><i class="fas fa-user-plus mr-1"></i>新規登録</RouterLink>
+                    </li>
+                    <li><span @click="guestLogin"><i class="fas fa-sign-in-alt mr-1"></i>ゲストログイン</span></li>
+                    <li @click="closeNavContent">
+                        <RouterLink to="/login"><i class="fas fa-sign-in-alt mr-1"></i>ログイン</RouterLink>
+                    </li>
                 </ul>
             </nav>
         </nav>
@@ -47,10 +59,20 @@ export default {
         }
     },
     data () {
-            return {
-                isNavContentOpen: false
-            }
-        },
+        return {
+            isNavContentOpen: false,
+            showNavContent: true
+        }
+    },
+    watch: {
+        isLogin () {
+            // ログインするとヘッダーがおかしくなるためDOMを更新
+            this.showNavContent = false
+            this.$nextTick(function () {
+                this.showNavContent = true;
+            })
+        }
+    },
     methods: {
         openNavContent () {
             this.isNavContentOpen = !this.isNavContentOpen
