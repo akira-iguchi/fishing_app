@@ -19249,13 +19249,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -19330,8 +19323,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    openImageByFullScreen: function openImageByFullScreen() {
-      this.fullScreen = !this.fullScreen;
+    // クリックで全画面表示
+    openImageByFullScreen: function openImageByFullScreen(fishingTypeId) {
+      var fishingTypeImage = document.getElementById(fishingTypeId);
+
+      if (fishingTypeImage.requestFullscreen) {
+        fishingTypeImage.requestFullscreen();
+      } else if (fishingTypeImage.mozRequestFullScreen) {
+        /* Firefox */
+        fishingTypeImage.mozRequestFullScreen();
+      } else if (fishingTypeImage.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        fishingTypeImage.webkitRequestFullscreen();
+      } else if (fishingTypeImage.msRequestFullscreen) {
+        /* IE/Edge */
+        fishingTypeImage.msRequestFullscreen();
+      }
     }
   }
 });
@@ -66165,39 +66172,40 @@ var render = function() {
     _c(
       "div",
       { staticClass: "row" },
-      _vm._l(_vm.fishingTypes, function(fishing_type) {
+      _vm._l(_vm.fishingTypes, function(fishingType) {
         return _c(
           "div",
           {
-            key: fishing_type.id,
+            key: fishingType.id,
             staticClass: "mx-auto d-block col-lg-5 fishing_type_card"
           },
           [
             _c("span", { staticClass: "fishing_type_card_title" }, [
               _vm._v(
                 "\n                " +
-                  _vm._s(fishing_type.fishing_type_name) +
+                  _vm._s(fishingType.fishing_type_name) +
                   "\n            "
               )
             ]),
             _vm._v(
               "\n\n            " +
-                _vm._s(fishing_type.content) +
+                _vm._s(fishingType.content) +
                 "\n\n            "
             ),
-            _c(
-              "p",
-              {
-                class: { full_screen_wrapper: _vm.fullScreen },
-                on: { click: _vm.openImageByFullScreen }
-              },
-              [
-                _c("img", {
-                  class: { full_screen_image: _vm.fullScreen },
-                  attrs: { src: "/images/akira.jpeg", alt: "釣り場方の画像" }
-                })
-              ]
-            ),
+            _c("p", [
+              _c("img", {
+                attrs: {
+                  id: fishingType.id,
+                  src: fishingType.fishing_type_image,
+                  alt: "釣り場方の画像"
+                },
+                on: {
+                  click: function($event) {
+                    return _vm.openImageByFullScreen(fishingType.id)
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
             _c("small", [_vm._v("画像クリックで拡大！")]),
             _vm._v(" "),
@@ -66205,7 +66213,7 @@ var render = function() {
             _vm._v(" "),
             _c("h5", [_vm._v("おすすめの釣り場")]),
             _vm._v(" "),
-            _vm._l(fishing_type.spots, function(spot) {
+            _vm._l(fishingType.spots, function(spot) {
               return _c(
                 "ul",
                 { key: spot.id, staticClass: "fishing_type-spot" },

@@ -9,27 +9,20 @@
         <div class="row">
             <div
                 class="mx-auto d-block col-lg-5 fishing_type_card"
-                v-for="fishing_type in fishingTypes"
-                :key="fishing_type.id"
+                v-for="fishingType in fishingTypes"
+                :key="fishingType.id"
             >
                 <span class="fishing_type_card_title">
-                    {{ fishing_type.fishing_type_name }}
+                    {{ fishingType.fishing_type_name }}
                 </span>
 
-                {{ fishing_type.content }}
+                {{ fishingType.content }}
 
-                <p
-                    @click="openImageByFullScreen"
-                    :class="{ 'full_screen_wrapper' : fullScreen }"
-                >
-                    <!-- <img
-                        @click="openImageByFullScreen"
-                        :src="`${fishing_type.fishing_type_image}`"
-                        alt="釣り場方の画像"
-                    > -->
+                <p>
                     <img
-                        :class="{ 'full_screen_image' : fullScreen }"
-                        src="/images/akira.jpeg"
+                        :id="fishingType.id"
+                        @click="openImageByFullScreen(fishingType.id)"
+                        :src="fishingType.fishing_type_image"
                         alt="釣り場方の画像"
                     >
                 </p>
@@ -37,7 +30,7 @@
                 <hr>
                 <h5>おすすめの釣り場</h5>
                     <ul class="fishing_type-spot"
-                        v-for="spot in fishing_type.spots"
+                        v-for="spot in fishingType.spots"
                         :key="spot.id"
                     >
                         <li>
@@ -87,9 +80,19 @@
 
                 this.fishingTypes = response.data
             },
-            openImageByFullScreen() {
-                this.fullScreen = !this.fullScreen
-            },
+            // クリックで全画面表示
+            openImageByFullScreen (fishingTypeId) {
+                const fishingTypeImage = document.getElementById(fishingTypeId)
+                if (fishingTypeImage.requestFullscreen) {
+                    fishingTypeImage.requestFullscreen();
+                } else if (fishingTypeImage.mozRequestFullScreen) { /* Firefox */
+                    fishingTypeImage.mozRequestFullScreen();
+                } else if (fishingTypeImage.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                    fishingTypeImage.webkitRequestFullscreen();
+                } else if (fishingTypeImage.msRequestFullscreen) { /* IE/Edge */
+                    fishingTypeImage.msRequestFullscreen();
+                }
+            }
         },
     }
 </script>
