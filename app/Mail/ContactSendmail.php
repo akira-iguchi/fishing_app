@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use Illuminate\Http\Request;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -21,11 +20,11 @@ class ContactSendmail extends Mailable
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct($inputs)
     {
-        $this->email = $request->email;
-        $this->title = $request->title;
-        $this->body  = $request->body;
+        $this->email = $inputs['email'];
+        $this->title = $inputs['title'];
+        $this->body  = $inputs['body'];
     }
 
     /**
@@ -36,8 +35,7 @@ class ContactSendmail extends Mailable
     public function build()
     {
         return $this
-            ->from('akituri931@icloud.com')
-            ->subject('自動送信メール')
+            ->subject('ポートフォリオお問い合わせメール')
             ->view('contact.mail')
             ->with([
                 'email' => $this->email,

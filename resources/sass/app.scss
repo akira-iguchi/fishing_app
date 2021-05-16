@@ -1,8 +1,15 @@
 $breakpoint-pc: 1024px;
 $breakpoint-tablet: 896px;
+$breakpoint-iPhone: 750px;
 
 @mixin max-screen($breakpoint-tablet) {
   @media screen and (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin max-screen($breakpoint-iPhone) {
+  @media screen and (max-width: $breakpoint-iPhone) {
     @content;
   }
 }
@@ -255,7 +262,6 @@ header {
 
 .footer {
   position: relative;
-  height: 116px;
   width: 100%;
   text-align: center;
   padding: 2em;
@@ -266,6 +272,33 @@ header {
   position: relative;
   top: 10px;
   opacity: 0.7;
+
+  span {
+    margin-left: 10px;
+    font-size: 2rem;
+    display: inline-block;
+
+    a:first-child {
+      color: #000000;
+      text-decoration: none;
+    }
+
+    @include max-screen($breakpoint-iPhone) {
+      display: block;
+    }
+  }
+}
+.qiita_icon {
+  color: #4cb10d;
+
+  .qiita_search_icon {
+    position: relative;
+    right: 38px;
+  }
+}
+
+.contact_link {
+  color: #000;
 }
 
 /* ロード画面 */
@@ -604,7 +637,7 @@ header {
   height: 50rem;
 }
 
-.login-signup {
+.login_signup {
   position: relative;
   width: 425px;
   top: 80px;
@@ -635,15 +668,15 @@ header {
   }
 }
 
-.login-signup-header h1 {
+.login_signup_header h1 {
   margin-top: 30px;
   color:#fff;
   text-align: center;
   font-size: 250%;
 }
 
-.login-signup-form {
-  background-color: rgba(255,255,255,0.1);
+.login_signup_form {
+  background-color: rgba(0, 0, 0, 0.1);
   border:.5px solid #fff;
   border-radius:10px;
   box-shadow:0px 0px 10px #000;
@@ -664,10 +697,12 @@ header {
 
   ul {
     list-style: none;
+    text-align: left;
   }
 
   li {
     position: relative;
+    width: 110%;
     right: 35px;
   }
 
@@ -676,7 +711,6 @@ header {
     margin: auto;
     margin-top: 3px;
     font-size: 15px;
-    text-align: end;
     font-weight: bold;
     width: 75%;
   }
@@ -747,26 +781,97 @@ header {
 
 // お問い合わせ
 
-.contact_table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 90%;
-  margin: auto;
-  background: #fff;
+.contact_body {
+  background-image: url('/images/signout.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 52rem;
+  padding-top: 100px;
+}
 
-  tr {
-    border-bottom: solid 1px #eee;
-    cursor: pointer;
+.contact_header h1 {
+  color: #fff;
+  text-align: center;
+  font-size: 250%;
+}
+
+.contact_form {
+  border:.5px solid #fff;
+  border-radius:10px;
+  box-shadow: 0px 0px 10px rgb(0 0 0 / 50%);
+  margin: 30px auto 0 auto;
+  padding: 1em 2em 2em 2em;
+  background-color: #fff;
+
+  label {
+    margin-top: 10px;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  li {
+    position: relative;
+    right: 35px;
+    width: 110%;
+  }
+
+  a {
+    display: block;
+    text-align: center;
+  }
+}
+
+.text_limit {
+  text-align: end;
+}
+
+.contact_button {
+  padding: 8px 12px 8px 12px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  background: transparent;
+  outline: none !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  display: inline-block;
+  border: 3px solid #000;
+
+  &:hover {
+    background: #000;
+    color: #fff;
+  }
+
+  &:active {
+    top: 2px;
+  }
+}
+
+.contact_table {
+  font-family: 'Roboto';
+  margin: 10px 0 30px 0;
+  width: 100%;
+  text-align: center;
+
+  th {
+    width: 30%;
+    background-color: #eee;
+    padding: 10px;
+    border: 1px solid #dedede;
   }
 
   td {
-    border: 1px solid #eee;
+    text-align: center;
+    padding: 10px .5em;
+    border: 1px solid #dedede;
   }
 
-  .contact_value {
+  .contact_table_body {
     text-align: left;
-    width: 25%;
-    padding: 1em;
+    padding-left: 10%;
+
   }
 
   input,

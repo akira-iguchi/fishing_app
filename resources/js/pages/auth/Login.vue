@@ -2,30 +2,53 @@
     <div class="login_body">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="login-signup">
-                    <div class="login-signup-header">
+                <div class="login_signup">
+                    <div class="login_signup_header">
                         <h1>ログイン</h1>
                     </div>
 
-                    <div class="login-signup-form">
+                    <div class="login_signup_form">
                         <form  @submit.prevent="login">
                             <label for="email">メールアドレス</label>
-                            <input id="email" type="email" class="form-control" autocomplete="email" autofocus v-model="loginForm.email">
+                            <input
+                                id="email"
+                                type="email"
+                                class="form-control"
+                                autocomplete="email"
+                                autofocus
+                                required
+                                v-model="loginForm.email"
+                            >
                             <div v-if="loginErrors">
                                 <ul v-if="loginErrors.email">
-                                    <li class="text-danger" v-for="msg in loginErrors.email" :key="msg"><p>{{ msg }}</p></li>
+                                    <li
+                                        class="text-danger"
+                                        v-for="msg in loginErrors.email"
+                                        :key="msg"
+                                    ><p>{{ msg }}</p></li>
                                 </ul>
                             </div>
 
                             <label for="password">パスワード</label>
                             <div class="login-signup-password">
-                                <input id="password" :type="inputType" class="form-control" autocomplete="current-password" v-model="loginForm.password">
+                                <input
+                                    id="password"
+                                    :type="inputType"
+                                    class="form-control"
+                                    autocomplete="current-password"
+                                    required
+                                    v-model="loginForm.password"
+                                >
                                 <input class="password_toggle" type="checkbox" @click="inputChange">
                                 <div class="password_label"><i :class="iconType"></i></div>
                             </div>
                             <div v-if="loginErrors">
                                 <ul v-if="loginErrors.password">
-                                    <li class="text-danger" v-for="msg in loginErrors.password" :key="msg"><p>{{ msg }}</p></li>
+                                    <li
+                                        class="text-danger"
+                                        v-for="msg in loginErrors.password"
+                                        :key="msg"
+                                    ><p>{{ msg }}</p></li>
                                 </ul>
                             </div>
 

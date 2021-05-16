@@ -58,8 +58,8 @@
         </div>
 
         <div class="form-field">
-            <div v-if="0 > wordCount" v-on="changeTrue()"></div>
-            <div v-else-if="0 <= wordCount" v-on="changeFalse()"></div>
+            <div v-if="100 < wordCount" v-on="changeTrue()"></div>
+            <div v-else-if="100 >= wordCount" v-on="changeFalse()"></div>
             <label class="event_label">詳細</label><br>
             <textarea
                 rows="5"
@@ -67,7 +67,12 @@
                 v-model="detail"
                 placeholder="例） アジがたくさん釣れた。"
             ></textarea>
-            <p>残り<span v-bind:class="{ 'text-danger':isActive }">{{ wordCount }}</span>文字</p>
+            <p class="text_limit">
+                <span
+                    v-bind:class="{ 'text-danger':isActive }"
+                >{{ wordCount }}
+                </span>/100
+            </p>
         </div>
         <div v-if="errors">
             <ul class="event_errors" v-if="errors.detail">
@@ -116,7 +121,6 @@
                 fishingType: "",
                 spot: "",
                 detail: "",
-                wordLimit: 100,
             }
         },
         mounted () {
@@ -135,7 +139,7 @@
         },
         computed: {
             wordCount () {
-                return this.wordLimit - this.detail.length
+                return this.detail.length
             },
         },
         watch: {
