@@ -16,7 +16,7 @@ URL：http://osakaturiba.com/
 * Laravel、Vue.jsを用いた完全SPA
 * AWS、Docker、CircleCIの導入、184個のテスト作成
 * GoogleMapで地域や釣り場を表示、OpenWeatherMapで天気予報を表示
-* JavaScriptを用いた残り文字数の表示など細かい部分も実装
+* 残り文字数の表示など細かい部分も実装
 * 個人的な「経験」による釣り場や釣り方の的確な説明
 
 <h2>使用技術</h2>

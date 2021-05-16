@@ -50,8 +50,8 @@
                         </div>
 
                         <label for="textAreaIntroduction">自己紹介</label>
-                        <div v-if="0 > wordCount" v-on="changeTrue()"></div>
-                        <div v-else-if="0 <= wordCount" v-on="changeFalse()"></div>
+                        <div v-if="100 < wordCount" v-on="changeTrue()"></div>
+                        <div v-else-if="100 >= wordCount" v-on="changeFalse()"></div>
                         <div class="user-edit_text">
                             <textarea
                                 rows="5"
@@ -60,7 +60,12 @@
                                 placeholder="よろしくおねがいします！"
                             ></textarea>
                         </div>
-                        <p>残り<span v-bind:class="{ 'text-danger':isActive }">{{ wordCount }}</span>文字</p>
+                        <p class="text_limit">
+                            <span
+                                v-bind:class="{ 'text-danger':isActive }"
+                            >{{ wordCount }}
+                            </span>/100
+                        </p>
                         <div v-if="errors">
                             <ul class="user_errors" v-if="errors.introduction">
                                 <li class="text-danger" v-for="msg in errors.introduction" :key="msg">{{ msg }}</li>
@@ -108,7 +113,7 @@
         },
         computed: {
             wordCount(){
-                return this.wordLimit - this.introduction.length
+                return this.introduction.length
             },
         },
         watch: {

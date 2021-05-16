@@ -48,15 +48,20 @@
 
         <form @submit.prevent="createComment">
             <div class="form-group">
-                <div v-if="0 > wordCount" v-on="changeTrue()"></div>
-                <div v-else-if="0 <= wordCount" v-on="changeFalse()"></div>
+                <div v-if="150 < wordCount" v-on="changeTrue()"></div>
+                <div v-else-if="150 >= wordCount" v-on="changeFalse()"></div>
                 <textarea
                     rows="4"
                     class="form-control mt-4"
                     placeholder="コメントしよう！"
                     v-model="commentContent"
                 ></textarea>
-                残り<span v-bind:class="{ 'text-danger':isActive }">{{ wordCount }}</span>文字
+                <p class="text_limit">
+                    <span
+                        v-bind:class="{ 'text-danger':isActive }"
+                    >{{ wordCount }}
+                    </span>/150
+                </p>
             </div>
             <div v-if="commentErrors">
                 <ul class="comment_errors" v-if="commentErrors.comment">
@@ -120,7 +125,6 @@
                 commentContent: "",
                 commentImage: "",
                 isActive: false,
-                wordLimit: 150,
                 commentImageMessage: "",
                 preview: null,
                 commentErrors: null,
@@ -135,7 +139,7 @@
         },
         computed: {
             wordCount(){
-                return this.wordLimit - this.commentContent.length
+                return this.commentContent.length
             },
             AuthUser () {
                 return this.$store.getters['auth/AuthUser']

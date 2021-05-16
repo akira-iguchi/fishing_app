@@ -37,7 +37,8 @@ Route::post('guest', 'Auth\LoginController@guestLogin')->name('guestLogin');
 Route::get('/contact', 'ContactController@index')->name('contact.index');
 Route::post('/contact/confirm/send', 'ContactController@confirm')->name('contact.confirm');
 Route::get('/contact/confirm', 'ContactController@confirmPage')->name('contact.confirmPage');
-Route::get('/contact/thanks', 'ContactController@send')->name('contact.send');
+Route::post('/contact/send', 'ContactController@send')->name('contact.send');
+Route::get('/contact/thanks', 'ContactController@thanks')->name('contact.thanks');
 
 Route::group(['middleware' => ['auth']], function () {
 

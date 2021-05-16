@@ -2,9 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import TopPage from './pages/spots/TopPage.vue'
-import ContactForm from './pages/contact/ContactForm.vue'
-import ConfirmContact from './pages/contact/ConfirmContact.vue'
-import ThanksContact from './pages/contact/ThanksContact.vue'
+import ContactForm from './pages/contacts/ContactForm.vue'
+import ConfirmContact from './pages/contacts/ConfirmContact.vue'
+import ThanksContact from './pages/contacts/ThanksContact.vue'
 import CreateSpot from './pages/spots/CreateSpot.vue'
 import SearchSpots from './pages/spots/SearchSpots.vue'
 import SpotDetail from './pages/spots/SpotDetail.vue'
@@ -48,7 +48,7 @@ const routes = [
         component: ConfirmContact,
     },
     {
-        path: '/Contact/thanks',
+        path: '/contact/thanks',
         component: ThanksContact,
     },
     {
