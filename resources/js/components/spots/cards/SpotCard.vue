@@ -39,9 +39,9 @@
                     </RouterLink>
                 </div>
 
-                <p class="text-center" v-if="spot.address && spot.address.length > 0">
+                <div class="spot_address" v-if="spot.address && spot.address.length > 0">
                     {{ spot.address }}
-                </p>
+                </div>
                 <!-- <p>{{ spot.explanation }}</p> -->
             </div>
         </div>

@@ -142,7 +142,7 @@
 
                     this.$store.commit('message/setContent', {
                         content: 'ゲストユーザーは編集できません',
-                        timeout: 5000
+                        timeout: 4000
                     })
                 }
             },

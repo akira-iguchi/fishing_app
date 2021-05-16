@@ -674,13 +674,13 @@ header {
   p {
     position: relative;
     margin: auto;
-    text-align:left;
-    font-size: large;
+    margin-top: 3px;
+    font-size: 15px;
+    text-align: end;
     font-weight: bold;
     width: 75%;
   }
 }
-
 
 .required:after {
   content: " *";
@@ -688,13 +688,13 @@ header {
 }
 
 .login-signup-button {
-  height:30px;
-  width:100px;
+  height: 30px;
+  padding: .2em 1em 1em 1em;
   background:#fff;
   border:1px solid #f2f2f2;
-  border-radius:20px;
+  border-radius: 20px;
   color: slategrey;
-  text-transform:uppercase;
+  text-transform: uppercase;
   cursor:pointer;
   margin-top: 30px;
   outline: none;
@@ -706,6 +706,10 @@ header {
   &:focus-within {
     outline: none;
   }
+}
+
+.back {
+  margin: 0;
 }
 
 .sign-up {
@@ -724,10 +728,6 @@ header {
   display: flex;
 }
 
-.js-password {
-  padding-right: 2.5em;
-}
-
 .password_toggle {
   position: absolute;
   top: 13px;
@@ -743,4 +743,34 @@ header {
   top: 7px;
   right: 56px;
   cursor: pointer;
+}
+
+// お問い合わせ
+
+.contact_table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 90%;
+  margin: auto;
+  background: #fff;
+
+  tr {
+    border-bottom: solid 1px #eee;
+    cursor: pointer;
+  }
+
+  td {
+    border: 1px solid #eee;
+  }
+
+  .contact_value {
+    text-align: left;
+    width: 25%;
+    padding: 1em;
+  }
+
+  input,
+  textarea {
+    display: none;
+  }
 }

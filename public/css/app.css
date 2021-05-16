@@ -699,8 +699,9 @@ header:focus-within {
 .login-signup-form p {
   position: relative;
   margin: auto;
-  text-align: left;
-  font-size: large;
+  margin-top: 3px;
+  font-size: 15px;
+  text-align: end;
   font-weight: bold;
   width: 75%;
 }
@@ -712,7 +713,7 @@ header:focus-within {
 
 .login-signup-button {
   height: 30px;
-  width: 100px;
+  padding: 0.2em 1em 1em 1em;
   background: #fff;
   border: 1px solid #f2f2f2;
   border-radius: 20px;
@@ -731,6 +732,10 @@ header:focus-within {
   outline: none;
 }
 
+.back {
+  margin: 0;
+}
+
 .sign-up {
   font-size: 18px;
   color: #f2f2f2;
@@ -745,10 +750,6 @@ header:focus-within {
 .login-signup-password {
   position: relative;
   display: flex;
-}
-
-.js-password {
-  padding-right: 2.5em;
 }
 
 .password_toggle {
@@ -766,6 +767,34 @@ header:focus-within {
   top: 7px;
   right: 56px;
   cursor: pointer;
+}
+
+.contact_table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 90%;
+  margin: auto;
+  background: #fff;
+}
+
+.contact_table tr {
+  border-bottom: solid 1px #eee;
+  cursor: pointer;
+}
+
+.contact_table td {
+  border: 1px solid #eee;
+}
+
+.contact_table .contact_value {
+  text-align: left;
+  width: 25%;
+  padding: 1em;
+}
+
+.contact_table input,
+.contact_table textarea {
+  display: none;
 }
 
 

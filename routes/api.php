@@ -30,8 +30,14 @@ Route::get('/reflesh-token', function (Request $request) {
     return response()->json();
 });
 
-# ゲストユーザーログイン
+// ゲストユーザーログイン
 Route::post('guest', 'Auth\LoginController@guestLogin')->name('guestLogin');
+
+// お問い合わせ
+Route::get('/contact', 'ContactController@index')->name('contact.index');
+Route::post('/contact/confirm/send', 'ContactController@confirm')->name('contact.confirm');
+Route::get('/contact/confirm', 'ContactController@confirmPage')->name('contact.confirmPage');
+Route::get('/contact/thanks', 'ContactController@send')->name('contact.send');
 
 Route::group(['middleware' => ['auth']], function () {
 
