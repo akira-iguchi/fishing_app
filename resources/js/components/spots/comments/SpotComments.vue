@@ -42,17 +42,26 @@
             </div>
         </div>
 
+        <div v-show="loading" class="mt-3">
+            <Loader />
+        </div>
+
         <form @submit.prevent="createComment">
             <div class="form-group">
-                <div v-if="0 > wordCount" v-on="changeTrue()"></div>
-                <div v-else-if="0 <= wordCount" v-on="changeFalse()"></div>
+                <div v-if="150 < wordCount" v-on="changeTrue()"></div>
+                <div v-else-if="150 >= wordCount" v-on="changeFalse()"></div>
                 <textarea
                     rows="4"
                     class="form-control mt-4"
                     placeholder="コメントしよう！"
                     v-model="commentContent"
                 ></textarea>
-                残り<span v-bind:class="{ 'text-danger':isActive }">{{ wordCount }}</span>文字
+                <p class="text_limit">
+                    <span
+                        v-bind:class="{ 'text-danger':isActive }"
+                    >{{ wordCount }}
+                    </span>/150
+                </p>
             </div>
             <div v-if="commentErrors">
                 <ul class="comment_errors" v-if="commentErrors.comment">
@@ -69,7 +78,7 @@
             <div class="form-group">
                 <label for="comment_image">画像</label><br>
 
-                <input id="comment_image" type="file" v-if="show" @change="onFileChange">
+                <input id="comment_image" type="file" v-if="showInputImage" @change="onFileChange">
                 <p v-if="preview">
                     <img class="commentImg" :src="preview" alt="">
                 </p>
@@ -87,10 +96,6 @@
                         {{ msg }}
                     </li>
                 </ul>
-            </div>
-
-            <div v-show="loading" class="mt-5">
-                <Loader />
             </div>
 
             <button class="spot-create-edit-button"><i class="fas fa-pencil-alt"></i>&thinsp;コメント</button>
@@ -120,11 +125,10 @@
                 commentContent: "",
                 commentImage: "",
                 isActive: false,
-                wordLimit: 150,
                 commentImageMessage: "",
                 preview: null,
                 commentErrors: null,
-                show: true,
+                showInputImage: true,
                 loading: false,
             }
         },
@@ -135,7 +139,7 @@
         },
         computed: {
             wordCount(){
-                return this.wordLimit - this.commentContent.length
+                return this.commentContent.length
             },
             AuthUser () {
                 return this.$store.getters['auth/AuthUser']
@@ -148,9 +152,9 @@
                 this.preview = null
                 this.commentContent = ""
                 this.commentErrors = null
-                this.show = false
+                this.showInputImage = false
                 this.$nextTick(function () {
-                    this.show = true;
+                    this.showInputImage = true;
                 })
                 this.spotCommentList = newSpot.spot_comments.reverse()
                 return this.spotCommentList
@@ -182,9 +186,9 @@
                 this.preview = null
                 this.commentContent = ""
                 this.commentErrors = null
-                this.show = false
+                this.showInputImage = false
                 this.$nextTick(function () {
-                    this.show = true;
+                    this.showInputImage = true;
                 })
 
                 this.spot.spot_comments.unshift(response.data)
@@ -199,7 +203,6 @@
 
                 this.spot.count_spot_comments -= 1
 
-                // this.spot.spot_comments.reverse()
                 this.spot.spot_comments.splice(index, 1)
 
                 this.$store.commit('message/setContent', {

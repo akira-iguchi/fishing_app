@@ -144,8 +144,8 @@
             </div>
 
             <div class="form-group">
-                <div v-if="0 > wordCount" v-on="changeTrue()"></div>
-                <div v-else-if="0 <= wordCount" v-on="changeFalse()"></div>
+                <div v-if="300 < wordCount" v-on="changeTrue()"></div>
+                <div v-else-if="300 >= wordCount" v-on="changeFalse()"></div>
                 <label for="textAreaExplanation" class="required">説明</label>
                 <textarea
                     rows="6"
@@ -156,7 +156,12 @@
                     placeholder="例） 風が弱くて釣りやすい釣り場です。"
                     required>
                 </textarea>
-                <p>残り<span v-bind:class="{ 'text-danger':isActive }">{{ wordCount }}</span>文字</p>
+                <p class="text_limit">
+                    <span
+                        v-bind:class="{ 'text-danger':isActive }"
+                    >{{ wordCount }}
+                    </span>/300
+                </p>
             </div>
             <div v-if="errors">
                 <ul class="spot_errors" v-if="errors.explanation">
@@ -223,7 +228,6 @@
                 mapAddress: "",
                 latitude: 35.6594666,
                 longitude: 139.7005536,
-                wordLimit: 300,
                 image2: false,
                 image3: false,
                 spotImage1Message: "",
@@ -248,7 +252,7 @@
         },
         computed: {
             wordCount () {
-                return this.wordLimit - this.explanation.length
+                return this.explanation.length
             },
         },
         mounted () {

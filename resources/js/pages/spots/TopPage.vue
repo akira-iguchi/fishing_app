@@ -85,10 +85,10 @@
                 <h1 class="top-title">Fishing Spot</h1>
                 <p>釣り場を投稿して、<span>共有し合おう！</span></p>
                 <button class="top_login_button">
-                    <RouterLink to="/login"><span><i class="fas fa-user-plus mr-1"></i>ログイン</span></RouterLink>
+                    <RouterLink to="/login"><span><i class="fas fa-sign-in-alt mr-1"></i>ログイン</span></RouterLink>
                 </button>
                 <button class="top_signup_button">
-                    <RouterLink to="/signup"><span><i class="fas fa-sign-in-alt mr-1"></i>新規登録</span></RouterLink>
+                    <RouterLink to="/signup"><span><i class="fas fa-user-plus mr-1"></i>新規登録</span></RouterLink>
                 </button>
                 <br>
                 <button @click="guestLogin" class="top_guest_login_button">
