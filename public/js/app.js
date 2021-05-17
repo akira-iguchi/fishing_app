@@ -21299,7 +21299,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     handleScroll: function handleScroll() {
-      var targetElement = this.$el.querySelectorAll('.top-slider') || null;
+      var targetElement = this.$el.querySelectorAll('.top_slider') || null;
 
       if (targetElement !== null) {
         for (var i = 0; i < targetElement.length; i++) {
@@ -68445,7 +68445,7 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "top text-center" }, [
-            _c("h1", { staticClass: "top-title" }, [_vm._v("Fishing Spot")]),
+            _c("h1", { staticClass: "top_title" }, [_vm._v("Fishing Spot")]),
             _vm._v(" "),
             _vm._m(1),
             _vm._v(" "),
@@ -68527,14 +68527,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "top-slider" }, [
-      _c("div", { staticClass: "spot-intro_image" }, [
+    return _c("div", { staticClass: "top_slider" }, [
+      _c("div", { staticClass: "spot_intro_image" }, [
         _c("img", {
           attrs: { src: "/images/fishing_boat_man.png", alt: "釣り画像" }
         })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "spot-intro_expla" }, [
+      _c("div", { staticClass: "spot_intro_expla" }, [
         _c("p", [_vm._v("Fishing Spotとは？")]),
         _vm._v(" "),
         _c("p", [
@@ -68553,8 +68553,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "top-slider" }, [
-      _c("div", { staticClass: "self-intro_expla" }, [
+    return _c("div", { staticClass: "top_slider" }, [
+      _c("div", { staticClass: "self_intro_expla" }, [
         _c("p", [_vm._v("自己紹介")]),
         _vm._v(" "),
         _c("img", {
@@ -68572,7 +68572,7 @@ var staticRenderFns = [
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "self-intro_image" }, [
+      _c("div", { staticClass: "self_intro_image" }, [
         _c("img", {
           attrs: { src: "/images/akira.jpeg", alt: "自己紹介の画像" }
         })

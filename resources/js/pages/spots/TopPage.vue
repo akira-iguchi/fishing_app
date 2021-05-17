@@ -82,7 +82,7 @@
             </div>
 
             <div class="top text-center">
-                <h1 class="top-title">Fishing Spot</h1>
+                <h1 class="top_title">Fishing Spot</h1>
                 <p>釣り場を投稿して、<span>共有し合おう！</span></p>
                 <button class="top_login_button">
                     <RouterLink to="/login"><span><i class="fas fa-sign-in-alt mr-1"></i>ログイン</span></RouterLink>
@@ -96,12 +96,12 @@
                 </button>
             </div>
 
-            <div class="top-slider">
-                <div class="spot-intro_image">
+            <div class="top_slider">
+                <div class="spot_intro_image">
                     <img src="/images/fishing_boat_man.png" alt="釣り画像">
                 </div>
 
-                <div class="spot-intro_expla">
+                <div class="spot_intro_expla">
                     <p>Fishing Spotとは？</p>
                     <p>
                         &emsp;Fishing Spotとは、釣り場を投稿し、釣り場にコメントして釣果などを共有するアプリです。
@@ -114,8 +114,8 @@
                 </div>
             </div>
 
-            <div class="top-slider">
-                <div class="self-intro_expla">
+            <div class="top_slider">
+                <div class="self_intro_expla">
                     <p>自己紹介</p>
                     <img src="/images/akira.jpeg" alt="自己紹介の画像">
                     <p>
@@ -126,7 +126,7 @@
                     </p>
                 </div>
 
-                <div class="self-intro_image">
+                <div class="self_intro_image">
                     <img src="/images/akira.jpeg" alt="自己紹介の画像">
                 </div>
             </div>
@@ -224,9 +224,9 @@
                 }
             },
             handleScroll() {
-                const targetElement = this.$el.querySelectorAll('.top-slider') || null
+                const targetElement = this.$el.querySelectorAll('.top_slider') || null
                 if (targetElement !== null) {
-                    for(let i = 0; i < targetElement.length; i++) {
+                    for (let i = 0; i < targetElement.length; i++) {
                         const getElementDistance = targetElement[i].getBoundingClientRect().top
                         + targetElement[i].clientHeight * .6
                         if (window.innerHeight > getElementDistance) {

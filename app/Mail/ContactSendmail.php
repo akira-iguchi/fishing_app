@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ContactSendmail extends Mailable
+class ContactSendMail extends Mailable
 {
     use Queueable, SerializesModels;
 
