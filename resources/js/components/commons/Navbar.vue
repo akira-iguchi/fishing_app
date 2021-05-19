@@ -2,7 +2,7 @@
     <header>
         <span @click="closeNavContent">
             <RouterLink class="nav_title" to="/">
-                <i class="fas fa-fish mr-1"></i>Fishing Spot
+                <i class="fas fa-fish mr-1"></i>Fishing App
             </RouterLink
         ></span>
         <nav class="nav_container">

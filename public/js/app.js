@@ -63407,7 +63407,7 @@ var render = function() {
       [
         _c("RouterLink", { staticClass: "nav_title", attrs: { to: "/" } }, [
           _c("i", { staticClass: "fas fa-fish mr-1" }),
-          _vm._v("Fishing Spot\n        ")
+          _vm._v("Fishing App\n        ")
         ])
       ],
       1
@@ -68445,7 +68445,7 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "top text-center" }, [
-            _c("h1", { staticClass: "top_title" }, [_vm._v("Fishing Spot")]),
+            _c("h1", { staticClass: "top_title" }, [_vm._v("Fishing App")]),
             _vm._v(" "),
             _vm._m(1),
             _vm._v(" "),
@@ -68535,11 +68535,11 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "spot_intro_expla" }, [
-        _c("p", [_vm._v("Fishing Spotとは？")]),
+        _c("p", [_vm._v("Fishing Appとは？")]),
         _vm._v(" "),
         _c("p", [
           _vm._v(
-            "\n                     Fishing Spotとは、釣り場を投稿し、釣り場にコメントして釣果などを共有するアプリです。\n                    また、釣り場におすすめの釣り方を選択することもできます。\n                    さらに、カレンダーで釣りの予定、記録をすることができ、このアプリ１つで満足できます。\n                    "
+            "\n                     Fishing Appとは、釣り場を投稿し、釣り場にコメントして釣果などを共有するアプリです。\n                    また、釣り場におすすめの釣り方を選択することもできます。\n                    さらに、カレンダーで釣りの予定、記録をすることができ、このアプリ１つで満足できます。\n                    "
           ),
           _c("br"),
           _vm._v(

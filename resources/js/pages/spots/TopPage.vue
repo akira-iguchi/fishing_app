@@ -82,7 +82,7 @@
             </div>
 
             <div class="top text-center">
-                <h1 class="top_title">Fishing Spot</h1>
+                <h1 class="top_title">Fishing App</h1>
                 <p>釣り場を投稿して、<span>共有し合おう！</span></p>
                 <button class="top_login_button">
                     <RouterLink to="/login"><span><i class="fas fa-sign-in-alt mr-1"></i>ログイン</span></RouterLink>
@@ -102,9 +102,9 @@
                 </div>
 
                 <div class="spot_intro_expla">
-                    <p>Fishing Spotとは？</p>
+                    <p>Fishing Appとは？</p>
                     <p>
-                        &emsp;Fishing Spotとは、釣り場を投稿し、釣り場にコメントして釣果などを共有するアプリです。
+                        &emsp;Fishing Appとは、釣り場を投稿し、釣り場にコメントして釣果などを共有するアプリです。
                         また、釣り場におすすめの釣り方を選択することもできます。
                         さらに、カレンダーで釣りの予定、記録をすることができ、このアプリ１つで満足できます。
                         <br>
