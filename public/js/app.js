@@ -63279,10 +63279,6 @@ var staticRenderFns = [
           _c("i", { staticClass: "fab fa-github" })
         ]),
         _vm._v(" "),
-        _c("a", { attrs: { href: "https://twitter.com/iguchan_4649" } }, [
-          _c("i", { staticClass: "fab fa-twitter" })
-        ]),
-        _vm._v(" "),
         _c(
           "a",
           {

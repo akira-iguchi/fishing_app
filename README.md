@@ -14,25 +14,24 @@ Fishing Appとは、釣り場を投稿し、釣り場にコメントして釣果
 <h3>工夫した点</h3>
 
 * Laravel、Vue.jsを用いた完全SPA
-* AWS、Docker、CircleCIの導入、184個のテスト作成
-* GoogleMapで地域や釣り場を表示、OpenWeatherMapで天気予報を表示
+* AWS(ECS)、Docker、Github Actionsの導入
+* GoogleMapで釣り場を表示、OpenWeatherMapで天気予報を表示
 * 残り文字数の表示など細かい部分も実装
 * 個人的な「経験」による釣り場や釣り方の的確な説明
 
 <h2>使用技術</h2>
 
 * HTML / CSS
-* Javascript
-* JQuery
+* Javascript(Vue.js)
 * Bootstrap
-* Ruby 2.6.3
-* Rails 6.0.3.4
-* MySQL 8.0.2.2
-* AWS(EC2, VPC, Route53, S3)
-* Doker/docker-compose
+* PHP 7.3
+* Laravel 8.0
+* MySQL 8.0.23
+* AWS(ECS,, Fargate VPC, Route53, S3)
+* Docker/docker-compose
 * Nginx
 * Puma
-* RSpec
+* PHPUnit
 * VScode
 
 <h2>機能一覧</h2>
