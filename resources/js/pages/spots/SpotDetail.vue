@@ -23,9 +23,9 @@
                 >
                     <slide class="hooper-slide">
                         <div id="show_map"></div>
-                        <!-- <GmapMap id="show_map" :center="spotPosition" :zoom="15" map-type-id="terrain">
+                        <GmapMap id="show_map" :center="spotPosition" :zoom="15" map-type-id="terrain">
                             <GmapMarker :animation="2" :position="spotPosition" />
-                        </GmapMap> -->
+                        </GmapMap>
                     </slide>
                     <slide
                         class="hooper-slide"
