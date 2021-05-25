@@ -21,14 +21,23 @@
 </template>
 
 <script>
+    import Vue from 'vue'
     import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../../util'
     import SpotForm from "../../components/spots/SpotForm.vue"
     import Loader from '../../components/commons/Loader.vue'
+    import * as VueGoogleMaps from 'vue2-google-maps'
+
+    Vue.use(VueGoogleMaps, {
+        load: {
+            key: 'AIzaSyCQDoDVD_7O5l7QPArpAhgrDJt5uvqV7io',
+        }
+    })
 
     export default {
         components: {
             SpotForm,
             Loader,
+            VueGoogleMaps,
         },
         data () {
             return {

@@ -20052,9 +20052,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
 /* harmony import */ var _components_spots_SpotForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/spots/SpotForm.vue */ "./resources/js/components/spots/SpotForm.vue");
 /* harmony import */ var _components_commons_Loader_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/commons/Loader.vue */ "./resources/js/components/commons/Loader.vue");
+/* harmony import */ var vue2_google_maps__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue2-google-maps */ "./node_modules/vue2-google-maps/dist/main.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -20086,10 +20088,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
+
+vue__WEBPACK_IMPORTED_MODULE_5__.default.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_4__, {
+  load: {
+    key: 'AIzaSyCQDoDVD_7O5l7QPArpAhgrDJt5uvqV7io'
+  }
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     SpotForm: _components_spots_SpotForm_vue__WEBPACK_IMPORTED_MODULE_2__.default,
-    Loader: _components_commons_Loader_vue__WEBPACK_IMPORTED_MODULE_3__.default
+    Loader: _components_commons_Loader_vue__WEBPACK_IMPORTED_MODULE_3__.default,
+    VueGoogleMaps: vue2_google_maps__WEBPACK_IMPORTED_MODULE_4__
   },
   data: function data() {
     return {
@@ -20836,7 +20846,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 
@@ -20868,7 +20877,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       spot: {},
       user: {},
       otherSpots: {},
-      spotPosition: {},
       spotDataLoaded: false
     };
   },
@@ -20911,14 +20919,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.loading = false;
                 _this.spot = response.data[0];
                 _this.user = _this.spot.user;
-                _this.spotPosition = {
-                  lat: _this.spot.latitude,
-                  lng: _this.spot.longitude
-                };
                 _this.otherSpots = response.data[1];
                 _this.spotDataLoaded = true;
 
-              case 12:
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -21978,13 +21982,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 /* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
-/* harmony import */ var vue2_google_maps__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue2-google-maps */ "./node_modules/vue2-google-maps/dist/main.js");
-/* harmony import */ var vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-awesome-swiper */ "./node_modules/vue-awesome-swiper/dist/vue-awesome-swiper.js");
-/* harmony import */ var vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-awesome-swiper */ "./node_modules/vue-awesome-swiper/dist/vue-awesome-swiper.js");
+/* harmony import */ var vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_4__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -21998,13 +22001,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-
-vue__WEBPACK_IMPORTED_MODULE_6__.default.use((vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_5___default()));
-vue__WEBPACK_IMPORTED_MODULE_6__.default.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_4__, {
-  load: {
-    key: googleMapApiKey
-  }
-});
+vue__WEBPACK_IMPORTED_MODULE_5__.default.use((vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_4___default()));
 
 var createApp = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -22016,7 +22013,7 @@ var createApp = /*#__PURE__*/function () {
             return _store__WEBPACK_IMPORTED_MODULE_2__.default.dispatch('auth/currentUser');
 
           case 2:
-            new vue__WEBPACK_IMPORTED_MODULE_6__.default({
+            new vue__WEBPACK_IMPORTED_MODULE_5__.default({
               el: '#app',
               router: _router__WEBPACK_IMPORTED_MODULE_1__.default,
               store: _store__WEBPACK_IMPORTED_MODULE_2__.default,
@@ -68040,9 +68037,30 @@ var render = function() {
               }
             },
             [
-              _c("slide", { staticClass: "hooper-slide" }, [
-                _c("div", { attrs: { id: "show_map" } })
-              ]),
+              _c(
+                "slide",
+                { staticClass: "hooper-slide" },
+                [
+                  _c(
+                    "GmapMap",
+                    {
+                      attrs: {
+                        id: "show_map",
+                        center: _vm.spotPosition,
+                        zoom: 15,
+                        "map-type-id": "terrain"
+                      }
+                    },
+                    [
+                      _c("GmapMarker", {
+                        attrs: { animation: 2, position: _vm.spotPosition }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _vm._l(_vm.spot.spot_images, function(image) {
                 return _c(

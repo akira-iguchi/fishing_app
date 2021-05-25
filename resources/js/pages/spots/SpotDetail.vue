@@ -22,7 +22,6 @@
                     :infiniteScroll="true"
                 >
                     <slide class="hooper-slide">
-                        <div id="show_map"></div>
                         <GmapMap id="show_map" :center="spotPosition" :zoom="15" map-type-id="terrain">
                             <GmapMarker :animation="2" :position="spotPosition" />
                         </GmapMap>
@@ -162,7 +161,6 @@
                 spot: {},
                 user: {},
                 otherSpots: {},
-                spotPosition: {},
                 spotDataLoaded: false,
             }
         },
@@ -189,7 +187,6 @@
 
                 this.spot = response.data[0]
                 this.user = this.spot.user
-                this.spotPosition = {lat: this.spot.latitude, lng: this.spot.longitude}
                 this.otherSpots = response.data[1]
 
                 this.spotDataLoaded = true
