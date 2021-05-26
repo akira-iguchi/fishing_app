@@ -21,6 +21,11 @@ class SpotController extends Controller
 {
     use TagNameTrait;
 
+    public function __construct()
+    {
+        $this->googleMapApiKey = config('services.google-map.apikey');
+    }
+
     public function searchItems($request)
     {
         $allFishingTypeNames = FishingType::all();
@@ -110,7 +115,7 @@ class SpotController extends Controller
 
         $allFishingTypeNames = FishingType::all();
 
-        return [$allTagNames, $allFishingTypeNames];
+        return [$allTagNames, $allFishingTypeNames, $this->googleMapApiKey];
     }
 
     public function store(SpotRequest $request, Spot $spot, SpotImage $spotImage)

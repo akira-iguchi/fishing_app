@@ -16205,195 +16205,217 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _tags_SpotTagsInput_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../tags/SpotTagsInput.vue */ "./resources/js/components/tags/SpotTagsInput.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _tags_SpotTagsInput_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../tags/SpotTagsInput.vue */ "./resources/js/components/tags/SpotTagsInput.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue2_google_maps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue2-google-maps */ "./node_modules/vue2-google-maps/dist/main.js");
 
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+ // import GoogleMapsApiLoader from 'google-maps-api-loader';
+
+
+
+vue__WEBPACK_IMPORTED_MODULE_3__.default.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_2__, {
+  load: {
+    key: googleMapApiKey,
+    libraries: 'places',
+    region: 'JP',
+    language: 'ja'
+  }
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    SpotTagsInput: _tags_SpotTagsInput_vue__WEBPACK_IMPORTED_MODULE_0__.default
+    SpotTagsInput: _tags_SpotTagsInput_vue__WEBPACK_IMPORTED_MODULE_1__.default
   },
   props: {
     tagNames: {
@@ -16423,6 +16445,10 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       required: false
     },
+    googleMapApiKey: {
+      type: String,
+      required: true
+    },
     errors: {
       type: Object,
       required: false
@@ -16431,6 +16457,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       spot: this.intialSpotValue,
+      google: null,
       mapLocation: {
         lat: 35.6594666,
         lng: 139.7005536
@@ -16466,22 +16493,44 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    function isEmpty(obj) {
-      return !Object.keys(obj).length;
-    }
+    var _this = this;
 
-    if (!isEmpty(this.spot)) {
-      this.latitude = this.spot.latitude;
-      this.longitude = this.spot.longitude;
-      this.spotName = this.spot.spot_name;
-      this.address = this.spot.address;
-      this.fishingTypes = this.intialspotFishingTypes;
-      this.tags = JSON.stringify(this.spotTags);
-      this.explanation = this.spot.explanation;
-      this.isEdit = true;
-    }
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              // this.google = await GoogleMapsApiLoader({
+              //     apiKey: this.googleMapApiKey
+              // })
+              // this.initializeMap()
+              if (Object.keys(_this.spot).length > 0) {
+                _this.latitude = _this.spot.latitude;
+                _this.longitude = _this.spot.longitude;
+                _this.spotName = _this.spot.spot_name;
+                _this.address = _this.spot.address;
+                _this.fishingTypes = _this.intialspotFishingTypes;
+                _this.tags = JSON.stringify(_this.spotTags);
+                _this.explanation = _this.spot.explanation;
+                _this.isEdit = true;
+              }
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
   methods: {
+    // initializeMap () {
+    //     new this.google.maps.Map(this.$refs.googleMap, this.mapLocation);
+    //     const markar = new this.google.maps.Marker({
+    //         position: this.mapLocation.center,
+    //         map: this.$refs.googleMap,
+    //     });
+    // },
     updateLocation: function updateLocation(location) {
       this.latitude = location.latLng.lat();
       this.longitude = location.latLng.lng();
@@ -16515,7 +16564,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 画像ファイルをプレビュー、エラーメッセージ処理（３つ）
     onFile1Change: function onFile1Change(event) {
-      var _this = this;
+      var _this2 = this;
 
       if (event.target.files.length === 0) {
         this.spotImage1Message = "";
@@ -16532,7 +16581,7 @@ __webpack_require__.r(__webpack_exports__);
       var reader = new FileReader();
 
       reader.onload = function (e) {
-        _this.preview1 = e.target.result;
+        _this2.preview1 = e.target.result;
       };
 
       reader.readAsDataURL(event.target.files[0]);
@@ -16541,7 +16590,7 @@ __webpack_require__.r(__webpack_exports__);
       this.spotImage1Message = "";
     },
     onFile2Change: function onFile2Change(event) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (event.target.files.length === 0) {
         this.spotImage2Message = "";
@@ -16558,7 +16607,7 @@ __webpack_require__.r(__webpack_exports__);
       var reader = new FileReader();
 
       reader.onload = function (e) {
-        _this2.preview2 = e.target.result;
+        _this3.preview2 = e.target.result;
       };
 
       reader.readAsDataURL(event.target.files[0]);
@@ -16567,7 +16616,7 @@ __webpack_require__.r(__webpack_exports__);
       this.spotImage2Message = "";
     },
     onFile3Change: function onFile3Change(event) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (event.target.files.length === 0) {
         this.spotImage3Message = "";
@@ -16584,7 +16633,7 @@ __webpack_require__.r(__webpack_exports__);
       var reader = new FileReader();
 
       reader.onload = function (e) {
-        _this3.preview3 = e.target.result;
+        _this4.preview3 = e.target.result;
       };
 
       reader.readAsDataURL(event.target.files[0]);
@@ -20052,11 +20101,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
 /* harmony import */ var _components_spots_SpotForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/spots/SpotForm.vue */ "./resources/js/components/spots/SpotForm.vue");
 /* harmony import */ var _components_commons_Loader_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/commons/Loader.vue */ "./resources/js/components/commons/Loader.vue");
-/* harmony import */ var vue2_google_maps__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue2-google-maps */ "./node_modules/vue2-google-maps/dist/main.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -20085,27 +20132,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
-
-
-vue__WEBPACK_IMPORTED_MODULE_5__.default.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_4__, {
-  load: {
-    key: 'AIzaSyCQDoDVD_7O5l7QPArpAhgrDJt5uvqV7io'
-  }
-});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     SpotForm: _components_spots_SpotForm_vue__WEBPACK_IMPORTED_MODULE_2__.default,
-    Loader: _components_commons_Loader_vue__WEBPACK_IMPORTED_MODULE_3__.default,
-    VueGoogleMaps: vue2_google_maps__WEBPACK_IMPORTED_MODULE_4__
+    Loader: _components_commons_Loader_vue__WEBPACK_IMPORTED_MODULE_3__.default
   },
   data: function data() {
     return {
       loading: false,
       allTagNames: [],
       allFishingTypeNames: [],
+      googleMapApiKey: "",
       spot: {},
       errors: null,
       spotDataLoaded: false
@@ -20165,9 +20206,10 @@ vue__WEBPACK_IMPORTED_MODULE_5__.default.use(vue2_google_maps__WEBPACK_IMPORTED_
                 _this2.loading = false;
                 _this2.allTagNames = response.data[0];
                 _this2.allFishingTypeNames = response.data[1];
+                _this2.googleMapApiKey = response.data[2];
                 _this2.spotDataLoaded = true;
 
-              case 11:
+              case 12:
               case "end":
                 return _context2.stop();
             }
@@ -20716,6 +20758,14 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -64077,11 +64127,11 @@ var render = function() {
       _c(
         "GmapMap",
         {
+          staticClass: "google_map_form",
           attrs: {
             center: _vm.mapLocation,
             zoom: 15,
-            "map-type-id": "terrain",
-            id: "map"
+            "map-type-id": "terrain"
           },
           on: { click: _vm.updateLocation }
         },
@@ -67771,6 +67821,7 @@ var render = function() {
                   tagNames: _vm.allTagNames,
                   fishingTypeNames: _vm.allFishingTypeNames,
                   intialSpotValue: _vm.spot,
+                  googleMapApiKey: _vm.googleMapApiKey,
                   errors: _vm.errors
                 },
                 on: { spotData: _vm.createSpot }
@@ -68041,23 +68092,34 @@ var render = function() {
                 "slide",
                 { staticClass: "hooper-slide" },
                 [
-                  _c(
-                    "GmapMap",
-                    {
-                      attrs: {
-                        id: "show_map",
-                        center: _vm.spotPosition,
-                        zoom: 15,
-                        "map-type-id": "terrain"
-                      }
-                    },
-                    [
-                      _c("GmapMarker", {
-                        attrs: { animation: 2, position: _vm.spotPosition }
-                      })
-                    ],
-                    1
-                  )
+                  _vm.spotDataLoaded
+                    ? _c(
+                        "GmapMap",
+                        {
+                          staticClass: "show_map",
+                          attrs: {
+                            center: {
+                              lat: _vm.spot.latitude,
+                              lng: _vm.spot.longitude
+                            },
+                            zoom: 15,
+                            "map-type-id": "terrain"
+                          }
+                        },
+                        [
+                          _c("GmapMarker", {
+                            attrs: {
+                              animation: 2,
+                              position: {
+                                lat: _vm.spot.latitude,
+                                lng: _vm.spot.longitude
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    : _vm._e()
                 ],
                 1
               ),

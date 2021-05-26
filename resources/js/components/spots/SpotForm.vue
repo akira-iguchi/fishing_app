@@ -13,9 +13,10 @@
             <button @click="searchAddress" class="spot_search_button"><i class="fas fa-search"></i></button>
         </div>
 
-        <GmapMap :center="mapLocation" :zoom="15" map-type-id="terrain" id="map" @click="updateLocation">
+        <GmapMap class="google_map_form" :center="mapLocation" :zoom="15" map-type-id="terrain" @click="updateLocation">
             <GmapMarker :animation="2" :position="mapLocation" :clickable="true" :draggable="true" @dragend="updateLocation" />
         </GmapMap>
+        <!-- <div class="google_map_form" ref="googleMap" /> -->
         <p>マーカーの移動も可能だよ！</p>
 
         <form @submit.prevent="spotData">
@@ -184,6 +185,18 @@
 
 <script>
     import SpotTagsInput from '../tags/SpotTagsInput.vue'
+    // import GoogleMapsApiLoader from 'google-maps-api-loader';
+    import Vue from 'vue'
+    import * as VueGoogleMaps from 'vue2-google-maps'
+
+    Vue.use(VueGoogleMaps, {
+        load: {
+            key: googleMapApiKey,
+            libraries: 'places',
+            region: 'JP',
+            language: 'ja'
+        }
+    })
 
     export default {
         components: {
@@ -213,6 +226,10 @@
                 type: Array,
                 required: false,
             },
+            googleMapApiKey: {
+                type: String,
+                required: true,
+            },
             errors: {
                 type: Object,
                 required: false,
@@ -221,6 +238,7 @@
         data () {
             return {
                 spot: this.intialSpotValue,
+                google: null,
                 mapLocation: {
                     lat: 35.6594666,
                     lng: 139.7005536,
@@ -255,12 +273,13 @@
                 return this.explanation.length
             },
         },
-        mounted () {
-            function isEmpty(obj){
-                return !Object.keys(obj).length;
-            }
+        async mounted () {
+            // this.google = await GoogleMapsApiLoader({
+            //     apiKey: this.googleMapApiKey
+            // })
+            // this.initializeMap()
 
-            if (!isEmpty(this.spot)) {
+            if (Object.keys(this.spot).length > 0) {
                 this.latitude = this.spot.latitude
                 this.longitude = this.spot.longitude
                 this.spotName = this.spot.spot_name
@@ -273,13 +292,20 @@
             }
         },
         methods: {
-            updateLocation(location) {
+            // initializeMap () {
+            //     new this.google.maps.Map(this.$refs.googleMap, this.mapLocation);
+            //     const markar = new this.google.maps.Marker({
+            //         position: this.mapLocation.center,
+            //         map: this.$refs.googleMap,
+            //     });
+            // },
+            updateLocation (location) {
                 this.latitude = location.latLng.lat()
                 this.longitude = location.latLng.lng()
                 this.mapLocation.lat = location.latLng.lat()
                 this.mapLocation.lng = location.latLng.lng()
             },
-            searchAddress() {
+            searchAddress () {
                 const geocoder = new google.maps.Geocoder()
                 const self = this
                 geocoder.geocode( { 'address': this.mapAddress}, function(results, status) {

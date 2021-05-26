@@ -11,6 +11,7 @@
                     :tagNames="allTagNames"
                     :fishingTypeNames="allFishingTypeNames"
                     :intialSpotValue="spot"
+                    :googleMapApiKey="googleMapApiKey"
                     :errors="errors"
                     @spotData="createSpot"
                 />
@@ -21,29 +22,21 @@
 </template>
 
 <script>
-    import Vue from 'vue'
     import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../../util'
     import SpotForm from "../../components/spots/SpotForm.vue"
     import Loader from '../../components/commons/Loader.vue'
-    import * as VueGoogleMaps from 'vue2-google-maps'
-
-    Vue.use(VueGoogleMaps, {
-        load: {
-            key: 'AIzaSyCQDoDVD_7O5l7QPArpAhgrDJt5uvqV7io',
-        }
-    })
 
     export default {
         components: {
             SpotForm,
             Loader,
-            VueGoogleMaps,
         },
         data () {
             return {
                 loading: false,
                 allTagNames: [],
                 allFishingTypeNames: [],
+                googleMapApiKey: "",
                 spot: {},
                 errors: null,
                 spotDataLoaded: false,
@@ -71,6 +64,7 @@
 
                 this.allTagNames = response.data[0]
                 this.allFishingTypeNames = response.data[1]
+                this.googleMapApiKey = response.data[2]
 
                 this.spotDataLoaded = true
             },

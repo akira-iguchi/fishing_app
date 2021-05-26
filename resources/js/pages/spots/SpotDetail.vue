@@ -22,8 +22,16 @@
                     :infiniteScroll="true"
                 >
                     <slide class="hooper-slide">
-                        <GmapMap id="show_map" :center="spotPosition" :zoom="15" map-type-id="terrain">
-                            <GmapMarker :animation="2" :position="spotPosition" />
+                        <GmapMap
+                            class="show_map"
+                            :center="{lat: spot.latitude, lng: spot.longitude}"
+                            :zoom="15"
+                            v-if="spotDataLoaded"
+                            map-type-id="terrain"
+                        >
+                            <GmapMarker
+                                :animation="2"
+                                :position="{lat: spot.latitude, lng: spot.longitude}" />
                         </GmapMap>
                     </slide>
                     <slide

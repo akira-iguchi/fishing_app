@@ -23,12 +23,9 @@
 </template>
 
 <script>
-
     import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../../util'
     import SpotForm from "../../components/spots/SpotForm.vue"
     import Loader from '../../components/commons/Loader.vue'
-
-
 
     export default {
         components: {
