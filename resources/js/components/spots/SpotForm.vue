@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h1>釣りスポット作成</h1>
+        <h1 v-if="isEdit">釣りスポット更新</h1>
+        <h1 v-else>釣りスポット作成</h1>
 
         <div class="d-flex">
             <input
@@ -13,10 +14,15 @@
             <button @click="searchAddress" class="spot_search_button"><i class="fas fa-search"></i></button>
         </div>
 
-        <GmapMap class="google_map_form" :center="mapLocation" :zoom="15" map-type-id="terrain" @click="updateLocation">
-            <GmapMarker :animation="2" :position="mapLocation" :clickable="true" :draggable="true" @dragend="updateLocation" />
-        </GmapMap>
-        <!-- <div class="google_map_form" ref="googleMap" /> -->
+        <div class="google_map_form" ref="googleMap">
+            <GoogleMapMarker
+                :position="mapLocation.center"
+                :google="google"
+                :map="map"
+                @dragendMarker="updateLocation"
+                v-if="googleMapLoaded"
+            />
+        </div>
         <p>マーカーの移動も可能だよ！</p>
 
         <form @submit.prevent="spotData">
@@ -185,22 +191,13 @@
 
 <script>
     import SpotTagsInput from '../tags/SpotTagsInput.vue'
-    // import GoogleMapsApiLoader from 'google-maps-api-loader';
-    import Vue from 'vue'
-    import * as VueGoogleMaps from 'vue2-google-maps'
-
-    Vue.use(VueGoogleMaps, {
-        load: {
-            key: googleMapApiKey,
-            libraries: 'places',
-            region: 'JP',
-            language: 'ja'
-        }
-    })
+    import GoogleMapsApiLoader from 'google-maps-api-loader'
+    import GoogleMapMarker from './googleMaps/GoogleMapMarker.vue'
 
     export default {
         components: {
             SpotTagsInput,
+            GoogleMapMarker,
         },
         props: {
             tagNames: {
@@ -239,9 +236,13 @@
             return {
                 spot: this.intialSpotValue,
                 google: null,
+                map: null,
                 mapLocation: {
-                    lat: 35.6594666,
-                    lng: 139.7005536,
+                    center: {
+                        lat: 35.6594666,
+                        lng: 139.7005536,
+                    },
+                    zoom: 15
                 },
                 mapAddress: "",
                 latitude: 35.6594666,
@@ -266,6 +267,7 @@
                 spotTags: this.intialSpotTags,
                 tags: [],
                 isEdit: false,
+                googleMapLoaded: false
             }
         },
         computed: {
@@ -274,14 +276,11 @@
             },
         },
         async mounted () {
-            // this.google = await GoogleMapsApiLoader({
-            //     apiKey: this.googleMapApiKey
-            // })
-            // this.initializeMap()
-
             if (Object.keys(this.spot).length > 0) {
                 this.latitude = this.spot.latitude
                 this.longitude = this.spot.longitude
+                this.mapLocation.center.lat = this.spot.latitude
+                this.mapLocation.center.lng = this.spot.longitude
                 this.spotName = this.spot.spot_name
                 this.address = this.spot.address
                 this.fishingTypes = this.intialspotFishingTypes
@@ -290,20 +289,25 @@
 
                 this.isEdit = true
             }
+
+            this.google = await GoogleMapsApiLoader({
+                apiKey: this.googleMapApiKey
+            })
+            this.initializeMap()
         },
         methods: {
-            // initializeMap () {
-            //     new this.google.maps.Map(this.$refs.googleMap, this.mapLocation);
-            //     const markar = new this.google.maps.Marker({
-            //         position: this.mapLocation.center,
-            //         map: this.$refs.googleMap,
-            //     });
-            // },
+            initializeMap () {
+                this.googleMapLoaded = false;
+
+                this.map = new this.google.maps.Map(this.$refs.googleMap, this.mapLocation)
+                this.$nextTick(() => (this.googleMapLoaded = true));
+            },
             updateLocation (location) {
                 this.latitude = location.latLng.lat()
                 this.longitude = location.latLng.lng()
-                this.mapLocation.lat = location.latLng.lat()
-                this.mapLocation.lng = location.latLng.lng()
+                this.mapLocation.center.lat = location.latLng.lat()
+                this.mapLocation.center.lng = location.latLng.lng()
+                this.initializeMap()
             },
             searchAddress () {
                 const geocoder = new google.maps.Geocoder()
@@ -315,8 +319,9 @@
 
                         self.latitude = lat
                         self.longitude = lng
-                        self.mapLocation.lat = lat
-                        self.mapLocation.lng = lng
+                        self.mapLocation.center.lat = lat
+                        self.mapLocation.center.lng = lng
+                        self.initializeMap()
                     } else {
                         alert('該当する結果がありませんでした');
                     }

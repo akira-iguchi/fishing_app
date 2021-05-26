@@ -18,21 +18,18 @@
                     class="hooper-container"
                     :autoPlay="true"
                     :wheelControl="false"
-                    :playSpeed="4000"
+                    :playSpeed="4000000"
                     :infiniteScroll="true"
                 >
                     <slide class="hooper-slide">
-                        <GmapMap
-                            class="show_map"
-                            :center="{lat: spot.latitude, lng: spot.longitude}"
-                            :zoom="15"
-                            v-if="spotDataLoaded"
-                            map-type-id="terrain"
-                        >
-                            <GmapMarker
-                                :animation="2"
-                                :position="{lat: spot.latitude, lng: spot.longitude}" />
-                        </GmapMap>
+                        <div class="show_map" ref="googleMap">
+                            <GoogleMapMarker
+                                :position="mapLocation.center"
+                                :google="google"
+                                :map="map"
+                                v-if="spotDataLoaded"
+                            />
+                        </div>
                     </slide>
                     <slide
                         class="hooper-slide"
@@ -143,6 +140,8 @@
     import SpotMiniCard from '../../components/spots/cards/SpotMiniCard.vue'
     import SpotComments from '../../components/spots/comments/SpotComments.vue'
     import moment from 'moment';
+    import GoogleMapsApiLoader from 'google-maps-api-loader'
+    import GoogleMapMarker from '../../components/spots/googleMaps/GoogleMapMarker.vue'
     import {Hooper, Slide, Pagination as HooperPagination, Navigation as HooperNavigation} from 'hooper';
     import 'hooper/dist/hooper.css';
 
@@ -152,6 +151,7 @@
             FavoriteButton,
             SpotMiniCard,
             SpotComments,
+            GoogleMapMarker,
             Hooper,
             Slide,
             HooperPagination,
@@ -169,6 +169,16 @@
                 spot: {},
                 user: {},
                 otherSpots: {},
+                google: null,
+                map: null,
+                mapLocation: {
+                    center: {
+                        lat: 35.6594666,
+                        lng: 139.7005536,
+                    },
+                    zoom: 15
+                },
+                googleMapApiKey: "",
                 spotDataLoaded: false,
             }
         },
@@ -196,6 +206,15 @@
                 this.spot = response.data[0]
                 this.user = this.spot.user
                 this.otherSpots = response.data[1]
+                this.googleMapApiKey = response.data[2]
+
+                this.google = await GoogleMapsApiLoader({
+                    apiKey: this.googleMapApiKey
+                })
+                this.spotGoogleMap()
+            },
+            spotGoogleMap () {
+                this.map = new this.google.maps.Map(this.$refs.googleMap, this.mapLocation)
 
                 this.spotDataLoaded = true
             },
