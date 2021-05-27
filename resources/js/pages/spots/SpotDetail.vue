@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-                <table>
+                <table v-if="spotDataLoaded">
                     <tbody>
                         <tr v-if="spot.address && spot.address.length > 0">
                             <th>所在地</th>
@@ -65,7 +65,11 @@
                         </tr>
                         <tr>
                             <th>説明</th>
-                            <td><span>{{ spot.explanation }}</span></td>
+                            <td>
+                                <span v-html="spot.explanation.replace(/\n/g,'<br/>')">
+                                    {{ spot.explanation }}
+                                </span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

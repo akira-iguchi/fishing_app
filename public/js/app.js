@@ -20967,6 +20967,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -68881,56 +68885,82 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("table", [
-            _c("tbody", [
-              _vm.spot.address && _vm.spot.address.length > 0
-                ? _c("tr", [
-                    _c("th", [_vm._v("所在地")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(_vm.spot.address))])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.spot.fishing_types && _vm.spot.fishing_types.length > 0
-                ? _c("tr", [
-                    _c(
-                      "th",
-                      [
-                        _c("RouterLink", { attrs: { to: "/fishing_types" } }, [
-                          _vm._v(
-                            "\n                                おすすめの釣り方\n                            "
+          _vm.spotDataLoaded
+            ? _c("table", [
+                _c("tbody", [
+                  _vm.spot.address && _vm.spot.address.length > 0
+                    ? _c("tr", [
+                        _c("th", [_vm._v("所在地")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(_vm.spot.address))])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.spot.fishing_types && _vm.spot.fishing_types.length > 0
+                    ? _c("tr", [
+                        _c(
+                          "th",
+                          [
+                            _c(
+                              "RouterLink",
+                              { attrs: { to: "/fishing_types" } },
+                              [
+                                _vm._v(
+                                  "\n                                おすすめの釣り方\n                            "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "ul",
+                            { staticClass: "spot-fishing_type" },
+                            _vm._l(_vm.spot.fishing_types, function(
+                              fishingType
+                            ) {
+                              return _c("li", { key: fishingType.id }, [
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(fishingType.fishing_type_name) +
+                                    "\n                                "
+                                )
+                              ])
+                            }),
+                            0
                           )
                         ])
-                      ],
-                      1
-                    ),
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("th", [_vm._v("説明")]),
                     _vm._v(" "),
                     _c("td", [
                       _c(
-                        "ul",
-                        { staticClass: "spot-fishing_type" },
-                        _vm._l(_vm.spot.fishing_types, function(fishingType) {
-                          return _c("li", { key: fishingType.id }, [
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(fishingType.fishing_type_name) +
-                                "\n                                "
+                        "span",
+                        {
+                          domProps: {
+                            innerHTML: _vm._s(
+                              _vm.spot.explanation.replace(/\n/g, "<br/>")
                             )
-                          ])
-                        }),
-                        0
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.spot.explanation) +
+                              "\n                            "
+                          )
+                        ]
                       )
                     ])
                   ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("tr", [
-                _c("th", [_vm._v("説明")]),
-                _vm._v(" "),
-                _c("td", [_c("span", [_vm._v(_vm._s(_vm.spot.explanation))])])
+                ])
               ])
-            ])
-          ]),
+            : _vm._e(),
           _vm._v(" "),
           _vm.spot.user_id === _vm.AuthUser.id
             ? _c("div", { staticClass: "spot_user_private" }, [
