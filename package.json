@@ -4,7 +4,7 @@
         "dev": "npm run development",
         "development": "mix",
         "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "watch-poll": "mix watch -- --watch-options-poll=3000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production"
@@ -44,6 +44,7 @@
         "core-js": "^3.9.1",
         "dotenv": "^8.2.0",
         "dotenv-expand": "^5.1.0",
+        "google-maps-api-loader": "^1.1.1",
         "hooper": "^0.3.4",
         "micromodal": "^0.4.6",
         "moment": "^2.29.1",

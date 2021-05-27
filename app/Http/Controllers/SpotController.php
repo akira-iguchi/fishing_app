@@ -21,6 +21,11 @@ class SpotController extends Controller
 {
     use TagNameTrait;
 
+    public function __construct()
+    {
+        $this->googleMapApiKey = config('services.google-map.apikey');
+    }
+
     public function searchItems($request)
     {
         $allFishingTypeNames = FishingType::all();
@@ -101,7 +106,7 @@ class SpotController extends Controller
         $otherSpots = Spot::where('id', '!=', $spot->id)->get()->shuffle()->take(4)
                     ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
 
-        return [$spot, $otherSpots];
+        return [$spot, $otherSpots, $this->googleMapApiKey];
     }
 
     public function create(Spot $spot)
@@ -110,7 +115,7 @@ class SpotController extends Controller
 
         $allFishingTypeNames = FishingType::all();
 
-        return [$allTagNames, $allFishingTypeNames];
+        return [$allTagNames, $allFishingTypeNames, $this->googleMapApiKey];
     }
 
     public function store(SpotRequest $request, Spot $spot, SpotImage $spotImage)
@@ -150,7 +155,14 @@ class SpotController extends Controller
 
         $allFishingTypeNames = FishingType::all();
 
-        return [$spot, $spotFishingTypeNames, $spotTagNames, $allTagNames, $allFishingTypeNames];
+        return [
+            $spot,
+            $spotFishingTypeNames,
+            $spotTagNames,
+            $allTagNames,
+            $allFishingTypeNames,
+            $this->googleMapApiKey
+        ];
     }
 
     public function update(SpotRequest $request, Spot $spot, SpotImage $spotImage)

@@ -4,29 +4,23 @@
             <div class="mx-auto d-block col-lg-8 spot_container">
                 <h1 class="spot_name">{{ spot.spot_name }}</h1>
 
-                    <div class="card-body pt-3 pb-4 pl-3">
-                        <div class="card-text line-height">
-                            <span v-for="tag in spot.tags" :key="tag.id">
-                                <RouterLink class="spot_tag" :to="`/tags/${tag.tag_name}`">
-                                    {{ tag.hashtag }}
-                                </RouterLink>
-                            </span>
-                        </div>
+                <div class="card-body pt-3 pb-4 pl-3">
+                    <div class="card-text line-height">
+                        <span v-for="tag in spot.tags" :key="tag.id">
+                            <RouterLink class="spot_tag" :to="`/tags/${tag.tag_name}`">
+                                {{ tag.hashtag }}
+                            </RouterLink>
+                        </span>
                     </div>
+                </div>
 
                 <hooper
                     class="hooper-container"
                     :autoPlay="true"
                     :wheelControl="false"
-                    :playSpeed="4000"
+                    :playSpeed="8000"
                     :infiniteScroll="true"
                 >
-                    <slide class="hooper-slide">
-                        <div id="show_map"></div>
-                        <!-- <GmapMap id="show_map" :center="spotPosition" :zoom="15" map-type-id="terrain">
-                            <GmapMarker :animation="2" :position="spotPosition" />
-                        </GmapMap> -->
-                    </slide>
                     <slide
                         class="hooper-slide"
                         v-for="image in spot.spot_images"
@@ -47,7 +41,7 @@
                     </div>
                 </div>
 
-                <table>
+                <table v-if="spotDataLoaded">
                     <tbody>
                         <tr v-if="spot.address && spot.address.length > 0">
                             <th>所在地</th>
@@ -71,7 +65,11 @@
                         </tr>
                         <tr>
                             <th>説明</th>
-                            <td><span>{{ spot.explanation }}</span></td>
+                            <td>
+                                <span v-html="spot.explanation.replace(/\n/g,'<br/>')">
+                                    {{ spot.explanation }}
+                                </span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -86,6 +84,15 @@
                     <button class="delete_button" @click="deleteSpot">
                         削除
                     </button>
+                </div>
+
+                <div class="show_map" ref="googleMap">
+                    <GoogleMapMarker
+                        :position="mapLocation.center"
+                        :google="google"
+                        :map="map"
+                        v-if="spotDataLoaded"
+                    />
                 </div>
 
                 <SpotComments
@@ -136,6 +143,8 @@
     import SpotMiniCard from '../../components/spots/cards/SpotMiniCard.vue'
     import SpotComments from '../../components/spots/comments/SpotComments.vue'
     import moment from 'moment';
+    import GoogleMapsApiLoader from 'google-maps-api-loader'
+    import GoogleMapMarker from '../../components/spots/googleMaps/GoogleMapMarker.vue'
     import {Hooper, Slide, Pagination as HooperPagination, Navigation as HooperNavigation} from 'hooper';
     import 'hooper/dist/hooper.css';
 
@@ -145,6 +154,7 @@
             FavoriteButton,
             SpotMiniCard,
             SpotComments,
+            GoogleMapMarker,
             Hooper,
             Slide,
             HooperPagination,
@@ -162,7 +172,17 @@
                 spot: {},
                 user: {},
                 otherSpots: {},
-                spotPosition: {},
+                google: null,
+                map: null,
+                mapLocation: {
+                    center: {
+                        lat: 35.6594666,
+                        lng: 139.7005536,
+                    },
+                    zoom: 15
+                },
+                googleMapApiKey: "",
+                loading: true,
                 spotDataLoaded: false,
             }
         },
@@ -178,6 +198,7 @@
         },
         methods: {
             async fetchSpot () {
+                this.loading = true
                 const response = await axios.get(`/api/spots/${ this.id }`)
 
                 if (response.status !== OK) {
@@ -189,10 +210,22 @@
 
                 this.spot = response.data[0]
                 this.user = this.spot.user
-                this.spotPosition = {lat: this.spot.latitude, lng: this.spot.longitude}
                 this.otherSpots = response.data[1]
+                this.googleMapApiKey = response.data[2]
 
-                this.spotDataLoaded = true
+                this.google = await GoogleMapsApiLoader({
+                    apiKey: this.googleMapApiKey
+                })
+                this.spotGoogleMap()
+            },
+            spotGoogleMap () {
+                this.mapLocation.center.lat = this.spot.latitude
+                this.mapLocation.center.lng = this.spot.longitude
+
+                this.spotDataLoaded = false
+                this.map = new this.google.maps.Map(this.$refs.googleMap, this.mapLocation)
+
+                this.$nextTick(() => (this.spotDataLoaded = true))
             },
             // 釣りスポット削除
             async deleteSpot() {

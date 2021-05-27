@@ -13,13 +13,13 @@
 
             <div class="mini_card_detail">
 
-                <div class="card_item mr-1">
+                <div class="card_item mt-2 mr-1">
                     <FavoriteButton
                         :spot="spot"
                     />
                 </div>
 
-                <div class="card_item">
+                <div class="card_item mt-2">
                     <i class="fa fa-comment ml-1 mr-1"></i>{{ spot.spot_comments.length }}
                 </div>
 

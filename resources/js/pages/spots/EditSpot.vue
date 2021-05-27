@@ -13,6 +13,7 @@
                     :intialSpotValue="spot"
                     :intialspotFishingTypes="spotFishingTypes"
                     :intialSpotTags="spotTags"
+                    :googleMapApiKey="googleMapApiKey"
                     :errors="errors"
                     @spotData="editSpot"
                 />
@@ -47,6 +48,7 @@
                 spotFishingTypes: [],
                 spotTags: [],
                 errors: null,
+                googleMapApiKey: "",
                 spotDataLoaded: false,
             }
         },
@@ -90,6 +92,7 @@
                 this.spotTags = response.data[2]
                 this.allTagNames = response.data[3]
                 this.allFishingTypeNames = response.data[4]
+                this.googleMapApiKey = response.data[5]
 
                 this.spotDataLoaded = true
             },

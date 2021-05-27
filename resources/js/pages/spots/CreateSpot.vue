@@ -11,6 +11,7 @@
                     :tagNames="allTagNames"
                     :fishingTypeNames="allFishingTypeNames"
                     :intialSpotValue="spot"
+                    :googleMapApiKey="googleMapApiKey"
                     :errors="errors"
                     @spotData="createSpot"
                 />
@@ -35,6 +36,7 @@
                 loading: false,
                 allTagNames: [],
                 allFishingTypeNames: [],
+                googleMapApiKey: "",
                 spot: {},
                 errors: null,
                 spotDataLoaded: false,
@@ -62,6 +64,7 @@
 
                 this.allTagNames = response.data[0]
                 this.allFishingTypeNames = response.data[1]
+                this.googleMapApiKey = response.data[2]
 
                 this.spotDataLoaded = true
             },

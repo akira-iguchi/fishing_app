@@ -55,6 +55,7 @@
                     class="form-control mt-4"
                     placeholder="コメントしよう！"
                     v-model="commentContent"
+                    required
                 ></textarea>
                 <p class="text_limit">
                     <span
