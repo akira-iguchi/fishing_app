@@ -297,10 +297,10 @@
         },
         methods: {
             initializeMap () {
-                this.googleMapLoaded = false;
+                this.googleMapLoaded = false
 
                 this.map = new this.google.maps.Map(this.$refs.googleMap, this.mapLocation)
-                this.$nextTick(() => (this.googleMapLoaded = true));
+                this.$nextTick(() => (this.googleMapLoaded = true))
             },
             updateLocation (location) {
                 this.latitude = location.latLng.lat()

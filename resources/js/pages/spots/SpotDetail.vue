@@ -4,33 +4,23 @@
             <div class="mx-auto d-block col-lg-8 spot_container">
                 <h1 class="spot_name">{{ spot.spot_name }}</h1>
 
-                    <div class="card-body pt-3 pb-4 pl-3">
-                        <div class="card-text line-height">
-                            <span v-for="tag in spot.tags" :key="tag.id">
-                                <RouterLink class="spot_tag" :to="`/tags/${tag.tag_name}`">
-                                    {{ tag.hashtag }}
-                                </RouterLink>
-                            </span>
-                        </div>
+                <div class="card-body pt-3 pb-4 pl-3">
+                    <div class="card-text line-height">
+                        <span v-for="tag in spot.tags" :key="tag.id">
+                            <RouterLink class="spot_tag" :to="`/tags/${tag.tag_name}`">
+                                {{ tag.hashtag }}
+                            </RouterLink>
+                        </span>
                     </div>
+                </div>
 
                 <hooper
                     class="hooper-container"
                     :autoPlay="true"
                     :wheelControl="false"
-                    :playSpeed="4000000"
+                    :playSpeed="8000"
                     :infiniteScroll="true"
                 >
-                    <slide class="hooper-slide">
-                        <div class="show_map" ref="googleMap">
-                            <GoogleMapMarker
-                                :position="mapLocation.center"
-                                :google="google"
-                                :map="map"
-                                v-if="spotDataLoaded"
-                            />
-                        </div>
-                    </slide>
                     <slide
                         class="hooper-slide"
                         v-for="image in spot.spot_images"
@@ -90,6 +80,15 @@
                     <button class="delete_button" @click="deleteSpot">
                         削除
                     </button>
+                </div>
+
+                <div class="show_map" ref="googleMap">
+                    <GoogleMapMarker
+                        :position="mapLocation.center"
+                        :google="google"
+                        :map="map"
+                        v-if="spotDataLoaded"
+                    />
                 </div>
 
                 <SpotComments
@@ -179,6 +178,7 @@
                     zoom: 15
                 },
                 googleMapApiKey: "",
+                loading: true,
                 spotDataLoaded: false,
             }
         },
@@ -194,6 +194,7 @@
         },
         methods: {
             async fetchSpot () {
+                this.loading = true
                 const response = await axios.get(`/api/spots/${ this.id }`)
 
                 if (response.status !== OK) {
@@ -214,9 +215,13 @@
                 this.spotGoogleMap()
             },
             spotGoogleMap () {
+                this.mapLocation.center.lat = this.spot.latitude
+                this.mapLocation.center.lng = this.spot.longitude
+
+                this.spotDataLoaded = false
                 this.map = new this.google.maps.Map(this.$refs.googleMap, this.mapLocation)
 
-                this.spotDataLoaded = true
+                this.$nextTick(() => (this.spotDataLoaded = true))
             },
             // 釣りスポット削除
             async deleteSpot() {

@@ -16944,6 +16944,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -20830,7 +20831,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -20994,7 +20996,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       loading: true,
       spot: {},
       user: {},
@@ -21008,9 +21012,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         },
         zoom: 15
       },
-      googleMapApiKey: "",
-      spotDataLoaded: false
-    };
+      googleMapApiKey: ""
+    }, _defineProperty(_ref, "loading", true), _defineProperty(_ref, "spotDataLoaded", false), _ref;
   },
   filters: {
     moment: function moment(date) {
@@ -21032,14 +21035,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _this.loading = true;
+                _context.next = 3;
                 return axios.get("/api/spots/".concat(_this.id));
 
-              case 2:
+              case 3:
                 response = _context.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                  _context.next = 6;
+                  _context.next = 7;
                   break;
                 }
 
@@ -21047,23 +21051,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 6:
+              case 7:
                 _this.loading = false;
                 _this.spot = response.data[0];
                 _this.user = _this.spot.user;
                 _this.otherSpots = response.data[1];
                 _this.googleMapApiKey = response.data[2];
-                _context.next = 13;
+                _context.next = 14;
                 return google_maps_api_loader__WEBPACK_IMPORTED_MODULE_7___default()({
                   apiKey: _this.googleMapApiKey
                 });
 
-              case 13:
+              case 14:
                 _this.google = _context.sent;
 
                 _this.spotGoogleMap();
 
-              case 15:
+              case 16:
               case "end":
                 return _context.stop();
             }
@@ -21072,12 +21076,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     spotGoogleMap: function spotGoogleMap() {
+      var _this2 = this;
+
+      this.mapLocation.center.lat = this.spot.latitude;
+      this.mapLocation.center.lng = this.spot.longitude;
+      this.spotDataLoaded = false;
       this.map = new this.google.maps.Map(this.$refs.googleMap, this.mapLocation);
-      this.spotDataLoaded = true;
+      this.$nextTick(function () {
+        return _this2.spotDataLoaded = true;
+      });
     },
     // 釣りスポット削除
     deleteSpot: function deleteSpot() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         var _response;
@@ -21092,17 +21103,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 _context2.next = 3;
-                return axios["delete"]("/api/spots/".concat(_this2.id));
+                return axios["delete"]("/api/spots/".concat(_this3.id));
 
               case 3:
                 _response = _context2.sent;
 
-                _this2.$store.commit('message/setContent', {
+                _this3.$store.commit('message/setContent', {
                   content: '釣りスポットを削除しました',
                   timeout: 4000
                 });
 
-                _this2.$router.push('/');
+                _this3.$router.push('/');
 
               case 6:
               case "end":
@@ -21119,7 +21130,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   watch: {
     $route: {
       handler: function handler() {
-        var _this3 = this;
+        var _this4 = this;
 
         return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
@@ -21127,7 +21138,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               switch (_context3.prev = _context3.next) {
                 case 0:
                   _context3.next = 2;
-                  return _this3.fetchSpot();
+                  return _this4.fetchSpot();
 
                 case 2:
                 case "end":
@@ -65565,12 +65576,12 @@ var render = function() {
           [
             _c(
               "div",
-              { staticClass: "card_item mr-1" },
+              { staticClass: "card_item mt-2 mr-1" },
               [_c("FavoriteButton", { attrs: { spot: _vm.spot } })],
               1
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "card_item" }, [
+            _c("div", { staticClass: "card_item mt-2" }, [
               _c("i", { staticClass: "fa fa-comment ml-1 mr-1" }),
               _vm._v(_vm._s(_vm.spot.spot_comments.length) + "\n            ")
             ]),
@@ -65736,7 +65747,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control mt-4",
-            attrs: { rows: "4", placeholder: "コメントしよう！" },
+            attrs: { rows: "4", placeholder: "コメントしよう！", required: "" },
             domProps: { value: _vm.commentContent },
             on: {
               input: function($event) {
@@ -68798,9 +68809,9 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                                " +
+                          "\n                            " +
                             _vm._s(tag.hashtag) +
-                            "\n                            "
+                            "\n                        "
                         )
                       ]
                     )
@@ -68819,30 +68830,11 @@ var render = function() {
               attrs: {
                 autoPlay: true,
                 wheelControl: false,
-                playSpeed: 4000000,
+                playSpeed: 8000,
                 infiniteScroll: true
               }
             },
             [
-              _c("slide", { staticClass: "hooper-slide" }, [
-                _c(
-                  "div",
-                  { ref: "googleMap", staticClass: "show_map" },
-                  [
-                    _vm.spotDataLoaded
-                      ? _c("GoogleMapMarker", {
-                          attrs: {
-                            position: _vm.mapLocation.center,
-                            google: _vm.google,
-                            map: _vm.map
-                          }
-                        })
-                      : _vm._e()
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
               _vm._l(_vm.spot.spot_images, function(image) {
                 return _c(
                   "slide",
@@ -68971,6 +68963,23 @@ var render = function() {
                 )
               ])
             : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "div",
+            { ref: "googleMap", staticClass: "show_map" },
+            [
+              _vm.spotDataLoaded
+                ? _c("GoogleMapMarker", {
+                    attrs: {
+                      position: _vm.mapLocation.center,
+                      google: _vm.google,
+                      map: _vm.map
+                    }
+                  })
+                : _vm._e()
+            ],
+            1
+          ),
           _vm._v(" "),
           _vm.spotDataLoaded
             ? _c("SpotComments", { attrs: { spotData: _vm.spot } })
