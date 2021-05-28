@@ -582,7 +582,7 @@
 
 .hooper-container {
   overflow: hidden;
-  height: 40em !important;
+  height: 30em !important;
   margin-bottom: 10px;
 }
 
@@ -616,7 +616,7 @@
   bottom: 3em;
   margin: auto;
   width: 100%;
-  height: 96%;
+  cursor: pointer;
 }
 
 .hooper-prev {

@@ -26,7 +26,12 @@
                         v-for="image in spot.spot_images"
                         :key="image.id"
                     >
-                        <img :src="`${ image.spot_image }`" alt="釣りスポットの画像">
+                        <img
+                            :src="`${ image.spot_image }`"
+                            :id="image.id"
+                            @click="openImageByFullScreen(image.id)"
+                            alt="釣りスポットの画像"
+                        >
                     </slide>
                     <hooper-navigation slot="hooper-addons"></hooper-navigation>
                     <hooper-pagination slot="hooper-addons"></hooper-pagination>
@@ -196,6 +201,14 @@
                 return this.$store.getters['auth/AuthUser']
             },
         },
+        watch: {
+            $route: {
+                async handler () {
+                    await this.fetchSpot()
+                },
+                immediate: true
+            }
+        },
         methods: {
             async fetchSpot () {
                 this.loading = true
@@ -242,15 +255,21 @@
             updateSpotComments () {
                 this.spot = response.data[0]
             },
-        },
-        watch: {
-            $route: {
-                async handler () {
-                    await this.fetchSpot()
-                },
-                immediate: true
+            // クリックで全画面表示
+            openImageByFullScreen (imageId) {
+                console.log("🚀 ~ file: SpotDetail.vue ~ line 257 ~ openImageByFullScreen ~ imageId", imageId)
+                const SpotImage = document.getElementById(imageId)
+                if (SpotImage.requestFullscreen) {
+                    SpotImage.requestFullscreen();
+                } else if (SpotImage.mozRequestFullScreen) { /* Firefox */
+                    SpotImage.mozRequestFullScreen();
+                } else if (SpotImage.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                    SpotImage.webkitRequestFullscreen();
+                } else if (SpotImage.msRequestFullscreen) { /* IE/Edge */
+                    SpotImage.msRequestFullscreen();
+                }
             }
-        }
+        },
     }
 </script>
 

@@ -63,7 +63,7 @@
             </div>
 
             <div class="form-group">
-                <label for="tags">タグ（５つまで）</label>
+                <label for="tags">タグ（最初の５つまで）</label>
                 <SpotTagsInput
                     :initialTags="intialSpotTags"
                     :autocomplete-items="tagNames"
