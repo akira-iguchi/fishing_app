@@ -59,6 +59,8 @@ Fishing Appとは、釣りスポットを投稿し、釣りスポットにコメ
 * 関連する釣り方、タグも追加可能
 * 画像複数選択可能（３つまで）
 
+<img src="public/images/create.gif" alt="釣りスポット投稿機能のgif画像" width="400">
+
 <h3>天気予報機能</h3>
 
 * 釣りで重要な天気予報を表示（全国の天気を選択可能）
@@ -74,6 +76,8 @@ Fishing Appとは、釣りスポットを投稿し、釣りスポットにコメ
 * 釣りスポット名や所在地、関連する釣り方をキーワードに検索
 * 関連するタグから検索
 * 検索した釣りスポットの一覧
+
+<img src="public/images/search.gif" alt="検索機能のgif画像" width="600">
 
 <h3>コメント機能</h3>
 
@@ -92,7 +96,7 @@ Fishing Appとは、釣りスポットを投稿し、釣りスポットにコメ
 * 釣りの予定・記録をカレンダーに表示
 * 釣りの予定・記録の日付は移動可能
 
-<a href="https://gyazo.com/cff5261935300032c9ca5ebaaaae3c7d"><img src="https://i.gyazo.com/cff5261935300032c9ca5ebaaaae3c7d.gif" alt="Image from Gyazo" width="1000"/></a>
+<a href="https://gyazo.com/cff5261935300032c9ca5ebaaaae3c7d"><img src="https://i.gyazo.com/cff5261935300032c9ca5ebaaaae3c7d.gif" alt="Image from Gyazo" width="800"></a>
 
 <h3>テスト機能</h3>
 
