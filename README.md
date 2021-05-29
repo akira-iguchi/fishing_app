@@ -27,7 +27,7 @@ Fishing Appとは、釣りスポットを投稿し、釣りスポットにコメ
 * PHP 7.3
 * Laravel 8.29.0
 * MySQL 8.0.23
-* AWS(ECS,, Fargate VPC, Route53, S3)
+* AWS(ECS, Fargate VPC, Route53, S3)
 * Docker/docker-compose
 * Nginx
 * PHPUnit
