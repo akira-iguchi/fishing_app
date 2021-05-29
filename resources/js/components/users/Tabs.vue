@@ -244,10 +244,10 @@
             user (newUser) {
                 this.loading = true
                 this.getUserSpots(newUser)
-                this.userSpotsCount = 1
-                this.userFavortieSpotsCount = 1
-                this.userFollowingsCount = 1
-                this.userFollowersCount = 1
+                this.userSpotsCount = 12
+                this.userFavortieSpotsCount = 12
+                this.userFollowingsCount = 12
+                this.userFollowersCount = 12
             },
             tab () {
                 this.loading = true
@@ -326,16 +326,16 @@
                 }
             },
             seeMoreSpots () {
-                this.userSpotsCount += 2
+                this.userSpotsCount += 12
             },
             seeMoreFavoriteSpots () {
-                this.userFavoriteSpotsCount += 2
+                this.userFavoriteSpotsCount += 12
             },
             seeMoreFollowings () {
-                this.userFollowingsCount += 2
+                this.userFollowingsCount += 12
             },
             seeMoreFollowers () {
-                this.userFollowersCount += 2
+                this.userFollowersCount += 12
             },
             plusFavoriteCount () {
                 this.user.favorite_spots.length += 1

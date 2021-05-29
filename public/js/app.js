@@ -17819,10 +17819,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     user: function user(newUser) {
       this.loading = true;
       this.getUserSpots(newUser);
-      this.userSpotsCount = 1;
-      this.userFavortieSpotsCount = 1;
-      this.userFollowingsCount = 1;
-      this.userFollowersCount = 1;
+      this.userSpotsCount = 12;
+      this.userFavortieSpotsCount = 12;
+      this.userFollowingsCount = 12;
+      this.userFollowersCount = 12;
     },
     tab: function tab() {
       this.loading = true;
@@ -17996,16 +17996,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     seeMoreSpots: function seeMoreSpots() {
-      this.userSpotsCount += 2;
+      this.userSpotsCount += 12;
     },
     seeMoreFavoriteSpots: function seeMoreFavoriteSpots() {
-      this.userFavoriteSpotsCount += 2;
+      this.userFavoriteSpotsCount += 12;
     },
     seeMoreFollowings: function seeMoreFollowings() {
-      this.userFollowingsCount += 2;
+      this.userFollowingsCount += 12;
     },
     seeMoreFollowers: function seeMoreFollowers() {
-      this.userFollowersCount += 2;
+      this.userFollowersCount += 12;
     },
     plusFavoriteCount: function plusFavoriteCount() {
       this.user.favorite_spots.length += 1;
@@ -20971,6 +20971,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -21029,97 +21034,73 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.$store.getters['auth/AuthUser'];
     }
   },
+  watch: {
+    $route: {
+      handler: function handler() {
+        var _this = this;
+
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.next = 2;
+                  return _this.fetchSpot();
+
+                case 2:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }))();
+      },
+      immediate: true
+    }
+  },
   methods: {
     fetchSpot: function fetchSpot() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _this.loading = true;
-                _context.next = 3;
-                return axios.get("/api/spots/".concat(_this.id));
-
-              case 3:
-                response = _context.sent;
-
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                  _context.next = 7;
-                  break;
-                }
-
-                _this.$store.commit('error/setCode', response.status);
-
-                return _context.abrupt("return", false);
-
-              case 7:
-                _this.loading = false;
-                _this.spot = response.data[0];
-                _this.user = _this.spot.user;
-                _this.otherSpots = response.data[1];
-                _this.googleMapApiKey = response.data[2];
-                _context.next = 14;
-                return google_maps_api_loader__WEBPACK_IMPORTED_MODULE_7___default()({
-                  apiKey: _this.googleMapApiKey
-                });
-
-              case 14:
-                _this.google = _context.sent;
-
-                _this.spotGoogleMap();
-
-              case 16:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    spotGoogleMap: function spotGoogleMap() {
       var _this2 = this;
 
-      this.mapLocation.center.lat = this.spot.latitude;
-      this.mapLocation.center.lng = this.spot.longitude;
-      this.spotDataLoaded = false;
-      this.map = new this.google.maps.Map(this.$refs.googleMap, this.mapLocation);
-      this.$nextTick(function () {
-        return _this2.spotDataLoaded = true;
-      });
-    },
-    // 釣りスポット削除
-    deleteSpot: function deleteSpot() {
-      var _this3 = this;
-
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var _response;
-
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!confirm('本当に削除しますか？')) {
-                  _context2.next = 6;
+                _this2.loading = true;
+                _context2.next = 3;
+                return axios.get("/api/spots/".concat(_this2.id));
+
+              case 3:
+                response = _context2.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
+                  _context2.next = 7;
                   break;
                 }
 
-                _context2.next = 3;
-                return axios["delete"]("/api/spots/".concat(_this3.id));
+                _this2.$store.commit('error/setCode', response.status);
 
-              case 3:
-                _response = _context2.sent;
+                return _context2.abrupt("return", false);
 
-                _this3.$store.commit('message/setContent', {
-                  content: '釣りスポットを削除しました',
-                  timeout: 4000
+              case 7:
+                _this2.loading = false;
+                _this2.spot = response.data[0];
+                _this2.user = _this2.spot.user;
+                _this2.otherSpots = response.data[1];
+                _this2.googleMapApiKey = response.data[2];
+                _context2.next = 14;
+                return google_maps_api_loader__WEBPACK_IMPORTED_MODULE_7___default()({
+                  apiKey: _this2.googleMapApiKey
                 });
 
-                _this3.$router.push('/');
+              case 14:
+                _this2.google = _context2.sent;
 
-              case 6:
+                _this2.spotGoogleMap();
+
+              case 16:
               case "end":
                 return _context2.stop();
             }
@@ -21127,32 +21108,74 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee2);
       }))();
     },
+    spotGoogleMap: function spotGoogleMap() {
+      var _this3 = this;
+
+      this.mapLocation.center.lat = this.spot.latitude;
+      this.mapLocation.center.lng = this.spot.longitude;
+      this.spotDataLoaded = false;
+      this.map = new this.google.maps.Map(this.$refs.googleMap, this.mapLocation);
+      this.$nextTick(function () {
+        return _this3.spotDataLoaded = true;
+      });
+    },
+    // 釣りスポット削除
+    deleteSpot: function deleteSpot() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var _response;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (!confirm('本当に削除しますか？')) {
+                  _context3.next = 6;
+                  break;
+                }
+
+                _context3.next = 3;
+                return axios["delete"]("/api/spots/".concat(_this4.id));
+
+              case 3:
+                _response = _context3.sent;
+
+                _this4.$store.commit('message/setContent', {
+                  content: '釣りスポットを削除しました',
+                  timeout: 4000
+                });
+
+                _this4.$router.push('/');
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
     updateSpotComments: function updateSpotComments() {
       this.spot = response.data[0];
-    }
-  },
-  watch: {
-    $route: {
-      handler: function handler() {
-        var _this4 = this;
+    },
+    // クリックで全画面表示
+    openImageByFullScreen: function openImageByFullScreen(imageId) {
+      console.log("🚀 ~ file: SpotDetail.vue ~ line 257 ~ openImageByFullScreen ~ imageId", imageId);
+      var SpotImage = document.getElementById(imageId);
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
-            while (1) {
-              switch (_context3.prev = _context3.next) {
-                case 0:
-                  _context3.next = 2;
-                  return _this4.fetchSpot();
-
-                case 2:
-                case "end":
-                  return _context3.stop();
-              }
-            }
-          }, _callee3);
-        }))();
-      },
-      immediate: true
+      if (SpotImage.requestFullscreen) {
+        SpotImage.requestFullscreen();
+      } else if (SpotImage.mozRequestFullScreen) {
+        /* Firefox */
+        SpotImage.mozRequestFullScreen();
+      } else if (SpotImage.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        SpotImage.webkitRequestFullscreen();
+      } else if (SpotImage.msRequestFullscreen) {
+        /* IE/Edge */
+        SpotImage.msRequestFullscreen();
+      }
     }
   }
 });
@@ -65047,7 +65070,7 @@ var render = function() {
           { staticClass: "form-group" },
           [
             _c("label", { attrs: { for: "tags" } }, [
-              _vm._v("タグ（５つまで）")
+              _vm._v("タグ（最初の５つまで）")
             ]),
             _vm._v(" "),
             _c("SpotTagsInput", {
@@ -68847,7 +68870,13 @@ var render = function() {
                     _c("img", {
                       attrs: {
                         src: "" + image.spot_image,
+                        id: image.id,
                         alt: "釣りスポットの画像"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.openImageByFullScreen(image.id)
+                        }
                       }
                     })
                   ]
