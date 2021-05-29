@@ -96,7 +96,7 @@ Fishing Appとは、釣りスポットを投稿し、釣りスポットにコメ
 * 釣りの予定・記録をカレンダーに表示
 * 釣りの予定・記録の日付は移動可能
 
-<a href="https://gyazo.com/cff5261935300032c9ca5ebaaaae3c7d"><img src="https://i.gyazo.com/cff5261935300032c9ca5ebaaaae3c7d.gif" alt="Image from Gyazo" width="800"></a>
+<img src="public/images/calendar.gif" alt="カレンダー機能のgif画像" width="600">
 
 <h3>テスト機能</h3>
 
