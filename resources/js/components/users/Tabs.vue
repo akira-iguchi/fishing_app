@@ -214,10 +214,10 @@
                 userFavoriteSpots: [],
                 userFollowings: [],
                 userFollowers: [],
-                userSpotsCount: 1,
-                userFavoriteSpotsCount: 1,
-                userFollowingsCount: 1,
-                userFollowersCount: 1,
+                userSpotsCount: 12,
+                userFavoriteSpotsCount: 12,
+                userFollowingsCount: 12,
+                userFollowersCount: 12,
             }
         },
         computed: {
