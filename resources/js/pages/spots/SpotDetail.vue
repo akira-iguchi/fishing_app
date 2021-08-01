@@ -2,6 +2,11 @@
     <div class="container">
         <div class="row spot_body">
             <div class="mx-auto d-block col-lg-8 spot_container">
+
+                <div v-show="loading" class="mt-3">
+                    <Loader />
+                </div>
+
                 <h1 class="spot_name">{{ spot.spot_name }}</h1>
 
                 <div class="card-body pt-3 pb-4 pl-3">
