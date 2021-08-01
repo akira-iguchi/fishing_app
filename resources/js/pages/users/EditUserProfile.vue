@@ -142,7 +142,7 @@
                 this.email = this.user.email
                 this.introduction = this.user.introduction
 
-                if (this.user.id === 4) {
+                if (this.user.id === 1) {
                     this.$router.push('/', () => {})
 
                     this.$store.commit('message/setContent', {

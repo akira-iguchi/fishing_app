@@ -76,7 +76,7 @@
                                 </ul>
                             </div>
 
-                            <label for="password">パスワード</label>
+                            <label for="password" class="required">パスワード</label>
                             <div class="login-signup-password">
                                 <input
                                     id="password"
@@ -156,6 +156,7 @@
         methods: {
             async register () {
                 await this.$store.dispatch('auth/register', this.registerForm)
+                window.scrollTo(0, 0)
 
                 if (this.apiStatus) {
                     this.$router.push('/')

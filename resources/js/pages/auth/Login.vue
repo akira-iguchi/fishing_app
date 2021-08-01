@@ -94,6 +94,7 @@
         methods: {
             async login () {
                 await this.$store.dispatch('auth/login', this.loginForm)
+                window.scrollTo(0, 0)
 
                 if (this.apiStatus) {
                     this.$router.push('/')

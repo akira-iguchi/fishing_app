@@ -113,6 +113,8 @@ Fishing App とは、釣りスポットを投稿し、釣りスポットにコ�
 
 <h2>インフラ構成図</h2>
 
+ <img src="public/images/infra.png" width="600" alt="インフラ構成図">
+
 <h2>ER図</h2>
 
  <img src="public/images/ER.png" width="600" alt="ER図">

@@ -145,6 +145,7 @@
 
                 this.errors = null
                 this.deleteInput = true
+                window.scrollTo(0, 0)
 
                 this.$store.commit('message/setContent', {
                     content: 'イベントを投稿しました',
