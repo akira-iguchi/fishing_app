@@ -1,7 +1,7 @@
 <h2>概要</h2>
 
 Fishing App
-URL：
+URL：https://fishingapp.work/
 
 Fishing App とは、釣りスポットを投稿し、釣りスポットにコメントして釣果などを共有するアプリです。また、釣りスポットにおすすめの釣り方を選択することもできます。さらに、カレンダーで釣りの予定、記録をすることができるので、このアプリ１つで満足できます。
 
@@ -17,9 +17,9 @@ Fishing App とは、釣りスポットを投稿し、釣りスポットにコ�
 
 -   Laravel、Vue.js を用いた完全 SPA
 -   AWS(ECS)、Docker、Github Actions の導入
--   GoogleMap で釣りスポットを表示、OpenWeatherMap で天気予報を表示
--   残り文字数の表示など細かい部分も実装
 -   個人的な「経験」による釣りスポットや釣り方の的確な説明
+-   GoogleMap で釣りスポットの位置を表示、OpenWeatherMap で天気予報を表示
+-   初学者なりにリファクタリングを重視（Fat Controller や Fat Model にならないよう）
 
 <h2>使用技術</h2>
 
@@ -30,6 +30,7 @@ Fishing App とは、釣りスポットを投稿し、釣りスポットにコ�
 -   Laravel 8.29.0
 -   MySQL 8.0.23
 -   AWS(ECS, Fargate VPC, Route53, S3)
+-   Github Actions
 -   Docker/docker-compose
 -   Nginx
 -   PHPUnit
