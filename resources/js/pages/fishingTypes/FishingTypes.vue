@@ -26,7 +26,6 @@
                         alt="釣り場方の画像"
                     >
                 </p>
-                <small>画像クリックで拡大！</small>
                 <hr>
                 <h5>おすすめの釣り場</h5>
                     <ul class="fishing_type-spot"
