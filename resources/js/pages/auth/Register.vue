@@ -154,6 +154,7 @@
         },
 
         methods: {
+            // store/auth.jsのregisterメソッドを引き出す
             async register () {
                 await this.$store.dispatch('auth/register', this.registerForm)
                 window.scrollTo(0, 0)

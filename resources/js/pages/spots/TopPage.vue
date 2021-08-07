@@ -215,6 +215,7 @@
 
                 this.loading = false
 
+                // ログインしている場合、データ読み込み
                 if (this.isLogin === true) {
                     this.fishingTypeNames = response.data[0][0]
                     this.tagNames = response.data[0][1]
@@ -224,6 +225,7 @@
                 }
             },
             handleScroll() {
+                // 要素の6割ほどの高さが出たら表示
                 const targetElement = this.$el.querySelectorAll('.top_slider') || null
                 if (targetElement !== null) {
                     for (let i = 0; i < targetElement.length; i++) {

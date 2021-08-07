@@ -132,6 +132,7 @@
                     return false
                 }
 
+                // 確認ページから戻った場合データを取得
                 this.contactForm.email = this.$route.params.email || ""
                 this.contactForm.title = this.$route.params.title || ""
                 this.contactForm.body = this.$route.params.body || ""

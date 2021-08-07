@@ -257,12 +257,12 @@
                     this.$router.push('/')
                 }
             },
+            // 釣りスポットを更新して同時にコメントも更新
             updateSpotComments () {
                 this.spot = response.data[0]
             },
             // クリックで全画面表示
             openImageByFullScreen (imageId) {
-                console.log("🚀 ~ file: SpotDetail.vue ~ line 257 ~ openImageByFullScreen ~ imageId", imageId)
                 const SpotImage = document.getElementById(imageId)
                 if (SpotImage.requestFullscreen) {
                     SpotImage.requestFullscreen();

@@ -93,6 +93,7 @@
 
         methods: {
             async login () {
+                // store/auth.jsのloginメソッドを引き出す
                 await this.$store.dispatch('auth/login', this.loginForm)
                 window.scrollTo(0, 0)
 

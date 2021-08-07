@@ -161,6 +161,7 @@
             closeModal () {
                 this.popup = false
             },
+            // イベントの日付移動
             async editEventDate (info) {
                 const event_id = info.event.id,
                     newDate = this.formatDate(info.event.start)

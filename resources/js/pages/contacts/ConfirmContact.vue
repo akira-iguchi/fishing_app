@@ -108,6 +108,7 @@
                     })
                 }
             },
+            // 前のページにデータを送る
             back () {
                 this.$router.push({
                     name: 'contact',
