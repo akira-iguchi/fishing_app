@@ -158,7 +158,7 @@
             changeFalse: function() {
                 this.isActive = false
             },
-            // 画像ファイルをプレビュー、エラーメッセージ処理（３つ）
+            // 画像ファイルをプレビュー、エラーメッセージ処理
             onFileChange (event) {
                 if (event.target.files.length === 0) {
                     this.imageErrorMessage = ""

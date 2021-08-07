@@ -7,6 +7,7 @@
             @getsearchData="getSearchSpots"
         />
 
+        <!-- 入力したワード、釣り方名一覧 -->
         <h2 class="search-result">
             <span
                 v-if="searchWord && searchWord.length > 0
@@ -134,6 +135,7 @@
                 this.currentPage = response.data[1].current_page
                 this.lastPage = response.data[1].last_page
             },
+            // ページネーション
             getSearchSpots (data) {
                 this.$route.query.page = "1"
                 this.$route.params.searchWord = data[0]

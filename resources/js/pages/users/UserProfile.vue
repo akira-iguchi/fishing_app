@@ -122,6 +122,7 @@
 
                 this.userDataLoaded = true
             },
+            // ユーザータブ(child)のchangeFollowerCountメソッドを引き出す
             follow () {
                 this.$refs.child.changeFollowerCount()
             },

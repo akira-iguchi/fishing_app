@@ -79,7 +79,7 @@
 
                 this.fishingTypes = response.data
             },
-            // クリックで全画面表示
+            // クリックで全画面表示（釣り方のidで分ける）
             openImageByFullScreen (fishingTypeId) {
                 const fishingTypeImage = document.getElementById(fishingTypeId)
                 if (fishingTypeImage.requestFullscreen) {
