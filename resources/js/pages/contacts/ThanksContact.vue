@@ -2,7 +2,7 @@
     <div class="contact_body">
         <div class="container">
             <div class="col-lg-6 contact_form">
-                <h2>お問い合わせ 送信完了</h2>
+                <h2 class="text-center">お問い合わせ 送信完了</h2>
                 <hr>
                 <p>
                     お問い合わせありがとうございました。<br>

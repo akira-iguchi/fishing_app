@@ -64,7 +64,7 @@
   display: block;
   cursor: pointer;
   outline: none;
-  background: #FFFFFF;
+  background: #ffffff;
   /* background: #EEFFFF; */
 }
 
@@ -178,7 +178,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 30px;
-  background: #FFFFFF;
+  background: #ffffff;
   margin: auto;
   margin-top: 40px;
   margin-bottom: 40px;
@@ -250,7 +250,7 @@
 }
 
 .spot_address {
-  text-align: left;
+  text-align: center;
   margin-bottom: 6px;
 }
 
@@ -341,8 +341,8 @@
   width: 282px;
   height: 90px;
   margin-bottom: 32px;
-  background-color: #BAD3FF;
-  box-shadow: 0 0 8px 8px #BAD3FF;
+  background-color: #bad3ff;
+  box-shadow: 0 0 8px 8px #bad3ff;
 }
 
 .weather-icon {
@@ -447,7 +447,7 @@
   height: 30rem;
   width: auto;
   margin-bottom: 5px;
-  border: 3px solid #FFCC33;
+  border: 3px solid #ffcc33;
 }
 
 .fishing_type_form {
@@ -511,7 +511,7 @@
   border-radius: 30px;
   padding: 30px 50px;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
-  background: #FFFFFF;
+  background: #ffffff;
 }
 
 .spot_container table {
@@ -634,7 +634,7 @@
 .show_map {
   height: 23em;
   margin: 20px 0;
-  border: 3px solid #FFCC33;
+  border: 3px solid #ffcc33;
 }
 
 .spot-fishing_type {
@@ -671,21 +671,21 @@
   text-decoration: none;
   background-color: rgba(0, 100, 255, 0.8);
   border-color: rgba(0, 100, 255, 0.1);
-  color: #FFF;
+  color: #fff;
 }
 
 .spot_user_private a:not([href]):not([tabindex]) {
-  color: #FF6633;
+  color: #ff6633;
 }
 
 .spot_user_private a:not([href]):not([tabindex]):hover {
-  color: #FFF;
+  color: #fff;
 }
 
 .delete_button {
   position: relative;
-  border: 2px solid #FF6633;
-  color: #FF6633;
+  border: 2px solid #ff6633;
+  color: #ff6633;
   cursor: pointer;
   padding: 8px 16px;
   border-radius: 4px;
@@ -695,9 +695,9 @@
 
 .delete_button:hover {
   text-decoration: none;
-  background-color: #FF6633;
-  border-color: #FF99CC;
-  color: #FFF;
+  background-color: #ff6633;
+  border-color: #ff99cc;
+  color: #fff;
 }
 
 .comment_index {
@@ -723,7 +723,7 @@
 }
 
 .comment a:hover .comment_creater_name {
-  color: #BF7497;
+  color: #bf7497;
 }
 
 .comment_top {
@@ -800,7 +800,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 30px;
-  background: #FFFFFF;
+  background: #ffffff;
   margin: 0 auto;
   margin-top: 20px;
   margin-bottom: 50px;

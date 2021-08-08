@@ -16090,6 +16090,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -16100,7 +16101,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      gotToLike: false
+      gotToLike: false,
+      isProcessing: false
     };
   },
   methods: {
@@ -16120,14 +16122,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _this.isProcessing = true;
+                _context.next = 3;
                 return axios.put("/api/spots/".concat(_this.spot.id, "/favorite"));
 
-              case 2:
+              case 3:
                 response = _context.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                  _context.next = 6;
+                  _context.next = 7;
                   break;
                 }
 
@@ -16135,14 +16138,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 6:
+              case 7:
                 _this.gotToLike = true;
                 _this.spot.count_spot_favorites += 1;
                 _this.spot.liked_by_user = true;
+                _this.isProcessing = false;
 
                 _this.$emit("favorite");
 
-              case 10:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -16159,14 +16163,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                _this2.isProcessing = true;
+                _context2.next = 3;
                 return axios["delete"]("/api/spots/".concat(_this2.spot.id, "/favorite"));
 
-              case 2:
+              case 3:
                 response = _context2.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.OK)) {
-                  _context2.next = 6;
+                  _context2.next = 7;
                   break;
                 }
 
@@ -16174,14 +16179,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context2.abrupt("return", false);
 
-              case 6:
+              case 7:
                 _this2.gotToLike = false;
                 _this2.spot.count_spot_favorites -= 1;
                 _this2.spot.liked_by_user = false;
+                _this2.isProcessing = false;
 
                 _this2.$emit("unfavorite");
 
-              case 10:
+              case 12:
               case "end":
                 return _context2.stop();
             }
@@ -17789,10 +17795,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       userFavoriteSpots: [],
       userFollowings: [],
       userFollowers: [],
-      userSpotsCount: 1,
-      userFavoriteSpotsCount: 1,
-      userFollowingsCount: 1,
-      userFollowersCount: 1
+      userSpotsCount: 12,
+      userFavoriteSpotsCount: 12,
+      userFollowingsCount: 12,
+      userFollowersCount: 12
     };
   },
   computed: {
@@ -18440,6 +18446,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return _this.$store.dispatch('auth/login', _this.loginForm);
 
               case 2:
+                window.scrollTo(0, 0);
+
                 if (_this.apiStatus) {
                   _this.$router.push('/');
 
@@ -18449,7 +18457,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   });
                 }
 
-              case 3:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -18652,6 +18660,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   methods: {
+    // store/auth.jsのregisterメソッドを引き出す
     register: function register() {
       var _this = this;
 
@@ -18664,6 +18673,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return _this.$store.dispatch('auth/register', _this.registerForm);
 
               case 2:
+                window.scrollTo(0, 0);
+
                 if (_this.apiStatus) {
                   _this.$router.push('/');
 
@@ -18673,7 +18684,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   });
                 }
 
-              case 3:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -18872,6 +18883,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
+    // 前のページにデータを送る
     back: function back() {
       this.$router.push({
         name: 'contact',
@@ -19113,6 +19125,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return", false);
 
               case 6:
+                // 確認ページから戻った場合データを取得
                 _this2.contactForm.email = _this2.$route.params.email || "";
                 _this2.contactForm.title = _this2.$route.params.title || "";
                 _this2.contactForm.body = _this2.$route.params.body || "";
@@ -19566,6 +19579,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     closeModal: function closeModal() {
       this.popup = false;
     },
+    // イベントの日付移動
     editEventDate: function editEventDate(info) {
       var _this4 = this;
 
@@ -19882,6 +19896,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 18:
                 _this3.errors = null;
                 _this3.deleteInput = true;
+                window.scrollTo(0, 0);
 
                 _this3.$store.commit('message/setContent', {
                   content: 'イベントを投稿しました',
@@ -19890,7 +19905,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this3.fetchEvents();
 
-              case 22:
+              case 23:
               case "end":
                 return _context3.stop();
             }
@@ -19905,6 +19920,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     closeModal: function closeModal() {
       this.popup = false;
     },
+    // イベントの日付移動
     editEventDate: function editEventDate(info) {
       var _this4 = this;
 
@@ -20058,7 +20074,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -20133,7 +20148,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
-    // クリックで全画面表示
+    // クリックで全画面表示（釣り方のidで分ける）
     openImageByFullScreen: function openImageByFullScreen(fishingTypeId) {
       var fishingTypeImage = document.getElementById(fishingTypeId);
 
@@ -20680,6 +20695,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -20789,6 +20805,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
+    // ページネーション
     getSearchSpots: function getSearchSpots(data) {
       this.$route.query.page = "1";
       this.$route.params.searchWord = data[0];
@@ -20833,6 +20850,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -21156,12 +21178,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee3);
       }))();
     },
+    // 釣りスポットを更新して同時にコメントも更新
     updateSpotComments: function updateSpotComments() {
       this.spot = response.data[0];
     },
     // クリックで全画面表示
     openImageByFullScreen: function openImageByFullScreen(imageId) {
-      console.log("🚀 ~ file: SpotDetail.vue ~ line 257 ~ openImageByFullScreen ~ imageId", imageId);
       var SpotImage = document.getElementById(imageId);
 
       if (SpotImage.requestFullscreen) {
@@ -21467,7 +21489,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context3.abrupt("return", false);
 
               case 11:
-                _this3.loading = false;
+                _this3.loading = false; // ログインしている場合、データ読み込み
 
                 if (_this3.isLogin === true) {
                   _this3.fishingTypeNames = response.data[0][0];
@@ -21486,6 +21508,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     handleScroll: function handleScroll() {
+      // 要素の6割ほどの高さが出たら表示
       var targetElement = this.$el.querySelectorAll('.top_slider') || null;
 
       if (targetElement !== null) {
@@ -21843,7 +21866,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.email = _this2.user.email;
                 _this2.introduction = _this2.user.introduction;
 
-                if (_this2.user.id === 4) {
+                if (_this2.user.id === 1) {
                   _this2.$router.push('/', function () {});
 
                   _this2.$store.commit('message/setContent', {
@@ -21867,7 +21890,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     changeFalse: function changeFalse() {
       this.isActive = false;
     },
-    // 画像ファイルをプレビュー、エラーメッセージ処理（３つ）
+    // 画像ファイルをプレビュー、エラーメッセージ処理
     onFileChange: function onFileChange(event) {
       var _this3 = this;
 
@@ -22147,6 +22170,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2);
       }))();
     },
+    // ユーザータブ(child)のchangeFollowerCountメソッドを引き出す
     follow: function follow() {
       this.$refs.child.changeFollowerCount();
     }
@@ -64824,6 +64848,7 @@ var render = function() {
           "text-danger": _vm.spot.liked_by_user,
           "animated heartBeat fast": this.gotToLike
         },
+        attrs: { disabled: _vm.isProcessing },
         on: { click: _vm.onFavoriteClick }
       },
       [_c("i", { staticClass: "fas fa-heart" })]
@@ -67363,9 +67388,11 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _c("label", { attrs: { for: "password" } }, [
-                  _vm._v("パスワード")
-                ]),
+                _c(
+                  "label",
+                  { staticClass: "required", attrs: { for: "password" } },
+                  [_vm._v("パスワード")]
+                ),
                 _vm._v(" "),
                 _c("div", { staticClass: "login-signup-password" }, [
                   _vm.inputType === "checkbox"
@@ -68124,7 +68151,9 @@ var render = function() {
         "div",
         { staticClass: "col-lg-6 contact_form" },
         [
-          _c("h1", [_vm._v("お問い合わせ 送信完了")]),
+          _c("h2", { staticClass: "text-center" }, [
+            _vm._v("お問い合わせ 送信完了")
+          ]),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
@@ -68507,8 +68536,6 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _c("small", [_vm._v("画像クリックで拡大！")]),
-            _vm._v(" "),
             _c("hr"),
             _vm._v(" "),
             _c("h5", [_vm._v("おすすめの釣り場")]),
@@ -68815,6 +68842,23 @@ var render = function() {
         "div",
         { staticClass: "mx-auto d-block col-lg-8 spot_container" },
         [
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.loading,
+                  expression: "loading"
+                }
+              ],
+              staticClass: "mt-3"
+            },
+            [_c("Loader")],
+            1
+          ),
+          _vm._v(" "),
           _c("h1", { staticClass: "spot_name" }, [
             _vm._v(_vm._s(_vm.spot.spot_name))
           ]),
@@ -69426,11 +69470,11 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("p", [
           _vm._v(
-            "\n                     井口 晶。20歳。プログラミングに励む、田舎好きな大阪生まれ育ちの都会男子。\n                    そのまま関西大学法学部所属(現在2年生)。毎日、法学やプログラミングの知識を取り入れています。\n                    "
+            "\n                     井口 晶。20歳。プログラミングに励む、田舎好きな大阪生まれ育ちの都会男子。\n                    関西大学法学部所属(現在2回生)。毎日、法学やプログラミングの知識を取り入れています。\n                    "
           ),
           _c("br"),
           _vm._v(
-            "\n                     釣りと筋トレが趣味。釣りで自然と戯れつつ、筋トレで自分を追い込んでます。\n                "
+            "\n                     釣りと筋トレが趣味。釣りで自然と戯れつつ、筋トレで自分を追い込んでいます。\n                "
           )
         ])
       ]),
