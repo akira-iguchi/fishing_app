@@ -7,14 +7,25 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
-        <link rel="shortcut icon" href="{{ secure_asset('/images/favicon.ico') }}">
-        <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
-        <link rel="stylesheet" href="{{ secure_asset('css/spot.css') }}">
-        <link rel="stylesheet" href="{{ secure_asset('css/spot.css') }}">
-        <link rel="stylesheet" href="{{ secure_asset('css/user.css') }}">
-        <link rel="stylesheet" href="{{ secure_asset('css/fishing_type.css') }}">
-        <link rel="stylesheet" href="{{ secure_asset('css/fullcalendar/core/main.css') }}">
-        <link rel="stylesheet" href="{{ secure_asset('css/fullcalendar/daygrid/main.css') }}">
+        @if ( app()->isLocal() || app()->runningUnitTests() )
+            <link rel="shortcut icon" href="{{ asset('/images/favicon.ico') }}">
+            <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/spot.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/spot.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/user.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/fishing_type.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/fullcalendar/core/main.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/fullcalendar/daygrid/main.css') }}">
+        @else
+            <link rel="shortcut icon" href="{{ secure_asset('/images/favicon.ico') }}">
+            <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
+            <link rel="stylesheet" href="{{ secure_asset('css/spot.css') }}">
+            <link rel="stylesheet" href="{{ secure_asset('css/spot.css') }}">
+            <link rel="stylesheet" href="{{ secure_asset('css/user.css') }}">
+            <link rel="stylesheet" href="{{ secure_asset('css/fishing_type.css') }}">
+            <link rel="stylesheet" href="{{ secure_asset('css/fullcalendar/core/main.css') }}">
+            <link rel="stylesheet" href="{{ secure_asset('css/fullcalendar/daygrid/main.css') }}">
+        @endif
     </head>
 
     <body>

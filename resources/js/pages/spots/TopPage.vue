@@ -81,53 +81,55 @@
                 <div class="spinner"></div>
             </div>
 
-            <div class="top text-center">
-                <h1 class="top_title">Fishing App</h1>
-                <p>釣り場を投稿して、<span>共有し合おう！</span></p>
-                <button class="top_login_button">
-                    <RouterLink to="/login"><span><i class="fas fa-sign-in-alt mr-1"></i>ログイン</span></RouterLink>
-                </button>
-                <button class="top_signup_button">
-                    <RouterLink to="/signup"><span><i class="fas fa-user-plus mr-1"></i>新規登録</span></RouterLink>
-                </button>
-                <br>
-                <button @click="guestLogin" class="top_guest_login_button">
-                    <span><i class="fas fa-sign-in-alt mr-1"></i>ゲストログイン</span>
-                </button>
-            </div>
-
-            <div class="top_slider">
-                <div class="spot_intro_image">
-                    <img src="/images/fishing_boat_man.png" alt="釣り画像">
+            <div v-show="isLoaded">
+                <div class="top text-center">
+                    <h1 class="top_title">Fishing App</h1>
+                    <p>釣り場を投稿して、<span>共有し合おう！</span></p>
+                    <button class="top_login_button">
+                        <RouterLink to="/login"><span><i class="fas fa-sign-in-alt mr-1"></i>ログイン</span></RouterLink>
+                    </button>
+                    <button class="top_signup_button">
+                        <RouterLink to="/signup"><span><i class="fas fa-user-plus mr-1"></i>新規登録</span></RouterLink>
+                    </button>
+                    <br>
+                    <button @click="guestLogin" class="top_guest_login_button">
+                        <span><i class="fas fa-sign-in-alt mr-1"></i>ゲストログイン</span>
+                    </button>
                 </div>
 
-                <div class="spot_intro_expla">
-                    <p>Fishing Appとは？</p>
-                    <p>
-                        &emsp;Fishing Appとは、釣り場を投稿し、釣り場にコメントして釣果などを共有するアプリです。
-                        また、釣り場におすすめの釣り方を選択することもできます。
-                        さらに、カレンダーで釣りの予定、記録をすることができ、このアプリ１つで満足できます。
-                        <br>
-                        &emsp;最近は、釣りの技術が進み、釣りを始める人も多くなっています。
-                        そこで、釣り初心者の方でもこのアプリ1つで釣りを知り、楽しんでもらえるように、このアプリを作成しました。
-                    </p>
-                </div>
-            </div>
+                <div class="top_slider">
+                    <div class="spot_intro_image">
+                        <img src="/images/fishing_boat_man.png" alt="釣り画像">
+                    </div>
 
-            <div class="top_slider">
-                <div class="self_intro_expla">
-                    <p>自己紹介</p>
-                    <img src="/images/akira.jpeg" alt="自己紹介の画像">
-                    <p>
-                        &emsp;井口 晶。20歳。プログラミングに励む、田舎好きな大阪生まれ育ちの都会男子。
-                        関西大学法学部所属(現在2回生)。毎日、法学やプログラミングの知識を取り入れています。
-                        <br>
-                        &emsp;釣りと筋トレが趣味。釣りで自然と戯れつつ、筋トレで自分を追い込んでいます。
-                    </p>
+                    <div class="spot_intro_expla">
+                        <p>Fishing Appとは？</p>
+                        <p>
+                            &emsp;Fishing Appとは、釣り場を投稿し、釣り場にコメントして釣果などを共有するアプリです。
+                            また、釣り場におすすめの釣り方を選択することもできます。
+                            さらに、カレンダーで釣りの予定、記録をすることができ、このアプリ１つで満足できます。
+                            <br>
+                            &emsp;最近は、釣りの技術が進み、釣りを始める人も多くなっています。
+                            そこで、釣り初心者の方でもこのアプリ1つで釣りを知り、楽しんでもらえるように、このアプリを作成しました。
+                        </p>
+                    </div>
                 </div>
 
-                <div class="self_intro_image">
-                    <img src="/images/akira.jpeg" alt="自己紹介の画像">
+                <div class="top_slider">
+                    <div class="self_intro_expla">
+                        <p>自己紹介</p>
+                        <img src="/images/akira.jpeg" alt="自己紹介の画像">
+                        <p>
+                            &emsp;井口 晶。20歳。プログラミングに励む、田舎好きな大阪生まれ育ちの都会男子。
+                            関西大学法学部所属(現在2回生)。毎日、法学やプログラミングの知識を取り入れています。
+                            <br>
+                            &emsp;釣りと筋トレが趣味。釣りで自然と戯れつつ、筋トレで自分を追い込んでいます。
+                        </p>
+                    </div>
+
+                    <div class="self_intro_image">
+                        <img src="/images/akira.jpeg" alt="自己紹介の画像">
+                    </div>
                 </div>
             </div>
         </div>
@@ -168,9 +170,11 @@
                 return this.$store.getters['auth/username']
             }
         },
+        mounted() {
+            this.isLoaded = true
+        },
         created() {
             window.addEventListener("scroll", this.handleScroll);
-            this.isLoaded = true
         },
         watch: {
             $route: {
