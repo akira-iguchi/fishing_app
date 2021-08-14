@@ -15,6 +15,7 @@ Fishing App とは、釣りスポットを投稿し、釣りスポットにコ�
 
 <h3>工夫した点</h3>
 
+-   SSL 化
 -   Laravel、Vue.js を用いた完全 SPA
 -   AWS(ECS)、Docker、Github Actions の導入
 -   個人的な「経験」による釣りスポットや釣り方の的確な説明
