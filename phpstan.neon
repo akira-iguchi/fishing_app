@@ -1,6 +1,0 @@
-parameters:
-    level: 6
-    paths:
-        - .
-    autoload_files:
-        - _ide_helper.php
