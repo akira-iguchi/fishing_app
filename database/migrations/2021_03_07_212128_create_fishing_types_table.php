@@ -17,7 +17,7 @@ class CreateFishingTypesTable extends Migration
             $table->id();
             $table->string('fishing_type_name')->unique();
             $table->string('fishing_type_image')->nullable();
-            $table->string('content');
+            $table->longText('content');
             $table->timestamps();
         });
     }

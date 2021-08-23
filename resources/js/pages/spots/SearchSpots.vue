@@ -111,7 +111,7 @@
         methods: {
             async fetchSearchSpots () {
                 this.loading = true
-                const response = await axios.get(`/api/spots/search/?page=${ this.$route.query.page }`, {
+                const response = await axios.get(`/api/spots/search?page=${ this.$route.query.page }`, {
                     params: {
                         searchWord: this.$route.params.searchWord,
                         fishingTypes: this.$route.params.fishingTypes
