@@ -1,7 +1,7 @@
 {
-    "/js/app.js": "/js/app.js?id=cc8793ec5462c6a125f2",
-    "/css/app.css": "/css/app.css?id=14f0b64f50aae58c315b",
-    "/css/fishing_type.css": "/css/fishing_type.css?id=4e0dc1cf64aba1e025e3",
-    "/css/user.css": "/css/user.css?id=0d0262d8413e65ad184b",
-    "/css/spot.css": "/css/spot.css?id=afa3c588647c79363f7b"
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/css/fishing_type.css": "/css/fishing_type.css",
+    "/css/user.css": "/css/user.css",
+    "/css/spot.css": "/css/spot.css"
 }
