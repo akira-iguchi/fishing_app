@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ContactSendMail;
-use Illuminate\Http\Request;
 use App\Http\Requests\ContactRequest;
 
 class ContactController extends Controller
