@@ -18,7 +18,7 @@
                     <div class="w-100">
                         <h2 class="toppage_heading">人気の釣りスポット<i class="fas fa-crown"></i></h2>
 
-                        <div v-show="loading" class="mt-5">
+                        <div v-show="circleLoading" class="mt-5">
                             <Loader />
                         </div>
 
@@ -43,7 +43,7 @@
                 <div v-if="followUserSpots && followUserSpots.length > 0">
                     <h2 class="toppage_heading">フォローしたユーザーの投稿</h2>
 
-                    <div v-show="loading" class="mt-3">
+                    <div v-show="circleLoading" class="mt-3">
                         <Loader />
                     </div>
 
@@ -60,7 +60,7 @@
 
                 <h2 class="toppage_heading">最近の投稿</h2>
 
-                <div v-show="loading" class="mt-3">
+                <div v-show="circleLoading" class="mt-3">
                     <Loader />
                 </div>
 
@@ -159,7 +159,7 @@
                 rankingSpots: [],
                 tagNames: [],
                 isLoaded: false,
-                loading: true
+                circleLoading: true
             }
         },
         computed: {
@@ -172,9 +172,10 @@
         },
         created() {
             window.addEventListener("scroll", this.handleScroll);
-            this.isLoaded = true
+            this.circleLoading = true
+            this.isLoaded = false
             window.setTimeout(() => {
-                this.isLoaded = false
+                this.isLoaded = true
             }, 300);
         },
         watch: {
@@ -185,7 +186,7 @@
                 immediate: true
             },
             isLogin () {
-                this.loading = true
+                this.circleLoading = true
                 this.fetchSpots()
             }
         },
@@ -218,7 +219,7 @@
                     return false
                 }
 
-                this.loading = false
+                this.circleLoading = false
 
                 // ログインしている場合、データ読み込み
                 if (this.isLogin === true) {
