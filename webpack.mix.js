@@ -18,4 +18,19 @@ mix.browserSync('vuesplash.test')
     .sass('resources/sass/user.scss', 'public/css/user.css')
     .sass('resources/sass/fishing_type.scss', 'public/css/fishing_type.css')
     .sass('resources/sass/app.scss', 'public/css')
-    .version();
+    .version()
+    .browserSync({
+        files: [
+            'resources/**/*',
+            'app/**/*',
+            'config/**/*',
+            'routes/**/*',
+            'public/**/*'
+        ],
+        proxy: 'localhost:8080',
+        port: 8080,
+        ui: {
+            port: 8080
+        },
+        open: false
+    });
