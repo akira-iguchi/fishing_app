@@ -170,11 +170,12 @@
                 return this.$store.getters['auth/username']
             }
         },
-        mounted() {
-            this.isLoaded = true
-        },
         created() {
             window.addEventListener("scroll", this.handleScroll);
+            this.isLoaded = true
+            window.setTimeout(() => {
+                this.isLoaded = false
+            }, 300);
         },
         watch: {
             $route: {

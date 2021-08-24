@@ -20767,7 +20767,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _this2.loading = true;
                 _context2.next = 3;
-                return axios.get("/api/spots/search/?page=".concat(_this2.$route.query.page), {
+                return axios.get("/api/spots/search?page=".concat(_this2.$route.query.page), {
                   params: {
                     searchWord: _this2.$route.params.searchWord,
                     fishingTypes: _this2.$route.params.fishingTypes
@@ -21364,6 +21364,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -21396,9 +21398,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.$store.getters['auth/username'];
     }
   },
+  mounted: function mounted() {
+    this.isLoaded = true;
+  },
   created: function created() {
     window.addEventListener("scroll", this.handleScroll);
-    this.isLoaded = true;
   },
   watch: {
     $route: {
@@ -69351,54 +69355,71 @@ var render = function() {
             [_c("div", { staticClass: "spinner" })]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "top text-center" }, [
-            _c("h1", { staticClass: "top_title" }, [_vm._v("Fishing App")]),
-            _vm._v(" "),
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "top_login_button" },
-              [
-                _c("RouterLink", { attrs: { to: "/login" } }, [
-                  _c("span", [
-                    _c("i", { staticClass: "fas fa-sign-in-alt mr-1" }),
-                    _vm._v("ログイン")
-                  ])
-                ])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "top_signup_button" },
-              [
-                _c("RouterLink", { attrs: { to: "/signup" } }, [
-                  _c("span", [
-                    _c("i", { staticClass: "fas fa-user-plus mr-1" }),
-                    _vm._v("新規登録")
-                  ])
-                ])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "top_guest_login_button",
-                on: { click: _vm.guestLogin }
-              },
-              [_vm._m(2)]
-            )
-          ]),
-          _vm._v(" "),
-          _vm._m(3),
-          _vm._v(" "),
-          _vm._m(4)
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isLoaded,
+                  expression: "isLoaded"
+                }
+              ]
+            },
+            [
+              _c("div", { staticClass: "top text-center" }, [
+                _c("h1", { staticClass: "top_title" }, [
+                  _vm._v("Fishing Appaaaaaaaaa")
+                ]),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "top_login_button" },
+                  [
+                    _c("RouterLink", { attrs: { to: "/login" } }, [
+                      _c("span", [
+                        _c("i", { staticClass: "fas fa-sign-in-alt mr-1" }),
+                        _vm._v("ログイン")
+                      ])
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "top_signup_button" },
+                  [
+                    _c("RouterLink", { attrs: { to: "/signup" } }, [
+                      _c("span", [
+                        _c("i", { staticClass: "fas fa-user-plus mr-1" }),
+                        _vm._v("新規登録")
+                      ])
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "top_guest_login_button",
+                    on: { click: _vm.guestLogin }
+                  },
+                  [_vm._m(2)]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(3),
+              _vm._v(" "),
+              _vm._m(4)
+            ]
+          )
         ])
   ])
 }
@@ -69446,11 +69467,11 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("p", [
           _vm._v(
-            "\n                     Fishing Appとは、釣り場を投稿し、釣り場にコメントして釣果などを共有するアプリです。\n                    また、釣り場におすすめの釣り方を選択することもできます。\n                    さらに、カレンダーで釣りの予定、記録をすることができ、このアプリ１つで満足できます。\n                    "
+            "\n                         Fishing Appとは、釣り場を投稿し、釣り場にコメントして釣果などを共有するアプリです。\n                        また、釣り場におすすめの釣り方を選択することもできます。\n                        さらに、カレンダーで釣りの予定、記録をすることができ、このアプリ１つで満足できます。\n                        "
           ),
           _c("br"),
           _vm._v(
-            "\n                     最近は、釣りの技術が進み、釣りを始める人も多くなっています。\n                    そこで、釣り初心者の方でもこのアプリ1つで釣りを知り、楽しんでもらえるように、このアプリを作成しました。\n                "
+            "\n                         最近は、釣りの技術が進み、釣りを始める人も多くなっています。\n                        そこで、釣り初心者の方でもこのアプリ1つで釣りを知り、楽しんでもらえるように、このアプリを作成しました。\n                    "
           )
         ])
       ])
@@ -69470,11 +69491,11 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("p", [
           _vm._v(
-            "\n                     井口 晶。20歳。プログラミングに励む、田舎好きな大阪生まれ育ちの都会男子。\n                    関西大学法学部所属(現在2回生)。毎日、法学やプログラミングの知識を取り入れています。\n                    "
+            "\n                         井口 晶。20歳。プログラミングに励む、田舎好きな大阪生まれ育ちの都会男子。\n                        関西大学法学部所属(現在2回生)。毎日、法学やプログラミングの知識を取り入れています。\n                        "
           ),
           _c("br"),
           _vm._v(
-            "\n                     釣りと筋トレが趣味。釣りで自然と戯れつつ、筋トレで自分を追い込んでいます。\n                "
+            "\n                         釣りと筋トレが趣味。釣りで自然と戯れつつ、筋トレで自分を追い込んでいます。\n                    "
           )
         ])
       ]),

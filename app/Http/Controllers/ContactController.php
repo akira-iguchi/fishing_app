@@ -18,7 +18,7 @@ class ContactController extends Controller
         return $request->all();
     }
 
-    public function confirmPage(Request $request)
+    public function confirmPage()
     {
         return response()->json();
     }
