@@ -143,10 +143,10 @@
                 registerErrors: state => state.auth.registerErrorMessages
             }),
             inputType: function () {
-                return this.isChecked ? "text" : "password";
+                return this.isChecked ? "text" : "password"
             },
             iconType: function () {
-                return this.isChecked ? "fas fa-eye-slash fa-lg" : "fas fa-eye fa-lg";
+                return this.isChecked ? "fas fa-eye-slash fa-lg" : "fas fa-eye fa-lg"
             },
             wordCount(){
                 return this.registerForm.introduction.length
@@ -171,14 +171,14 @@
             clearError () {
                 this.$store.commit('auth/setRegisterErrorMessages', null)
             },
-            inputChange: function() {
+            inputChange () {
                 this.isChecked = !this.isChecked;
             },
             // 文字数
-            changeTrue: function() {
+            changeTrue () {
                 this.isActive = true
             },
-            changeFalse: function() {
+            changeFalse () {
                 this.isActive = false
             },
         },

@@ -21399,14 +21399,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   created: function created() {
+    var _this = this;
+
     window.addEventListener("scroll", this.handleScroll);
     this.circleLoading = true;
-    this.windowLoading;
+    this.isLoaded = false;
+    window.setTimeout(function () {
+      _this.isLoaded = true;
+    }, 300);
   },
   watch: {
     $route: {
       handler: function handler() {
-        var _this = this;
+        var _this2 = this;
 
         return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -21414,7 +21419,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               switch (_context.prev = _context.next) {
                 case 0:
                   _context.next = 2;
-                  return _this.fetchSpots();
+                  return _this2.fetchSpots();
 
                 case 2:
                 case "end":
@@ -21429,12 +21434,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     isLogin: function isLogin() {
       this.circleLoading = true;
       this.fetchSpots();
-      this.windowLoading;
     }
   },
   methods: {
     guestLogin: function guestLogin() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -21442,15 +21446,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return _this2.$store.dispatch('auth/guestLogin', {
+                return _this3.$store.dispatch('auth/guestLogin', {
                   email: 'guest@example.com',
                   password: 'guest123'
                 });
 
               case 2:
-                _this2.$router.push('/', function () {});
+                _this3.$router.push('/', function () {});
 
-                _this2.$store.commit('message/setContent', {
+                _this3.$store.commit('message/setContent', {
                   content: 'ゲストユーザーでログインしました',
                   timeout: 5000
                 });
@@ -21464,7 +21468,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     fetchSpots: function fetchSpots() {
-      var _this3 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var response;
@@ -21472,11 +21476,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this3.fishingTypeNames = [];
-                _this3.tagNames = [];
-                _this3.recentSpots = [];
-                _this3.followUserSpots = [];
-                _this3.rankingSpots = [];
+                _this4.fishingTypeNames = [];
+                _this4.tagNames = [];
+                _this4.recentSpots = [];
+                _this4.followUserSpots = [];
+                _this4.rankingSpots = [];
                 _context3.next = 7;
                 return axios.get('/api');
 
@@ -21488,19 +21492,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                _this3.$store.commit('error/setCode', response.status);
+                _this4.$store.commit('error/setCode', response.status);
 
                 return _context3.abrupt("return", false);
 
               case 11:
-                _this3.circleLoading = false; // ログインしている場合、データ読み込み
+                _this4.circleLoading = false; // ログインしている場合、データ読み込み
 
-                if (_this3.isLogin === true) {
-                  _this3.fishingTypeNames = response.data[0][0];
-                  _this3.tagNames = response.data[0][1];
-                  _this3.recentSpots = response.data[1];
-                  _this3.followUserSpots = response.data[2];
-                  _this3.rankingSpots = response.data[3];
+                if (_this4.isLogin === true) {
+                  _this4.fishingTypeNames = response.data[0][0];
+                  _this4.tagNames = response.data[0][1];
+                  _this4.recentSpots = response.data[1];
+                  _this4.followUserSpots = response.data[2];
+                  _this4.rankingSpots = response.data[3];
                 }
 
               case 13:
@@ -21510,14 +21514,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee3);
       }))();
-    },
-    windowLoading: function windowLoading() {
-      var _this4 = this;
-
-      this.isLoaded = false;
-      window.setTimeout(function () {
-        _this4.isLoaded = true;
-      }, 300);
     },
     handleScroll: function handleScroll() {
       // 要素の6割ほどの高さが出たら表示
