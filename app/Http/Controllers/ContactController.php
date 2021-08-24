@@ -28,7 +28,7 @@ class ContactController extends Controller
         $inputs = $request->all();
 
         //入力されたメールアドレスにメールを送信
-        \Mail::to(config('mail.mailers.smtp.username'))->send(new ContactSendMail($inputs));
+        Mail::to(config('mail.mailers.smtp.username'))->send(new ContactSendMail($inputs));
 
         //再送信を防ぐためにトークンを再発行
         $request->session()->regenerateToken();
