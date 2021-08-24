@@ -84,10 +84,10 @@
                 loginErrors: state => state.auth.loginErrorMessages
             }),
             inputType: function () {
-                return this.isChecked ? "text" : "password";
+                return this.isChecked ? "text" : "password"
             },
             iconType: function () {
-                return this.isChecked ? "fas fa-eye-slash fa-lg" : "fas fa-eye fa-lg";
+                return this.isChecked ? "fas fa-eye-slash fa-lg" : "fas fa-eye fa-lg"
             }
         },
 
@@ -109,8 +109,8 @@
             clearError () {
                 this.$store.commit('auth/setLoginErrorMessages', null)
             },
-            inputChange: function() {
-                this.isChecked = !this.isChecked;
+            inputChange () {
+                this.isChecked = !this.isChecked
             }
         },
         created () {

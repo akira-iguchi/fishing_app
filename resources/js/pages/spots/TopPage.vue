@@ -173,10 +173,7 @@
         created() {
             window.addEventListener("scroll", this.handleScroll);
             this.circleLoading = true
-            this.isLoaded = false
-            window.setTimeout(() => {
-                this.isLoaded = true
-            }, 300);
+            this.windowLoading
         },
         watch: {
             $route: {
@@ -188,6 +185,7 @@
             isLogin () {
                 this.circleLoading = true
                 this.fetchSpots()
+                this.windowLoading
             }
         },
         methods: {
@@ -230,7 +228,13 @@
                     this.rankingSpots = response.data[3]
                 }
             },
-            handleScroll() {
+            windowLoading () {
+                this.isLoaded = false
+                window.setTimeout(() => {
+                    this.isLoaded = true
+                }, 300);
+            },
+            handleScroll () {
                 // 要素の6割ほどの高さが出たら表示
                 const targetElement = this.$el.querySelectorAll('.top_slider') || null
                 if (targetElement !== null) {
