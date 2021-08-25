@@ -18468,18 +18468,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     clearError: function clearError() {
       this.$store.commit('auth/setLoginErrorMessages', null);
     },
-    // 目のアイコンがなぜかvue(compute)で動かなくなったため素のJSで記述
-    showEye: function showEye() {
-      document.getElementById('eye').classList.remove('d-none');
-      document.getElementById('eye_slash').classList.add('d-none');
-    },
-    showSlashEye: function showSlashEye() {
-      document.getElementById('eye').classList.add('d-none');
-      document.getElementById('eye_slash').classList.remove('d-none');
-    },
     inputChange: function inputChange() {
-      this.isChecked = !this.isChecked;
-      this.isChecked ? this.showSlashEye() : this.showEye();
+      var eye = document.getElementById('eye');
+      var slashEye = document.getElementById('eye_slash');
+      this.isChecked = !this.isChecked; // 目のアイコンがなぜかvue(compute)で動かなくなったため素のJSで記述
+
+      if (this.isChecked) {
+        eye.classList.add('d-none');
+        slashEye.classList.remove('d-none');
+      } else {
+        eye.classList.remove('d-none');
+        slashEye.classList.add('d-none');
+      }
     }
   },
   created: function created() {
@@ -18705,18 +18705,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     clearError: function clearError() {
       this.$store.commit('auth/setRegisterErrorMessages', null);
     },
-    // 目のアイコンがなぜかvue(compute)で動かなくなったため素のJSで記述
-    showEye: function showEye() {
-      document.getElementById('eye').classList.remove('d-none');
-      document.getElementById('eye_slash').classList.add('d-none');
-    },
-    showSlashEye: function showSlashEye() {
-      document.getElementById('eye').classList.add('d-none');
-      document.getElementById('eye_slash').classList.remove('d-none');
-    },
     inputChange: function inputChange() {
-      this.isChecked = !this.isChecked;
-      this.isChecked ? this.showSlashEye() : this.showEye();
+      var eye = document.getElementById('eye');
+      var slashEye = document.getElementById('eye_slash');
+      this.isChecked = !this.isChecked; // 目のアイコンがなぜかvue(compute)で動かなくなったため素のJSで記述
+
+      if (this.isChecked) {
+        eye.classList.add('d-none');
+        slashEye.classList.remove('d-none');
+      } else {
+        eye.classList.remove('d-none');
+        slashEye.classList.add('d-none');
+      }
     },
     // 文字数
     changeTrue: function changeTrue() {

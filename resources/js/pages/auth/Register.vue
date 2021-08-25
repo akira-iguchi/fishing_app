@@ -171,18 +171,20 @@
             clearError () {
                 this.$store.commit('auth/setRegisterErrorMessages', null)
             },
-            // 目のアイコンがなぜかvue(compute)で動かなくなったため素のJSで記述
-            showEye () {
-                document.getElementById('eye').classList.remove('d-none')
-                document.getElementById('eye_slash').classList.add('d-none')
-            },
-            showSlashEye () {
-                document.getElementById('eye').classList.add('d-none')
-                document.getElementById('eye_slash').classList.remove('d-none')
-            },
             inputChange () {
+                const eye = document.getElementById('eye')
+                const slashEye = document.getElementById('eye_slash')
+
                 this.isChecked = !this.isChecked
-                this.isChecked ? this.showSlashEye() : this.showEye()
+
+                // 目のアイコンがなぜかvue(compute)で動かなくなったため素のJSで記述
+                if (this.isChecked) {
+                    eye.classList.add('d-none')
+                    slashEye.classList.remove('d-none')
+                } else {
+                    eye.classList.remove('d-none')
+                    slashEye.classList.add('d-none')
+                }
             },
             // 文字数
             changeTrue () {

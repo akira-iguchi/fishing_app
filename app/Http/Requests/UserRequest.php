@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
         return [
             'user_name' => 'required|string|max:10',
             'email' => 'required|string|email|max:255|unique:users,email,' . Auth::user()->email . ',email',
-            'user_image' => 'nullable|image',
+            'user_image' => 'nullable',
             'introduction' => 'nullable|string|max:100',
         ];
     }
