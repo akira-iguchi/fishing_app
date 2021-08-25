@@ -18407,6 +18407,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -18428,9 +18431,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), {}, {
     inputType: function inputType() {
       return this.isChecked ? "text" : "password";
-    },
-    iconType: function iconType() {
-      return this.isChecked ? "fas fa-eye-slash fa-lg" : "fas fa-eye fa-lg";
     }
   }),
   methods: {
@@ -18468,8 +18468,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     clearError: function clearError() {
       this.$store.commit('auth/setLoginErrorMessages', null);
     },
+    // 目のアイコンがなぜかvue(compute)で動かなくなったため素のJSで記述
+    showEye: function showEye() {
+      document.getElementById('eye').classList.remove('d-none');
+      document.getElementById('eye_slash').classList.add('d-none');
+    },
+    showSlashEye: function showSlashEye() {
+      document.getElementById('eye').classList.add('d-none');
+      document.getElementById('eye_slash').classList.remove('d-none');
+    },
     inputChange: function inputChange() {
       this.isChecked = !this.isChecked;
+      this.isChecked ? this.showSlashEye() : this.showEye();
     }
   },
   created: function created() {
@@ -18627,6 +18637,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -18651,9 +18664,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   })), {}, {
     inputType: function inputType() {
       return this.isChecked ? "text" : "password";
-    },
-    iconType: function iconType() {
-      return this.isChecked ? "fas fa-eye-slash fa-lg" : "fas fa-eye fa-lg";
     },
     wordCount: function wordCount() {
       return this.registerForm.introduction.length;
@@ -18695,8 +18705,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     clearError: function clearError() {
       this.$store.commit('auth/setRegisterErrorMessages', null);
     },
+    // 目のアイコンがなぜかvue(compute)で動かなくなったため素のJSで記述
+    showEye: function showEye() {
+      document.getElementById('eye').classList.remove('d-none');
+      document.getElementById('eye_slash').classList.add('d-none');
+    },
+    showSlashEye: function showSlashEye() {
+      document.getElementById('eye').classList.add('d-none');
+      document.getElementById('eye_slash').classList.remove('d-none');
+    },
     inputChange: function inputChange() {
       this.isChecked = !this.isChecked;
+      this.isChecked ? this.showSlashEye() : this.showEye();
     },
     // 文字数
     changeTrue: function changeTrue() {
@@ -21399,19 +21419,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   created: function created() {
-    var _this = this;
-
     window.addEventListener("scroll", this.handleScroll);
+    this.windowLoading();
     this.circleLoading = true;
-    this.isLoaded = false;
-    window.setTimeout(function () {
-      _this.isLoaded = true;
-    }, 300);
   },
   watch: {
     $route: {
       handler: function handler() {
-        var _this2 = this;
+        var _this = this;
 
         return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -21419,7 +21434,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               switch (_context.prev = _context.next) {
                 case 0:
                   _context.next = 2;
-                  return _this2.fetchSpots();
+                  return _this.fetchSpots();
 
                 case 2:
                 case "end":
@@ -21433,12 +21448,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     isLogin: function isLogin() {
       this.circleLoading = true;
+      this.windowLoading();
       this.fetchSpots();
     }
   },
   methods: {
     guestLogin: function guestLogin() {
-      var _this3 = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -21446,15 +21462,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return _this3.$store.dispatch('auth/guestLogin', {
+                return _this2.$store.dispatch('auth/guestLogin', {
                   email: 'guest@example.com',
                   password: 'guest123'
                 });
 
               case 2:
-                _this3.$router.push('/', function () {});
+                _this2.$router.push('/', function () {});
 
-                _this3.$store.commit('message/setContent', {
+                _this2.$store.commit('message/setContent', {
                   content: 'ゲストユーザーでログインしました',
                   timeout: 5000
                 });
@@ -21468,7 +21484,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     fetchSpots: function fetchSpots() {
-      var _this4 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
         var response;
@@ -21476,11 +21492,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this4.fishingTypeNames = [];
-                _this4.tagNames = [];
-                _this4.recentSpots = [];
-                _this4.followUserSpots = [];
-                _this4.rankingSpots = [];
+                _this3.fishingTypeNames = [];
+                _this3.tagNames = [];
+                _this3.recentSpots = [];
+                _this3.followUserSpots = [];
+                _this3.rankingSpots = [];
                 _context3.next = 7;
                 return axios.get('/api');
 
@@ -21492,19 +21508,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                _this4.$store.commit('error/setCode', response.status);
+                _this3.$store.commit('error/setCode', response.status);
 
                 return _context3.abrupt("return", false);
 
               case 11:
-                _this4.circleLoading = false; // ログインしている場合、データ読み込み
+                _this3.circleLoading = false; // ログインしている場合、データ読み込み
 
-                if (_this4.isLogin === true) {
-                  _this4.fishingTypeNames = response.data[0][0];
-                  _this4.tagNames = response.data[0][1];
-                  _this4.recentSpots = response.data[1];
-                  _this4.followUserSpots = response.data[2];
-                  _this4.rankingSpots = response.data[3];
+                if (_this3.isLogin === true) {
+                  _this3.fishingTypeNames = response.data[0][0];
+                  _this3.tagNames = response.data[0][1];
+                  _this3.recentSpots = response.data[1];
+                  _this3.followUserSpots = response.data[2];
+                  _this3.rankingSpots = response.data[3];
                 }
 
               case 13:
@@ -21514,6 +21530,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee3);
       }))();
+    },
+    windowLoading: function windowLoading() {
+      var _this4 = this;
+
+      this.isLoaded = false;
+      window.setTimeout(function () {
+        _this4.isLoaded = true;
+      }, 700);
     },
     handleScroll: function handleScroll() {
       // 要素の6割ほどの高さが出たら表示
@@ -21933,13 +21957,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                console.log(_this4.userImage);
                 _this4.loading = true;
                 formData = new FormData();
                 formData.append('user_name', _this4.userName);
                 formData.append('email', _this4.email);
                 formData.append('user_image', _this4.userImage);
                 formData.append('introduction', _this4.introduction);
-                _context3.next = 8;
+                _context3.next = 9;
                 return axios.post("/api/users/".concat(_this4.id), formData, {
                   // PUTに変換
                   headers: {
@@ -21947,26 +21972,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 });
 
-              case 8:
+              case 9:
                 response = _context3.sent;
                 _this4.loading = false;
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY)) {
-                  _context3.next = 13;
+                  _context3.next = 14;
                   break;
                 }
 
                 _this4.errors = response.data.errors;
                 return _context3.abrupt("return", false);
 
-              case 13:
+              case 14:
                 _this4.imageErrorMessage = "";
                 _this4.preview = null;
 
                 _this4.$emit('input', false);
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.CREATED)) {
-                  _context3.next = 19;
+                  _context3.next = 20;
                   break;
                 }
 
@@ -21974,7 +21999,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context3.abrupt("return", false);
 
-              case 19:
+              case 20:
                 _this4.$store.commit('message/setContent', {
                   content: 'ユーザー情報を更新しました',
                   timeout: 6000
@@ -21982,7 +22007,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this4.$router.push("/users/".concat(response.data.id));
 
-              case 21:
+              case 22:
               case "end":
                 return _context3.stop();
             }
@@ -67121,9 +67146,7 @@ var render = function() {
                     on: { click: _vm.inputChange }
                   }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "password_label" }, [
-                    _c("i", { class: _vm.iconType })
-                  ])
+                  _vm._m(1)
                 ]),
                 _vm._v(" "),
                 _vm.loginErrors
@@ -67171,6 +67194,19 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "login_signup_header" }, [
       _c("h1", [_vm._v("ログイン")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "password_label" }, [
+      _c("i", { staticClass: "fas fa-eye fa-lg", attrs: { id: "eye" } }),
+      _vm._v(" "),
+      _c("i", {
+        staticClass: "fas fa-eye-slash fa-lg d-none",
+        attrs: { id: "eye_slash" }
+      })
     ])
   }
 ]
@@ -67517,9 +67553,7 @@ var render = function() {
                     on: { click: _vm.inputChange }
                   }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "password_label" }, [
-                    _c("i", { class: _vm.iconType })
-                  ])
+                  _vm._m(1)
                 ]),
                 _vm._v(" "),
                 _vm.registerErrors
@@ -67702,6 +67736,19 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "login_signup_header" }, [
       _c("h1", [_vm._v("新規登録")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "password_label" }, [
+      _c("i", { staticClass: "fas fa-eye fa-lg", attrs: { id: "eye" } }),
+      _vm._v(" "),
+      _c("i", {
+        staticClass: "fas fa-eye-slash fa-lg d-none",
+        attrs: { id: "eye_slash" }
+      })
     ])
   }
 ]

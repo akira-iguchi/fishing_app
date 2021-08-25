@@ -30,11 +30,11 @@ class SpotController extends Controller
     {
         $allFishingTypeNames = FishingType::all();
         $tags = Tag::take(15)->with([
-                'spots',
-                'spots.spotImages',
-                'spots.spotComments',
-                'spots.spotFavorites',
-            ])->get();
+            'spots',
+            'spots.spotImages',
+            'spots.spotComments',
+            'spots.spotFavorites',
+        ])->get();
         $searchWord = $request->searchWord;
         $fishingTypesId = $request->fishingTypes;
 
@@ -48,26 +48,26 @@ class SpotController extends Controller
 
             // 最近の投稿
             $recentSpots = Spot::take(8)->with([
-                    'user',
-                    'spotImages',
-                    'spotFavorites',
-                    'spotComments'
-                ])
+                'user',
+                'spotImages',
+                'spotFavorites',
+                'spotComments'
+            ])
                 ->latest()->get();
 
             // フォローしたユーザーの投稿
             if (Auth::user()->count_followings > 0) {
                 $followUserSpots = Spot::query()
-                ->whereIn('user_id', Auth::user()->followings()->pluck('followee_id'))
-                ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])
-                ->take(8)->latest()->get();
+                    ->whereIn('user_id', Auth::user()->followings()->pluck('followee_id'))
+                    ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])
+                    ->take(8)->latest()->get();
             } else {
                 $followUserSpots = null;
             }
 
             // いいねランキング
             $rankingSpots = Spot::withCount('spotFavorites')->orderBy('spot_favorites_count', 'desc')
-            ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(6)->get();
+                ->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])->take(6)->get();
 
             return [$searchData, $recentSpots, $followUserSpots, $rankingSpots];
         } else {
@@ -82,7 +82,7 @@ class SpotController extends Controller
         list($query, $searchFishingTypeName) = $request->filters($searchData[2], $searchData[3]);
 
         $spots = $query->with(['user', 'spotImages', 'spotFavorites', 'spotComments'])
-        ->latest()->paginate();
+            ->latest()->paginate();
 
         return [$searchData, $spots, $searchFishingTypeName];
     }
@@ -104,7 +104,7 @@ class SpotController extends Controller
 
         // その他の釣りスポット
         $otherSpots = Spot::where('id', '!=', $spot->id)->get()->shuffle()->take(4)
-                    ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
+            ->load(['user', 'spotImages', 'spotFavorites', 'spotComments']);
 
         return [$spot, $otherSpots, $this->googleMapApiKey];
     }

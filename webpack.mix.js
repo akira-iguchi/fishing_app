@@ -11,7 +11,7 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.browserSync('vuesplash.test')
+mix .browserSync('vuesplash.test')
     .js('resources/js/app.js', 'public/js')
     .vue()
     .sass('resources/sass/spot.scss', 'public/css/spot.css')
@@ -22,15 +22,8 @@ mix.browserSync('vuesplash.test')
     .browserSync({
         files: [
             'resources/**/*',
-            'app/**/*',
-            'config/**/*',
-            'routes/**/*',
             'public/**/*'
         ],
         proxy: 'localhost:8080',
-        port: 8080,
-        ui: {
-            port: 8080
-        },
         open: false
     });

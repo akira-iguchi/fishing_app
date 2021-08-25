@@ -40,7 +40,10 @@
                                     v-model="loginForm.password"
                                 >
                                 <input class="password_toggle" type="checkbox" @click="inputChange">
-                                <div class="password_label"><i :class="iconType"></i></div>
+                                <div class="password_label">
+                                    <i id="eye" class="fas fa-eye fa-lg"></i>
+                                    <i id="eye_slash" class="fas fa-eye-slash fa-lg d-none"></i>
+                                </div>
                             </div>
                             <div v-if="loginErrors">
                                 <ul v-if="loginErrors.password">
@@ -83,12 +86,9 @@
                 apiStatus: state => state.auth.apiStatus,
                 loginErrors: state => state.auth.loginErrorMessages
             }),
-            inputType: function () {
+            inputType () {
                 return this.isChecked ? "text" : "password"
             },
-            iconType: function () {
-                return this.isChecked ? "fas fa-eye-slash fa-lg" : "fas fa-eye fa-lg"
-            }
         },
 
         methods: {
@@ -104,13 +104,22 @@
                         timeout: 5000
                     })
                 }
-
             },
             clearError () {
                 this.$store.commit('auth/setLoginErrorMessages', null)
             },
+            // 目のアイコンがなぜかvue(compute)で動かなくなったため素のJSで記述
+            showEye () {
+                document.getElementById('eye').classList.remove('d-none')
+                document.getElementById('eye_slash').classList.add('d-none')
+            },
+            showSlashEye () {
+                document.getElementById('eye').classList.add('d-none')
+                document.getElementById('eye_slash').classList.remove('d-none')
+            },
             inputChange () {
                 this.isChecked = !this.isChecked
+                this.isChecked ? this.showSlashEye() : this.showEye()
             }
         },
         created () {
