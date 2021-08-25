@@ -179,7 +179,6 @@
                 this.imageErrorMessage = ""
             },
             async editUserProfile () {
-                console.log(this.userImage)
                 this.loading = true
                 const formData = new FormData()
                 formData.append('user_name', this.userName)

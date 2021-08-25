@@ -29,9 +29,9 @@ class SpotRequest extends FormRequest
             'address' => 'max:50',
             'latitude' => 'required',
             'longitude' => 'required',
-            'spot_image_first' => 'nullable|image|max:2048',
-            'spot_image_second' => 'nullable|image|max:2048',
-            'spot_image_third' => 'nullable|image|max:2048',
+            'spot_image_first' => 'nullable|image',
+            'spot_image_second' => 'nullable|image',
+            'spot_image_third' => 'nullable|image',
             'fishing_types' => 'nullable',
             'tags' => 'nullable|json|distinct|regex:/^(?!.*\s).+$/u|regex:/^(?!.*\/).*$/u',
         ];

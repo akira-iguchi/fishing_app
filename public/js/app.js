@@ -21957,14 +21957,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                console.log(_this4.userImage);
                 _this4.loading = true;
                 formData = new FormData();
                 formData.append('user_name', _this4.userName);
                 formData.append('email', _this4.email);
                 formData.append('user_image', _this4.userImage);
                 formData.append('introduction', _this4.introduction);
-                _context3.next = 9;
+                _context3.next = 8;
                 return axios.post("/api/users/".concat(_this4.id), formData, {
                   // PUTに変換
                   headers: {
@@ -21972,26 +21971,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 });
 
-              case 9:
+              case 8:
                 response = _context3.sent;
                 _this4.loading = false;
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY)) {
-                  _context3.next = 14;
+                  _context3.next = 13;
                   break;
                 }
 
                 _this4.errors = response.data.errors;
                 return _context3.abrupt("return", false);
 
-              case 14:
+              case 13:
                 _this4.imageErrorMessage = "";
                 _this4.preview = null;
 
                 _this4.$emit('input', false);
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.CREATED)) {
-                  _context3.next = 20;
+                  _context3.next = 19;
                   break;
                 }
 
@@ -21999,7 +21998,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context3.abrupt("return", false);
 
-              case 20:
+              case 19:
                 _this4.$store.commit('message/setContent', {
                   content: 'ユーザー情報を更新しました',
                   timeout: 6000
@@ -22007,7 +22006,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this4.$router.push("/users/".concat(response.data.id));
 
-              case 22:
+              case 21:
               case "end":
                 return _context3.stop();
             }
