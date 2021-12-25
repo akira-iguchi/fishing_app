@@ -38,7 +38,6 @@ Fishing App とは、釣りスポットを投稿し、釣りスポットにコ�
 -   Github Actions
 -   Docker/docker-compose
 -   Nginx
--   PHPUnit
 -   VScode
 
 <h2>機能一覧</h2>
