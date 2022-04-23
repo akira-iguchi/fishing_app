@@ -33,6 +33,7 @@ class SpotRequest extends FormRequest
             'spot_image_second' => 'nullable|image',
             'spot_image_third' => 'nullable|image',
             'fishing_types' => 'nullable',
+            // /^(?!.*\s).+$/uは、PHPにおいて半角スペースが無いこと、/^(?!.*\/).*$/uは/が無いことをチェックする正規表現
             'tags' => 'nullable|json|distinct|regex:/^(?!.*\s).+$/u|regex:/^(?!.*\/).*$/u',
         ];
     }
