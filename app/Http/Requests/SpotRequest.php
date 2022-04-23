@@ -56,6 +56,7 @@ class SpotRequest extends FormRequest
 
     public function passedValidation()
     {
+        // collect関数を使ってコレクションに変換し、sliceメソッドやmapメソッドを使う
         $this->tags = collect(json_decode($this->tags))
             ->slice(0, 5)
             ->map(function ($requestTag) {
