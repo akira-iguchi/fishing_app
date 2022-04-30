@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'user_name' => 'ゲストユーザー',
-            'email' => 'guest@example.com',
+            'email' => env('GUEST_USER_EMAIL'),
             'password' => Hash::make('guest123'),
             'introduction' => 'ポートフォリオをご覧いただきありがとうございます！
                                 是非、お楽しみください！',
