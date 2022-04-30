@@ -15388,6 +15388,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -22289,10 +22290,13 @@ createApp();
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ "./resources/js/util.js");
+// クッキーからトークンを取り出して、HTTP ヘッダーにそのトークンを含めてリクエストを送信しても CSRF チェックがかかる
 
-window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); // Ajaxリクエストであることを示す X-Requested-With ヘッダーを付与
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.interceptors.request.use(function (config) {
+  // クッキーからトークンを取り出してヘッダーに添付する
   config.headers['X-XSRF-TOKEN'] = (0,_util__WEBPACK_IMPORTED_MODULE_0__.getCookieValue)('XSRF-TOKEN');
   return config;
 });
@@ -22517,6 +22521,8 @@ var routes = [{
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_20__.default({
+  // URL 文字列中のハッシュの変化では画面遷移が発生しないブラウザの仕様
+  // → デフォルトだとURLに「＃」がついてしまう（hash モード）ため、historyモードを使用して本来の URL の形を再現
   mode: 'history',
   scrollBehavior: function scrollBehavior() {
     return {
@@ -22550,13 +22556,16 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+// ストアを参照することで、どのコンポーネントでも参照できる
+ // ステートはデータの入れ物そのもの。ログイン中のユーザーデータなどが該当
 
 var state = {
   user: null,
   apiStatus: null,
   loginErrorMessages: null,
   registerErrorMessages: null
-};
+}; // ゲッターはステートの内容から算出される値
+
 var getters = {
   check: function check(state) {
     return !!state.user;
@@ -22564,7 +22573,8 @@ var getters = {
   AuthUser: function AuthUser(state) {
     return state.user ? state.user : '';
   }
-};
+}; // ミューテーションはステートを更新するためのメソッド、同期処理
+
 var mutations = {
   setUser: function setUser(state, user) {
     state.user = user;
@@ -22578,7 +22588,9 @@ var mutations = {
   setRegisterErrorMessages: function setRegisterErrorMessages(state, messages) {
     state.registerErrorMessages = messages;
   }
-};
+}; // アクションはステートを更新するためのメソッド、非同期処理
+// API との通信などの非同期処理を行った後にミューテーションを呼び出してステートを更新する
+
 var actions = {
   register: function register(context, data) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -22587,6 +22599,8 @@ var actions = {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              // アクションの第一引数にはコンテキストオブジェクトが渡され、
+              // コンテキストオブジェクトにはミューテーションを呼び出すための commit メソッドなどが入る。
               context.commit('setApiStatus', null);
               _context.next = 3;
               return axios.post('/api/signup', data);
@@ -22918,6 +22932,7 @@ function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "und
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+// util == 役に立つもの
 var OK = 200;
 var CREATED = 201;
 var NOT_FOUND = 404;
@@ -22929,7 +22944,8 @@ function getCookieValue(searchKey) {
     return '';
   }
 
-  var val = '';
+  var val = ''; // document.cookieの形式 → name=12345;token=67890;key=abcde
+
   document.cookie.split(';').forEach(function (cookie) {
     var _cookie$split = cookie.split('='),
         _cookie$split2 = _slicedToArray(_cookie$split, 2),

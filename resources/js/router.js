@@ -199,6 +199,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
+    // URL 文字列中のハッシュの変化では画面遷移が発生しないブラウザの仕様
+    // → デフォルトだとURLに「＃」がついてしまう（hash モード）ため、historyモードを使用して本来の URL の形を再現
     mode: 'history',
     scrollBehavior () {
         return { x: 0, y: 0 }

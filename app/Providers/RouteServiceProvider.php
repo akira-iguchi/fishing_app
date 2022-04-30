@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
+// アプリケーションの起動時にルート定義を読み込むためのクラス
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -58,6 +59,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting()
     {
         RateLimiter::for('api', function (Request $request) {
+            // 1分間に60アクセスまでの制限
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         });
     }

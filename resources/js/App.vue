@@ -3,6 +3,7 @@
         <Navbar />
         <main>
             <Message />
+            <!-- URL によって HTML 部品が切り替わる（紙芝居のような感じ） -->
             <RouterView />
         </main>
         <Footer />
