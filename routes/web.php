@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{any}', function() {
+// すべての URL で index テンプレートを返す
+Route::get('/{any}', function () {
     return view('/app');
 })->where('any', '.*');

@@ -1,5 +1,7 @@
+// ストアを参照することで、どのコンポーネントでも参照できる
 import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../util'
 
+// ステートはデータの入れ物そのもの。ログイン中のユーザーデータなどが該当
 const state = {
     user: null,
     apiStatus: null,
@@ -7,11 +9,13 @@ const state = {
     registerErrorMessages: null,
 }
 
+// ゲッターはステートの内容から算出される値
 const getters = {
     check: state => !! state.user,
     AuthUser: state => state.user ? state.user : ''
 }
 
+// ミューテーションはステートを更新するためのメソッド、同期処理
 const mutations = {
     setUser (state, user) {
         state.user = user
@@ -27,8 +31,12 @@ const mutations = {
     },
 }
 
+// アクションはステートを更新するためのメソッド、非同期処理
+// API との通信などの非同期処理を行った後にミューテーションを呼び出してステートを更新する
 const actions = {
     async register (context, data) {
+        // アクションの第一引数にはコンテキストオブジェクトが渡され、
+        // コンテキストオブジェクトにはミューテーションを呼び出すための commit メソッドなどが入る。
         context.commit('setApiStatus', null)
         const response = await axios.post('/api/signup', data)
 

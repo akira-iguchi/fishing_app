@@ -1,3 +1,5 @@
+// util == 役に立つもの
+
 export const OK = 200
 export const CREATED = 201
 export const NOT_FOUND = 404
@@ -12,6 +14,7 @@ export function getCookieValue (searchKey) {
 
     let val = ''
 
+    // document.cookieの形式 → name=12345;token=67890;key=abcde
     document.cookie.split(';').forEach(cookie => {
         const [key, value] = cookie.split('=')
         if (key === searchKey) {

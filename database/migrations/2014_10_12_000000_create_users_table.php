@@ -17,10 +17,10 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('user_name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('user_image')->default('https://osakafish.s3-us-west-1.amazonaws.com/user/defaultUser.jpg');
             $table->longText('introduction')->nullable();
+            // ログイン保持
             $table->rememberToken();
             $table->timestamps();
         });

@@ -24,6 +24,6 @@ mix .browserSync('vuesplash.test')
             'resources/**/*',
             'public/**/*'
         ],
-        proxy: 'localhost:8080',
+        proxy: '0.0.0.0',
         open: false
     });
