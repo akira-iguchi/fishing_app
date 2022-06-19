@@ -1,7 +1,8 @@
 <h2>概要</h2>
 
 Fishing App <br>
-URL ： https://www.fishing-app.work/
+URL ： https://fishing-spot-main.herokuapp.com/
+<!-- URL ： https://www.fishing-app.work/ -->
 
 Fishing App とは、釣りスポットを投稿し、釣りスポットにコメントして釣果などを共有するアプリです。また、釣りスポットにおすすめの釣り方を選択することもできます。さらに、カレンダーで釣りの予定、記録をすることができるので、このアプリ１つで満足できます。
 
