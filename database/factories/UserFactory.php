@@ -23,9 +23,8 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'user_name' =>'ゲスト' ,
+            'user_name' => 'ゲスト',
             'email' => 'guest@example.com',
-            'email_verified_at' => now(),
             'user_image' => 'defaultUser.jpg',
             'password' => 'password',
             'remember_token' => Str::random(10),

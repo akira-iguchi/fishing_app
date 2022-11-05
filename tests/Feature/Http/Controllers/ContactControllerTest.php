@@ -4,8 +4,6 @@ namespace Tests\Feature\Http\Controllers;
 
 use Tests\TestCase;
 use App\Mail\ContactSendMail;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

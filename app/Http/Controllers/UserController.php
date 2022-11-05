@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UserRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -14,15 +12,15 @@ class UserController extends Controller
     public function show(String $id)
     {
         $user = User::findOrFail($id)->load([
-                'spots.spotImages',
-                'spots.spotComments',
-                'spots.spotFavorites',
-                'favoriteSpots.spotImages',
-                'favoriteSpots.spotComments',
-                'favoriteSpots.spotFavorites',
-                'followings',
-                'followers'
-            ]);
+            'spots.spotImages',
+            'spots.spotComments',
+            'spots.spotFavorites',
+            'favoriteSpots.spotImages',
+            'favoriteSpots.spotComments',
+            'favoriteSpots.spotFavorites',
+            'followings',
+            'followers'
+        ]);
 
         return $user;
     }
@@ -35,6 +33,11 @@ class UserController extends Controller
     public function update(UserRequest $request, User $user)
     {
         return DB::transaction(function () use ($user, $request) {
+            // ゲストユーザーは編集できない
+            if ($user->id === 1) {
+                return response()->json();
+            }
+
             if ($request->hasFile('user_image')) {
                 Storage::delete('public' . $user->user_image);
                 $upload_info = Storage::disk('s3')->putFile('/user', $request->file('user_image'), 'public');

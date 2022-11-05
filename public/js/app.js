@@ -18816,6 +18816,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -22565,6 +22567,7 @@ var state = {
   loginErrorMessages: null,
   registerErrorMessages: null
 }; // ゲッターはステートの内容から算出される値
+// stateから参照するより簡単に参照できる
 
 var getters = {
   check: function check(state) {
@@ -67928,21 +67931,27 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "contact_button", attrs: { type: "submit" } },
-              [_vm._v("\n                    送信\n                ")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "contact_button",
-                attrs: { type: "button" },
-                on: { click: _vm.back }
-              },
-              [_vm._v("\n                    入力内容修正\n                ")]
-            )
+            _c("div", { staticClass: "text-center" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "contact_button",
+                  attrs: { type: "button" },
+                  on: { click: _vm.back }
+                },
+                [
+                  _vm._v(
+                    "\n                        入力内容修正\n                    "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "contact_button", attrs: { type: "submit" } },
+                [_vm._v("\n                        送信\n                    ")]
+              )
+            ])
           ]
         )
       ])

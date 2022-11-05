@@ -47,12 +47,14 @@
                         </tr>
                     </table>
 
-                    <button type="submit" class="contact_button">
-                        送信
-                    </button>
-                    <button type="button" class="contact_button" @click="back">
-                        入力内容修正
-                    </button>
+                    <div class="text-center">
+                        <button type="button" class="contact_button" @click="back">
+                            入力内容修正
+                        </button>
+                        <button type="submit" class="contact_button">
+                            送信
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
