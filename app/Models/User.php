@@ -37,15 +37,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
     // なぜか画面が表示されずタイムアウトするため断念
     protected $appends = [
         // 'followed_by',

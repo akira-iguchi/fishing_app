@@ -185,7 +185,7 @@ header:focus-within {
 
   .nav_container .nav_content li a:hover,
   .nav_container .nav_content li span:hover {
-    color: #BF7497;
+    color: #bf7497;
   }
 
   .nav_container .open_nav_content {
@@ -224,7 +224,7 @@ header:focus-within {
           animation: fadeout 1.5s ease 2.3s 1 forwards;
   font-weight: bold;
   color: #fff;
-  background-color: #FF6699;
+  background-color: #ff6699;
   border-radius: 20px;
   margin-left: 20px;
 }
@@ -256,7 +256,7 @@ header:focus-within {
   width: 100%;
   text-align: center;
   padding: 2em;
-  background-color: #DDDDDD;
+  background-color: #dddddd;
 }
 
 .footer_sentence {
@@ -433,7 +433,7 @@ header:focus-within {
   top: 20px;
   font-weight: bold;
   font-size: 5rem;
-  color: #DDFFFF;
+  color: #ddffff;
   text-shadow: 5px 5px 5px #808080;
 }
 
@@ -685,7 +685,7 @@ header:focus-within {
 }
 
 .login_signup input:focus {
-  background: #DDDDDD;
+  background: #dddddd;
 }
 
 .login_signup_header h1 {
@@ -755,7 +755,7 @@ header:focus-within {
 }
 
 .login-signup-button:hover {
-  background: #EEEEEE;
+  background: #eeeeee;
 }
 
 .login-signup-button:focus-within {
@@ -846,6 +846,7 @@ header:focus-within {
 }
 
 .contact_button {
+  margin-right: 10px;
   padding: 8px 12px 8px 12px;
   font-family: "Roboto", sans-serif;
   font-weight: bold;

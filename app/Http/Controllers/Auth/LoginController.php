@@ -28,22 +28,6 @@ class LoginController extends Controller
         return $user;
     }
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function logout(Request $request)
-    {
-        $this->guard()->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return $this->loggedOut($request) ?: redirect('/');
-    }
-
     protected function loggedOut(Request $request)
     {
         $request->session()->regenerate();

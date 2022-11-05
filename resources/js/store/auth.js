@@ -10,6 +10,7 @@ const state = {
 }
 
 // ゲッターはステートの内容から算出される値
+// stateから参照するより簡単に参照できる
 const getters = {
     check: state => !! state.user,
     AuthUser: state => state.user ? state.user : ''
