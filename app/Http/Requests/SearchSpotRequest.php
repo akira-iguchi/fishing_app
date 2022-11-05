@@ -33,6 +33,7 @@ class SearchSpotRequest extends FormRequest
 
     public function escapeLike($str)
     {
+        // メタ文字を普通の文字に置き換え
         return str_replace(['\\', '%', '_'], ['\\\\', '\%', '\_'], $str);
     }
 
