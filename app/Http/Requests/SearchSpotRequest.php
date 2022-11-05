@@ -39,7 +39,7 @@ class SearchSpotRequest extends FormRequest
 
     public function filters($searchWord, $fishingTypes)
     {
-        // query()は見やすさ重視で使用
+        // Spot全て取得、query()は見やすさ重視で使用
         $query = Spot::query();
 
         // 配列化
