@@ -116,7 +116,7 @@
                     </div>
                 </div>
 
-                <div class="top_slider">
+                <!-- <div class="top_slider">
                     <div class="self_intro_expla">
                         <p>自己紹介</p>
                         <img src="/images/akira.jpeg" alt="自己紹介の画像">
@@ -131,7 +131,7 @@
                     <div class="self_intro_image">
                         <img src="/images/akira.jpeg" alt="自己紹介の画像">
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
